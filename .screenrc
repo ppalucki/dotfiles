@@ -1,0 +1,61 @@
+# visual bell
+vbell off
+
+# Bind F11 and F12 (NOT F1 and F2) to previous and next screen window
+bindkey -k F1 prev
+bindkey -k F2 next
+
+startup_message off
+
+
+# Window list at the bottom.
+hardstatus alwayslastline
+hardstatus string "%-w%{= BW}%50>%n %t%{-}%+w%<"
+# hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+
+#
+defscrollback 9000 
+termcapinfo xterm* ti@:te@
+#term "screen-256color"
+term "xterm-256color"
+
+# tells screen not to display text when a monitored window has activity (only change its indicator on the status line)
+activity ''
+
+# left right
+bindkey "^[<" eval number !echo $WINDOW-1|bc
+bindkey "^[>" eval number !echo $WINDOW+1|bc
+bindkey "^[," prev
+bindkey "^[." next
+
+bind ` select 0
+
+## make the shell in every window a login shell
+## - to wlasnie powoduje wylaczenie
+#shell -$SHELL
+
+##remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+
+
+#caption always           "%?%F%{= Kk}%:%{=u kR}%?  %h %-024=%{+b} %C%a %D %d %M %Y%{= db}"
+
+
+
+# http://www.frexx.de/xterm-256-notes/
+# terminfo and termcap for nice 256 color terminal
+# # allow bold colors - necessary for some reason
+attrcolor b ".I" 
+# # tell screen how to set colors. AB = background, AF=foreground 
+termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' 
+# # erase background with current bg color 
+defbce "on"
+
+# some fix for vim
+maptimeout 5
