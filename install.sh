@@ -5,4 +5,5 @@ ln -sv `pwd`/.pdbrc.py ~/.pdbrc.py
 ln -sv `pwd`/.rdebugrc ~/.rdebugrc
 ln -sv `pwd`/.riplrc ~/.riplrc
 ln -sv `pwd`/.irbrc ~/.irbrc
+ln -sv `pwd`/.vim ~/.vim
 echo done
