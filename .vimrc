@@ -160,3 +160,6 @@ set statusline=%f "tail of the filename
 
 """ ---- saveall shortcut
 map ZA :wall<CR>
+
+""" ---- TagList
+let Tlist_Show_One_File = 1
