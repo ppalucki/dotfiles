@@ -1,0 +1,1 @@
+copy this files to ~/Documents/Aptana Rubles/rails.ruble/snippets

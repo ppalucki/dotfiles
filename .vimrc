@@ -46,7 +46,7 @@ ab ipy from IPython import ipapi;ipapi.launch_new_instance(dict(globals(), ** lo
 ab pdb import pdb;pdb.set_trace()
 ab xpm import pdb;pdb.xpm()
 ab ripl Ripl.start :binding => binding
-ab pry binding.pry
+ab bpry binding.pry
 ab deb debugger
 
 
