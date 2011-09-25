@@ -5,5 +5,6 @@
   { "keys": ["ctrl+h"], "command": "show_panel", "args": {"panel": "find_in_files", "location": "<open folders>"}},
   { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "replace"} },
   { "keys": ["ctrl+k"], "command": "find_under" },
-  { "keys": ["ctrl+shift+k"], "command": "find_under_prev" }
+  { "keys": ["ctrl+shift+k"], "command": "find_under_prev" },
+  { "keys": ["ctrl+m"], "command": "toggle_side_bar" }
 ]
