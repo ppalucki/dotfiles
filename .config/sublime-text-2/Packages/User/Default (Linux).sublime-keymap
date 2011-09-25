@@ -3,5 +3,7 @@
   { "keys": ["f3"], "command": "goto_python_definition"},
   { "keys": ["ctrl+o"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
   { "keys": ["ctrl+h"], "command": "show_panel", "args": {"panel": "find_in_files", "location": "<open folders>"}},
-  { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "replace"} }
+  { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "replace"} },
+  { "keys": ["ctrl+k"], "command": "find_under" },
+  { "keys": ["ctrl+shift+k"], "command": "find_under_prev" }
 ]
