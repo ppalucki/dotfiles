@@ -138,7 +138,7 @@ map <leader><F5> :FufQuickfix<CR>
 map <F6> :FufCoverageFile<CR>
 "defaults: let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 let g:fuf_modesDisable = [ 'mrucmd', ]
-let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile'] 
+let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile'] 
 let g:fuf_maxMenuWidth = 140
 
 """ ----- mouse

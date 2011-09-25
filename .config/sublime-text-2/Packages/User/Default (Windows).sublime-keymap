@@ -1,0 +1,7 @@
+[
+  { "keys": ["ctrl+t"], "command": "show_overlay", "args": {"overlay": "goto"} },
+  { "keys": ["f3"], "command": "goto_python_definition"},
+  { "keys": ["ctrl+o"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
+  { "keys": ["ctrl+h"], "command": "show_panel", "args": {"panel": "find_in_files", "location": "<open folders>"}},
+  { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "replace"} }
+]
