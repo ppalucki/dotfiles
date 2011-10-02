@@ -1,6 +1,6 @@
 [
   { "keys": ["ctrl+t"], "command": "show_overlay", "args": {"overlay": "goto"} },
-  { "keys": ["f3"], "command": "goto_python_definition"},
+  //{ "keys": ["f3"], "command": "goto_python_definition"},
   { "keys": ["ctrl+o"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
   { "keys": ["ctrl+h"], "command": "show_panel", "args": {"panel": "find_in_files", "location": "<open folders>"}},
   { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "replace"} },
@@ -10,5 +10,9 @@
   { "keys": ["shift+enter"], "command": "run_macro_file", "args": {"file": "Packages/Default/Add Line.sublime-macro"} },
   { "keys": ["alt+up"], "command": "swap_line_up" },
   { "keys": ["alt+down"], "command": "swap_line_down" },
-  { "keys": ["ctrl+d"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} }  
+  { "keys": ["ctrl+d"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} },
+  { "args": {}, "command": "navigate_to_definition", "context": [], "keys": ["f3"] },
+  { "args": {}, "command": "jump_back", "context": [], "keys": ["alt+left"] }, 
+  { "args": {"to": "last_modification"}, "command": "jump_back", "context": [], "keys": ["ctrl+q"]},
+  { "keys": ["ctrl+l"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} }
 ]
