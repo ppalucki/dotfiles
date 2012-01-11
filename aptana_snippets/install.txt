@@ -1,1 +1,21 @@
 copy this files to ~/Documents/Aptana Rubles/rails.ruble/snippets
+# opcjonalnie
+1. menu -> Commands/Ruby/Edit this bundle
+2. edytujemy snippets/snippets.rb
+3. 
+
+  snippet 'bpry' do |s|
+    s.trigger = 'bpry'
+    s.expansion = 'binding.pry'
+  end
+
+  snippet 'ripl' do |s|
+    s.trigger = 'ripl'
+    s.expansion = 'Ripl.start :binding => binding'
+  end
+
+  snippet 'deb' do |s|
+    s.trigger = 'deb'
+    s.expansion = 'debugger'
+  end
+

@@ -132,10 +132,13 @@ command W w !sudo tee % > /dev/null
 
 """ ----- fuzzyfinder
 map <F3> :FufBufferTag<CR>
+map <c-o> :FufBufferTag<CR>
 map <F4> :FufMruFile<CR>
+map <c-3> :FufMruFile<CR>
 map <F5> :FufBuffer<CR>
 map <leader><F5> :FufQuickfix<CR>
 map <F6> :FufCoverageFile<CR>
+map <c-t> :FufCoverageFile<CR>
 "defaults: let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 let g:fuf_modesDisable = [ 'mrucmd', ]
 let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile'] 
