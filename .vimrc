@@ -6,7 +6,7 @@ filetype plugin indent on
 
 """ -------- Standard options
 syntax on 
-set number
+set nonumber
 set nowrap
 "set paste
 set comments=
@@ -46,9 +46,11 @@ ab ipy from IPython import ipapi;ipapi.launch_new_instance(dict(globals(), ** lo
 ab pdb import pdb;pdb.set_trace()
 ab xpm import pdb;pdb.xpm()
 ab ripl Ripl.start :binding => binding
-ab bpry binding.pry
+ab bpry binding.pry<ESC>
 ab deb debugger
 
+""" -------- jumps
+" map <m-left> :jumps  "nie dziala!
 
 """ ------- Backspace fix
 set backspace=indent,eol,start
@@ -103,7 +105,8 @@ nmap <F10> :w\|!ruby %<CR>
 imap <F10> <Esc>:w\|!ruby %<CR>
 
 """ -------- Ctags
-map <F7> :!ctags **/*.
+"map <F7> :!ctags **/*.       
+map <F7> :!find -type f -name "*.rb" \| xargs ctags --totals
 map <leader><F7> :!ctags --verbose=yes --recurse=yes .
 set tags+=./tags
 set tags+=tags
@@ -132,13 +135,13 @@ command W w !sudo tee % > /dev/null
 
 """ ----- fuzzyfinder
 map <F3> :FufBufferTag<CR>
-map <c-o> :FufBufferTag<CR>
+map <leader><c-o> :FufBufferTag<CR>
 map <F4> :FufMruFile<CR>
 map <c-3> :FufMruFile<CR>
 map <F5> :FufBuffer<CR>
 map <leader><F5> :FufQuickfix<CR>
 map <F6> :FufCoverageFile<CR>
-map <c-t> :FufCoverageFile<CR>
+map <leader><c-t> :FufCoverageFile<CR>
 "defaults: let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 let g:fuf_modesDisable = [ 'mrucmd', ]
 let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile'] 
@@ -159,10 +162,14 @@ hi CursorLine cterm=NONE ctermbg=233
 
 """ ---- statusline
 set laststatus=2
-set statusline=%f "tail of the filename
+set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%) 
 
 """ ---- saveall shortcut
 map ZA :wall<CR>
 
 """ ---- TagList
 let Tlist_Show_One_File = 1
+
+
+""" --- komentarze map
+map <C-/> <C-C>

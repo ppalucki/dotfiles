@@ -1,14 +1,31 @@
+##### HIRB
+# http://lucapette.com/pry/pry-everywhere/
 require 'hirb'
 Pry.config.print = proc do |output, value|
   Hirb::View.view_or_page_output(value) || Pry::DEFAULT_PRINT.call(output, value)
 end
 Hirb.enable
-# http://lucapette.com/pry/pry-everywhere/
 
-def v(*a)
-  Hirb::Console.render_output(*a)
+#def v(*a)
+#  Hirb::Console.render_output(*a)
+#end
+
+# exception 5 lines
+# wg. https://github.com/pry/pry/wiki/Exceptions
+# mozna tez:
+# cat --ex N
+# _ex_.backtrace
+# edit --ex N
+=begin
+Pry.config.exception_handler = proc do |output, exception, _pry_|
+  output.puts "#{exception}"
+  #output.puts "#{exception.backtrace.first}"
+  output.puts exception.backtrace[:5]
 end
-  
+=end
+
+######### Print Methods
+=begin
 require 'active_support/core_ext/kernel'
 
 begin # ANSI codeos
@@ -83,3 +100,25 @@ begin # ANSI codeos
       data.size
     end
 end
+
+
+############## RAILS in PRY
+# Launch Pry with access to the entire Rails stack.
+# If you have Pry in your Gemfile, you can pass: ./script/console --irb=pry instead.
+# If you don't, you can load it through the lines below :)
+rails = File.join Dir.getwd, 'config', 'environment.rb'
+
+if File.exist?(rails) && ENV['SKIP_RAILS'].nil?
+  require rails
+  if Rails.version[0..0] == "2"
+    require 'console_app'
+    require 'console_with_helpers'
+  elsif Rails.version[0..0] == "3"
+    require 'rails/console/app'
+    require 'rails/console/helpers'
+  else
+    warn "[WARN] cannot load Rails console commands (Not on Rails2 or Rails3?)"
+  end
+end
+
+=end

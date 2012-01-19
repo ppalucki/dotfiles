@@ -19,3 +19,10 @@ copy this files to ~/Documents/Aptana Rubles/rails.ruble/snippets
     s.expansion = 'debugger'
   end
 
+
+# oznaczanie git (kolorki pliku w navigator/app explorer)
+1. preferencese/Aptana Studio/Themes
+2. wylaczamy invasive themes/editor font in views
+3. przerabiamy Unstaged/Staged Files
+4. jesli jest yellow wykrzynik to patrzymy przez co zostale nadpisane (np. diff-modified) i usuwamy/zmieniamy 
+
