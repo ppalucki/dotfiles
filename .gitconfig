@@ -1,0 +1,19 @@
+[gui]
+	fontdiff = -family \"courier new\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
+	recentrepo = /home/ppalucki/tmp/foo4
+	recentrepo = /home/ppalucki/workspace_rr/muzomedia
+
+[color]
+  diff = auto
+
+[user]
+	name = Paweł Pałucki
+	email = pawel.palucki@redefine.pl
+
+[core]
+	excludesfile = .project
+
+[alias]
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date=relative
+  st = status
+  ci = commit -a
