@@ -1,10 +1,38 @@
 ##### HIRB
 # http://lucapette.com/pry/pry-everywhere/
+=begin
 require 'hirb'
 Pry.config.print = proc do |output, value|
   Hirb::View.view_or_page_output(value) || Pry::DEFAULT_PRINT.call(output, value)
 end
 Hirb.enable
+=end
+
+=begin
+require 'awesome_print'
+=end
+
+
+# init rails + hirb
+if File.exist?('./config/environment.rb')
+  require 'rails'
+  puts "Booting rails #{Rails.env}..."
+  require './config/environment.rb'
+  require 'rails/console/app'
+  require 'rails/console/helpers'
+  include Rails::ConsoleMethods
+  require 'hirb'
+  extend Hirb::Console
+  Hirb.enable
+end
+
+#### awesome_print
+#begin
+  #require "awesome_print"
+  #Pry.config.print = proc { |output, value| output.puts value.ai }
+#rescue LoadError
+#end
+
 
 #def v(*a)
 #  Hirb::Console.render_output(*a)
