@@ -26,3 +26,16 @@ copy this files to ~/Documents/Aptana Rubles/rails.ruble/snippets
 3. przerabiamy Unstaged/Staged Files
 4. jesli jest yellow wykrzynik to patrzymy przez co zostale nadpisane (np. diff-modified) i usuwamy/zmieniamy 
 
+
+====================================
+- Naprawa Control-Shift+K
+- Go to alternate file in rails
+- oraz wlasne snippety
+
+instalacji rubles
+1. w AptanaStudion commands i edytujemy odpowiednio bundle
+- Rails 
+- Ruby
+2. to powinno stworzyc w katalogu ~/Documents/Aptana Rubles odpowiednie ruble
+3. wtedy napisujemy je rublami z katalogu Aptana Rubles
+
