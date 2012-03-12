@@ -17,3 +17,10 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date=relative
   st = status
   ci = commit -a
+  d = difftool
+
+[diff]
+  tool = vimdiff
+
+[difftool]
+  prompt = false
