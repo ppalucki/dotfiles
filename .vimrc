@@ -4,6 +4,9 @@ call pathogen#runtime_append_all_bundles()
 filetype plugin indent on
 ":call pathogen#helptags()   "load all helptags
 
+"""-------------- ruby/thor
+au BufRead,BufNewFile *.thor set filetype=ruby
+
 """ -------- Standard options
 syntax on 
 set nonumber
@@ -92,6 +95,7 @@ imap <C-w> ESC<C-w>
 
 """ ------- rails.vim OpenURL
 command -bar -nargs=1 OpenURL :!"c:\Program Files\Mozilla Firefox\firefox.exe" <args>
+map <leader><c-g> :A<CR>
 
 """ ------- TagList (outline)
 "let Tlist_File_Fold_Auto_Close = 1
@@ -128,10 +132,8 @@ map <silent><F9> :!/usr/bin/env python %<CR>
 "This autocommand jumps to the last known position in a file just after opening it, if the '"' mark is set:
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-
 """ ------ sudo write
 command W w !sudo tee % > /dev/null
-
 
 """ ----- fuzzyfinder
 map <F3> :FufBufferTag<CR>
@@ -144,17 +146,19 @@ map <F6> :FufCoverageFile<CR>
 map <leader><c-t> :FufCoverageFile<CR>
 "defaults: let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 let g:fuf_modesDisable = [ 'mrucmd', ]
-let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile'] 
+let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl'] 
 let g:fuf_maxMenuWidth = 140
 
 """ ----- mouse
 "set mouse=a
+"set ttymouse=xterm2
 
 """ ----- grep (plugin) 
-let Grep_Default_Filelist = '*.rb *.py *.html *.erb'
+let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
 let Grep_Default_Options = '-i'
 let Grep_OpenQuickfixWindow = 1
-map <leader><F6> :Rfgrep<CR>
+"map <leader><F6> :Rfgrep<CR>
+map <leader><c-h> :Rfgrep<CR>
 
 """ ------ cursorline
 set cursorline
@@ -166,6 +170,7 @@ set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%)
 
 """ ---- saveall shortcut
 map ZA :wall<CR>
+map ZW :qa<CR>
 
 """ ---- TagList
 let Tlist_Show_One_File = 1
@@ -173,3 +178,6 @@ let Tlist_Show_One_File = 1
 
 """ --- komentarze map
 map <C-/> <C-C>
+
+""" --- json
+autocmd BufNewFile,BufRead *.json set ft=javascript
