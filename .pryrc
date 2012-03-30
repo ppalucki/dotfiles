@@ -1,12 +1,13 @@
 ##### HIRB
 # http://lucapette.com/pry/pry-everywhere/
-=begin
+begin
 require 'hirb'
 Pry.config.print = proc do |output, value|
   Hirb::View.view_or_page_output(value) || Pry::DEFAULT_PRINT.call(output, value)
 end
 Hirb.enable
-=end
+rescue LoadError
+end
 
 =begin
 require 'awesome_print'

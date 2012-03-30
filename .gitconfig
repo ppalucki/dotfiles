@@ -11,7 +11,7 @@
 	email = pawel.palucki@redefine.pl
 
 [core]
-	excludesfile = .project
+	excludesfile = ~/.gitignore_global
 
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date=relative
@@ -24,3 +24,11 @@
 
 [difftool]
   prompt = false
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 0x0+0+0
+	main-window-view = HistoryView
+	show-graph = true
+	history-view-vpane-position = 439
+	file-view-vpane-position = 565
+	file-view-hpane-position = 285
