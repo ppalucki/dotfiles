@@ -82,7 +82,7 @@ let NERDTreeQuitOnOpen=1
 
 
 """ proba fixa kasowania slow w trybie insert
-imap <C-w> ESC<C-w>
+imap <C-w> <ESC>
 
 "" Turn on NERDTree on startup
 "autocmd VimEnter * NERDTree
