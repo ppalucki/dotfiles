@@ -15,9 +15,10 @@ require 'awesome_print'
 
 
 # init rails + hirb
-if File.exist?('./config/environment.rb')
+if true and File.exist?('./config/environment.rb')
+ 
   require 'rails'
-  puts "Booting rails #{Rails.env}..."
+  puts "Booting rails #{Rails.env}..."  
   require './config/environment.rb'
   require 'rails/console/app'
   require 'rails/console/helpers'
