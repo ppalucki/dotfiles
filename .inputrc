@@ -3,5 +3,5 @@
 "\e[6~": history-search-forward
 
 # ctrl+left, ctrl+right for words
-"\e[1;5C": forward-word
-"\e[1;5D": backward-word
+#"\e[1;5C": forward-word
+#"\e[1;5D": backward-word
