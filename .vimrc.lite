@@ -16,14 +16,6 @@ autocmd FileType ruby set ts=2 sw=2 softtabstop=2
 autocmd FileType html set ts=2 sw=2 softtabstop=2 nocindent
 autocmd FileType python set ts=4 sw=4 softtabstop=4
 
-"""------- kolorki
-colorscheme desert256
-set t_Co=256
-hi Pmenu ctermfg=220 ctermbg=238
-hi PmenuSel ctermfg=lightyellow ctermbg=brown
-hi PmenuSbar ctermbg=6
-hi PmenuThumb ctermfg=3
-
 """ ------- skroty
 ab ipy from IPython import ipapi;ipapi.launch_new_instance(dict(globals(), ** locals())) 
 ab pdb import pdb;pdb.set_trace()
