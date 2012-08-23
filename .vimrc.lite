@@ -1,0 +1,77 @@
+"""-------------- ruby/thor
+au BufRead,BufNewFile *.thor set filetype=ruby
+syntax on 
+set nonumber
+set nowrap
+set comments=
+set incsearch
+set smartcase
+set scrolloff=2
+set ignorecase
+set smarttab
+set expandtab
+set autoindent
+set ts=2 sw=2 softtabstop=2
+autocmd FileType ruby set ts=2 sw=2 softtabstop=2
+autocmd FileType html set ts=2 sw=2 softtabstop=2 nocindent
+autocmd FileType python set ts=4 sw=4 softtabstop=4
+
+"""------- kolorki
+colorscheme desert256
+set t_Co=256
+hi Pmenu ctermfg=220 ctermbg=238
+hi PmenuSel ctermfg=lightyellow ctermbg=brown
+hi PmenuSbar ctermbg=6
+hi PmenuThumb ctermfg=3
+
+""" ------- skroty
+ab ipy from IPython import ipapi;ipapi.launch_new_instance(dict(globals(), ** locals())) 
+ab pdb import pdb;pdb.set_trace()
+ab xpm import pdb;pdb.xpm()
+ab ripl Ripl.start :binding => binding
+ab bpry binding.pry<ESC>
+ab deb debugger
+
+""" -------- jumps
+" map <m-left> :jumps  "nie dziala!
+
+""" ------- Backspace fix
+set backspace=indent,eol,start
+
+""" ------- AutoComplete fix
+set completeopt=longest,menuone
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : 
+            \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : 
+            \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+
+""" proba fixa kasowania slow w trybie insert
+imap <C-w> <ESC>
+
+""" -------- Ctags
+"map <F7> :!ctags **/*.       
+map <F7> :!find -type f -name "*.rb" \| xargs ctags --totals
+map <leader><F7> :!ctags --verbose=yes --recurse=yes .
+set tags+=./tags
+set tags+=tags
+set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
+
+""" ------ cursorline
+set cursorline
+hi CursorLine cterm=NONE ctermbg=233
+
+""" ---- statusline
+set laststatus=2
+set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%) 
+
+""" ---- saveall shortcut
+map ZA :wall<CR>
+map ZW :qa<CR>
+
+""" --- komentarze map
+map <C-/> <C-C>
+
+""" --- json
+autocmd BufNewFile,BufRead *.json set ft=javascript
