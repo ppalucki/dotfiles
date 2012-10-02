@@ -181,3 +181,6 @@ map <C-/> <C-C>
 
 """ --- json
 autocmd BufNewFile,BufRead *.json set ft=javascript
+
+
+set clipboard=unnamedplus
