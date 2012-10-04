@@ -2,6 +2,7 @@
 copy me to PYTHONPATH
 and then use
 from pyshell import main; main(dict(globals(),**locals())
+
 """
 
 import wx
