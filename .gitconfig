@@ -18,6 +18,7 @@
   st = status
   ci = commit -a
   d = difftool
+  branches = branch -a -vv
 
 [diff]
   tool = vimdiff

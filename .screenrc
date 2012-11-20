@@ -9,9 +9,14 @@ startup_message off
 
 
 # Window list at the bottom.
-hardstatus alwayslastline
-hardstatus string "%-w%{= BW}%50>%n %t%{-}%+w%<"
+# hardstatus alwayslastline
+# hardstatus alwayslastline "%-w%{= BW}%50>%n %t%{-}%+w%<"
+hardstatus ignore
+# caption splitonly "%t"
+caption always "%{yK}%-Lw%50>%{Ky}%n %t%{-}%+Lw%<%{- Wk}%{yK} "
+# hardstatus string "%-w%{= BW}%50>%n %t%{-}%+w%<"
 # hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
+# caption always "%w"
 
 #
 defscrollback 9000 
