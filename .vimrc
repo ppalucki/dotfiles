@@ -52,9 +52,10 @@ let g:pymode_utils_whitespaces = 0
 let g:pymode_lint_jump = 1
 "let g:pymode_syntax_indent_errors = 0
 let g:pymode_syntax_space_errors = 0
-let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101'
+let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
 "let g:pymode_lint_select = 'E0611'
 map <leader>l :PyLint<CR>
+let g:pymode_breakpoint_key = ''
 
 """-----------ipython
 let g:ipy_perform_mappings = 0
@@ -63,13 +64,16 @@ let g:ipy_completefunc = 'global'
 map <leader>ii :IPython<CR>
 map <leader>is :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
 map <leader>iq :py run_command('quit')<CR>
-map <leader>d :py get_doc_buffer()<CR>
+map <leader>id :py get_doc_buffer()<CR>
 nmap <S-F5> :python dedent_run_this_line()<CR>
 vmap <S-F5> :python dedent_run_these_lines()<CR>
 imap <C-F5> <C-O>:python dedent_run_this_line()<CR>
 "
 " ipython embeded
 nmap <leader>ip o<esc>Sipy<ESC>:w<cr>
+" ipython debug
+nmap <leader>id o<esc>Sipdb<ESC>:w<cr>
+
 """--------- hidden
 " allow edited buffers
 set hidden
@@ -114,8 +118,8 @@ set hlsearch             " highlight search
 map <leader>/ :nohlsearch<CR>; echo 'Search highlight cleared' <CR>
 "
 " delete without yank
-nmap <silent> <leader>d "_d 
-vmap <silent> <leader>d "_d
+" nmap <silent> <leader>d "_d 
+" vmap <silent> <leader>d "_d
 
 """ ------- switch buffers
 map <C-h> :bp<CR> 
@@ -190,9 +194,9 @@ let NERDTreeQuitOnOpen=1
 "
 """ -------- Ctags
 "map <F7> :!ctags **/*.       
-map <F8> :!find -type f -name "*.py" \| xargs ctags --totals --python-kinds=-i-v
-map <leader><F8> :!ctags --verbose=yes --recurse=yes .
-set tags=.tags
+map <F8> :!find -type f -name "*.py" \| xargs ctags -f tags --totals --python-kinds=-i-v
+map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes .
+set tags=tags
 "set tags+=./.tags
 "set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
 "set tags+=$HOME/.vim/tags/python.ctags
@@ -234,6 +238,10 @@ let g:fuf_maxMenuWidth = 240
 let g:fuf_ignoreCase = 0
 let g:fuf_fuzzyRefining = 0
 
+"fuf mrufile
+let g:fuf_mrufile_maxItem = 600
+let g:fuf_mrufile_maxItemDir = 150
+
 """ ----- mouse
 "set mouse=a
 "set ttymouse=xterm2
@@ -243,8 +251,7 @@ let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.ya
 let Grep_Default_Options = '-i'
 let Grep_OpenQuickfixWindow = 1
 "map <leader><F6> :Rfgrep<CR>
-map <leader><c-h> :Rfgrep<CR>
-
+map <leader>h :Rfgrep<cr>
 
 """ ---- statusline
 set laststatus=2
@@ -268,14 +275,14 @@ map <leader>bl :!bzr qlog<CR>
 map <leader>bs :!bzr st<CR>
 map <leader>bu :!bzr up<CR>
 map <leader>bb :!bzr qblame %<CR>
-"noremap <c-s> :wall<CR>
+map <leader>bv :w<cr>:!bzr cdiff %<CR>
 
 
 """ ---- buffers
 " buffer write delete
-map <leader>bwd :w<bar>bd<cr>
+map <leader>bwd :w<bar>BD<cr>
 " buffer delete
-map <leader>bd :bd<cr>
+map <leader>bd :BD<cr>
 
 """ -----navgigation
 map <leader>g :RopeGotoDefinition<cr>
@@ -322,11 +329,33 @@ map <leader>ts :ScreenSend<CR>
 " run and send last run
 map <leader>tr :w<bar>call ScreenShellSend("!!")<cr>
 map <leader>te :w<bar>call ScreenShellSend('exit')<cr>
-" terminal line begin then send visual till end and terminal send
+" "terminal line" begin then send visual till end and terminal send
 nmap <leader>tl _v$,ts
+" "terminal word" (send)
+nmap <leader>tw viw<leader>ts
 
+""" screen debuger
+" konflikt w <leader>d (kasowanie lini bez buffora)
+" nmap <leader>dn :call ScreenShellSend("next")<cr>
 
 """ pi_paren
 " bez oznaczania nawiasow
 let loaded_matchparen = 1
 " NoMatchParen
+"
+"
+"
+""" disable fold
+set nofoldenable
+
+""" swap files
+
+
+
+" cmdline-editing bash style
+cnoremap <C-A> <Home>
+cnoremap <C-F> <Right>
+cnoremap <C-B> <Left>
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
+
