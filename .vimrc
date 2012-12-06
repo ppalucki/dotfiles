@@ -250,6 +250,8 @@ let g:fuf_mrufile_maxItemDir = 150
 let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
 let Grep_Default_Options = '-i'
 let Grep_OpenQuickfixWindow = 1
+let Grep_Skip_Dirs = 'tmp'
+let Grep_Shell_Escape_Char = '\'
 "map <leader><F6> :Rfgrep<CR>
 map <leader>h :Rfgrep<cr>
 
@@ -328,7 +330,7 @@ map <leader>tb :ScreenShell bash<cr>
 map <leader>ts :ScreenSend<CR>
 " run and send last run
 map <leader>tr :w<bar>call ScreenShellSend("!!")<cr>
-map <leader>te :w<bar>call ScreenShellSend('exit')<cr>
+map <leader>te :call ScreenShellSend('exit')<cr>
 " "terminal line" begin then send visual till end and terminal send
 nmap <leader>tl _v$,ts
 " "terminal word" (send)
