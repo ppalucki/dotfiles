@@ -253,7 +253,10 @@ let Grep_OpenQuickfixWindow = 1
 let Grep_Skip_Dirs = 'tmp'
 let Grep_Shell_Escape_Char = '\'
 "map <leader><F6> :Rfgrep<CR>
-map <leader>h :Rfgrep<cr>
+" map <leader>h :Rfgrep<cr>
+map <leader>h :Ack --py --ignore-dir=tmp 
+map <leader>a yaw:Ack --ignore-dir=tmp --py <C-r>"
+vmap <leader>a y:Ack --ignore-dir=tmp --py <C-r>"
 
 """ ---- statusline
 set laststatus=2
