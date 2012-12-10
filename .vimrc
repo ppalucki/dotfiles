@@ -257,8 +257,13 @@ let Grep_Shell_Escape_Char = '\'
 "map <leader><F6> :Rfgrep<CR>
 " map <leader>h :Rfgrep<cr>
 " map <leader>h :Ack --py
-map <leader>h yiw:Ack --py "<C-r>""
-vmap <leader>h y:Ack --py "<C-r>""
+map <leader>h yiw:Ack "<C-r>""
+vmap <leader>h y:Ack "<C-r>""
+au FileType python map <leader>h yiw:Ack --python "<C-r>""
+au FileType python vmap <leader>h y:Ack --python  "<C-r>""
+au FileType ruby map <leader>h yiw:Ack --ruby "<C-r>""
+au FileType ruby vmap <leader>h y:Ack --ruby "<C-r>""
+
 
 """ ---- statusline
 set laststatus=2
