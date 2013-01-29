@@ -1,6 +1,9 @@
 """ -------- GUI --------------
 set gfn=Bitstream\ Vera\ Sans\ Mono\ for\ Powerline\ 9
-set guioptions-=T
+" set guioptions-=TrRlLb
+" set guioptions+=ic
+set guioptions=aegmtic
+
 
 """-------- pathogen
 " install plugins in ~/.vim/bundle folder
@@ -16,8 +19,8 @@ call pathogen#helptags()   "load all helptags
 syntax on 
 set t_Co=256
 " colorscheme desert256
+let g:molokai_original = 0
 colorscheme molokai
-let g:molokai_original = 1
 hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
 hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
 hi PmenuSbar ctermbg=6
@@ -50,21 +53,25 @@ let g:pymode_lint_checker = "pyflakes"
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_utils_whitespaces = 0
 let g:pymode_lint_jump = 1
+" auto jump off
+" let g:pymode_lint_jump = 0 
 "let g:pymode_syntax_indent_errors = 0
 let g:pymode_syntax_space_errors = 0
 let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
 "let g:pymode_lint_select = 'E0611'
 map <leader>l :PyLint<CR>
-let g:pymode_breakpoint_key = ''
+let g:pymode_breakpoint_key = '<leader>ib'
+let g:pymode_run = 0
+"let g:pymode_run_key = '<leader>r'
 
 """-----------ipython
 let g:ipy_perform_mappings = 0
 let g:ipy_completefunc = 'global'
 " ipython connect/shell/quit
-map <leader>ii :IPython<CR>
-map <leader>is :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
-map <leader>iq :py run_command('quit')<CR>
-map <leader>id :py get_doc_buffer()<CR>
+nmap <leader>ii :IPython<CR>
+nmap <leader>is :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
+nmap <leader>iq :py run_command('quit')<CR>
+nmap <leader>k :py get_doc_buffer()<CR>
 nmap <S-F5> :python dedent_run_this_line()<CR>
 vmap <S-F5> :python dedent_run_these_lines()<CR>
 imap <C-F5> <C-O>:python dedent_run_this_line()<CR>
@@ -172,6 +179,7 @@ let NERDChristmasTree=1                 " more colors
 let NERDTreeMinimalUI=1
 "let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen=1
+let NERDTreeIgnore=['\.pyc$', '\~$']
 
 """ proba fixa kasowania slow w trybie insert
 "imap <C-w> <ESC>
@@ -194,8 +202,11 @@ let NERDTreeQuitOnOpen=1
 "
 """ -------- Ctags
 "map <F7> :!ctags **/*.       
-map <F8> :!find -type f -name "*.py" \| xargs ctags -f tags --totals --python-kinds=-i-v
-map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes .
+" map <F8> :!find -type f -name "*.py" \| xargs ctags -f tags --totals --python-kinds=-i-v
+" map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes .
+map <leader><F8> :!ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes .
+au FileType python map <F8> :!ctags -f tags --languages=Python --verbose=no --totals --recurse=yes .
+au FileType ruby map <F8> :!ctags -f tags --languages=Ruby --verbose=no --totals --recurse=yes .
 set tags=tags
 "set tags+=./.tags
 "set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
@@ -203,8 +214,16 @@ set tags=tags
 
 """ ---- IDE Pyhon 
 "" script exectue
-map <F9> :w<cr>:!/usr/bin/env python %<CR>
+au FileType python map <F9> :w<bar>!/usr/bin/env python %<CR>
+au FileType python map <leader><F9> :w <bar>!/usr/bin/env python %  
+map <leader>r @:
 
+""" ---- IDE running riv (rest)
+au FileType rst map <F9> :w<bar>!cd ..;make html<cr>
+au FileType rst map <leader><F9> :w<bar>!cd ..;make clean html<cr>
+""" fix of italic overbold!
+au FileType rst :highlight rstEmphasis cterm=NONE ctermfg=3
+" let g:riv_link_cursor_hl=0
 """ ----- Python complete
 "autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class 
 "autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``   "remove trailing spaces
@@ -224,18 +243,18 @@ map <F3> :FufBufferTag<CR>
 map <leader><c-o> :FufBufferTag<CR>
 map <leader><F3> :TagbarToggle<CR>
 map <F4> :FufMruFile<CR>
-map <F5> :FufTag!<CR>
-map <leader><F5> :FufTag<CR>
+map <F5> :FufBuffer<CR>
+map <leader><F5> :FufQuickfix<CR>
 map <F6> :FufCoverageFile<CR>
 map <leader><c-t> :FufCoverageFile<CR>
-map <F7> :FufBuffer<CR>
-map <leader><F7> :FufQuickfix<CR>
+map <F7> :FufTag!<CR>
+map <leader><F7> :FufTag<CR>
 
 "defaults: let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 let g:fuf_modesDisable = [ 'mrucmd', ]
-let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl'] 
+let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl', '**/*.rst', '**/*.json', '**/*.java', '**/*.xhtml']
 let g:fuf_maxMenuWidth = 240
-let g:fuf_ignoreCase = 0
+let g:fuf_ignoreCase = 1
 let g:fuf_fuzzyRefining = 0
 
 "fuf mrufile
@@ -245,6 +264,7 @@ let g:fuf_mrufile_maxItemDir = 150
 """ ----- mouse
 "set mouse=a
 "set ttymouse=xterm2
+set nomousehide
 
 """ ----- grep (plugin) 
 let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
@@ -295,9 +315,14 @@ map <leader>bv :w<cr>:!bzr cdiff %<CR>
 map <leader>bwd :w<bar>BD<cr>
 " buffer delete
 map <leader>bd :BD<cr>
+" close all but this one (and not saved!)
+map <leader>bo :BufOnly<cr>
 
 """ -----navgigation
-map <leader>g :RopeGotoDefinition<cr>
+" au FileType ruby map <leader>g <C-]>
+map <leader>g <C-]>
+au FileType python map <leader>g :RopeGotoDefinition<cr>
+
 "<C-c>g
 
 """ ------------ fugitive
@@ -336,6 +361,9 @@ let g:ConqueTerm_ToggleKey = ''
 
 """ Screen
 map <leader>tb :ScreenShell bash<cr>
+"" nie dziala, zebym zrestartowal i mi przywrocilo
+" map <leader>ta :ScreenShellAttach<cr> 
+" let g:ScreenShellQuitOnVimExit = 0 
 " map <leader>tp :call screen#IPython()<CR>
 map <leader>ts :ScreenSend<CR>
 " run and send last run
@@ -359,10 +387,23 @@ let loaded_matchparen = 1
 "
 """ disable fold
 set nofoldenable
+au FileType rst set nofoldenable 
+let g:riv_fold_auto_update = 0
+let g:riv_web_browser = "google-chrome"
+
+
+let docs_tv = { 'path': '~/workspace/getmedia/docs_tv/source', 'build_path': '~/workspace/getmedia/docs_tv/build'}
+let g:riv_projects = [docs_tv]
+
 
 """ swap files
 
-
+" insert mode bash style
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+"" nie dzialaja
+" inoremap <M-b> <S-Left>
+" inoremap <M-f> <S-Right>
 
 " cmdline-editing bash style
 cnoremap <C-A> <Home>
@@ -370,4 +411,39 @@ cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
+" jedi-vim
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#popup_on_dot = 0
+
+" set noswapfile
+"
+
+" slowness fix!!!
+au FileType ruby set nocursorline
+set foldmethod=manual
+au FileType rst set nocursorline
+
+" java + eclim
+au FileType java nnoremap <silent> <buffer> <leader>ji :JavaImport<cr>
+au FileType java nnoremap <silent> <buffer> <leader>jd :JavaDocSearch -x declarations<cr>
+au FileType java nnoremap <silent> <buffer> <leader>k :JavaDocSearch -x declarations<cr>
+au FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
+au FileType java nnoremap <buffer> <leader>g :JavaSearchContext<cr>
+
+
+"""""""""""""""""""""""""""""""""" colore rerun
+" set t_Co=256
+" colorscheme desert256
+" colorscheme molokai
+" let g:molokai_original = 1
+" hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
+" hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
+" hi PmenuSbar ctermbg=6
+" hi PmenuThumb ctermfg=3
+"
+"
+""""""""""""" spell
+set spellcapcheck=0

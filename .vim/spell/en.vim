@@ -1,0 +1,1 @@
+set spellcapcheck=0
