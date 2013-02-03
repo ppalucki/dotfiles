@@ -1,0 +1,6 @@
+unmap <c-f>
+unmap <m-d>
+
+map x dc
+map X u
+
