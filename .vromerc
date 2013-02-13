@@ -1,5 +1,5 @@
-unmap <c-f>
-unmap <m-d>
+unmap <C-f>
+unmap <M-d>
 
 map x dc
 map X u
