@@ -28,7 +28,7 @@ hi PmenuThumb ctermfg=3
 
 """ ------ cursorline
 set cursorline
-hi CursorLine cterm=NONE ctermbg=234 guibg=#121212
+hi CursorLine cterm=NONE ctermbg=234 guibg=NONE
 
 """ ------ statusline
 hi StatusLine ctermbg=black
@@ -68,19 +68,21 @@ let g:pymode_run = 0
 let g:ipy_perform_mappings = 0
 let g:ipy_completefunc = 'global'
 " ipython connect/shell/quit
-nmap <leader>ii :IPython<CR>
-nmap <leader>is :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
-nmap <leader>iq :py run_command('quit')<CR>
-nmap <leader>k :py get_doc_buffer()<CR>
-nmap <S-F5> :python dedent_run_this_line()<CR>
-vmap <S-F5> :python dedent_run_these_lines()<CR>
-imap <C-F5> <C-O>:python dedent_run_this_line()<CR>
+" nmap <leader>ii :IPython<CR>
+" nmap <leader>is :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
+" nmap <leader>iq :py run_command('quit')<CR>
+" nmap <leader>k :py get_doc_buffer()<CR>
+" nmap <S-F5> :python dedent_run_this_line()<CR>
+" vmap <S-F5> :python dedent_run_these_lines()<CR>
+" imap <C-F5> <C-O>:python dedent_run_this_line()<CR>
 "
 " ipython embeded
-nmap <leader>ip o<esc>Sipy<ESC>:w<cr>
+au FileType python nmap <buffer> <leader>ip o<esc>Sipy<ESC>:w<cr>
 " ipython debug
 nmap <leader>id o<esc>Sipdb<ESC>:w<cr>
 
+" binding pry (only for ruby)
+au FileType ruby nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
 """--------- hidden
 " allow edited buffers
 set hidden
@@ -141,6 +143,7 @@ set ts=4 sw=4 softtabstop=4
 autocmd FileType ruby set ts=2 sw=2 softtabstop=2
 autocmd FileType html set ts=2 sw=2 softtabstop=2 nocindent
 autocmd FileType python set ts=4 sw=4 softtabstop=4
+autocmd FileType mkd set shiftwidth=2
 
 
 
@@ -215,8 +218,11 @@ set tags=tags
 """ ---- IDE Pyhon 
 "" script exectue
 au FileType python map <F9> :w<bar>!/usr/bin/env python %<CR>
-au FileType python map <leader><F9> :w <bar>!/usr/bin/env python %  
+au FileType python map <leader><F9> :w<bar>!/usr/bin/env python %  
+"" repeat last command
 map <leader>r @:
+"" ---- Java - eclim
+au FileType java map <F9> :w<bar>:Java<cr>
 
 """ ---- IDE running riv (rest)
 au FileType rst map <F9> :w<bar>!cd ..;make html<cr>
@@ -240,13 +246,14 @@ command! W w !sudo tee % > /dev/null
 
 """ ----- fuzzyfinder
 map <F3> :FufBufferTag<CR>
-map <leader><c-o> :FufBufferTag<CR>
 map <leader><F3> :TagbarToggle<CR>
+" map <leader><c-o> :FufBufferTag<CR>
 map <F4> :FufMruFile<CR>
 map <F5> :FufBuffer<CR>
 map <leader><F5> :FufQuickfix<CR>
 map <F6> :FufCoverageFile<CR>
-map <leader><c-t> :FufCoverageFile<CR>
+map <leader><F6> :FufFile<CR>
+" map <leader><c-t> :FufCoverageFile<CR>
 map <F7> :FufTag!<CR>
 map <leader><F7> :FufTag<CR>
 
@@ -255,12 +262,13 @@ let g:fuf_modesDisable = [ 'mrucmd', ]
 let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl', '**/*.rst', '**/*.json', '**/*.java', '**/*.xhtml']
 let g:fuf_maxMenuWidth = 240
 let g:fuf_ignoreCase = 1
-let g:fuf_fuzzyRefining = 0
+" let g:fuf_fuzzyRefining = 1
 
 "fuf mrufile
-let g:fuf_mrufile_maxItem = 600
-let g:fuf_mrufile_maxItemDir = 150
-
+let g:fuf_mrufile_maxItem = 6000
+let g:fuf_mrufile_maxItemDir = 1500
+let g:fuf_learningLimit = 1000
+let g:fuf_autoPreview = 1
 """ ----- mouse
 "set mouse=a
 "set ttymouse=xterm2
@@ -277,13 +285,21 @@ let Grep_Shell_Escape_Char = '\'
 "map <leader><F6> :Rfgrep<CR>
 " map <leader>h :Rfgrep<cr>
 " map <leader>h :Ack --py
-map <leader>h yiw:Ack "<C-r>""
-vmap <leader>h y:Ack "<C-r>""
-au FileType python map <leader>h yiw:Ack --python "<C-r>""
-au FileType python vmap <leader>h y:Ack --python  "<C-r>""
-au FileType ruby map <leader>h yiw:Ack --ruby "<C-r>""
-au FileType ruby vmap <leader>h y:Ack --ruby "<C-r>""
+" Ack bez jumpa
+map <leader>h yiw:Ack! "<C-r>""
+vmap <leader>h y:Ack! "<C-r>""
+au FileType python map <leader>h yiw:Ack! --python "<C-r>""
+au FileType python vmap <leader>h y:Ack! --python  "<C-r>""
+au FileType ruby map <leader>h yiw:Ack! --ruby "<C-r>""
+au FileType ruby vmap <leader>h y:Ack! --ruby "<C-r>""
 
+" Ack z jumpa
+map <leader>H yiw:Ack "<C-r>""
+vmap <leader>H y:Ack "<C-r>""
+au FileType python map <leader>H yiw:Ack --python "<C-r>""
+au FileType python vmap <leader>H y:Ack --python  "<C-r>""
+au FileType ruby map <leader>H yiw:Ack --ruby "<C-r>""
+au FileType ruby vmap <leader>H y:Ack --ruby "<C-r>""
 
 """ ---- statusline
 set laststatus=2
@@ -411,8 +427,8 @@ cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
+cnoremap <c-p> <Up>
+cnoremap <c-n> <Down>
 
 " jedi-vim
 let g:jedi#use_tabs_not_buffers = 0
@@ -428,11 +444,15 @@ au FileType rst set nocursorline
 
 " java + eclim
 au FileType java nnoremap <silent> <buffer> <leader>ji :JavaImport<cr>
+
+" java doc
 au FileType java nnoremap <silent> <buffer> <leader>jd :JavaDocSearch -x declarations<cr>
 au FileType java nnoremap <silent> <buffer> <leader>k :JavaDocSearch -x declarations<cr>
+
+" java go
 au FileType java nnoremap <silent> <buffer> <cr> :JavaSearchContext<cr>
 au FileType java nnoremap <buffer> <leader>g :JavaSearchContext<cr>
-
+let g:EclimJavaSearchSingleResult = "edit"
 
 """""""""""""""""""""""""""""""""" colore rerun
 " set t_Co=256
@@ -447,3 +467,22 @@ au FileType java nnoremap <buffer> <leader>g :JavaSearchContext<cr>
 "
 """"""""""""" spell
 set spellcapcheck=0
+
+"""""""""""" modeline
+set modeline
+
+"""""""""""" mkd - markdown
+au FileType mkd set nofoldenable
+au FileType mkd nmap ,e ysiw*
+au FileType mkd vmap ,e S*
+au FileType mkd nmap ds* F*xf*xb
+
+au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
+au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
+"
+"""""""""""" highlith identifiaction
+" http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+" kolorowanie przykladow w helpie 
+hi helpExample ctermfg=Magenta
