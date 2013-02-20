@@ -1,5 +1,6 @@
 unmap <C-f>
 unmap <M-d>
+unmap <C-j>
 
 map x dc
 map X u
