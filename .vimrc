@@ -496,3 +496,6 @@ hi helpExample ctermfg=Magenta
 
 " swap parameters
 map <F12> "qdt,dwep"qpb
+
+" gundo
+map <leader>u :GundoToggle<CR>
