@@ -12,21 +12,22 @@
 
 [core]
 	excludesfile = ~/.gitignore_global
-	mergeoptions = --no-edit
 
 [alias]
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date=relative
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 
   st = status
-	ci = commit
+  ci = commit
   d = difftool
   branches = branch -a -vv
   remotes = remote show origin
-	co = checkout
-	ciam = commit -a -m
-	cim = commit -m
+  co = checkout
+  ciam = commit -a -m
+  cim = commit -m
+
 [diff]
-  tool = vimdiff
-	guitool = meld
+  tool = vimdiff 
+	guitool = diffuse 
 
 [difftool]
   prompt = false
@@ -40,5 +41,6 @@
 	file-view-hpane-position = 285
 [merge]
 	defaultToUpstream = true
+	tool = vimdiff
 [push]
 	default = upstream

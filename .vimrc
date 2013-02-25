@@ -77,9 +77,10 @@ let g:ipy_completefunc = 'global'
 " imap <C-F5> <C-O>:python dedent_run_this_line()<CR>
 "
 " ipython embeded
-au FileType python nmap <buffer> <leader>ip o<esc>Sipy<ESC>:w<cr>
-" ipython debug
-nmap <leader>id o<esc>Sipdb<ESC>:w<cr>
+au FileType python nmap <buffer> <leader>ip o<esc>Sfrom IPython import embed;embed()<ESC>:w<cr>
+" ipython debug 
+au FileType python nmap <buffer> <leader>id o<esc>Simport ipdb;ipdb.set_trace()<ESC>:w<cr>
+au FileType python nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 
 " binding pry (only for ruby)
 au FileType ruby nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
@@ -151,15 +152,19 @@ autocmd FileType mkd set shiftwidth=2
 inoremap jj <ESC>
 
 """ ------- skroty
-ab ipy from IPython import embed;embed()
+""" PYTHON
+" ab ipy from IPython import embed;embed()
 ab eke from IPython import embed_kernel;embed_kernel()
-ab pdb import pdb;pdb.set_trace()
-ab ipdb import ipdb;ipdb.set_trace()
-ab xpm import pdb;pdb.xpm()
+" ab pdb import pdb;pdb.set_trace()
+" ab ipdb import ipdb;ipdb.set_trace()
+" ab pudb import pudb;pudb.set_trace()
+" ab xpm import pdb;pdb.xpm()
+" ab sh from pyshell import main; main(dict(globals(),**locals()))
+"
+""" RUBY
 ab ripl Ripl.start :binding => binding
 ab bpry binding.pry<ESC>
 ab deb debugger
-ab sh from pyshell import main; main(dict(globals(),**locals()))
 
 """ ------- Backspace fix
 set backspace=indent,eol,start
@@ -207,10 +212,10 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 "map <F7> :!ctags **/*.       
 " map <F8> :!find -type f -name "*.py" \| xargs ctags -f tags --totals --python-kinds=-i-v
 " map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes .
-map <leader><F8> :!ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes .
-au FileType python map <F8> :!ctags -f tags --languages=Python --verbose=no --totals --recurse=yes .
-au FileType ruby map <F8> :!ctags -f tags --languages=Ruby --verbose=no --totals --recurse=yes .
-set tags=tags
+map <leader><F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes .
+au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes .
+au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes .
+set tags=.tags
 "set tags+=./.tags
 "set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
 "set tags+=$HOME/.vim/tags/python.ctags
@@ -248,18 +253,20 @@ command! W w !sudo tee % > /dev/null
 map <F3> :FufBufferTag<CR>
 map <leader><F3> :TagbarToggle<CR>
 " map <leader><c-o> :FufBufferTag<CR>
-map <F4> :FufMruFile<CR>
+map <F4> :FufMruFileInCwd<CR>
+map <leader><F4> :FufMruFile<CR>
 map <F5> :FufBuffer<CR>
 map <leader><F5> :FufQuickfix<CR>
-map <F6> :FufCoverageFile<CR>
-map <leader><F6> :FufFile<CR>
+map <F6> :FufFile<CR>
+map <leader><F6> :FufCoverageFile<CR>
 " map <leader><c-t> :FufCoverageFile<CR>
 map <F7> :FufTag!<CR>
 map <leader><F7> :FufTag<CR>
+map <leader>o :FufJumpList<CR>
 
 "defaults: let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 let g:fuf_modesDisable = [ 'mrucmd', ]
-let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl', '**/*.rst', '**/*.json', '**/*.java', '**/*.xhtml']
+let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl', '**/*.rst', '**/*.json', '**/*.java', '**/*.xhtml', '**/*.sql']
 let g:fuf_maxMenuWidth = 240
 let g:fuf_ignoreCase = 1
 " let g:fuf_fuzzyRefining = 1
@@ -381,7 +388,7 @@ map <leader>tb :ScreenShell bash<cr>
 " map <leader>ta :ScreenShellAttach<cr> 
 " let g:ScreenShellQuitOnVimExit = 0 
 " map <leader>tp :call screen#IPython()<CR>
-map <leader>ts :ScreenSend<CR>
+vmap <leader>ts :ScreenSend<CR>
 " run and send last run
 map <leader>tr :w<bar>call ScreenShellSend("!!")<cr>
 map <leader>te :call ScreenShellSend('exit')<cr>
@@ -486,3 +493,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 
 " kolorowanie przykladow w helpie 
 hi helpExample ctermfg=Magenta
+
+" swap parameters
+map <F12> "qdt,dwep"qpb
