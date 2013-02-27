@@ -47,6 +47,8 @@ let mapleader = ","
 """--------- pythonmode
 let g:pymode_folding = 0
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow
+" let g:pymode_indent = 1 
+let g:pymode_lint = 0
 let g:pymode_lint_write = 1
 let g:pymode_lint_checker = "pyflakes"
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
@@ -57,6 +59,7 @@ let g:pymode_lint_jump = 1
 " let g:pymode_lint_jump = 0 
 "let g:pymode_syntax_indent_errors = 0
 let g:pymode_syntax_space_errors = 0
+let g:pymode_syntax_indent_errors = 0
 let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
 "let g:pymode_lint_select = 'E0611'
 map <leader>l :PyLint<CR>
