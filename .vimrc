@@ -409,6 +409,9 @@ let g:ConqueTerm_ToggleKey = ''
 
 
 """ Screen
+let g:ScreenShellHeight = 10
+""" default 1
+let g:ScreenShellQuitOnVimExit = 1 
 map <leader>tb :ScreenShell bash<cr>
 "" nie dziala, zebym zrestartowal i mi przywrocilo
 " map <leader>ta :ScreenShellAttach<cr> 
