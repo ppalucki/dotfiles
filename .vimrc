@@ -45,12 +45,15 @@ set scrolloff=6
 let mapleader = ","
 
 """--------- pythonmode
+let g:pymode_doc = 0
 let g:pymode_folding = 0
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow
 " let g:pymode_indent = 1 
-let g:pymode_lint = 0
-let g:pymode_lint_write = 1
+let g:pymode_lint = 1
+let g:pymode_rope = 1
+let g:pymode_lint_write = 0
 let g:pymode_lint_checker = "pyflakes"
+let g:pymode_lint_signs = 0
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_utils_whitespaces = 0
@@ -63,8 +66,10 @@ let g:pymode_syntax_indent_errors = 0
 let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
 "let g:pymode_lint_select = 'E0611'
 map <leader>l :PyLint<CR>
+let g:pymode_breakpoint = 0 
 let g:pymode_breakpoint_key = '<leader>ib'
 let g:pymode_run = 0
+let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
 """-----------ipython
@@ -98,7 +103,7 @@ noremap ; :
 """ delaing with .vimrc
 " vimrc edit/source
 noremap <leader>ve :e $MYVIMRC<CR>
-noremap <leader>vs :so $MYVIMRC<CR>
+noremap <leader>vr :so $MYVIMRC<CR>
 
 """ ---------- quickfix window navigation
 nnoremap ]q :cnext<cr>
@@ -328,14 +333,32 @@ noremap <leader>e `.
 
 """ ---- bzr shortcuts (gui)
 " bzr commit/log/status
-map <leader>bc :!bzr qci<CR>
-map <leader>bl :!bzr qlog<CR>
-map <leader>bs :!bzr st<CR>
-map <leader>bu :!bzr up<CR>
-map <leader>bb :!bzr qblame %<CR>
-map <leader>bv :w<cr>:!bzr cdiff %<CR>
+" map <leader>bc :!bzr qci<CR>
+" map <leader>bl :!bzr qlog<CR>
+" map <leader>bs :!bzr st<CR>
+" map <leader>bu :!bzr up<CR>
+" map <leader>bb :!bzr qblame %<CR>
+" map <leader>bv :w<cr>:!bzr cdiff %<CR>
 
 
+""" VCS (git bzr)
+"vimdiff current vs git head (fugitive extension)
+nnoremap <Leader>vd :Gdiff<cr>
+"switch back to current file and closes fugitive buffer
+nnoremap <Leader>vD :diffoff!<cr><c-w>h:bd<cr>
+nnoremap <Leader>vs :Gstatus<cr>
+nnoremap <Leader>vc :Gcommit<cr>
+" log current file
+nnoremap <Leader>vl :Glog<cr>
+" last 10 commits
+nnoremap <Leader>vL :Glog -n 10 --<cr>
+" gblame
+nnoremap <Leader>vb :Gblame<cr>
+vnoremap <Leader>vb :Gblame<cr>
+
+nnoremap <Leader>vpl :Git pull<cr>
+nnoremap <leader>vps :Git push<cr>
+"
 """ ---- buffers
 " buffer write delete
 map <leader>bwd :w<bar>BD<cr>
@@ -497,8 +520,11 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " kolorowanie przykladow w helpie 
 hi helpExample ctermfg=Magenta
 
-" swap parameters
-map <F12> "qdt,dwep"qpb
+" move parameter right
+map <leader>m "qdt,dwep"qpb
 
 " gundo
 map <leader>u :GundoToggle<CR>
+
+
+

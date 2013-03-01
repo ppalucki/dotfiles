@@ -19,7 +19,8 @@
   st = status
   ci = commit
   d = difftool
-  branches = branch -a -vv
+  branches = branch -vv
+    branchesall = branch -a -vv
   remotes = remote show origin
   co = checkout
   ciam = commit -a -m
