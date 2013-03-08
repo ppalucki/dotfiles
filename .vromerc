@@ -1,7 +1,7 @@
 unmap <C-f>
 unmap <M-d>
 unmap <C-j>
-unmap <C-u>
+" unmap <C-u>
 
 map x dc
 map X u
