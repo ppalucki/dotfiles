@@ -73,7 +73,7 @@ let g:pymode_run = 0
 let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
-function PythonMappinga()
+function PythonMappings()
 	nmap <buffer> <leader>ip o<esc>Sfrom IPython import embed;embed()<ESC>:w<cr>
 	" ipython debug 
 	nmap <buffer> <leader>id o<esc>Simport ipdb;ipdb.set_trace()<ESC>:w<cr>
@@ -85,16 +85,16 @@ function PythonMappinga()
 	map <F9> :w<bar>!/usr/bin/env python %<CR>
 	map <leader><F9> :w<bar>!/usr/bin/env python %  
 endfunction
-au FileType python PythonMappings()
+au FileType python call PythonMappings()
 
 "------------------------ RUBY
 function RubyMappings()
 	""" binding pry 
 	nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
 	""" ruby run
-	nmap <F9> :w\|!ruby %<cr> 
-	imap <F9> <Esc><f9>
-	nmap <leader><F9> :w\|!ruby % 
+	nmap <buffer> <F9> :w\|!ruby %<cr> 
+	imap <buffer> <F9> <Esc><f9>
+	nmap <buffer> <leader><F9> :w\|!ruby % 
 endfunction
 au FileType ruby call RubyMappings()
 
