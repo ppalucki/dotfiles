@@ -96,7 +96,7 @@ function RubyMappings()
 	imap <F9> <Esc><f9>
 	nmap <leader><F9> :w\|!ruby % 
 endfunction
-au FileType ruby RubyMappings()
+au FileType ruby call RubyMappings()
 
 " ruby/thor
 au BufRead,BufNewFile *.thor set filetype=ruby
@@ -364,7 +364,8 @@ let g:jedi#popup_on_dot = 0
 " set noswapfile
 
 " slowness fix!!!
-au FileType ruby set nocursorline set foldmethod=manual 
+au FileType ruby set nocursorline
+set foldmethod=manual 
 au FileType rst set nocursorline
 
 " ----------------------------------------- JAVA ECLIM
@@ -510,12 +511,3 @@ hi DiffChange ctermbg=NONE
 hi DiffDelete ctermbg=53
 hi DiffAdd ctermbg=53
 hi DiffText ctermbg=52 
-
-""" dziala tylko przy starcie
-if &diff
-    set nonumber
-else
-    set number
-end
-
-
