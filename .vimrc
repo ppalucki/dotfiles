@@ -1,14 +1,14 @@
-""" -------- GUI --------------
-set gfn=Bitstream\ Vera\ Sans\ Mono\ for\ Powerline\ 9
-" set guioptions-=TrRlLb
-" set guioptions+=ic
-set guioptions=aegmtic
-
 """-------- pathogen
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
 :Helptags
+
+""" -------- GUI --------------
+set gfn=Bitstream\ Vera\ Sans\ Mono\ for\ Powerline\ 9
+" set guioptions-=TrRlLb
+" set guioptions+=ic
+set guioptions=aegmtic
 
 """------- kolorki
 "podglad numerow kolorow ~/download/xtrem-colortest -w -r syntax on musi byc "przed kolorkami
@@ -170,7 +170,7 @@ set completeopt=longest,menuone
 
 """ ------- NerdTree
 map <silent> <F2> :NERDTreeToggle<CR>
-map <silent> <leader><F2> :NERDTreeFind<CR>:wincmd p<CR>
+map <silent> <leader><F2> :NERDTreeFind<CR>
 let NERDTreeShowBookmarks = 0
 let NERDChristmasTree = 1
 " set Enter/Return to activate a node
@@ -371,12 +371,12 @@ au FileType rst set nocursorline
 function JavaMapping()
     " ----------- run
     "- Executes the java using your project's main class.
-nmap <F9> :w<bar>:Java<cr>
-imap <F9> <Esc><F9>
+    nmap <F9> :w<bar>:Java<cr>
+    imap <F9> <Esc><F9>
 
     " ------------ javadoc
     nnoremap <buffer> <leader>k :JavaDocPreview<cr>
-nnoremap <buffer> <leader>K :JavaDocSearch -x declarations<cr>
+    nnoremap <buffer> <leader>K :JavaDocSearch -x declarations<cr>
 
     " ----------- search
     " java go
@@ -422,7 +422,7 @@ nnoremap <buffer> <leader>K :JavaDocSearch -x declarations<cr>
 
     " ------------ correct
     "- Suggest possible corrections for a source error.
-    nnoremap <leader>jf :JavaCorrect<cr>
+    nnoremap <leader>ja :JavaCorrect<cr>
 
 
 
@@ -445,7 +445,7 @@ nnoremap <buffer> <leader>K :JavaDocSearch -x declarations<cr>
 
     " --------- format
     "- Formats java source code.
-    nnoremap <buffer> <leader>gq :JavaFormat<cr>
+    nnoremap <buffer> <leader>jf :JavaFormat<cr>
 
     " --------------- javadoc generation
     "[file, file, ...] - Executes the javadoc utility against all or just the supplied source files.
