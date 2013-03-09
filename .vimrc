@@ -73,7 +73,7 @@ let g:pymode_run = 0
 let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
-function PythonMappings()
+function! PythonMappings()
 	nmap <buffer> <leader>ip o<esc>Sfrom IPython import embed;embed()<ESC>:w<cr>
 	" ipython debug 
 	nmap <buffer> <leader>id o<esc>Simport ipdb;ipdb.set_trace()<ESC>:w<cr>
@@ -88,7 +88,7 @@ endfunction
 au FileType python call PythonMappings()
 
 "------------------------ RUBY
-function RubyMappings()
+function! RubyMappings()
 	""" binding pry 
 	nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
 	""" ruby run
@@ -199,7 +199,7 @@ set tags=.tags
 map <leader>r @:
 
 """ rest doc riv run 
-function RstMappings()
+function! RstMappings()
 	map <F9> :w<bar>!cd ..;make html<cr>
 	map <leader><F9> :w<bar>!cd ..;make clean html<cr>
 	""" fix of italic overbold!
@@ -369,7 +369,7 @@ set foldmethod=manual
 au FileType rst set nocursorline
 
 " ----------------------------------------- JAVA ECLIM
-function JavaMapping()
+function! JavaMapping()
     " ----------- run
     "- Executes the java using your project's main class.
     nmap <F9> :w<bar>:Java<cr>
@@ -399,9 +399,8 @@ function JavaMapping()
     " ------------ view
     "- View the type hierarchy tree.
     nnoremap <leader>jh :JavaHierarchy<cr>
-    "- View implementable / overridable methods from super classes and
-    "implemented interfaces.
-    nnoremap <leader>ji :JavaImpl<cr>
+    "- View implementable / overridable methods from super classes and implemented interfaces.
+    nnoremap <leader>jim :JavaImpl<cr>
     "- View list of methods that delegate to the field under the cursor.
     nnoremap <leader>jd :JavaDelegate<cr>
 
@@ -446,7 +445,7 @@ function JavaMapping()
 
     " --------- format
     "- Formats java source code.
-    nnoremap <buffer> <leader>jf :JavaFormat<cr>
+    noremap <buffer> <leader>jf :JavaFormat<cr>
 
     " --------------- javadoc generation
     "[file, file, ...] - Executes the javadoc utility against all or just the supplied source files.
