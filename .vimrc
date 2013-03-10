@@ -44,7 +44,6 @@ let mapleader = ","
 set hidden
 
 set clipboard=unnamedplus
-set number
 
 """----------------------------- Python
 """--------- pythonmode
@@ -80,7 +79,7 @@ function! PythonMappings()
 	" pudb debugger
 	nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 	"" fix na diff doget
-	au FileType python ounmap <buffer> o
+	ounmap <buffer> o
 	"" python run
 	map <F9> :w<bar>!/usr/bin/env python %<CR>
 	map <leader><F9> :w<bar>!/usr/bin/env python %  
@@ -114,6 +113,10 @@ noremap <leader>cr :so $MYVIMRC<CR>
 """ quickfix window navigation
 nnoremap ]q :cnext<cr>
 nnoremap [q :cprevious<cr>
+
+""" location window navigation
+nnoremap ]l :lnext<cr>
+nnoremap [l :lprevious<cr>
 
 " S for subsitute inner word from yanked text
 nnoremap <leader>s "_diwP
@@ -374,6 +377,7 @@ function! JavaMapping()
     "- Executes the java using your project's main class.
     nmap <F9> :w<bar>:Java<cr>
     imap <F9> <Esc><F9>
+    map <leader><F9> :Java
 
     " ------------ javadoc
     nnoremap <buffer> <leader>k :JavaDocPreview<cr>
@@ -390,11 +394,10 @@ function! JavaMapping()
     " ------------ create
     " Create a java bean getter method.  nnoremap <leader>jg :JavaGet<cr>
     " Create a java bean setter method.  nnoremap <leader>js :JavaSet<cr>
-    "- Create both a java bean getter and setter method.
+    " Create both a java bean getter and setter method.
     nnoremap <leader>jg :JavaGetSet<cr>
-    "- Creates class constructor, either empty or based on selected class
-    "fields.
-    nnoremap <leader>jc :JavaConstructor<cr>
+    " Creates class constructor, either empty or based on selected class "fields.
+    noremap <leader>jc :JavaConstructor<cr>
 
     " ------------ view
     "- View the type hierarchy tree.
@@ -407,9 +410,9 @@ function! JavaMapping()
     " --------- junit
     " [testcase] - Allows you to execute junit test cases.
     nnoremap <leader>ju :JUnit
-    "- Attempts to find the corresponding test for the current source file.
+    " Attempts to find the corresponding test for the current source file.
     nnoremap <leader>juf :JUnitFindTest<cr>
-    "- Similar to :JavaImpl, but creates test methods.
+    " Similar to :JavaImpl, but creates test methods.
     nnoremap <leader>jui :JUnitImpl<cr>
     "[testcase] - Allows you to view the results of a test case.
     nnoremap <leader>jur :JUnitResult
@@ -456,7 +459,7 @@ function! JavaMapping()
     " super tab for java uses user completetions
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
     let g:EclimJavaSearchSingleResult = "edit"
-
+    let g:EclimJavaCompleteCaseSensitive = 1
 endfunction
 au FileType java call JavaMapping()
 
@@ -510,3 +513,5 @@ hi DiffChange ctermbg=NONE
 hi DiffDelete ctermbg=53
 hi DiffAdd ctermbg=53
 hi DiffText ctermbg=52 
+
+set number
