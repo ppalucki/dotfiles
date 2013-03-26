@@ -1,2 +1,3 @@
 --ignore-dir=tmp
 --literal
+--type-set=rst=.rst

@@ -54,14 +54,15 @@ let g:pymode_folding = 0
 "let g:pymode_indent = 1 
 let g:pymode_lint = 1
 let g:pymode_rope = 1
-let g:pymode_lint_write = 0
+" on save
+let g:pymode_lint_write = 0 
 let g:pymode_lint_checker = "pyflakes"
 let g:pymode_lint_signs = 0
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
-let g:pymode_lint_checker = "pylint"
+" let g:pymode_lint_checker = "pylint"
 let g:pymode_utils_whitespaces = 0
 " auto jump on/off
-let g:pymode_lint_jump = 1
+let g:pymode_lint_jump = 0
 let g:pymode_syntax_space_errors = 0
 let g:pymode_syntax_indent_errors = 0
 let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
@@ -79,10 +80,14 @@ function! PythonMappings()
 	" pudb debugger
 	nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 	"" fix na diff doget
-	ounmap <buffer> o
+	ounmap <silent> <buffer> o
 	"" python run
 	map <F9> :w<bar>!/usr/bin/env python %<CR>
 	map <leader><F9> :w<bar>!/usr/bin/env python %  
+    map <leader>g :RopeGotoDefinition<cr>
+    " works badly
+    " inoremap <silent> <buffer> <tab> <C-R>=RopeCodeAssistInsertMode()<CR>
+
 endfunction
 au FileType python call PythonMappings()
 
@@ -168,8 +173,6 @@ inoremap jj <ESC>
 """ Backspace fix
 set backspace=indent,eol,start
 
-""" ------- AutoComplete fix
-set completeopt=longest,menuone
 
 """ ------- NerdTree
 map <silent> <F2> :NERDTreeToggle<CR>
@@ -187,10 +190,10 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes . 
-map <F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes .
-au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes . 
-au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes . 
+map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes . <cr>
+map <F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes . <cr>
+au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes . <cr>
+au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes . <cr>
 """ tags file
 set tags=.tags
 "set tags+=./.tags
@@ -206,7 +209,7 @@ function! RstMappings()
 	map <F9> :w<bar>!cd ..;make html<cr>
 	map <leader><F9> :w<bar>!cd ..;make clean html<cr>
 	""" fix of italic overbold!
-	:highlight rstEmphasis cterm=NONE ctermfg=3
+	highlight rstEmphasis cterm=NONE ctermfg=3
 endfunction
 au FileType rst call RstMappings()
 " let g:riv_link_cursor_hl=0
@@ -257,18 +260,22 @@ let Grep_Shell_Escape_Char = '\'
 "--py Ack bez jumpa
 map <leader>h yiw:Ack! "<C-r>""
 vmap <leader>h y:Ack! "<C-r>""
-au FileType python map <leader>h yiw:Ack! --python "<C-r>""
-au FileType python vmap <leader>h y:Ack! --python  "<C-r>""
-au FileType ruby map <leader>h yiw:Ack! --ruby "<C-r>""
-au FileType ruby vmap <leader>h y:Ack! --ruby "<C-r>""
+map <leader>H yiw:Ack! --all "<C-r>""
+vmap <leader>H y:Ack! --all "<C-r>""
+au FileType python map <buffer> <leader>h yiw:Ack! --python "<C-r>""
+au FileType python vmap <buffer> <leader>h y:Ack! --python  "<C-r>""
+au FileType ruby map <buffer> <leader>h yiw:Ack! --ruby "<C-r>""
+au FileType ruby vmap <buffer> <leader>h y:Ack! --ruby "<C-r>""
+au FileType rst map <buffer> <leader>h yiw:Ack! --rst "<C-r>""
+au FileType rst vmap <buffer> <leader>h y:Ack! --rst "<C-r>""
 
 " Ack z jumpa
-map <leader>H yiw:Ack "<C-r>""
-vmap <leader>H y:Ack "<C-r>""
-au FileType python map <leader>H yiw:Ack --python "<C-r>""
-au FileType python vmap <leader>H y:Ack --python  "<C-r>""
-au FileType ruby map <leader>H yiw:Ack --ruby "<C-r>""
-au FileType ruby vmap <leader>H y:Ack --ruby "<C-r>""
+" map <leader>H yiw:Ack! "<C-r>""
+" vmap <leader>H y:Ack! "<C-r>""
+" au FileType python map <leader>H yiw:Ack --python "<C-r>""
+" au FileType python vmap <leader>H y:Ack --python  "<C-r>""
+" au FileType ruby map <leader>H yiw:Ack --ruby "<C-r>""
+" au FileType ruby vmap <leader>H y:Ack --ruby "<C-r>""
 
 
 """ ---- saveall shortcut
@@ -310,7 +317,6 @@ map <leader>bo :BufOnly<cr>
 """ navgigation goto
 " au FileType ruby map <leader>g <C-]>
 map <leader>g <C-]>
-au FileType python map <leader>g :RopeGotoDefinition<cr>
 
 """ json
 autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -357,8 +363,8 @@ cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
-cnoremap <c-p> <Up>
-cnoremap <c-n> <Down>
+" cnoremap <c-p> <Up>
+" cnoremap <c-n> <Down>
 
 " jedi-vim
 let g:jedi#use_tabs_not_buffers = 0
@@ -458,12 +464,20 @@ function! JavaMapping()
     " --------------- config
     " super tab for java uses user completetions
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+
+    " eclim
     let g:EclimJavaSearchSingleResult = "edit"
     let g:EclimJavaCompleteCaseSensitive = 1
 endfunction
 au FileType java call JavaMapping()
 
-
+""" ------- AutoComplete fix
+set completeopt=longest,menu
+"
+""""""""""" supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabLongestEnhanced = 0
+let g:SuperTabLongestHighlight = 1
 """""""""""""""""""""""""""""""""" colore rerun
 " set t_Co=256
 " colorscheme desert256
@@ -515,3 +529,7 @@ hi DiffAdd ctermbg=53
 hi DiffText ctermbg=52 
 
 set number
+
+" ultisnip
+let g:UltiSnipsListSnippets = '<c-l>'
+let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]

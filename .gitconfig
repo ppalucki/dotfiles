@@ -13,18 +13,22 @@
 [core]
 	excludesfile = ~/.gitignore_global
 
+
 [alias]
   l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 20 
   st = status
   ci = commit
+  cim = commit -m
   d = difftool
   branches = branch -vv
-    branchesall = branch -a -vv
+  branchesall = branch -a -vv
   remotes = remote show origin
   co = checkout
   ciam = commit -a -m
   cim = commit -m
+  unstash = stash pop
+  stagingdiff = !comm -12 <(git branch --no-merged master) <(git branch --merged staging)
 
 [diff]
   tool = vimdiff 
@@ -43,5 +47,6 @@
 [merge]
 	defaultToUpstream = true
 	tool = vimdiff
+    options = --no-edit
 [push]
 	default = upstream
