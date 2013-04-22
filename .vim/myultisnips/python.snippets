@@ -26,3 +26,19 @@ endsnippet
 snippet super "super" b
 	super(${1:Class}, self).__init__(${2})
 endsnippet
+
+snippet deff "function" b
+def ${1:foo}($2):
+    ${3:pass}
+endsnippet
+
+snippet defm "method" b
+def ${1:foo}(self${2}):
+    ${3:pass}
+endsnippet
+
+snippet classs "class" b
+class Foo(object):
+    def __init__(self$2):
+        ${3:pass}
+endsnippet

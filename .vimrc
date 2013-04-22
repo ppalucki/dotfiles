@@ -62,7 +62,7 @@ let g:pymode_lint_signs = 0
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_utils_whitespaces = 0
 " auto jump on/off
-let g:pymode_lint_jump = 0
+let g:pymode_lint_jump = 1
 let g:pymode_syntax_space_errors = 0
 let g:pymode_syntax_indent_errors = 0
 let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
@@ -74,19 +74,21 @@ let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
 function! PythonMappings()
-	nmap <buffer> <leader>ip o<esc>Sfrom IPython import embed;embed()<ESC>:w<cr>
+	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
 	" ipython debug 
-	nmap <buffer> <leader>id o<esc>Simport ipdb;ipdb.set_trace()<ESC>:w<cr>
-	" pudb debugger
-	nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
-	"" fix na diff doget
-	ounmap <silent> <buffer> o
+	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
+	nmap <buffer> <leader>l :PyLint<cr>
+	" " pudb debugger
+	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
+	"" fix na diff doget - z brancha johntyree python-mode
+	" ounmap <silent> <buffer> o
 	"" python run
 	map <F9> :w<bar>!/usr/bin/env python %<CR>
 	map <leader><F9> :w<bar>!/usr/bin/env python %  
     map <leader>g :RopeGotoDefinition<cr>
     " works badly
     " inoremap <silent> <buffer> <tab> <C-R>=RopeCodeAssistInsertMode()<CR>
+    "
 
 endfunction
 au FileType python call PythonMappings()
@@ -124,7 +126,8 @@ nnoremap ]l :lnext<cr>
 nnoremap [l :lprevious<cr>
 
 " S for subsitute inner word from yanked text
-nnoremap <leader>s "_diwP
+" change inner word and in insert mode yank from " and exit inster mode :)
+nnoremap <leader>s "_ciw<c-r>"<esc>
 
 " numberlines toggle
 nnoremap <leader>n :set invnumber<cr>
@@ -152,8 +155,8 @@ nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
 
 """ switch buffers
-map <C-h> :bp<CR>
-map <C-l> :bn<CR>
+nmap <C-h> :b#<CR>
+" map <C-l> :bn<CR>
 
 """ wciecia
 set smarttab
@@ -223,51 +226,53 @@ au FileType rst call RstMappings()
 """ ------ sudo write
 command! W w !sudo tee % > /dev/null
 
-""" ----- fuzzyfinder
-map <F3> :FufBufferTag<CR>
+""" tagbar
 map <leader><F3> :TagbarToggle<CR>
-map <F4> :FufMruFileInCwd<CR>
-map <leader><F4> :FufMruFile<CR>
-map <F5> :FufBuffer<CR>
-map <leader><F5> :FufQuickfix<CR>
-map <F6> :FufFile<CR>
-map <leader><F6> :FufCoverageFile<CR>
-map <F7> :FufTag!<CR>
-map <leader><F7> :FufTag<CR>
-map <leader>o :FufJumpList<CR>
 
-let g:fuf_modesDisable = [ 'mrucmd', ]
-let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl', '**/*.rst', '**/*.json', '**/*.java', '**/*.xhtml', '**/*.sql']
-let g:fuf_maxMenuWidth = 240
-let g:fuf_ignoreCase = 1
-let g:fuf_mrufile_maxItem = 6000
-let g:fuf_mrufile_maxItemDir = 1500
-let g:fuf_learningLimit = 1000
-let g:fuf_autoPreview = 1
+""" ----- fuzzyfinder
+" map <F3> :FufBufferTag<CR>
+" map <F4> :FufMruFileInCwd<CR>
+" map <leader><F4> :FufMruFile<CR>
+" map <F5> :FufBuffer<CR>
+" map <leader><F5> :FufQuickfix<CR>
+" map <F6> :FufFile<CR>
+" map <leader><F6> :FufCoverageFile<CR>
+" map <F7> :FufTag!<CR>
+" map <leader><F7> :FufTag<CR>
+" map <leader>o :FufJumpList<CR>
+" let g:fuf_modesDisable = [ 'mrucmd', ]
+" let g:fuf_coveragefile_globPatterns = ['**/*.rb', '**/*.erb', '**/*.haml', '**/*.html', '**/*.xml', '**/*.js', '**/*.sh', '**/*.py', '**/*.yml', 'Gemfile', '**/*.thor', '**/*.rake', '**/*.yaml', '**/signed_curl', '**/*.rst', '**/*.json', '**/*.java', '**/*.xhtml', '**/*.sql']
+" let g:fuf_maxMenuWidth = 240
+" let g:fuf_ignoreCase = 1
+" let g:fuf_mrufile_maxItem = 6000
+" let g:fuf_mrufile_maxItemDir = 1500
+" let g:fuf_learningLimit = 5000
+" let g:fuf_autoPreview = 0
 
 """ ----- mouse
 "set mouse=a set ttymouse=xterm2
 set nomousehide
 
 """ ----- grep (plugin) 
-let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
-let Grep_Default_Options = '-i'
-let Grep_OpenQuickfixWindow = 1
-let Grep_Skip_Dirs = 'tmp'
-let Grep_Shell_Escape_Char = '\'
+" let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
+" let Grep_Default_Options = '-i'
+" let Grep_OpenQuickfixWindow = 1
+" let Grep_Skip_Dirs = 'tmp'
+" let Grep_Shell_Escape_Char = '\'
 "NOT USED
+"
 "map <leader><F6> :Rfgrep<CR> map <leader>h :Rfgrep<cr> map <leader>h :Ack
 "--py Ack bez jumpa
-map <leader>h yiw:Ack! "<C-r>""
-vmap <leader>h y:Ack! "<C-r>""
-map <leader>H yiw:Ack! --all "<C-r>""
-vmap <leader>H y:Ack! --all "<C-r>""
-au FileType python map <buffer> <leader>h yiw:Ack! --python "<C-r>""
-au FileType python vmap <buffer> <leader>h y:Ack! --python  "<C-r>""
-au FileType ruby map <buffer> <leader>h yiw:Ack! --ruby "<C-r>""
-au FileType ruby vmap <buffer> <leader>h y:Ack! --ruby "<C-r>""
-au FileType rst map <buffer> <leader>h yiw:Ack! --rst "<C-r>""
-au FileType rst vmap <buffer> <leader>h y:Ack! --rst "<C-r>""
+map <leader>h "ayiw:Ack! "<C-r>a"
+vmap <leader>h "ay:Ack! "<C-r>a"
+map <leader>H "ayiw:Ack! --all "<C-r>a"
+vmap <leader>H "ay:Ack! --all "<C-r>a"
+au FileType python map <buffer> <leader>h "ayiw:Ack! --python "<C-r>a"
+au FileType python vmap <buffer> <leader>h "ay:Ack! --python  "<C-r>a"
+au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
+au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
+au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
+au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""
@@ -282,8 +287,12 @@ au FileType rst vmap <buffer> <leader>h y:Ack! --rst "<C-r>""
 map ZA :wall<CR>
 map ZW :qa<CR>
 """ write/quit
+" aka ZZ
 map <leader>w :w<CR>
+map <leader>W :w!<CR>
 map <leader>q :q<CR>
+" aka ZQ
+map <leader>Q :q!<CR>
 
 
 """ VCS (git bzr)
@@ -293,8 +302,10 @@ nnoremap <Leader>vd :Gdiff<cr>
 nnoremap <Leader>vD :diffoff!<cr><c-w>h:bd<cr>
 nnoremap <Leader>vs :Gstatus<cr>
 nnoremap <Leader>vc :Gcommit<cr>
+nnoremap <Leader>vvc :Gcommit --verbose<cr>
+nnoremap <Leader>vac :Gcommit --amend<cr>
 " log current file
-nnoremap <Leader>vl :Glog<cr>
+nnoremap <Leader>vl :Glog -n 10<cr>
 " last 10 commits
 nnoremap <Leader>vL :Glog -n 10 --<cr>
 " gblame
@@ -304,11 +315,11 @@ vnoremap <Leader>vb :Gblame<cr>
 nnoremap <Leader>vpl :Git pull<cr>
 nnoremap <leader>vps :Git push<cr>
 nnoremap <leader>vw :Gwrite<cr>
-" nnoremap <leader>vr :Gread<cr> # danger!
+nnoremap <leader>vr :Gread<cr>
 
 """ ---- buffers
 " buffer write delete
-map <leader>bwd :w<bar>BD<cr>
+map <leader>bw :w<bar>BD<cr>
 " buffer delete
 map <leader>bd :BD<cr>
 " close all but this one (and not saved!)
@@ -326,16 +337,32 @@ let g:ConqueTerm_ReadUnfocused = 1
 
 """ Screen
 let g:ScreenShellHeight = 10
+let g:ScreenShellGnuScreenVerticalSupport = 'native'
 map <leader>tb :ScreenShell bash<cr>
-vmap <leader>ts :ScreenSend<CR>
+map <leader>tB :ScreenShellVertical bash<cr>
+vmap <leader>ts :ScreenSend<cr>
 " termianal run 
 map <leader>tr :w<bar>call ScreenShellSend("!!")<cr>
 map <leader>te :call ScreenShellSend('exit')<cr>
 " terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _v$,ts
+
+function! ScreenSendPaste1()
+  let g:ScreenShellSendPrefix = '%cpaste'
+  let g:ScreenShellSendSuffix = '--'
+endfunction 
+
+function! ScreenSendPaste2()
+  let g:ScreenShellSendPrefix = ''
+  let g:ScreenShellSendSuffix = ''
+endfunction 
+
+vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
-
+nmap <leader>tt :call ScreenShellSend("cdgm")<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
+nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
 
 """ pi_paren
 " bez oznaczania nawiasow
@@ -533,3 +560,44 @@ set number
 " ultisnip
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
+let g:UltiSnipsJumpBackwardTrigger = '<c-h>'
+" ctrlp
+map <F3> :CtrlPBufTag<CR>
+map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
+map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
+map <F5> :CtrlPTag<CR>
+map <F7> :CtrlPBuffer<CR>
+" nmap <leader><F4> :CtrlPLine<cr>
+" nmap <F6> :CtrlPChangeAll<cr>
+" nmap <leader><F6> :CtrlPChange<cr>
+nmap <leader>o :CtrlPChangeAll<cr>
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\v\.(git|hg|svn|bzr)$',
+	\ 'file': '\v(\.(exe|so|dll|pyc|orig))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
+	\ }
+
+let g:ctrlp_match_window_bottom = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_mruf_exclude = '\v(\.git)'
+
+" repeat last movement
+noremap \ ;
+
+" replast move command
+let repmo_key = "\\"
+let repmo_revkey = "<bar>"
+" let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl ]c|[c ]]|[[ ]m|[m ]q|[q"
+let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl"
+
+" diff jump with ()
+nn <expr> ( &diff ? "[c" : "("
+nn <expr> ) &diff ? "]c" : ")"
+
+" vsplit tag
+nmap ,<C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR><c-w>r<c-w><c-w>
+
+" swap ' with `
+nnoremap ' `
+nnoremap ` '

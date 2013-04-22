@@ -29,13 +29,12 @@
   cim = commit -m
   unstash = stash pop
   stagingdiff = !comm -12 <(git branch --no-merged master) <(git branch --merged staging)
+  mt = mergetool
 
 [diff]
-  tool = vimdiff 
+    tool = vimdiff 
 	guitool = diffuse 
 
-[difftool]
-  prompt = false
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
@@ -44,9 +43,21 @@
 	history-view-vpane-position = 439
 	file-view-vpane-position = 565
 	file-view-hpane-position = 285
+
 [merge]
 	defaultToUpstream = true
-	tool = vimdiff
+	tool = fugitive
     options = --no-edit
+
 [push]
 	default = upstream
+
+[mergetool "diffconflicts"]
+	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+	; trustExitCode = false
+	keepBackup = false
+
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[github]
+	user = sacre
