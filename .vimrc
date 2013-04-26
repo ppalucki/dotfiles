@@ -133,7 +133,7 @@ nnoremap <leader>s "_ciw<c-r>"<esc>
 nnoremap <leader>n :set invnumber<cr>
 
 " pasttoggle
-nnoremap <leader>p :set paste!<cr>
+nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
 
 """ -------- Standard options
 set nonumber
@@ -338,8 +338,8 @@ let g:ConqueTerm_ReadUnfocused = 1
 """ Screen
 let g:ScreenShellHeight = 10
 let g:ScreenShellGnuScreenVerticalSupport = 'native'
-map <leader>tb :ScreenShell bash<cr>
-map <leader>tB :ScreenShellVertical bash<cr>
+map <leader>tB :ScreenShell bash<cr>
+map <leader>tb :ScreenShellVertical bash<cr>
 vmap <leader>ts :ScreenSend<cr>
 " termianal run 
 map <leader>tr :w<bar>call ScreenShellSend("!!")<cr>
@@ -360,7 +360,7 @@ endfunction
 vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
-nmap <leader>tt :call ScreenShellSend("cdgm")<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+nmap <leader>tt :w<bar>call ScreenShellSend("cdgm")<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
 nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
 nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
 
@@ -560,7 +560,7 @@ set number
 " ultisnip
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
-let g:UltiSnipsJumpBackwardTrigger = '<c-h>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
 " ctrlp
 map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
@@ -574,8 +574,8 @@ nmap <leader>o :CtrlPChangeAll<cr>
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
-	\ 'dir':  '\v\.(git|hg|svn|bzr)$',
-	\ 'file': '\v(\.(exe|so|dll|pyc|orig))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
+	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)$',
+	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
 	\ }
 
 let g:ctrlp_match_window_bottom = 1
@@ -597,6 +597,7 @@ nn <expr> ) &diff ? "]c" : ")"
 
 " vsplit tag
 nmap ,<C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR><c-w>r<c-w><c-w>
+nmap <C-\> :split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " swap ' with `
 nnoremap ' `
