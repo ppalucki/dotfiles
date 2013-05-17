@@ -21,14 +21,16 @@ hi PmenuSbar ctermbg=6
 hi PmenuThumb ctermfg=3
 
 """ ------ cursorline
-set cursorline
-hi CursorLine cterm=NONE ctermbg=234 guibg=NONE
+" set cursorline
+" hi CursorLine cterm=NONE ctermbg=234 guibg=NONE
 
 """ ------ statusline
 hi StatusLine ctermbg=black
 hi StatusLineNC ctermbg=black
 set laststatus=2
 set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%) 
+
+set nonumber
 
 """ ------- powerline
 " inny colorscheme aby byla czarna lina przy vertical split
@@ -56,8 +58,10 @@ let g:pymode_lint = 1
 let g:pymode_rope = 1
 " on save
 let g:pymode_lint_write = 0 
+let g:pymode_lint_onfly = 0
 let g:pymode_lint_checker = "pyflakes"
 let g:pymode_lint_signs = 0
+
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_utils_whitespaces = 0
@@ -193,10 +197,11 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes . <cr>
-map <F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes . <cr>
-au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes . <cr>
-au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes . <cr>
+map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes --exclude=tmp --fields=zK . <cr>
+map <F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes --exclude=tmp --fields=zK . <cr>
+" au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
+au FileType python map <F8> :!ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .;fgrep -v kind:variable ._tags >.tags;rm ._tags<cr>
+au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK . <cr>
 """ tags file
 set tags=.tags
 "set tags+=./.tags
@@ -390,8 +395,9 @@ cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 cnoremap <Esc>b <S-Left>
 cnoremap <Esc>f <S-Right>
-" cnoremap <c-p> <Up>
-" cnoremap <c-n> <Down>
+" alt-p, alt-n history search
+cnoremap p <Up>
+cnoremap n <Down>
 
 " jedi-vim
 let g:jedi#use_tabs_not_buffers = 0
@@ -498,6 +504,16 @@ function! JavaMapping()
 endfunction
 au FileType java call JavaMapping()
 
+"
+""" ------------------ scala ------------
+function! ScalaMapping()
+    let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+    map <leader>g :ScalaSearch<cr>
+endfunction
+au FileType scala call ScalaMapping()
+let g:EclimScalaSearchSingleResult = 'edit'
+
+
 """ ------- AutoComplete fix
 set completeopt=longest,menu
 "
@@ -555,7 +571,7 @@ hi DiffDelete ctermbg=53
 hi DiffAdd ctermbg=53
 hi DiffText ctermbg=52 
 
-set number
+" set number
 
 " ultisnip
 let g:UltiSnipsListSnippets = '<c-l>'
@@ -566,6 +582,8 @@ map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
 map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
 map <F5> :CtrlPTag<CR>
+map <F6> :CtrlPModified<CR>
+map <leader><F6> :CtrlPBranch<CR>
 map <F7> :CtrlPBuffer<CR>
 " nmap <leader><F4> :CtrlPLine<cr>
 " nmap <F6> :CtrlPChangeAll<cr>
@@ -574,7 +592,7 @@ nmap <leader>o :CtrlPChangeAll<cr>
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
-	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)$',
+	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
 	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
 	\ }
 
@@ -602,3 +620,6 @@ nmap <C-\> :split<CR>:exec("tag ".expand("<cword>"))<CR>
 " swap ' with `
 nnoremap ' `
 nnoremap ` '
+
+" set nonumber
+
