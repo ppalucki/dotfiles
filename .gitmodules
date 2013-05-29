@@ -64,3 +64,12 @@
 [submodule ".vim/bundle/vim-colorschemes"]
 	path = .vim/bundle/vim-colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
+[submodule ".vim/bundle/ctrlp-filetype.vim"]
+	path = .vim/bundle/ctrlp-filetype.vim
+	url = https://github.com/endel/ctrlp-filetype.vim.git
+[submodule ".vim/bundle/ctrlp-modified.vim"]
+	path = .vim/bundle/ctrlp-modified.vim
+	url = https://github.com/jasoncodes/ctrlp-modified.vim.git
+[submodule ".vim/bundle/ctrlp.vim"]
+	path = .vim/bundle/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim.git
