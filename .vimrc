@@ -11,6 +11,11 @@ set gfn=Bitstream\ Vera\ Sans\ Mono\ for\ Powerline\ 9
 set guioptions=aegmtic
 
 """------- kolorki
+" Show whitespace
+" MUST be inserted BEFORE the colorscheme command
+""autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+""au InsertLeave * match ExtraWhitespace /\s\+$/
+
 "podglad numerow kolorow ~/download/xtrem-colortest -w -r syntax on musi byc "przed kolorkami
 set t_Co=256
 let g:molokai_original = 0
@@ -30,7 +35,7 @@ hi StatusLineNC ctermbg=black
 set laststatus=2
 set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%) 
 
-set nonumber
+" set nonumber
 
 """ ------- powerline
 " inny colorscheme aby byla czarna lina przy vertical split
@@ -61,6 +66,11 @@ let g:pymode_lint_write = 0
 let g:pymode_lint_onfly = 0
 let g:pymode_lint_checker = "pyflakes"
 let g:pymode_lint_signs = 0
+    
+let g:pymode_syntax_highlight_equal_operator = 0
+let g:pymode_syntax_highlight_stars_operator = 1
+let g:pymode_syntax_highlight_self = 0
+let g:pymode_syntax_builtin_types = 0
 
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
 " let g:pymode_lint_checker = "pylint"
@@ -87,13 +97,13 @@ function! PythonMappings()
 	"" fix na diff doget - z brancha johntyree python-mode
 	" ounmap <silent> <buffer> o
 	"" python run
-	map <F9> :w<bar>!/usr/bin/env python %<CR>
-	map <leader><F9> :w<bar>!/usr/bin/env python %  
-    map <leader>g :RopeGotoDefinition<cr>
+	map <F9> :up<bar>!/usr/bin/env python %<CR>
+	map <leader><F9> :up<bar>!/usr/bin/env python %  
+    " map <leader>g :RopeGotoDefinition<cr>
     " works badly
     " inoremap <silent> <buffer> <tab> <C-R>=RopeCodeAssistInsertMode()<CR>
     "
-
+    set nonumber
 endfunction
 au FileType python call PythonMappings()
 
@@ -102,9 +112,9 @@ function! RubyMappings()
 	""" binding pry 
 	nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
 	""" ruby run
-	nmap <buffer> <F9> :w\|!ruby %<cr> 
+	nmap <buffer> <F9> :up\|!ruby %<cr> 
 	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :w\|!ruby % 
+	nmap <buffer> <leader><F9> :up\|!ruby % 
 endfunction
 au FileType ruby call RubyMappings()
 
@@ -140,7 +150,7 @@ nnoremap <leader>n :set invnumber<cr>
 nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
 
 """ -------- Standard options
-set nonumber
+" set nonumber
 set nowrap
 "set paste
 set comments=
@@ -152,7 +162,8 @@ set ignorecase
 " highlight search
 set hlsearch
 " highlight search reset
-map <leader>/ :nohlsearch<CR>
+map <leader>/ :nohlsearch<cr>
+"<bar>QuickFixClear<cr>:SignClearAll<cr>
 
 " delete without yank
 nmap <silent> <leader>d "_d
@@ -214,8 +225,8 @@ map <leader>r @:
 
 """ rest doc riv run 
 function! RstMappings()
-	map <F9> :w<bar>!cd ..;make html<cr>
-	map <leader><F9> :w<bar>!cd ..;make clean html<cr>
+	map <F9> :up<bar>!cd ..;make html<cr>
+	map <leader><F9> :up<bar>!cd ..;make clean html<cr>
 	""" fix of italic overbold!
 	highlight rstEmphasis cterm=NONE ctermfg=3
 endfunction
@@ -226,7 +237,23 @@ au FileType rst call RstMappings()
 """ ------  Last position
 "This autocommand jumps to the last known position in a file just after
 "opening it, if the '"' mark is set:
-:au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+"wg :h last-postion-jump
+" au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+"
+" improved version from 
+" from:
+" http://vim.wikia.com/wiki/Restore_cursor_to_file_position_in_previous_editing_session
+" function! ResCur()
+"   if line("'\"") <= line("$")
+"     normal! g`"
+"     return 1
+"   endif
+" endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call setpos(".", getpos("'\""))
+augroup END
 
 """ ------ sudo write
 command! W w !sudo tee % > /dev/null
@@ -255,7 +282,8 @@ map <leader><F3> :TagbarToggle<CR>
 " let g:fuf_autoPreview = 0
 
 """ ----- mouse
-"set mouse=a set ttymouse=xterm2
+set mouse=a
+set ttymouse=xterm2
 set nomousehide
 
 """ ----- grep (plugin) 
@@ -293,7 +321,7 @@ map ZA :wall<CR>
 map ZW :qa<CR>
 """ write/quit
 " aka ZZ
-map <leader>w :w<CR>
+map <leader>w :up<CR>
 map <leader>W :w!<CR>
 map <leader>q :q<CR>
 " aka ZQ
@@ -399,9 +427,14 @@ cnoremap <Esc>f <S-Right>
 cnoremap p <Up>
 cnoremap n <Down>
 
-" jedi-vim
-let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#popup_on_dot = 0
+" hist like ctrl+p/ctrl+n
+" cnoremap <C-j> <t_kd>
+" cnoremap <C-k> <t_ku>
+
+" history
+" Useful settings
+set history=700
+set undolevels=700
 
 " set noswapfile
 
@@ -514,13 +547,6 @@ au FileType scala call ScalaMapping()
 let g:EclimScalaSearchSingleResult = 'edit'
 
 
-""" ------- AutoComplete fix
-set completeopt=longest,menu
-"
-""""""""""" supertab
-let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabLongestEnhanced = 0
-let g:SuperTabLongestHighlight = 1
 """""""""""""""""""""""""""""""""" colore rerun
 " set t_Co=256
 " colorscheme desert256
@@ -623,3 +649,66 @@ nnoremap ` '
 
 " set nonumber
 
+" sorting - usefull for imports sorting
+"" vnoremap <Leader>s :sort<CR>
+
+" easier moving of code blocks
+" Try to go into visual mode (v), thenselect several lines of code here and
+" then press ``>`` several times.
+vnoremap < <gv0 " better indentation
+vnoremap > >gv0  " better indentation
+
+" autosource write of .vimrc
+" autocmd! bufwritepost .vimrc source %
+
+" easier formatting of paragraphs
+"SLABO formatuje kod pyythona
+" vmap Q gq
+" nmap Q gqap
+"
+""" ------- AutoComplete fix
+" set completeopt=longest,menu 
+"" auto be jedi plugin
+"
+""""""""""" supertab
+" let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabLongestEnhanced = 0
+let g:SuperTabLongestHighlight = 1
+" let g:SuperTabDefaultCompletionType = "context"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+" Settings for jedi-vim
+" jedi-vim
+" cd ~/.vim/bundle
+" git clone git://github.com/davidhalter/jedi-vim.git
+" TAB is reserved for omnifunc
+" let g:jedi#autocompletion_command = "<tab>"
+let g:jedi#auto_vim_configuration = 1
+let g:jedi#get_definition_command = "<leader>g"
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#related_names_command = "<leader>z"
+let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#show_function_definition = 0
+
+" Open last/alternate buffer
+noremap <Leader><Leader> <C-^>
+
+" Map Q to repeat the last recorded macro
+map Q @@
+
+" undo-persistent
+if exists("+undofile")
+  " undofile - This allows you to use undos after exiting and restarting
+  " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+  " :help undo-persistence
+  " This is only present in 7.3+
+  if isdirectory($HOME . '/.vim/undo') == 0
+    :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+  endif
+  set undodir=./.vim-undo//
+  set undodir+=~/.vim/undo//
+  set undofile
+endif

@@ -67,5 +67,5 @@ defbce "on"
 maptimeout 5
 # http://askubuntu.com/questions/56570/how-do-i-copy-text-from-the-program-screen-to-my-clipboard
 # Now, when you select something in screen copy/scrollback mode, and write paste buffer to a file with C-a >, 
-bind > eval writebuf "exec sh -c 'xsel -nbi </tmp/screen-exchange'"
+bind b eval writebuf "exec sh -c 'xsel -nbi </tmp/screen-exchange'"
 # bind y eval "exec sh -c 'xsel -bo >/tmp/screen-exchange'"
