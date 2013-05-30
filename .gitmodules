@@ -76,3 +76,18 @@
 [submodule ".vim/bundle/jedi-vim"]
 	path = .vim/bundle/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git
+[submodule ".vim/bundle/DrawIt"]
+	path = .vim/bundle/DrawIt
+	url = https://github.com/vim-scripts/DrawIt.git
+[submodule ".vim/bundle/interactive-replace"]
+	path = .vim/bundle/interactive-replace
+	url = https://github.com/hwrod/interactive-replace.git
+[submodule ".vim/bundle/neocomplcache"]
+	path = .vim/bundle/neocomplcache
+	url = https://github.com/Shougo/neocomplcache.vim.git
+[submodule ".vim/bundle/vim-compiler-python"]
+	path = .vim/bundle/vim-compiler-python
+	url = https://github.com/tlvince/vim-compiler-python.git
+[submodule ".vim/bundle/vim-dispatch"]
+	path = .vim/bundle/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch.git
