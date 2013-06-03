@@ -113,9 +113,9 @@ menu <silent>       &Tools.Python\ Tag\ Complete\ Stop           :call PythonTag
 " Function Definations:
 
 function! PythonTagImportStart()
-    exec "silent! iunmap  <buffer> ".g:pythontagimportkey
-    exec "inoremap <buffer> ".g:pythontagimportkey."  <c-r>=PythonTagImportComplete()<cr>"
-    exec "nnoremap <buffer> ".g:pythontagimportcurrentword."  yiwO<esc>pA<C-R>=PythonTagImportComplete()<CR>"
+    " exec "silent! iunmap  <buffer> ".g:pythontagimportkey
+    " exec "inoremap <buffer> ".g:pythontagimportkey."  <c-r>=PythonTagImportComplete()<cr>"
+    exec "nnoremap <buffer> ".g:pythontagimportcurrentword."  yiwO<esc>pA<C-R>=PythonTagImportComplete()<CR><esc>"
 endfunction
 
 function! PythonTagImportStop()
