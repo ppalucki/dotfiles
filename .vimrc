@@ -712,3 +712,11 @@ if exists("+undofile")
   set undodir+=~/.vim/undo//
   set undofile
 endif
+
+" python import
+let g:pythontagimportcurrentword = "<leader>a"
+let g:pythontagimport_from = 1
+let g:pythontagimport_from_mod = 0
+let g:pythontagimport_as = 0
+let g:pythontagimport_full  = 0
+let g:pythontagimport_prefix = 'getmedia.'
