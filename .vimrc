@@ -60,7 +60,7 @@ let g:pymode_folding = 0
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
 "let g:pymode_indent = 1 
 let g:pymode_lint = 1
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 " on save
 let g:pymode_lint_write = 0 
 let g:pymode_lint_onfly = 0
@@ -655,8 +655,9 @@ nnoremap ` '
 " easier moving of code blocks
 " Try to go into visual mode (v), thenselect several lines of code here and
 " then press ``>`` several times.
-vnoremap < <gv0 " better indentation
-vnoremap > >gv0  " better indentation
+" BETTER to user .
+" vnoremap < <gv0 " better indentation
+" vnoremap > >gv0  " better indentation
 
 " autosource write of .vimrc
 " autocmd! bufwritepost .vimrc source %
