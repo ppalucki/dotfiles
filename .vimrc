@@ -282,9 +282,10 @@ map <leader><F3> :TagbarToggle<CR>
 " let g:fuf_autoPreview = 0
 
 """ ----- mouse
-set mouse=a
-set ttymouse=xterm2
-set nomousehide
+""" wiecej szkody z myszki niz pozytku
+" set mouse=a
+" set ttymouse=xterm2
+" set nomousehide
 
 """ ----- grep (plugin) 
 " let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
@@ -721,3 +722,15 @@ let g:pythontagimport_from_mod = 0
 let g:pythontagimport_as = 0
 let g:pythontagimport_full  = 0
 let g:pythontagimport_prefix = 'getmedia.'
+
+nmap cp :let @* = expand("%:p")<cr>
+
+" xml syntax fix
+hi link xmlTagName Identifier
+hi link xmlTag Identifier
+hi link xmlEntity String
+hi link xmlEntityPunct String
+
+" and xml folding
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
