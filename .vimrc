@@ -51,6 +51,7 @@ let mapleader = ","
 set hidden
 
 set clipboard=unnamedplus
+" set clipboard=autoselect
 
 """----------------------------- Python
 """--------- pythonmode
@@ -79,7 +80,7 @@ let g:pymode_utils_whitespaces = 0
 let g:pymode_lint_jump = 1
 let g:pymode_syntax_space_errors = 0
 let g:pymode_syntax_indent_errors = 0
-let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W404'
+let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W0404'
 "let g:pymode_lint_select = 'E0611'
 let g:pymode_breakpoint = 0
 let g:pymode_breakpoint_key = '<leader>ib'
@@ -87,10 +88,15 @@ let g:pymode_run = 0
 let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
+nmap ]m ]M
+nmap [m [M
+
 function! PythonMappings()
 	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
 	" ipython debug 
 	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
+	nmap <buffer> <leader>ic oimport ipdb;ipdb.cond=True<ESC>:w<cr>
+	nmap <buffer> <leader>ir oimport ipdb<cr>if hasattr(ipdb,'cond'):ipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>l :PyLint<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
@@ -104,6 +110,7 @@ function! PythonMappings()
     " inoremap <silent> <buffer> <tab> <C-R>=RopeCodeAssistInsertMode()<CR>
     "
     set nonumber
+    compiler python
 endfunction
 au FileType python call PythonMappings()
 
@@ -148,6 +155,9 @@ nnoremap <leader>n :set invnumber<cr>
 
 " pasttoggle
 nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
+
+" quickfixclear
+" nmap <leader>qc :QuickFixClear<cr>
 
 """ -------- Standard options
 " set nonumber
@@ -283,9 +293,10 @@ map <leader><F3> :TagbarToggle<CR>
 
 """ ----- mouse
 """ wiecej szkody z myszki niz pozytku
-" set mouse=a
-" set ttymouse=xterm2
-" set nomousehide
+" set mouse=nvih
+set mouse=
+set ttymouse=xterm2
+set nomousehide
 
 """ ----- grep (plugin) 
 " let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
@@ -339,9 +350,9 @@ nnoremap <Leader>vc :Gcommit<cr>
 nnoremap <Leader>vvc :Gcommit --verbose<cr>
 nnoremap <Leader>vac :Gcommit --amend<cr>
 " log current file
-nnoremap <Leader>vl :Glog -n 10<cr>
+nnoremap <silent> <Leader>vl :Glog -n 50<cr>
 " last 10 commits
-nnoremap <Leader>vL :Glog -n 10 --<cr>
+nnoremap <Leader>vL :Glog -n 50 --<cr>
 " gblame
 nnoremap <Leader>vb :Gblame<cr>
 vnoremap <Leader>vb :Gblame<cr>
@@ -369,42 +380,81 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 """ ConqueTerm
 let g:ConqueTerm_ReadUnfocused = 1
 
-""" Screen
+""" -----------------------------
+""" Screen Terminal
+""" -----------------------------
 let g:ScreenShellHeight = 10
 let g:ScreenShellGnuScreenVerticalSupport = 'native'
-map <leader>tB :ScreenShell bash<cr>
+" terminal bash vertical
 map <leader>tb :ScreenShellVertical bash<cr>
+" terminal base horizontal
+map <leader>tB :ScreenShell bash<cr>
+" terminal send
 vmap <leader>ts :ScreenSend<cr>
-" termianal run 
-map <leader>tr :w<bar>call ScreenShellSend("!!")<cr>
+" termianal rerun 
+map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
+" terminal exit
 map <leader>te :call ScreenShellSend('exit')<cr>
 " terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _v$,ts
-
 function! ScreenSendPaste1()
   let g:ScreenShellSendPrefix = '%cpaste'
   let g:ScreenShellSendSuffix = '--'
 endfunction 
-
 function! ScreenSendPaste2()
   let g:ScreenShellSendPrefix = ''
   let g:ScreenShellSendSuffix = ''
 endfunction 
-
+" terminal paste
 vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
-nmap <leader>tt :w<bar>call ScreenShellSend("cdgm")<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
-nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
+" terminal test
+nmap <silent> <leader>tt :w<bar>call ScreenShellSend("cdgm")<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+""" Dispatch & Make
+
+" ORGinal nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
+py <<EOF
+last_test_tag = None
+from vim import eval as e
+from vim import command as c
+def _make_test(tag):
+    c(':up')
+    c(':compiler! python')
+    c(r":set makeprg=./run_tests.py\ %s"%tag)
+    c(":Dispatch")
+
+def make_current_test():
+    'run current tag in Make'
+    global last_test_tag
+    last_test_tag = e("tagbar#currenttag('%s','')")
+    _make_test(last_test_tag)
+
+def make_last_test():
+    'rerun last runned test'
+    if not last_test_tag:
+        return
+    _make_test(last_test_tag)
+EOF
+
+" terminal yank test
+nmap <leader>ty :py make_current_test()<cr>
+" terminal global test
+nmap <leader>tg :py make_last_test()<cr>
+
+" termianl yank all tests
 nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
+
 
 """ pi_paren
 " bez oznaczania nawiasow
 let loaded_matchparen = 1
 
+
 """ disable fold
 set nofoldenable
 au FileType rst set nofoldenable
+
 
 """ RIV
 let g:riv_fold_auto_update = 0
@@ -573,20 +623,20 @@ au FileType mkd nmap ds* F*xf*xb
 
 au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
 au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
-"
-"""""""""""" highlith identifiaction
-" http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
+
+
+""" ------ highlith identifiaction
+""" http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" kolorowanie przykladow w helpie 
+""" kolorowanie przykladow w helpie 
 hi helpExample ctermfg=Magenta
 
-" move parameter right
+""" move parameter right
 map <leader>m "qdt,dwep"qpb
 
-" gundo
+""" gundo
 map <leader>u :GundoToggle<CR>
-
 
 " find occurences - search current word but without scroll
 nmap <leader>f yiwh/<c-r>"<cr>
@@ -600,11 +650,12 @@ hi DiffText ctermbg=52
 
 " set number
 
-" ultisnip
+""" ----- ultisnip
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
 let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
-" ctrlp
+
+""" ----- ctrlp
 map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
 map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
@@ -641,7 +692,7 @@ nn <expr> ( &diff ? "[c" : "("
 nn <expr> ) &diff ? "]c" : ")"
 
 " vsplit tag
-nmap ,<C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR><c-w>r<c-w><c-w>
+nmap ,<C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zt<c-w>r<c-w><c-w>
 nmap <C-\> :split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " swap ' with `
@@ -734,3 +785,52 @@ hi link xmlEntityPunct String
 " and xml folding
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
+
+" Add the virtualenv's site-packages to vim path
+let g:pymode_virtualenv = 1
+" UWAGA: zeby dzialalo jedi ze zmiana interpretera
+" trzeba zrobic linka
+" (flask)~/.virtualenvs/flask/lib$ ln -s python3.3 python2.7
+" poniewaz activate_this.py szukanie domylsnie katalogi site-packages w
+" lib/python%VERSION/site-packages i wtedy go nie ma !
+if has('pythonXXX')
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+    print 'activated: ', activate_this
+EOF
+endif
+
+"vimchat
+" let g:vimchat_buddylistwidth = 30 "width of buddy list, default is 30
+" let g:vimchat_logpath = path to store log files, default is ~/.vimchat/logs
+" let g:vimchat_logchats = (0 or 1) default is 1 -- 0 will not log,
+let g:vimchat_otr = 0 "(0 or 1) default is 0 -- enable otr or not
+" let g:vimchat_logotr = (0 or 1) default is 1 -- log otr convos or not
+let g:vimchat_statusicon = 0 "(0 or 1) default is 1 -- use a gtk status icon?
+" let g:vimchat_blinktimeout = timeout in seconds, default is -1
+" let g:vimchat_buddylistmaxwidth = max width of buddy list window, default ''
+" let g:vimchat_timestampformat = format of the message timestamp, default "[%H:%M]"
+" let g:vimchat_showPresenceNotification = notification if buddy changed status, comma-separated list of states, default ""
+let g:vimchat_libnotify = 0
+
+""" source vim file type 
+au FileType vim :nmap <F9> :%y<bar>@"<cr>
+
+""" example of python
+py <<EOF
+def xxx():
+    import vim
+    # print 'oto vim'
+    # print vim.current.window
+    # print vim.current.buffer
+    print vim.eval("tagbar#currenttag('%s','')")
+EOF
+
+nmap ,k :py xxx()<cr>

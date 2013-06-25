@@ -13,7 +13,7 @@ def __unicode__(self):
 	return u'%s(%s)'%(self.__class__.__name__, id(self)${1})
 endsnippet
 
-snippet repr "repr" b
+snippet repr "just repr function" b
 def __repr__(self):
 	return '%s(%s)'%(self.__class__.__name__, id(self)${1})
 endsnippet
@@ -24,21 +24,50 @@ def __init__(self):
 endsnippet
 
 snippet super "super" b
-	super(${1:Class}, self).__init__(${2})
+super(${1:Class}, self).__init__(${2})
 endsnippet
 
-snippet deff "function" b
+
+snippet de "function" b
 def ${1:foo}($2):
     ${3:pass}
 endsnippet
 
-snippet defm "method" b
+
+snippet dem "method" b
 def ${1:foo}(self${2}):
     ${3:pass}
 endsnippet
 
-snippet classs "class" b
-class Foo(object):
-    def __init__(self$2):
-        ${3:pass}
+
+snippet cls "class with init without docsstrings" b
+class ${1:Foo}(${2:object}):
+    def __init__(self$3):
+        ${4:pass}
 endsnippet
+
+
+snippet enc "encoding" b
+# coding: utf-8
+endsnippet
+
+
+snippet doc "docstring" b
+"""${1}"""
+endsnippet
+
+
+snippet mdoc "docstring" b
+"""
+${1}
+"""
+${2}		
+endsnippet
+
+
+snippet pres "print_result" b
+from getmedia.system.tools import print_result
+print_result(${1})
+endsnippet
+
+
