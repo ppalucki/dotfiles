@@ -139,12 +139,12 @@ noremap <leader>ce :e $MYVIMRC<CR>
 noremap <leader>cr :so $MYVIMRC<CR>
 
 """ quickfix window navigation
-nnoremap ]q :cnext<cr>
-nnoremap [q :cprevious<cr>
+nnoremap ]q :execute "try \n cnext \n catch \n  cfirst \n endtry"<cr>
+nnoremap [q :execute "try \n cprevious \n catch \n  clast \n endtry"<cr>
 
 """ location window navigation
-nnoremap ]l :lnext<cr>
-nnoremap [l :lprevious<cr>
+nnoremap ]l :execute "try \n lnext \n catch \n  lfirst \n endtry"<cr>
+nnoremap [l :execute "try \n lprevious \n catch \n  llast \n endtry"<cr>
 
 " S for subsitute inner word from yanked text
 " change inner word and in insert mode yank from " and exit inster mode :)
@@ -422,7 +422,7 @@ def _make_test(tag):
     c(':up')
     c(':compiler! python')
     c(r":set makeprg=./run_tests.py\ %s"%tag)
-    c(":Dispatch")
+    c(':Make')
 
 def make_current_test():
     'run current tag in Make'
