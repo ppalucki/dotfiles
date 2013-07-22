@@ -7,5 +7,8 @@ map x dc
 map X u
 
 " Set your hintkeys instead of the default 0123456789
-set hintkeys=0123456789
+" set hintkeys=0123456789
 
+" by default, hints use numbers. You can have both numbers AND strings (view custom JS below). 
+" Or you can use strings only as hints and overwrite the number commands
+set useletters=0
