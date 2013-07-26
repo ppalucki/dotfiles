@@ -1,9 +1,13 @@
+" normalne wyszukiwanie
 unmap <C-f>
+" pokaz zrodlo
 unmap <M-d>
 unmap <C-j>
 " unmap <C-u>
 
+" skasuj zakladke
 map x dc
+" przywroc zakladke
 map X u
 
 " Set your hintkeys instead of the default 0123456789
@@ -12,3 +16,6 @@ map X u
 " by default, hints use numbers. You can have both numbers AND strings (view custom JS below). 
 " Or you can use strings only as hints and overwrite the number commands
 set useletters=0
+
+" Disable Vrome in those sites, Multiple URLs can be separated with ','
+set disablesites=mail.google.com, reader.google.com, http://www.epochconverter.com/
