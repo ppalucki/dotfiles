@@ -2,6 +2,7 @@
 unmap <C-f>
 " pokaz zrodlo
 unmap <M-d>
+" downloaded files
 unmap <C-j>
 " unmap <C-u>
 
