@@ -1,4 +1,3 @@
-# visual bell
 vbell off
 vbell_msg ''
 
@@ -7,7 +6,6 @@ bindkey -k F1 prev
 bindkey -k F2 next
 
 startup_message off
-
 
 # Window list at the bottom.
 # hardstatus alwayslastline
@@ -21,8 +19,11 @@ caption always "%{yK}%-Lw%50>%{Ky}%n %t%{-}%+Lw%<%{- Wk}%{yK} "
 
 #
 defscrollback 9000 
-termcapinfo xterm* ti@:te@
-#term "screen-256color"
+termcapinfo * ti@:te@
+# # termcapinfo xterm|xterms|xs ti@:te=\E[2J
+# # termcapinfo xterm|xterms|xs|rxvt ti@:te@
+# term "screen-256color"
+# termcapinfo * 'hs:ts=\E]2;:fs=07:ds=\E]2;screen07'
 term "xterm-256color"
 
 # tells screen not to display text when a monitored window has activity (only change its indicator on the status line)
@@ -59,6 +60,7 @@ bind h
 # # allow bold colors - necessary for some reason
 attrcolor b ".I" 
 # # tell screen how to set colors. AB = background, AF=foreground 
+# required for VIM
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' 
 # # erase background with current bg color 
 defbce "on"
@@ -70,3 +72,6 @@ maptimeout 5
 # bind b eval writebuf "exec sh -c 'xsel -nbi </tmp/screen-exchange'"
 bind b eval writebuf "exec sh -c 'xsel -nbi </tmp/screen-exchange'"
 # bind y eval "exec sh -c 'xsel -bo >/tmp/screen-exchange'"
+
+# no wait for copy mode
+msgminwait 0

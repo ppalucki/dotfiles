@@ -70,4 +70,14 @@ from getmedia.system.tools import print_result
 print_result(${1})
 endsnippet
 
+snippet classmethod "classmethod with function" b
+@classmethod
+def ${1:foo}(cls${2}):
+    ${3:pass}
+endsnippet
 
+snippet staticmethod "classmethod with function" b
+@staticmethod
+def ${1:foo}(${2}):
+    ${3:pass}
+endsnippet

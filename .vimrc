@@ -57,7 +57,7 @@ set clipboard=unnamedplus
 """--------- pythonmode
 let g:pymode_motion = 1
 let g:pymode_doc = 0
-let g:pymode_folding = 0
+let g:pymode_folding = 1
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
 "let g:pymode_indent = 1 
 let g:pymode_lint = 1
@@ -111,6 +111,7 @@ function! PythonMappings()
     "
     set nonumber
     compiler python
+    " wytlacz elcim i signs
 endfunction
 au FileType python call PythonMappings()
 
@@ -270,6 +271,9 @@ command! W w !sudo tee % > /dev/null
 
 """ tagbar
 map <leader><F3> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 1
+let g:tagbar_width = 60
 
 """ ----- fuzzyfinder
 " map <F3> :FufBufferTag<CR>
@@ -383,6 +387,9 @@ let g:ConqueTerm_ReadUnfocused = 1
 """ -----------------------------
 """ Screen Terminal
 """ -----------------------------
+" nie zamykaj screena bo czesto zabija mi dodatwkoeo konsole
+" domsylnie kiluje wszystkie screene! a bez tego musze dwa razy zamykac vima
+" let g:ScreenShellQuitOnVimExit = 0 
 let g:ScreenShellHeight = 10
 let g:ScreenShellGnuScreenVerticalSupport = 'native'
 " terminal bash vertical
@@ -597,6 +604,10 @@ endfunction
 au FileType scala call ScalaMapping()
 let g:EclimScalaSearchSingleResult = 'edit'
 
+""" ECLIM
+let g:EclimPythonValidate = 0
+let g:EclimShowErrors = 1
+" let g:EclimSignLevel = 0
 
 """""""""""""""""""""""""""""""""" colore rerun
 " set t_Co=256
@@ -671,7 +682,7 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
-	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
+	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
 	\ }
 
 let g:ctrlp_match_window_bottom = 1
@@ -774,7 +785,7 @@ let g:pythontagimport_as = 0
 let g:pythontagimport_full  = 0
 let g:pythontagimport_prefix = 'getmedia.'
 
-nmap cp :let @* = expand("%:p")<cr>
+nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
 
 " xml syntax fix
 hi link xmlTagName Identifier
@@ -834,3 +845,10 @@ def xxx():
 EOF
 
 nmap ,k :py xxx()<cr>
+
+" vimroom
+let g:vimroom_sidebar_height=0
+" let g:vimroom_min_sidebar_width=100
+let g:vimroom_background = "red"
+let g:vimroom_width = 120
+
