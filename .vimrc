@@ -57,7 +57,7 @@ set clipboard=unnamedplus
 """--------- pythonmode
 let g:pymode_motion = 1
 let g:pymode_doc = 0
-let g:pymode_folding = 1
+let g:pymode_folding = 0
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
 "let g:pymode_indent = 1 
 let g:pymode_lint = 1
@@ -650,7 +650,7 @@ map <leader>m "qdt,dwep"qpb
 map <leader>u :GundoToggle<CR>
 
 " find occurences - search current word but without scroll
-nmap <leader>f yiwh/<c-r>"<cr>
+nmap <leader>f "myiwh/<c-r>m<cr>
 
 " fix na colory diffa (change bez tla - bylo szare)
 " sprawdz kolory: colortest -w -s (w bashu!)
