@@ -94,9 +94,9 @@ nmap [m [M
 function! PythonMappings()
 	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
 	" ipython debug 
-	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>ic oimport ipdb;ipdb.cond=True<ESC>:w<cr>
-	nmap <buffer> <leader>ir oimport ipdb<cr>if hasattr(ipdb,'cond'):ipdb.set_trace()<ESC>:w<cr>
+	nmap <buffer> <leader>id oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
+	nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
+	nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>l :PyLint<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
@@ -452,6 +452,11 @@ def make_last_test():
     if not last_test_tag:
         return
     _make_test(last_test_tag)
+
+def debuging_on():
+    'prepare synchronize in ipdb'
+    pass
+
 EOF
 
 " terminal yank test
@@ -659,7 +664,7 @@ hi helpExample ctermfg=Magenta
 map <leader>m "qdt,dwep"qpb
 
 """ gundo
-" map <leader>u :GundoToggle<CR>
+map <leader>u :GundoToggle<CR>
 
 " find occurences - search current word but without scroll
 nmap <leader>f "myiwh/<c-r>m<cr>
@@ -845,7 +850,8 @@ let g:vimchat_statusicon = 0 "(0 or 1) default is 1 -- use a gtk status icon?
 let g:vimchat_libnotify = 0
 
 """ source vim file type 
-au FileType vim :nmap <F9> :%y<bar>@"<cr>
+au FileType vim :nmap <F9> :up<cr>:%y<bar>@"<cr>
+au FileType vim :setlocal keywordprg=:help
 
 """ example of python
 py <<EOF
@@ -865,16 +871,18 @@ let g:vimroom_sidebar_height=0
 let g:vimroom_background = "red"
 let g:vimroom_width = 120
 
-" Unite
+""" -------------- Unite
 let g:unite_source_history_yank_enable = 1
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" nnoremap <leader>ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
-nnoremap <leader>uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap <leader>ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap <leader>uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap <leader>uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap <leader>ue :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+" nnoremap ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap Ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
+" nnoremap Uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap Ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap Uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap Uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap Ue :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+nnoremap Uc :<C-u>Unite -no-split -buffer-name=command  -start-insert command<cr>
+nnoremap Uf :<C-u>Unite -no-split -buffer-name=function  -start-insert function<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
@@ -882,19 +890,80 @@ function! s:unite_settings()
   " Play nice with supertab
   let b:SuperTabDisabled=1
   " Enable navigation with control-j and control-k in insert mode
+  " normal 
+  nmap <buffer> <ESC>      <Plug>(unite_exit)
+  nmap <buffer> <C-c>      <Plug>(unite_exit)
+  " insert
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <buffer> jj      <Plug>(unite_insert_leave)
+  imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
 endfunction
 
-" yankring
+""" ------------- yankring
 let g:yankring_replace_n_pkey = '<c-n>'
 let g:yankring_replace_n_nkey = '<c-q>'
 
 
-" screenpaste
+""" ------------- screenpaste
 map  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
 map! <Leader>p  <Plug>ScreenpastePut		" Insert, Command-line mode
 map  <Leader>gp <Plug>ScreenpasteGPut		" Normal, Visual mode
 nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
 nmap <Leader>gP <Plug>ScreenpasteGPutBefore	" Normal mode
+
+""" ------------------------------------------------------------
+""" -------------------- debuging ------------------------------
+""" ------------------------------------------------------------
+py <<EOF
+
+# def send_line(line):
+#     'send line to screen'
+#     c("call ScreenShellSend(%s)"%line)
+# 
+# def send_escape(s):
+#     'escape line '
+#     return "'"+s.replace("'", "''")+"'"
+# 
+# def send_text(txt):
+#     'send lines to screen'
+#     for l in filter(None, txt.split('\n')):
+#         # print repr(l)
+#         el = send_escape(l)
+#         send_line(el)
+
+def find_buffer(filename):
+    for b in vim.buffers:
+        if b.name == filename:
+            return b
+
+def debug_loc(cmd=None):
+    if cmd is not None:
+        c('call ScreenShellSend("%s")'%cmd)
+
+    import vipdb
+    filename, line = vipdb.get_location()
+    # print repr(filename), repr(line)
+    if filename is not None:
+        line = int(line)
+        buf = find_buffer(filename)
+        if buf is not None:
+            # print 'buf found', buf.number, 'going', line
+            if vim.current.buffer.number != buf.number:
+                # print 'switching', buf.number
+                c('buffer %s'%buf.number)
+            c(str(line))
+            # c('normal z.')
+        else:
+            # print 'tryin to open', filename, line
+            c('edit +%i %s'%(line, filename))
+
+EOF
+
+nmap gn :py debug_loc('next')<cr>
+nmap gs :py debug_loc('step')<cr>
+" nmap gu :py debug_loc('until')<cr>
+nmap gr :py debug_loc('return')<cr>
+nmap gl :py debug_loc()<cr>
+" nmap gc :call ScreenShellSend('continue')<cr>
 
