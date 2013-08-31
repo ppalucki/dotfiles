@@ -59,7 +59,7 @@ let g:pymode_motion = 1
 let g:pymode_doc = 0
 let g:pymode_folding = 0
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
-"let g:pymode_indent = 1 
+let g:pymode_indent = 0 
 let g:pymode_lint = 1
 let g:pymode_rope = 0
 " on save
@@ -140,8 +140,8 @@ noremap <leader>ce :e $MYVIMRC<CR>
 noremap <leader>cr :so $MYVIMRC<CR>
 
 """ quickfix window navigation
-nnoremap ]q :execute "try \n cnext \n catch \n  cfirst \n endtry"<cr>
-nnoremap [q :execute "try \n cprevious \n catch \n  clast \n endtry"<cr>
+nnoremap ]q :execute "try \n cnext \n catch \n try \n cfirst \n catch \n cc \n endtry \n endtry"<cr>
+nnoremap [q :execute "try \n cprevious \n catch \n try \n clast \n catch \n cc \n endtry \n endtry"<cr>
 
 """ location window navigation
 nnoremap ]l :execute "try \n lnext \n catch \n  lfirst \n endtry"<cr>
@@ -154,8 +154,8 @@ nnoremap <leader>s "_ciw<c-r>"<esc>
 " numberlines toggle
 nnoremap <leader>n :set invnumber<cr>
 
-" pasttoggle
-nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
+" 
+" nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
 
 " quickfixclear
 " nmap <leader>qc :QuickFixClear<cr>
@@ -180,9 +180,12 @@ map <leader>/ :nohlsearch<cr>
 nmap <silent> <leader>d "_d
 vmap <silent> <leader>d "_d
 
-""" switch buffers
-nmap <C-h> :b#<CR>
-" map <C-l> :bn<CR>
+""" move between windows
+nmap <C-J> <C-W>j
+nmap <C-K> <C-W>k
+nmap <C-l> <C-W>l
+nmap <C-h> <C-W>h
+
 
 """ wciecia
 set smarttab
@@ -322,6 +325,13 @@ au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
 au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
 au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
 au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
+" let g:ackprg = 'ag --nogroup --nocolor --column'
+"
+""" Search and replace
+" http://stackoverflow.com/questions/5686206/search-replace-using-quickfix-list-in-vim/5686810#5686810
+nmap <leader>y :Qdo %s/<C-r>a//gc<left><left><left>
+nmap <leader>Y :.,$s///gc<left><left><left>
+vmap <leader>Y :s///gc<left><left><left>
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""
@@ -417,7 +427,7 @@ vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
 " terminal test
-nmap <silent> <leader>tt :w<bar>call ScreenShellSend("cdgm")<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+nmap <silent> <leader>tt :w<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
 """ Dispatch & Make
 
 " ORGinal nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
@@ -461,6 +471,8 @@ let loaded_matchparen = 1
 """ disable fold
 set nofoldenable
 au FileType rst set nofoldenable
+au FileType python set nofoldenable
+au FileType python set foldmethod=manual
 
 
 """ RIV
@@ -647,7 +659,7 @@ hi helpExample ctermfg=Magenta
 map <leader>m "qdt,dwep"qpb
 
 """ gundo
-map <leader>u :GundoToggle<CR>
+" map <leader>u :GundoToggle<CR>
 
 " find occurences - search current word but without scroll
 nmap <leader>f "myiwh/<c-r>m<cr>
@@ -749,13 +761,14 @@ let g:SuperTabLongestHighlight = 1
 " TAB is reserved for omnifunc
 " let g:jedi#autocompletion_command = "<tab>"
 let g:jedi#auto_vim_configuration = 1
-let g:jedi#get_definition_command = "<leader>g"
-let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_definition_command = "<leader>g"
+let g:jedi#goto_assignemts_command = "<leader>d"
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
-let g:jedi#related_names_command = "<leader>z"
+let g:jedi#usages_command = "<leader>z"
 let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#show_function_definition = 0
+let g:jedi#show_call_signatures = 0
+autocmd FileType python setlocal completeopt-=preview
 
 " Open last/alternate buffer
 noremap <Leader><Leader> <C-^>
@@ -851,4 +864,37 @@ let g:vimroom_sidebar_height=0
 " let g:vimroom_min_sidebar_width=100
 let g:vimroom_background = "red"
 let g:vimroom_width = 120
+
+" Unite
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" nnoremap <leader>ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
+nnoremap <leader>uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>ue :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+" yankring
+let g:yankring_replace_n_pkey = '<c-n>'
+let g:yankring_replace_n_nkey = '<c-q>'
+
+
+" screenpaste
+map  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
+map! <Leader>p  <Plug>ScreenpastePut		" Insert, Command-line mode
+map  <Leader>gp <Plug>ScreenpasteGPut		" Normal, Visual mode
+nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
+nmap <Leader>gP <Plug>ScreenpasteGPutBefore	" Normal mode
 
