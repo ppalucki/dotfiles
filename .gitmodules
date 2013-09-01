@@ -109,3 +109,9 @@
 [submodule ".vim/bundle/vim-ctrlp-cmdpalette"]
 	path = .vim/bundle/vim-ctrlp-cmdpalette
 	url = https://github.com/fisadev/vim-ctrlp-cmdpalette.git
+[submodule ".vim/bundle/vim-misc"]
+	path = .vim/bundle/vim-misc
+	url = https://github.com/xolox/vim-misc.git
+[submodule ".vim/bundle/vim-pyref"]
+	path = .vim/bundle/vim-pyref
+	url = https://github.com/xolox/vim-pyref.git
