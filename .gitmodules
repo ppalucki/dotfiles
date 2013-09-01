@@ -94,3 +94,12 @@
 [submodule ".vim/bundle/delimitMate"]
 	path = .vim/bundle/delimitMate
 	url = http://github.com/Raimondi/delimitMate.git
+[submodule ".vim/bundle/Recover.vim"]
+	path = .vim/bundle/Recover.vim
+	url = https://github.com/chrisbra/Recover.vim
+[submodule ".vim/bundle/ctrlp-tjump"]
+	path = .vim/bundle/ctrlp-tjump
+	url = https://github.com/vim-scripts/ctrlp-tjump.git
+[submodule ".vim/bundle/screenpaste.vim"]
+	path = .vim/bundle/screenpaste.vim
+	url = https://github.com/vim-scripts/screenpaste.vim.git

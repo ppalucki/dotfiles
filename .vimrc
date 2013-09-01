@@ -706,6 +706,8 @@ let g:ctrlp_match_window_bottom = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '\v(\.git)'
 
+nmap <c-]> :CtrlPtjump<cr>
+
 " repeat last movement
 noremap \ ;
 
@@ -967,3 +969,14 @@ nmap gr :py debug_loc('return')<cr>
 nmap gl :py debug_loc()<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 
+let g:COMMAND_MAP = {
+    \ "hit" : "echo 'HIT'",
+    \ "ls current dir" : "ls",
+    \ }
+
+
+
+
+""" Autoformat autopep8 options
+" aggressive added
+let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." --aggressive"'
