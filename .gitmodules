@@ -103,3 +103,9 @@
 [submodule ".vim/bundle/screenpaste.vim"]
 	path = .vim/bundle/screenpaste.vim
 	url = https://github.com/vim-scripts/screenpaste.vim.git
+[submodule ".vim/bundle/vim-autoformat"]
+	path = .vim/bundle/vim-autoformat
+	url = https://github.com/Chiel92/vim-autoformat.git
+[submodule ".vim/bundle/vim-ctrlp-cmdpalette"]
+	path = .vim/bundle/vim-ctrlp-cmdpalette
+	url = https://github.com/fisadev/vim-ctrlp-cmdpalette.git
