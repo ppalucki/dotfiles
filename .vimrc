@@ -92,7 +92,8 @@ nmap ]m ]M
 nmap [m [M
 
 function! PythonMappings()
-	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
+	nmap <buffer> <leader>iP ofrom IPython import embed;embed()<ESC>:w<cr>
+	nmap <buffer> <leader>ip ofrom vipdb import embed;embed()<ESC>:w<cr>
 	" ipython debug 
 	nmap <buffer> <leader>id oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
@@ -123,6 +124,9 @@ function! RubyMappings()
 	nmap <buffer> <F9> :up\|!ruby %<cr> 
 	imap <buffer> <F9> <Esc><f9>
 	nmap <buffer> <leader><F9> :up\|!ruby % 
+    
+    """ navgigation goto
+    map <leader>g <C-]>
 endfunction
 au FileType ruby call RubyMappings()
 
@@ -329,8 +333,11 @@ au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
 "
 """ Search and replace
 " http://stackoverflow.com/questions/5686206/search-replace-using-quickfix-list-in-vim/5686810#5686810
+" replace in many buffers after ,h (last searched element)
 nmap <leader>y :Qdo %s/<C-r>a//gc<left><left><left>
+" replace normal mode with last searched element elmenet
 nmap <leader>Y :.,$s///gc<left><left><left>
+" replace last search element ("/ register) in given selection
 vmap <leader>Y :s///gc<left><left><left>
 
 " Ack z jumpa
@@ -384,9 +391,6 @@ map <leader>bd :BD<cr>
 " close all but this one (and not saved!)
 map <leader>bo :BufOnly<cr>
 
-""" navgigation goto
-" au FileType ruby map <leader>g <C-]>
-map <leader>g <C-]>
 
 """ json
 autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -696,7 +700,7 @@ map <F7> :CtrlPBuffer<CR>
 " nmap <leader><F6> :CtrlPChange<cr>
 nmap <leader>o :CtrlPChangeAll<cr>
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
+" let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
 	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
@@ -768,8 +772,8 @@ let g:SuperTabLongestHighlight = 1
 " TAB is reserved for omnifunc
 " let g:jedi#autocompletion_command = "<tab>"
 let g:jedi#auto_vim_configuration = 1
-let g:jedi#goto_definition_command = "<leader>g"
-let g:jedi#goto_assignemts_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>d"
+let g:jedi#goto_definitions_command = "<leader>g"
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#usages_command = "<leader>z"
@@ -908,11 +912,14 @@ let g:yankring_replace_n_nkey = '<c-q>'
 
 
 """ ------------- screenpaste
-map  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
-map! <Leader>p  <Plug>ScreenpastePut		" Insert, Command-line mode
-map  <Leader>gp <Plug>ScreenpasteGPut		" Normal, Visual mode
+" screen paste normal mode only
+nmap  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
 nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
-nmap <Leader>gP <Plug>ScreenpasteGPutBefore	" Normal mode
+" map! <Leader>p  <Plug>ScreenpastePut		" Insert, Command-line mode
+" map  <Leader>gp <Plug>ScreenpasteGPut		" Normal, Visual mode
+" some dummmy mappings!!!
+map <Leader>xP1 <Plug>ScreenpasteGPutBefore	
+map <Leader>xP2 <Plug>ScreenpasteGPut		
 
 """ ------------------------------------------------------------
 """ -------------------- debuging ------------------------------
@@ -946,7 +953,7 @@ def debug_loc(cmd=None):
     import vipdb
     filename, line = vipdb.get_location()
     # print repr(filename), repr(line)
-    if filename is not None:
+    if filename is not None and not filename.endswith('.pyc') and filename.endswith('.py'):
         line = int(line)
         buf = find_buffer(filename)
         if buf is not None:
@@ -967,6 +974,8 @@ nmap gs :py debug_loc('step')<cr>
 " nmap gu :py debug_loc('until')<cr>
 nmap gr :py debug_loc('return')<cr>
 nmap gl :py debug_loc()<cr>
+nmap gu :py debug_loc('up')<cr>
+nmap gb :py debug_loc('down')<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 
 let g:COMMAND_MAP = {
@@ -980,3 +989,7 @@ let g:COMMAND_MAP = {
 """ Autoformat autopep8 options
 " aggressive added
 let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." --aggressive"'
+
+
+""" diff
+set diffopt=filler,vertical

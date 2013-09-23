@@ -12,10 +12,12 @@ gs - go step
 gr - go retrun
 gn - go next
 gl - go location
+gu - go up (traceback)
+
 """
 from ipdb.__main__ import Pdb, update_stdout, wrap_sys_excepthook, def_colors
 import sys
-import zmq
+# import zmq
 import os, time
 # from Queue import Queue, Empty 
 # from threading import Thread
@@ -32,6 +34,8 @@ def synchronize_with_editor(ip, filename, line, value):
     #     ctx = zmq.Context()
     #     sock = ctx.socket(zmq.PAIR)
     #     sock.connect(sockname)
+    if filename.endswith('.pyc'):
+        filename = filename.replace('.pyc', '.py')
 
     fn = os.path.join(os.getcwd(), filename)
     file('/tmp/vim.loc', 'w').write('%s %i'%(fn, line))
@@ -88,5 +92,23 @@ def set_trace(frame=None):
     pdb.shell.set_hook('synchronize_with_editor', synchronize_with_editor)
 
     pdb.set_trace(frame)
+
+def embed(pdb=False):
+    from IPython.terminal.embed import InteractiveShellEmbed, load_default_config
+    from IPython import Application, embed, get_ipython
+    config = load_default_config()
+    config.InteractiveShellEmbed = config.TerminalInteractiveShell
+    config.InteractiveShellEmbed.pdb = pdb
+
+    shell = InteractiveShellEmbed.instance(config=config)
+
+    # my hook
+    shell.set_hook('synchronize_with_editor', synchronize_with_editor)
+
+    ### di, gu, gv etc...
+    shell.safe_execfile('/home/ppalucki/workspace/djangoshellhelpers.py')
+
+    ### start
+    shell(stack_depth=2)
 
 
