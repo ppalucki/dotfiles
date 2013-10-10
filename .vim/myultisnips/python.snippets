@@ -83,3 +83,15 @@ snippet staticmethod "classmethod with function" b
 def ${1:foo}(${2}):
     ${3:pass}
 endsnippet
+
+snippet setup "TestCase setUp" b
+def setUp(self):
+    super(${1}, self).setUp()
+    ${2}
+endsnippet
+
+snippet teardown "TestCase teardown" b
+def tearDown(self):
+    super(${1}, self).tearDown()
+    ${2}
+endsnippet

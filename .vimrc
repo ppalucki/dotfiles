@@ -126,7 +126,8 @@ function! RubyMappings()
 	nmap <buffer> <leader><F9> :up\|!ruby % 
     
     """ navgigation goto
-    map <leader>g <C-]>
+    " map <leader>g <C-]>
+    nmap gd <C-]>
 endfunction
 au FileType ruby call RubyMappings()
 
@@ -339,6 +340,13 @@ nmap <leader>y :Qdo %s/<C-r>a//gc<left><left><left>
 nmap <leader>Y :.,$s///gc<left><left><left>
 " replace last search element ("/ register) in given selection
 vmap <leader>Y :s///gc<left><left><left>
+" or manual procedure
+" ---------- manual --------------
+" Put the cursor on foo.
+" Press * to search for the next occurrence.
+" Type ciw (change inner word) then bar then press Escape.
+" Press n (move to next occurrence) then . (repeat change).
+" Repeat last step
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""
@@ -537,7 +545,8 @@ function! JavaMapping()
     " ----------- search
     " java go
     "- Perform a context sensitive search for the element under the cursor.
-    nnoremap <buffer> <leader>g :JavaSearchContext<cr>
+    " nnoremap <buffer> <leader>g :JavaSearchContext<cr>
+    nnoremap <buffer> gd :JavaSearchContext<cr>
     "[-p <pattern>] [-t <type>] [-x <context>] [-s <scope>] - Search for
     "classes, methods, fields, etc.  (With pattern supplied, searches for the
     "element under the cursor).  nnoremap <leader>js :JavaSearch
@@ -620,7 +629,8 @@ au FileType java call JavaMapping()
 """ ------------------ scala ------------
 function! ScalaMapping()
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
-    map <leader>g :ScalaSearch<cr>
+    " map <leader>g :ScalaSearch<cr>
+    map gd :ScalaSearch<cr>
 endfunction
 au FileType scala call ScalaMapping()
 let g:EclimScalaSearchSingleResult = 'edit'
@@ -647,15 +657,26 @@ set spellcapcheck=0
 """""""""""" modeline
 set modeline
 
-"""""""""""" mkd - markdown
+"""""""""""" mkd - markdown & textile
+" surround with asterisk
 au FileType mkd set nofoldenable
 au FileType mkd nmap ,e ysiw*
 au FileType mkd vmap ,e S*
+au FileType mkd nmap ,E ,el,e
+au FileType mkd vmap ,E ,el,e
+
 au FileType mkd nmap ds* F*xf*xb
 
 au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
 au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
 
+
+" testtile
+au FileType textile nmap ,e ysiw*
+au FileType textile vmap ,e S*
+au FileType textile nmap ,E ,el,e
+au FileType textile vmap ,E ,el,e
+au FileType textile nmap ds* F*xf*xb
 
 """ ------ highlith identifiaction
 """ http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
@@ -773,7 +794,7 @@ let g:SuperTabLongestHighlight = 1
 " let g:jedi#autocompletion_command = "<tab>"
 let g:jedi#auto_vim_configuration = 1
 let g:jedi#goto_assignments_command = "<leader>d"
-let g:jedi#goto_definitions_command = "<leader>g"
+let g:jedi#goto_definitions_command = "gd"
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#usages_command = "<leader>z"
