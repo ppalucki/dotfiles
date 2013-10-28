@@ -1026,8 +1026,4 @@ let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length
 set diffopt=filler,vertical
 
 
-""" dbext GetMedia
-let g:dbext_default_profile_getmedia_staging = 'type=PGSQL:user=getmedia:dbname=getmedia:host=getmedia-test1.vm.redefine.pl'
-let g:dbext_default_profile_getmedia_production = 'type=PGSQL:user=getmedia:dbname=getmedia:host=192.168.10.241:port=6900'
-let g:dbext_map_prefix = '<leader>d'
 
