@@ -66,6 +66,7 @@ let g:pymode_rope = 0
 let g:pymode_lint_write = 0 
 let g:pymode_lint_onfly = 0
 let g:pymode_lint_checker = "pyflakes"
+" let g:pymode_lint_checker = "pylint"
 let g:pymode_lint_signs = 0
     
 let g:pymode_syntax_highlight_equal_operator = 0
@@ -74,7 +75,6 @@ let g:pymode_syntax_highlight_self = 0
 let g:pymode_syntax_builtin_types = 0
 
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
-" let g:pymode_lint_checker = "pylint"
 let g:pymode_utils_whitespaces = 0
 " auto jump on/off
 let g:pymode_lint_jump = 1
@@ -182,8 +182,8 @@ map <leader>/ :nohlsearch<cr>
 "<bar>QuickFixClear<cr>:SignClearAll<cr>
 
 " delete without yank
-nmap <silent> <leader>d "_d
-vmap <silent> <leader>d "_d
+" nmap <silent> <leader>d "_d
+" vmap <silent> <leader>d "_d
 
 """ move between windows
 nmap <C-J> <C-W>j
@@ -426,6 +426,9 @@ map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
 map <leader>te :call ScreenShellSend('exit')<cr>
 " terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _v$,ts
+" terminal all
+nmap <leader>ta ggvG$,ts
+
 function! ScreenSendPaste1()
   let g:ScreenShellSendPrefix = '%cpaste'
   let g:ScreenShellSendSuffix = '--'
@@ -486,8 +489,8 @@ let loaded_matchparen = 1
 
 
 """ disable fold
-set nofoldenable
 au FileType rst set nofoldenable
+set nofoldenable
 au FileType python set nofoldenable
 au FileType python set foldmethod=manual
 
@@ -677,6 +680,9 @@ au FileType textile vmap ,e S*
 au FileType textile nmap ,E ,el,e
 au FileType textile vmap ,E ,el,e
 au FileType textile nmap ds* F*xf*xb
+
+" zrob tabele |adsaa|asdfasd|asdfasdf| dla redmine na zaznaczonym obszarze!
+au FileType textile vmap <leader>T :s/;/\|/g<cr>gv:norm A\|<cr>gv:norm I\|<cr>
 
 """ ------ highlith identifiaction
 """ http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
@@ -961,6 +967,7 @@ py <<EOF
 #         # print repr(l)
 #         el = send_escape(l)
 #         send_line(el)
+import time
 
 def find_buffer(filename):
     for b in vim.buffers:
@@ -970,6 +977,7 @@ def find_buffer(filename):
 def debug_loc(cmd=None):
     if cmd is not None:
         c('call ScreenShellSend("%s")'%cmd)
+        time.sleep(0.01) # 10ms
 
     import vipdb
     filename, line = vipdb.get_location()
@@ -1009,8 +1017,17 @@ let g:COMMAND_MAP = {
 
 """ Autoformat autopep8 options
 " aggressive added
-let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." --aggressive"'
+" -a means --aggressive 
+" -a, --aggressive      enable non-whitespace changes; multiple -a result in more aggressive changes
+let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." -a -a"'
 
 
 """ diff
 set diffopt=filler,vertical
+
+
+""" dbext GetMedia
+let g:dbext_default_profile_getmedia_staging = 'type=PGSQL:user=getmedia:dbname=getmedia:host=getmedia-test1.vm.redefine.pl'
+let g:dbext_default_profile_getmedia_production = 'type=PGSQL:user=getmedia:dbname=getmedia:host=192.168.10.241:port=6900'
+let g:dbext_map_prefix = '<leader>d'
+

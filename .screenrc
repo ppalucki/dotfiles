@@ -70,8 +70,12 @@ maptimeout 5
 # http://askubuntu.com/questions/56570/how-do-i-copy-text-from-the-program-screen-to-my-clipboard
 # Now, when you select something in screen copy/scrollback mode, and write paste buffer to a file with C-a >, 
 # bind b eval writebuf "exec sh -c 'xsel -nbi </tmp/screen-exchange'"
-bind b eval writebuf "exec sh -c 'xsel -bi </tmp/screen-exchange'"
+# bind b eval writebuf "exec sh -c 'xsel -psbi </tmp/screen-exchange'"
+bind b eval writebuf "!xclip -selection clipboard /tmp/screen-exchange"
 # bind y eval "exec sh -c 'xsel -bo >/tmp/screen-exchange'"
+#
+# split focus select1 and return to 0
+bind | eval "split -v" "focus" "select 1" "focus"
 
 # no wait for copy mode
 msgminwait 0

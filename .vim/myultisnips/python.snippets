@@ -6,37 +6,45 @@ endsnippet
 snippet str "str" b
 def __str__(self):
 	return '%s(%s)'%(self.__class__.__name__, id(self)${1})
+
 endsnippet
 
 snippet unicode "unicode" b
 def __unicode__(self):
 	return u'%s(%s)'%(self.__class__.__name__, id(self)${1})
+
 endsnippet
 
-snippet repr "just repr function" b
+snippet repr "just repr function" b!
 def __repr__(self):
 	return '%s(%s)'%(self.__class__.__name__, id(self)${1})
+
 endsnippet
 
 snippet init "init" b
-def __init__(self):
-	${1}		
+def __init__(self$1):
+	${2:${VISUAL:pass}}		
+
 endsnippet
 
 snippet super "super" b
-super(${1:Class}, self).__init__(${2})
+super(${1:Class}, self).`!v tagbar#currenttag('%s','')`(${2})
 endsnippet
 
 
-snippet de "function" b
+snippet def "function" b!
 def ${1:foo}($2):
-    ${3:pass}
+    ${3:${VISUAL:pass}}
+    $4
+
 endsnippet
 
 
 snippet dem "method" b
 def ${1:foo}(self${2}):
-    ${3:pass}
+    ${3:${VISUAL:pass}}
+    $4
+
 endsnippet
 
 
@@ -55,13 +63,13 @@ endsnippet
 
 
 snippet doc "docstring" b
-"""${1}"""
+"""${VISUAL}${1}"""
 endsnippet
 
 
 snippet mdoc "docstring" b
 """
-${1}
+${VISUAL}${1}
 """
 ${2}		
 endsnippet
@@ -94,4 +102,31 @@ snippet teardown "TestCase teardown" b
 def tearDown(self):
     super(${1}, self).tearDown()
     ${2}
+endsnippet
+
+snippet initsup "init with super" b
+def __init__(self, *args, **kwargs):
+    super(${1:Class}, self).__init__(*args, **kwargs)
+    ${2}
+endsnippet
+
+snippet try "Visual(Try / Except)" b!
+try:
+	${1:${VISUAL:pass}}
+except ${3:Exception} as e:
+	${3:raise}
+endsnippet
+
+
+snippet for "For loop" b!
+for ${2:item} in ${2:collection}:
+    $4
+endsnippet
+
+
+snippet test "test function" b!
+def test_${1:foo}(self):
+    ${2:${VISUAL:pass}}
+    $4
+
 endsnippet
