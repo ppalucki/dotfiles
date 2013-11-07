@@ -69,17 +69,36 @@ let g:pymode_lint_checker = "pyflakes"
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_lint_signs = 0
     
-let g:pymode_syntax_highlight_equal_operator = 0
-let g:pymode_syntax_highlight_stars_operator = 1
-let g:pymode_syntax_highlight_self = 0
+"
+" PyMode Syntax Highlight
+"
+let g:pymode_syntax = 1 
+let g:pymode_syntax_all = 0 
+" 
+let g:pymode_syntax_builtin_funcs = 0
+let g:pymode_syntax_builtin_objs = 1
 let g:pymode_syntax_builtin_types = 0
+let g:pymode_syntax_doctests = 0 
+let g:pymode_syntax_highlight_equal_operator = 0
+let g:pymode_syntax_highlight_exceptions = 0
+let g:pymode_syntax_highlight_self = 0
+let g:pymode_syntax_highlight_stars_operator = 0
+let g:pymode_syntax_indent_errors = 0
+let g:pymode_syntax_print_as_function = 0
+let g:pymode_syntax_space_errors = 0
+let g:pymode_syntax_string_format = 0 
+let g:pymode_syntax_string_formatting = 0 
+let g:pymode_syntax_string_templates = 0
 
+" For fast machines
+" let g:pymode_syntax_slow_sync = 0
+" overwrite
+" -----------------------------------------------------
+"
 " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
 let g:pymode_utils_whitespaces = 0
 " auto jump on/off
 let g:pymode_lint_jump = 1
-let g:pymode_syntax_space_errors = 0
-let g:pymode_syntax_indent_errors = 0
 let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W0404'
 "let g:pymode_lint_select = 'E0611'
 let g:pymode_breakpoint = 0
@@ -98,7 +117,8 @@ function! PythonMappings()
 	nmap <buffer> <leader>id oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
 	nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>l :PyLint<cr>
+	nmap <buffer> <leader>L :PyLint<cr>
+    nmap <buffer> <leader>l :call Flake8()<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 	"" fix na diff doget - z brancha johntyree python-mode
@@ -232,6 +252,17 @@ map <F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals 
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .;fgrep -v kind:variable ._tags >.tags;rm ._tags<cr>
 au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK . <cr>
+au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
+" au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
+
+let g:ctrlp_buftag_types = {
+\'haskell' : {
+  \ 'bin': '/home/ppalucki/.cabal/bin/lushtags',
+  \ 'args': 'f --'
+  \ },
+\ }
+
+  " \ 'args': '<ctrl-r>%',
 """ tags file
 set tags=.tags
 "set tags+=./.tags
@@ -453,7 +484,7 @@ from vim import command as c
 def _make_test(tag):
     c(':up')
     c(':compiler! python')
-    c(r":set makeprg=./run_tests.py\ %s"%tag)
+    c(r":set makeprg=XTB\=off\ ./run_tests.py\ %s"%tag)
     c(':Make')
 
 def make_current_test():
@@ -1013,8 +1044,6 @@ let g:COMMAND_MAP = {
     \ }
 
 
-
-
 """ Autoformat autopep8 options
 " aggressive added
 " -a means --aggressive 
@@ -1025,5 +1054,16 @@ let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length
 """ diff
 set diffopt=filler,vertical
 
+""" flake8 vim - F7 or L
+let no_flake8_maps=1
 
+""" syntastic
+" uzyj ,L dla pylinta, ,l dla call Flake8 ,C-l dla SyntasticCheck
+nmap <leader><C-l> :SyntasticCheck<Cr>
+let g:syntastic_check_on_wq=0
+let g:syntastic_quiet_warnings=0
+let g:syntastic_mode_map = { 'mode': 'active' }
+" tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
+let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_python_flake8_args="--config=setup.cfg"
 
