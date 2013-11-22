@@ -39,7 +39,6 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 
   st = status
   ci = commit
-  cim = commit -m
   d = difftool
   branches = branch -vv
   branchesall = branch -a -vv

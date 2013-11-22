@@ -1,20 +1,35 @@
 snippet pre "pre" b
 <pre>
-${1}
+${1:${VISUAL}}
 </pre>
 ${2}
 endsnippet
 
 snippet sql "sql" b
 <pre><code class="sql">
-${1}
+${1:${VISUAL}}
 </code></pre>
 ${2}
 endsnippet
 
 snippet python "python" b
 <pre><code class="python">
+${1:${VISUAL}}
 ${1}
+</code></pre>
+${2}
+endsnippet
+
+snippet xml "xml" b
+<pre><code class="xml">
+${1:${VISUAL}}
+</code></pre>
+${2}
+endsnippet
+
+snippet ruby "ruby" b
+<pre><code class="ruby">
+${1:${VISUAL}}
 </code></pre>
 ${2}
 endsnippet

@@ -45,7 +45,8 @@ set timeoutlen=1000
 set scrolloff=6
 
 """ -------- leader
-let mapleader = ","
+" let mapleader = ","
+let mapleader = " "
 
 """--------- hidden allow edited buffers
 set hidden
@@ -117,8 +118,8 @@ function! PythonMappings()
 	nmap <buffer> <leader>id oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
 	nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>L :PyLint<cr>
-    nmap <buffer> <leader>l :call Flake8()<cr>
+	nmap <buffer> <leader>l :PyLint<cr>
+    nmap <buffer> <leader>L :call Flake8()<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 	"" fix na diff doget - z brancha johntyree python-mode
@@ -417,8 +418,9 @@ nnoremap <Leader>vL :Glog -n 50 --<cr>
 nnoremap <Leader>vb :Gblame<cr>
 vnoremap <Leader>vb :Gblame<cr>
 
-nnoremap <Leader>vpl :Git pull<cr>
-nnoremap <leader>vps :Git push<cr>
+" aka vim fetch&merge
+nnoremap <Leader>vm :Git pull<cr> 
+nnoremap <leader>vp :Git push<cr>
 nnoremap <leader>vw :Gwrite<cr>
 nnoremap <leader>vr :Gread<cr>
 
@@ -453,12 +455,14 @@ map <leader>tB :ScreenShell bash<cr>
 vmap <leader>ts :ScreenSend<cr>
 " termianal rerun 
 map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
+" termianal python 
+map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
 " terminal exit
 map <leader>te :call ScreenShellSend('exit')<cr>
 " terminal line - begin then send visual till end and terminal send
-nmap <leader>tl _v$,ts
+nmap <leader>tl _v$<leader>ts
 " terminal all
-nmap <leader>ta ggvG$,ts
+nmap <leader>ta ggvG$<leader>ts
 
 function! ScreenSendPaste1()
   let g:ScreenShellSendPrefix = '%cpaste'
@@ -694,10 +698,10 @@ set modeline
 """""""""""" mkd - markdown & textile
 " surround with asterisk
 au FileType mkd set nofoldenable
-au FileType mkd nmap ,e ysiw*
-au FileType mkd vmap ,e S*
-au FileType mkd nmap ,E ,el,e
-au FileType mkd vmap ,E ,el,e
+au FileType mkd nmap <leader>e ysiw*
+au FileType mkd vmap <leader>e S*
+au FileType mkd nmap <leader>E ,el,e
+au FileType mkd vmap <leader>E ,el,e
 
 au FileType mkd nmap ds* F*xf*xb
 
@@ -706,10 +710,10 @@ au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
 
 
 " testtile
-au FileType textile nmap ,e ysiw*
-au FileType textile vmap ,e S*
-au FileType textile nmap ,E ,el,e
-au FileType textile vmap ,E ,el,e
+au FileType textile nmap <leader>e ysiw*
+au FileType textile vmap <leader>e S*
+au FileType textile nmap <leader>E ,el,e
+au FileType textile vmap <leader>E ,el,e
 au FileType textile nmap ds* F*xf*xb
 
 " zrob tabele |adsaa|asdfasd|asdfasdf| dla redmine na zaznaczonym obszarze!
@@ -784,7 +788,7 @@ nn <expr> ( &diff ? "[c" : "("
 nn <expr> ) &diff ? "]c" : ")"
 
 " vsplit tag
-nmap ,<C-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>zt<c-w>r<c-w><c-w>
+nmap <leader><C-]> :vsplit <CR>:exec("tag ".expand("<cword>"))<CR>zt<c-w>r<c-w><c-w>
 nmap <C-\> :split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " swap ' with `
@@ -867,6 +871,8 @@ let g:pythontagimport_as = 0
 let g:pythontagimport_full  = 0
 let g:pythontagimport_prefix = 'getmedia.'
 
+" yank current buffer filname to register
+" http://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
 nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
 
 " xml syntax fix
@@ -919,7 +925,7 @@ au FileType vim :setlocal keywordprg=:help
 
 """ example of python
 py <<EOF
-def xxx():
+def testvima():
     import vim
     # print 'oto vim'
     # print vim.current.window
@@ -927,7 +933,7 @@ def xxx():
     print vim.eval("tagbar#currenttag('%s','')")
 EOF
 
-nmap ,k :py xxx()<cr>
+nmap <leader>k :py testvima()<cr>
 
 " vimroom
 let g:vimroom_sidebar_height=0
@@ -1065,5 +1071,16 @@ let g:syntastic_quiet_warnings=0
 let g:syntastic_mode_map = { 'mode': 'active' }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_always_populate_loc_list=1
 " let g:syntastic_python_flake8_args="--config=setup.cfg"
+
+"" Removes trailing spaces
+function! TrimWhiteSpace() "{{{
+    let cursor_pos = getpos('.')
+    silent! %s/\s\+$//
+    call setpos('.', cursor_pos)
+endfunction "}}}
+
+" nnoremap <silent> <Leader>rtw :call TrimWhiteSpace()<CR>
+nnoremap <Leader>xw :call TrimWhiteSpace()<CR>
 
