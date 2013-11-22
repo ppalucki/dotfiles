@@ -115,3 +115,24 @@
 [submodule ".vim/bundle/vim-pyref"]
 	path = .vim/bundle/vim-pyref
 	url = https://github.com/xolox/vim-pyref.git
+[submodule ".vim/bundle/coveragepy.vim"]
+	path = .vim/bundle/coveragepy.vim
+	url = https://github.com/alfredodeza/coveragepy.vim.git
+[submodule ".vim/bundle/ctrlp-filetype"]
+	path = .vim/bundle/ctrlp-filetype
+	url = https://github.com/kaneshin/ctrlp-filetype.git
+[submodule ".vim/bundle/ctrlp-git"]
+	path = .vim/bundle/ctrlp-git
+	url = https://github.com/kaneshin/ctrlp-git.git
+[submodule ".vim/bundle/ctrlp-funky"]
+	path = .vim/bundle/ctrlp-funky
+	url = https://github.com/tacahiroy/ctrlp-funky.git
+[submodule ".vim/bundle/syntastic"]
+	path = .vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic.git
+[submodule ".vim/bundle/vim-flake8"]
+	path = .vim/bundle/vim-flake8
+	url = https://github.com/nvie/vim-flake8.git
+[submodule ".vim/bundle/vim-python-pep8-indent"]
+	path = .vim/bundle/vim-python-pep8-indent
+	url = https://github.com/hynek/vim-python-pep8-indent.git
