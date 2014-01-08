@@ -5,6 +5,8 @@ unmap <M-d>
 " downloaded files
 unmap <C-j>
 " unmap <C-u>
+" nomrlane bookmark
+unmap <C-b>
 
 " skasuj zakladke
 map x dc
