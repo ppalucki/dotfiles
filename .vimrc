@@ -47,6 +47,7 @@ set scrolloff=6
 """ -------- leader
 " let mapleader = ","
 let mapleader = " "
+" nmap , <space> # second leader key ! lepiej nie zeby sie odzwyaczic
 
 """--------- hidden allow edited buffers
 set hidden
@@ -69,6 +70,7 @@ let g:pymode_lint_onfly = 0
 let g:pymode_lint_checker = "pyflakes"
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_lint_signs = 0
+let g:pymode_lint_config = 'pylint.rc2'
     
 "
 " PyMode Syntax Highlight
@@ -134,6 +136,13 @@ function! PythonMappings()
     set nonumber
     compiler python
     " wytlacz elcim i signs
+
+    " terminal test
+    nmap <silent> <leader>tt :w<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+
+    " termianal python 
+    map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
+
 endfunction
 au FileType python call PythonMappings()
 
@@ -263,6 +272,17 @@ let g:ctrlp_buftag_types = {
   \ },
 \ }
 
+""" HaskMappings
+function! HaskellMappings()
+	map <F9> :!ghc %<cr>
+
+    " termianal python 
+    map <leader>tp :up<bar>call ScreenShellSend("runhaskell <c-r>%")<bar><cr>
+
+endfunction
+au FileType haskell call HaskellMappings()
+" let g:riv_link_cursor_hl=0
+
   " \ 'args': '<ctrl-r>%',
 """ tags file
 set tags=.tags
@@ -367,11 +387,11 @@ au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
 """ Search and replace
 " http://stackoverflow.com/questions/5686206/search-replace-using-quickfix-list-in-vim/5686810#5686810
 " replace in many buffers after ,h (last searched element)
-nmap <leader>y :Qdo %s/<C-r>a//gc<left><left><left>
+nmap <leader>Y :Qdo %s/<C-r>a//gc<left><left><left>
 " replace normal mode with last searched element elmenet
-nmap <leader>Y :.,$s///gc<left><left><left>
+nmap <leader>y :.,$s///gc<left><left><left>
 " replace last search element ("/ register) in given selection
-vmap <leader>Y :s///gc<left><left><left>
+vmap <leader>y :s///gc<left><left><left>
 " or manual procedure
 " ---------- manual --------------
 " Put the cursor on foo.
@@ -432,6 +452,10 @@ map <leader>bd :BD<cr>
 " close all but this one (and not saved!)
 map <leader>bo :BufOnly<cr>
 
+" buffer next/previous
+map <leader>bn :bn<cr>
+map <leader>bp :bp<cr>
+map <leader>bn :bn<cr>
 
 """ json
 autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -455,8 +479,6 @@ map <leader>tB :ScreenShell bash<cr>
 vmap <leader>ts :ScreenSend<cr>
 " termianal rerun 
 map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
-" termianal python 
-map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
 " terminal exit
 map <leader>te :call ScreenShellSend('exit')<cr>
 " terminal line - begin then send visual till end and terminal send
@@ -476,8 +498,6 @@ endfunction
 vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
-" terminal test
-nmap <silent> <leader>tt :w<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
 """ Dispatch & Make
 
 " ORGinal nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
@@ -717,6 +737,7 @@ au FileType textile vmap <leader>E ,el,e
 au FileType textile nmap ds* F*xf*xb
 
 " zrob tabele |adsaa|asdfasd|asdfasdf| dla redmine na zaznaczonym obszarze!
+" redmine TABLE
 au FileType textile vmap <leader>T :s/;/\|/g<cr>gv:norm A\|<cr>gv:norm I\|<cr>
 
 """ ------ highlith identifiaction
@@ -760,7 +781,7 @@ map <F7> :CtrlPBuffer<CR>
 " nmap <leader><F4> :CtrlPLine<cr>
 " nmap <F6> :CtrlPChangeAll<cr>
 " nmap <leader><F6> :CtrlPChange<cr>
-nmap <leader>o :CtrlPChangeAll<cr>
+" nmap <leader>o :CtrlPChangeAll<cr>
 let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
@@ -1082,5 +1103,20 @@ function! TrimWhiteSpace() "{{{
 endfunction "}}}
 
 " nnoremap <silent> <Leader>rtw :call TrimWhiteSpace()<CR>
-nnoremap <Leader>xw :call TrimWhiteSpace()<CR>
+nnoremap <Leader>xw :call TrimWhiteSpace()<CR><bar>:up<cr>
+
+" screen focus change
+nmap f<cr> :silent !screen -X focus<cr>
+
+au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
+
+" encryption
+set cryptmethod=blowfish
+
+" distraction mode litedfm
+nmap <leader>o :LiteDFMToggle<CR>
+
+if has("gui_running")
+    set mouse=a
+endif
 
