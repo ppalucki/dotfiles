@@ -46,4 +46,18 @@ alias cdgg='workon greengate;title greengate'
 alias cdt='workon testy'
 alias cdw='cd /home/ppalucki/workspace'
 alias cdd="cd ~/downloads/"
+alias cdg="export GOPATH=~/workspace/goprojects ; cd \$GOPATH/src ; export PATH=\$PATH:\$GOPATH/bin"
+alias cdvim="cd ~/.vim/bundle"
 
+##########################################
+## vim and vi wersion python3 
+##########################################
+# zaintaslowany z src/vim
+alias vi3='/usr/local/bin/vim'
+alias vim3='/usr/local/bin/vim'
+
+
+########################################
+## gitk
+########################################
+alias gitka='gitk --all'

@@ -1,0 +1,47 @@
+snippet se "select * from x" b
+select ${1:*} from $2 $0
+endsnippet
+
+snippet c1 "count(1)" w
+count(1)
+endsnippet
+
+snippet di "distinct" w
+distinct
+endsnippet
+
+snippet wh "where " w
+where $1 $0
+endsnippet
+
+snippet jo "join" w
+join $1 as $2 on $3 = $4 $0
+endsnippet
+
+snippet ljo "left outer join" w
+left outer join $1 as $2 on $3 = $4 $0
+endsnippet
+
+snippet li "limit" w
+limit ${1:10} $0
+endsnippet
+
+snippet or "order" w
+order by ${1:id} desc $0
+endsnippet
+
+snippet isnn "is not null" w
+is not null
+endsnippet
+
+snippet gr "group by" w
+group by $0
+endsnippet
+
+snippet ha "having count" w
+having
+endsnippet
+
+snippet ha1 "having count(1) > 1" w
+having count(1) > 1
+endsnippet

@@ -35,22 +35,23 @@
 
 
 [alias]
-  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 
-  st = status
-  ci = commit
-  d = difftool
-  branches = branch -vv
-  branchesall = branch -a -vv
-  remotes = remote show origin
-  co = checkout
-  ciam = commit -a -m
-  cim = commit -m
-  civ = commit --verbose
-  ciav = commit -a --verbose
-  unstash = stash pop
-  stagingdiff = !comm -12 <(git branch --no-merged master) <(git branch --merged staging)
-  mt = mergetool
+    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 
+    st = status
+    ci = commit
+    d = difftool
+    branches = branch -vv
+    branchesall = branch -a -vv
+    remotes = remote show origin
+    co = checkout
+    ciam = commit -a -m
+    cim = commit -m
+    civ = commit --verbose
+    ciav = commit -a --verbose
+    unstash = stash pop
+    stagingdiff = !comm -12 <(git branch --no-merged master) <(git branch --merged staging)
+    mt = mergetool
+    pullr = pull --rebase
 
 [diff]
     tool = vimdiff 
@@ -80,5 +81,18 @@
 
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+
+
 [github]
 	user = sacre
+[guitool "Rebase onto..."]
+    cmd = git rebase
+    revprompt = yes
+[guitool "Rebase/Continue"]
+    cmd = git rebase --continue
+[guitool "Rebase/Skip"]
+    cmd = git rebase --skip
+[guitool "Rebase/Abort"]
+    cmd = git rebase --abort
+[guitool "Pull with Rebase"]
+    cmd = git pull --rebase

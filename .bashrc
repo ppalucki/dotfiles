@@ -184,7 +184,9 @@ umask 022
 ### xmodmap
 ### WARN: xkb is now in use so
 ### learn /usr/share/X11/xkb
-################################k
+### http://www.charvolant.org/~doug/xkb/html/index.html
+# mozna zamienic na xmodmap ~/.Xmodmap
+###############################k
 ### capslock as enter
 # ESCAPE_KEYCODE=9
 # CAPS_KEYCODE=66
@@ -244,7 +246,7 @@ bind '"\en":history-search-forward'
 
 ### podpiecie shrtcuta ktory znika
 # gconf editor
-gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>F11']"
+# gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>F11']"
 # dconf - media keys
 ### alt-q browser
 # dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding "'<Alt>q'"
@@ -322,3 +324,7 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 ### ??!
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+################################
+# GOlang
+################################
+export PATH=$PATH:/usr/local/go/bin

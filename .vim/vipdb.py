@@ -79,7 +79,9 @@ def get_location():
     #     if lastloc:
     #         return lastloc
     #     return None, None
-    return file('/tmp/vim.loc','r').read().split()
+    if os.path.isfile('/tmp/vim.loc'):
+        return file('/tmp/vim.loc','r').read().split()
+    return None, None
 
 def set_trace(frame=None):
     update_stdout()

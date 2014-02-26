@@ -74,8 +74,24 @@ bind b eval writebuf "exec /bin/bash -c 'xselscreen'"
 # bind b eval writebuf "!xclip -selection clipboard /tmp/screen-exchange"
 # bind y eval "exec sh -c 'xsel -bo >/tmp/screen-exchange'"
 #
-# split focus select1 and return to 0
-bind | eval "split -v" "focus" "select 1" "focus"
-
 # no wait for copy mode
 msgminwait 0
+
+# idea z vima, ze nie wazne, czy zrobie z shiftem czy bez shiftwa i czy wciaz trzymam ctrl
+
+# split focus select1 and return to 0
+bind | eval "split -v" "focus" "select 1" "focus"
+bind \ eval "split -v" "focus" "select 1" "focus"
+bind ^\ eval "split -v" "focus" "select 1" "focus"
+
+# change foucse on "f" - pasuje mi do komentady f w vimie i do polecania f w bashu
+bind f focus
+bind ^f focus
+
+# only current region (aka Q) - akcepts lower q and with control
+bind q only
+bind ^q only
+
+
+
+

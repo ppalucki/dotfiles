@@ -64,14 +64,29 @@ let g:pymode_folding = 0
 let g:pymode_indent = 0 
 let g:pymode_lint = 1
 let g:pymode_rope = 0
+" Show error message if cursor placed at the error line  *'g:pymode_lint_message'*
+let g:pymode_lint_message = 0
 " on save
-let g:pymode_lint_write = 0 
-let g:pymode_lint_onfly = 0
-let g:pymode_lint_checker = "pyflakes"
+" Check code on every save (if file has been modified)  *'g:pymode_lint_on_write'*
+let g:pymode_lint_on_write = 0
+" Check code on every save (every)                    *'g:pymode_lint_unmodified'*
+let g:pymode_lint_unmodified = 0
+" Check code when editting (onfly)                        *'g:pymode_lint_on_fly'*
+let g:pymode_lint_on_fly = 0
+
+" Default code checkers (you could set several)         *'g:pymode_lint_checkers'*
+" Values may be choosen from: `pylint`, `pep8`, `mccabe`, `pep257`, `pyflakes`.
+let g:pymode_lint_checkers = ["pyflakes"]
 " let g:pymode_lint_checker = "pylint"
 let g:pymode_lint_signs = 0
 let g:pymode_lint_config = 'pylint.rc2'
     
+
+
+
+
+
+
 "
 " PyMode Syntax Highlight
 "
@@ -120,7 +135,7 @@ function! PythonMappings()
 	nmap <buffer> <leader>id oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
 	nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>l :PyLint<cr>
+	nmap <buffer> <leader>l :PymodeLint<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
@@ -146,6 +161,12 @@ function! PythonMappings()
 endfunction
 au FileType python call PythonMappings()
 
+"----------------------- XML mappings
+function! XMLMappings()
+    vmap <buffer> gq :!xmllint --format -<cr>
+endfunction
+au FileType xml call XMLMappings()
+
 "------------------------ RUBY
 function! RubyMappings()
 	""" binding pry 
@@ -163,6 +184,43 @@ au FileType ruby call RubyMappings()
 
 " ruby/thor
 au BufRead,BufNewFile *.thor set filetype=ruby
+
+"------------------------ Golang
+function! GoMappings()
+	""" ruby run
+	" nmap <buffer> <F9> :up\|!go run %<cr> 
+	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
+	nmap <buffer> <leader>r <f9>
+	imap <buffer> <F9> <Esc><f9>
+	nmap <buffer> <leader><F9> :up\|Make<cr>
+    
+    map <leader>tp :up<bar>call ScreenShellSend("go run <c-r>%")<bar><cr>
+    """ navgigation goto
+    " map <leader>g <C-]>
+    nmap gd <C-]>
+
+    nmap K :Godoc<cr>
+
+    " compiler go
+
+    " autocmd FileType go autocmd BufWritePre <buffer> Fmt
+    
+    " make supertab works better
+    let g:SuperTabDefaultCompletionType = "context"
+
+    nnoremap <buffer> <Leader>a :exe 'Import ' . expand('<cword>')<CR>
+
+    " test current pkg
+    nmap <leader>tt :GoCurTest<cr>
+
+    nmap <silent> <leader>m :up\|make<cr>
+
+    nmap <buffer> <leader>w :silent up<cr>
+
+
+endfunction
+au FileType go call GoMappings()
+
 
 "----------------------------- OTHER hacks
 """ save shift (lost repeat of t,f,T,F)
@@ -257,11 +315,11 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!ctags -f tags --verbose=yes --recurse=yes --exclude=tmp --fields=zK . <cr>
-map <F8> :!ctags -f .tags --languages=HTML,Java,JavaScript,Python,Ruby --totals --verbose=no --recurse=yes --exclude=tmp --fields=zK . <cr>
+map <leader><F8> :!mkdir -p .tags;ctags -f .tags/tags --verbose=yes --recurse=yes --exclude=tmp --fields=zK . <cr>
+map <F8> :!mkdir -p .tags;ctags -f .tags/tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --fields=zK . <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
-au FileType python map <F8> :!ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .;fgrep -v kind:variable ._tags >.tags;rm ._tags<cr>
-au FileType ruby map <F8> :!ctags -f .tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK . <cr>
+au FileType python map <F8> :!mkdir -p .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .;fgrep -v kind:variable ._tags >.tags/tags;rm ._tags<cr>
+au FileType ruby map <F8> :!mkdir -p .tags;ctags -f .tags/tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK . <cr>
 au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
 
@@ -285,7 +343,8 @@ au FileType haskell call HaskellMappings()
 
   " \ 'args': '<ctrl-r>%',
 """ tags file
-set tags=.tags
+" specjalnie nizej w podkatalogu aby nie psulo mi wyszukiwania w pycharmie
+set tags=.tags/tags
 "set tags+=./.tags
 "set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
 "set tags+=$HOME/.vim/tags/python.ctags
@@ -304,6 +363,12 @@ endfunction
 au FileType rst call RstMappings()
 " let g:riv_link_cursor_hl=0
 
+" --------------------------- spell
+" fix na spell, ze spellcap mi nie oznacza eelementow, ktore maja nie poprawne
+" skladanie (duza litera na poaczatku)
+highlight SpellCap ctermbg=None
+" fixnij za pomoca pierwszego dopasowania
+nmap z9 1z=
 
 """ ------  Last position
 "This autocommand jumps to the last known position in a file just after
@@ -501,6 +566,7 @@ nmap <leader>tw viw<leader>ts
 """ Dispatch & Make
 
 " ORGinal nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
+if !has('python3')
 py <<EOF
 last_test_tag = None
 from vim import eval as e
@@ -528,6 +594,7 @@ def debuging_on():
     pass
 
 EOF
+endif
 
 " terminal yank test
 nmap <leader>ty :py make_current_test()<cr>
@@ -541,14 +608,18 @@ nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr
 """ pi_paren
 " bez oznaczania nawiasow
 let loaded_matchparen = 1
-
+" NoMatchParen
+set noshowmatch
 
 """ disable fold
 au FileType rst set nofoldenable
+" au FileType rst :NoMatchParen
+
 set nofoldenable
 au FileType python set nofoldenable
 au FileType python set foldmethod=manual
-
+" au FileType python :NoMatchParen
+" au FileType go :NoMatchParen
 
 """ RIV
 let g:riv_fold_auto_update = 0
@@ -868,6 +939,8 @@ autocmd FileType python setlocal completeopt-=preview
 noremap <Leader><Leader> <C-^>
 
 " Map Q to repeat the last recorded macro
+" exmode sie czasem jednak przydaje - a jednak nie dziala jak chce (lepiej
+" uzyc gQ
 map Q @@
 
 " undo-persistent
@@ -892,7 +965,7 @@ let g:pythontagimport_as = 0
 let g:pythontagimport_full  = 0
 let g:pythontagimport_prefix = 'getmedia.'
 
-" yank current buffer filname to register
+" yank current buffer filename to register
 " http://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
 nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
 
@@ -913,20 +986,36 @@ let g:pymode_virtualenv = 1
 " (flask)~/.virtualenvs/flask/lib$ ln -s python3.3 python2.7
 " poniewaz activate_this.py szukanie domylsnie katalogi site-packages w
 " lib/python%VERSION/site-packages i wtedy go nie ma !
-if has('pythonXXX')
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-    print 'activated: ', activate_this
-EOF
-endif
-
+" OBA SA CHYBA POPSUTE!
+" if !has('python3')
+" py << EOF
+" import os.path
+" import sys
+" import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"     project_base_dir = os.environ['VIRTUAL_ENV']
+"     sys.path.insert(0, project_base_dir)
+"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"     execfile(activate_this, dict(__file__=activate_this))
+"     print 'activated: ', activate_this
+" EOF
+" 
+" elseif has('python3')
+" 
+" py3 << EOF
+" import os.path
+" import sys
+" import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"     project_base_dir = os.environ['VIRTUAL_ENV']
+"     sys.path.insert(0, project_base_dir)
+"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"     # execfile(activate_this, dict(__file__=activate_this))
+"     exec(open(activate_this).read(), dict(__file__=activate_this))
+"     print('activated: ', activate_this)
+" EOF
+" 
+" endif
 "vimchat
 " let g:vimchat_buddylistwidth = 30 "width of buddy list, default is 30
 " let g:vimchat_logpath = path to store log files, default is ~/.vimchat/logs
@@ -945,14 +1034,16 @@ au FileType vim :nmap <F9> :up<cr>:%y<bar>@"<cr>
 au FileType vim :setlocal keywordprg=:help
 
 """ example of python
+if !has('python3')
 py <<EOF
 def testvima():
     import vim
     # print 'oto vim'
     # print vim.current.window
     # print vim.current.buffer
-    print vim.eval("tagbar#currenttag('%s','')")
+    print(vim.eval("tagbar#currenttag('%s','')"))
 EOF
+endif
 
 nmap <leader>k :py testvima()<cr>
 
@@ -1009,6 +1100,7 @@ map <Leader>xP2 <Plug>ScreenpasteGPut
 """ ------------------------------------------------------------
 """ -------------------- debuging ------------------------------
 """ ------------------------------------------------------------
+if !has('python3')
 py <<EOF
 
 # def send_line(line):
@@ -1056,13 +1148,23 @@ def debug_loc(cmd=None):
 
 EOF
 
+endif
+
+" go next
 nmap gn :py debug_loc('next')<cr>
+" go step (inside)
 nmap gs :py debug_loc('step')<cr>
 " nmap gu :py debug_loc('until')<cr>
 nmap gr :py debug_loc('return')<cr>
+" go location
 nmap gl :py debug_loc()<cr>
+" go up stack
 nmap gu :py debug_loc('up')<cr>
+" go bottom aka down stack
 nmap gb :py debug_loc('down')<cr>
+" go over line aka smart step
+nmap go :py debug_loc('until')<cr>
+nmap gj :call ScreenShellSend('jump ' . line('.'))<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 
 let g:COMMAND_MAP = {
@@ -1115,8 +1217,73 @@ set cryptmethod=blowfish
 
 " distraction mode litedfm
 nmap <leader>o :LiteDFMToggle<CR>
+let g:lite_dfm_left_offset = 22
 
 if has("gui_running")
     set mouse=a
+    " Toolbar
+    " set guioptions+=T 
 endif
 
+
+
+let g:lite_dfm_normal_bg_cterm = 232
+let g:lite_dfm_normal_bg_gui = '#abcabc'
+
+" calculator, calc
+" Then, just type 8*8<C-A> you will get 8*8 = 64
+ino <C-A> <C-O>yiW<End> = <C-R>=<C-R>0<CR>
+" or CTRL-R followed by = then, for example, 2+2 and press Enter.
+"
+"
+""" paredit
+
+let g:paredit_leader = ','
+let g:paredit_disable_clojure = 1
+
+""" clojure
+
+"----------------------- Clojure mappings
+function! ClojureMappings()
+    nmap <buffer> gd [<C-D>
+endfunction
+
+" ------------------------ tagbar go
+au FileType clojure call ClojureMappings()
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+" let g:ctrlp_buftag_ctags_bin='/home/ppalucki/workspace/goprojects/bin/gotags'
+"
+"
+let g:ctrlp_buftag_types = {
+\ 'go' : {
+  \ 'bin': 'ctags',
+  \ 'args': '-f - --sort=no --excmd=pattern --fields=nKs --language-force=go',
+  \ },
+\ }

@@ -67,7 +67,7 @@
 "           let g:python_path = ['/usr/lib/python2.4/site-packages/']
 "==================================================
 
-if v:version < 700
+if v:version < 700 || has('python3')
     finish
 endif
 
