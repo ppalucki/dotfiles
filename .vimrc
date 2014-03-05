@@ -197,7 +197,7 @@ function! GoMappings()
     map <leader>tp :up<bar>call ScreenShellSend("go run <c-r>%")<bar><cr>
     """ navgigation goto
     " map <leader>g <C-]>
-    nmap gd <C-]>
+    " nmap gd <C-]> # depracted by vim-godef
 
     nmap K :Godoc<cr>
 
@@ -211,12 +211,11 @@ function! GoMappings()
     nnoremap <buffer> <Leader>a :exe 'Import ' . expand('<cword>')<CR>
 
     " test current pkg
-    nmap <leader>tt :GoCurTest<cr>
+    nmap <leader>tt :GoTestVerbose<cr>
 
     nmap <silent> <leader>m :up\|make<cr>
 
     nmap <buffer> <leader>w :silent up<cr>
-
 
 endfunction
 au FileType go call GoMappings()
@@ -315,13 +314,20 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!mkdir -p .tags;ctags -f .tags/tags --verbose=yes --recurse=yes --exclude=tmp --fields=zK . <cr>
-map <F8> :!mkdir -p .tags;ctags -f .tags/tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --fields=zK . <cr>
+map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f .tags/tags --verbose=yes --recurse=yes --exclude=tmp --fields=zK . <cr>
+map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
-au FileType python map <F8> :!mkdir -p .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .;fgrep -v kind:variable ._tags >.tags/tags;rm ._tags<cr>
-au FileType ruby map <F8> :!mkdir -p .tags;ctags -f .tags/tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK . <cr>
+au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
+au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
+"
+""" tags file
+" specjalnie nizej w podkatalogu aby nie psulo mi wyszukiwania w pycharmie
+set tags=.tags/tags
+"set tags+=./.tags
+"set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
+"set tags+=$HOME/.vim/tags/python.ctags
 
 let g:ctrlp_buftag_types = {
 \'haskell' : {
@@ -341,13 +347,6 @@ endfunction
 au FileType haskell call HaskellMappings()
 " let g:riv_link_cursor_hl=0
 
-  " \ 'args': '<ctrl-r>%',
-""" tags file
-" specjalnie nizej w podkatalogu aby nie psulo mi wyszukiwania w pycharmie
-set tags=.tags/tags
-"set tags+=./.tags
-"set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
-"set tags+=$HOME/.vim/tags/python.ctags
 
 
 "" repeat last command
@@ -1287,3 +1286,12 @@ let g:ctrlp_buftag_types = {
   \ 'args': '-f - --sort=no --excmd=pattern --fields=nKs --language-force=go',
   \ },
 \ }
+
+
+
+set lazyredraw
+
+
+" godef
+let g:godef_split=0
+let g:godef_same_file_in_same_window=1
