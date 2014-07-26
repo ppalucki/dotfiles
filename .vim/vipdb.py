@@ -19,9 +19,9 @@ from ipdb.__main__ import Pdb, update_stdout, wrap_sys_excepthook, def_colors
 import sys
 # import zmq
 import os, time
-# from Queue import Queue, Empty 
+# from Queue import Queue, Empty
 # from threading import Thread
-# 
+#
 sock = None
 # queue = Queue()
 # sockname = 'tcp://127.0.0.1:5555'
@@ -38,7 +38,8 @@ def synchronize_with_editor(ip, filename, line, value):
         filename = filename.replace('.pyc', '.py')
 
     fn = os.path.join(os.getcwd(), filename)
-    file('/tmp/vim.loc', 'w').write('%s %i'%(fn, line))
+    if line:
+        file('/tmp/vim.loc', 'w').write('%s %i'%(fn, line))
     # sock.send('%s %i'%(fn, line))
     # print 'loc sent'
 
@@ -59,7 +60,7 @@ def synchronize_with_editor(ip, filename, line, value):
 #         while True:
 #             queue.put(sock.recv().split())
 #             time.sleep(1)
-# 
+#
 # def start_reader():
 #     ReaderThread().start() # thread
 
@@ -67,7 +68,7 @@ def get_location():
     # try:
     #     fn, line = queue.get_nowait()
     # except Empty:
-    #     return None, None 
+    #     return None, None
     # global sock, lastloc
     # if sock is None:
     #     serv_start()

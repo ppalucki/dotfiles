@@ -142,8 +142,11 @@ function! PythonMappings()
 	"" fix na diff doget - z brancha johntyree python-mode
 	" ounmap <silent> <buffer> o
 	"" python run
-	map <F9> :up<bar>!/usr/bin/env python %<CR>
+	nmap <buffer> <F9> :silent up\|QuickRun -split 10<cr>
+    vmap <buffer> <F9> :QuickRun -split 10<cr>
+	" map <F9> :up<bar>!/usr/bin/env python %<CR>
 	map <leader><F9> :up<bar>!/usr/bin/env python %  
+    "
     " map <leader>g :RopeGotoDefinition<cr>
     " works badly
     " inoremap <silent> <buffer> <tab> <C-R>=RopeCodeAssistInsertMode()<CR>
@@ -157,6 +160,7 @@ function! PythonMappings()
 
     " termianal python 
     map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
+    map <leader>ti :up<bar>call ScreenShellSend("ipython -i <c-r>%")<cr>
 
 endfunction
 au FileType python call PythonMappings()
@@ -211,7 +215,7 @@ function! GoMappings()
     nnoremap <buffer> <Leader>a :exe 'Import ' . expand('<cword>')<CR>
 
     " test current pkg
-    nmap <leader>tt :GoTestVerbose<cr>
+    nmap <leader>tt :up<bar>GoTestVerbose<cr>
 
     nmap <silent> <leader>m :up\|make<cr>
 
@@ -219,6 +223,12 @@ function! GoMappings()
 
 endfunction
 au FileType go call GoMappings()
+
+function! SQLMappings()
+    map gq :SQLUFormatter<cr>
+
+endfunction
+au FileType sql call SQLMappings()
 
 
 "----------------------------- OTHER hacks
@@ -314,8 +324,8 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f .tags/tags --verbose=yes --recurse=yes --exclude=tmp --fields=zK . <cr>
-map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --fields=zK .. <cr>
+map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f .tags/tags --verbose=yes --recurse=yes --exclude=tmp --exclude=rhodecode/lib/dbmigrate -fields=zK . <cr>
+map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
@@ -787,6 +797,7 @@ set modeline
 
 """""""""""" mkd - markdown & textile
 " surround with asterisk
+" bold/em
 au FileType mkd set nofoldenable
 au FileType mkd nmap <leader>e ysiw*
 au FileType mkd vmap <leader>e S*
@@ -798,6 +809,15 @@ au FileType mkd nmap ds* F*xf*xb
 au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
 au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
 
+au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
+au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
+
+" zwykly markdowna
+au FileType markdown nmap <leader>e ysiw*
+au FileType markdown vmap <leader>e S*
+au FileType markdown nmap <leader>E ,el,e
+au FileType markdown vmap <leader>E ,el,e
+au FileType markdown nmap ds* F*xf*xb
 
 " testtile
 au FileType textile nmap <leader>e ysiw*
@@ -808,7 +828,9 @@ au FileType textile nmap ds* F*xf*xb
 
 " zrob tabele |adsaa|asdfasd|asdfasdf| dla redmine na zaznaczonym obszarze!
 " redmine TABLE
-au FileType textile vmap <leader>T :s/;/\|/g<cr>gv:norm A\|<cr>gv:norm I\|<cr>
+" au FileType textile vmap <leader>T :s/;/\|/g<cr>gv:norm A\|<cr>gv:norm I\|<cr>
+" au FileType textile vmap <leader>C :s/,/\|/g<cr>gv:s/"//g<cr>gv:norm A\|<cr>gv:norm I\|<cr>
+au FileType textile vmap <leader>T :!csv_to_redmine.py<cr>
 
 """ ------ highlith identifiaction
 """ http://vim.wikia.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
@@ -1148,7 +1170,8 @@ def debug_loc(cmd=None):
 EOF
 
 endif
-
+" go cOntinue
+nmap go :py debug_loc('continue')<cr>
 " go next
 nmap gn :py debug_loc('next')<cr>
 " go step (inside)
@@ -1161,8 +1184,8 @@ nmap gl :py debug_loc()<cr>
 nmap gu :py debug_loc('up')<cr>
 " go bottom aka down stack
 nmap gb :py debug_loc('down')<cr>
-" go over line aka smart step
-nmap go :py debug_loc('until')<cr>
+" go untIl 
+nmap gi :py debug_loc('until')<cr>
 nmap gj :call ScreenShellSend('jump ' . line('.'))<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 
@@ -1220,10 +1243,15 @@ let g:lite_dfm_left_offset = 22
 
 if has("gui_running")
     set mouse=a
+    " for better scrolling when using the mouse
+    " set scrolloff
     " Toolbar
     " set guioptions+=T 
 endif
 
+" i like mouse too much :p
+set mouse=a
+set scrolloff=6
 
 
 let g:lite_dfm_normal_bg_cterm = 232
@@ -1231,7 +1259,7 @@ let g:lite_dfm_normal_bg_gui = '#abcabc'
 
 " calculator, calc
 " Then, just type 8*8<C-A> you will get 8*8 = 64
-ino <C-A> <C-O>yiW<End> = <C-R>=<C-R>0<CR>
+inoremap <C-A> <C-O>yiW<End> = <C-R>=<C-R>0<CR>
 " or CTRL-R followed by = then, for example, 2+2 and press Enter.
 "
 "
@@ -1295,3 +1323,46 @@ set lazyredraw
 " godef
 let g:godef_split=0
 let g:godef_same_file_in_same_window=1
+
+
+""" wymaga align
+" sqlutils i sqluformatter
+let g:sqlutil_align_comma = 1 " tnij po przecinku
+let g:sqlutil_align_first_word = 1  
+let g:sqlutil_align_keyword_right = 0 " wyrownaj keywords do prawej
+let g:sqlutil_keyword_case = '\L' " zmieni wilkosc selectow
+let g:sqlutil_align_where = 0 " w where = wartosc wyrownaj
+let g:sqlutil_stmt_keywords = 'select,insert,update,delete,with,merge,join,limit,group,union,on'
+
+" ignore all mappings from align plugn
+let g:loaded_AlignMapsPlugin = "v42"
+
+
+" convert timestamp ct
+nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r>")<cr>
+
+" python h
+let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
+
+" c mappngs
+" clang
+function CMappings()
+
+    nmap <F9> :up<cr>:QuickRun<cr>
+    let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+    nmap gd <c-]>
+
+
+endfunction
+
+let g:clang_close_preview = 1
+
+au FileType c call CMappings()
+
+let g:quickrun_config = {}
+
+let g:quickrun_config.c = {
+      \ 'type': 'clang',
+      \ 'cmdopt': '`python-config --cflags --ldflags`',
+      \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
+      \ }

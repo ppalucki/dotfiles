@@ -39,8 +39,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 #############################################
 alias cdgm="workon getmedia;title getmedia"
 alias cdgm2="workon getmedia2;title getmedia"
-alias cdexp="workon getmedia;cd ~/workspace/exp/getmedia;title exp"
-alias cdvpn="workon getmedia;cd ~/workspace/vpn/getmedia;title vpn"
+alias cdexp="workon getmedia;cd ~/workspace/exp/getmedia;title exp;export PYTHONPATH=/home/ppalucki/workspace/exp"
+alias cdvpn="workon getmedia;cd ~/workspace/vpn/getmedia;title vpn;export PYTHONPATH=/home/ppalucki/workspace/vpn"
 alias cdmm="cd ~/workspace/muzomedia; title muzomedia"
 alias cdgg='workon greengate;title greengate'
 alias cdt='workon testy'

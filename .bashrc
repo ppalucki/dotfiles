@@ -328,4 +328,5 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 # GOlang
 ################################
 export PATH=$PATH:/usr/local/go/bin
+export GOROOT=/usr/local/go
 

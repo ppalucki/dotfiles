@@ -12,7 +12,7 @@ try:
             cmd = 'v = Vod.objects.get_vod_by_provider_file_id(%i)'%int(hashkey_or_provider_file_id)
         else:
             cmd = "v = Vod.objects.get_vod_by_hash('%s')"%(hashkey_or_provider_file_id)
-        print cmd
+        print (cmd)
         ip.ex(cmd)
     del gv
 
@@ -22,7 +22,7 @@ try:
         ip = get_ipython()
         ip.ex('from getmedia.system.allimports import *')
         cmd = 'c = get_channel_or_schannel_by_id(%i, show_test_live=True)'%int(channel_id)
-        print cmd
+        print (cmd)
         ip.ex(cmd)
     del gl
 
@@ -32,7 +32,7 @@ try:
         ip = get_ipython()
         ip.ex('from getmedia.system.allimports import *')
         cmd = "g = AccessGroup.get_by_code('%s')"%accessgroup_code
-        print cmd
+        print (cmd)
         ip.ex(cmd)
     del gag
 
@@ -45,7 +45,7 @@ try:
             cmd = 'u = get_user(%i)'%int(username_or_id)
         else:
             cmd = "u = get_user_for_username('%s')"%username_or_id
-        print cmd
+        print (cmd)
         ip.ex(cmd)
     del gu
 

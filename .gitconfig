@@ -26,7 +26,7 @@
 	untracked = cyan
 
 [user]
-	name = Pawel Palucki\n
+	name = Pawel Palucki
 	email = pawel.palucki@redefine.pl
 
 [core]
@@ -42,7 +42,6 @@
     d = difftool
     branches = branch -vv
     branchesall = branch -a -vv
-    remotes = remote show origin
     co = checkout
     ciam = commit -a -m
     cim = commit -m
@@ -52,6 +51,12 @@
     stagingdiff = !comm -12 <(git branch --no-merged master) <(git branch --merged staging)
     mt = mergetool
     pullr = pull --rebase
+    # wg. ale nie dziala bo nie mam zsh http://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git
+	branchdiff = !sh -c \"git diff `git oldest-ancestor`..\"
+	branchlog = !sh -c \"git log `git oldest-ancestor`..\"
+	branchd = !sh -c \"git d `git oldest-ancestor`..\"
+	branchlg = !sh -c \"git lg `git oldest-ancestor`..\"
+	oldest-ancestor = !zsh -c 'diff --old-line-format= --new-line-format= <(git rev-list --first-parent \"${1:-master}\") <(git rev-list --first-parent \"${2:-HEAD}\") | head -1' -
 
 [diff]
     tool = vimdiff 
@@ -84,7 +89,7 @@
 
 
 [github]
-	user = sacre
+	user = ppalucki
 [guitool "Rebase onto..."]
     cmd = git rebase
     revprompt = yes

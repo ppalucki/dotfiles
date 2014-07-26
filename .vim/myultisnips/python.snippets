@@ -92,6 +92,11 @@ def ${1:foo}(${2}):
     ${3:pass}
 endsnippet
 
+snippet Test "TestCase class" b
+class ${1}TestCase(TestCase):
+	${3:pass}
+endsnippet
+
 snippet setup "TestCase setUp" b
 def setUp(self):
     super(${1}, self).setUp()
