@@ -64,6 +64,11 @@ parse_git_branch() {
 # (venv)blue(path)branch(red)$
 PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(parse_git_branch)\[\033[01;31m\]$\[\033[00m\] '
 
+###############################
+### git-completions
+###############################
+source /opt/local/share/bash-completion/completions/git
+
 
 ###############################
 ### bash history
@@ -88,6 +93,7 @@ shopt -s histappend                      # append to history, don't overwrite it
 ### VIM: default editor
 ###############################
 export EDITOR=vim
+# export GIT_EDITOR= 
 # vim for psql
 export PSQL_EDITOR="vi -c 'setf sql'"
 

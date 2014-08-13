@@ -38,6 +38,9 @@ set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%)
 " set nonumber
 
 """ ------- powerline
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 " inny colorscheme aby byla czarna lina przy vertical split
 let g:Powerline_colorscheme='skwp' 
 " wplywa na multipolcenie taloe jak leader \ev \es \s
@@ -46,13 +49,18 @@ set scrolloff=6
 
 """ -------- leader
 " let mapleader = ","
-let mapleader = " "
+" let mapleader = " " - zmiast tego musze uzywac tych dwoch lini ponizej, zeby
+" macvim nie czekaj na spacje po wcisnieciu
+" http://superuser.com/questions/693528/vim-is-there-a-downside-to-using-space-as-your-leader-key
+let mapleader = "\\"
+map <space> \
 " nmap , <space> # second leader key ! lepiej nie zeby sie odzwyaczic
 
 """--------- hidden allow edited buffers
 set hidden
 
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
+set clipboard=unnamed
 " set clipboard=autoselect
 
 """----------------------------- Python
@@ -1074,34 +1082,34 @@ let g:vimroom_sidebar_height=0
 let g:vimroom_background = "red"
 let g:vimroom_width = 120
 
-""" -------------- Unite
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" nnoremap ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap Ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
-" nnoremap Uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-nnoremap Ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-nnoremap Uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-nnoremap Uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap Ue :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-nnoremap Uc :<C-u>Unite -no-split -buffer-name=command  -start-insert command<cr>
-nnoremap Uf :<C-u>Unite -no-split -buffer-name=function  -start-insert function<cr>
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  " Play nice with supertab
-  let b:SuperTabDisabled=1
-  " Enable navigation with control-j and control-k in insert mode
-  " normal 
-  nmap <buffer> <ESC>      <Plug>(unite_exit)
-  nmap <buffer> <C-c>      <Plug>(unite_exit)
-  " insert
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  imap <buffer> jj      <Plug>(unite_insert_leave)
-  imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-endfunction
+" """ -------------- Unite
+" let g:unite_source_history_yank_enable = 1
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" " nnoremap ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+" nnoremap Ut :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec<cr>
+" " nnoremap Uf :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+" nnoremap Ur :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+" nnoremap Uo :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+" nnoremap Uy :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+" nnoremap Ue :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
+" nnoremap Uc :<C-u>Unite -no-split -buffer-name=command  -start-insert command<cr>
+" nnoremap Uf :<C-u>Unite -no-split -buffer-name=function  -start-insert function<cr>
+" 
+" " Custom mappings for the unite buffer
+" autocmd FileType unite call s:unite_settings()
+" function! s:unite_settings()
+"   " Play nice with supertab
+"   let b:SuperTabDisabled=1
+"   " Enable navigation with control-j and control-k in insert mode
+"   " normal 
+"   nmap <buffer> <ESC>      <Plug>(unite_exit)
+"   nmap <buffer> <C-c>      <Plug>(unite_exit)
+"   " insert
+"   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+"   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+"   imap <buffer> jj      <Plug>(unite_insert_leave)
+"   imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+" endfunction
 
 """ ------------- yankring
 let g:yankring_replace_n_pkey = '<c-n>'

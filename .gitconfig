@@ -27,10 +27,10 @@
 
 [user]
 	name = Pawel Palucki
-	email = pawel.palucki@redefine.pl
+	email = pawel.palucki@gmail.com
 
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/ppalucki/.gitignore_global
 	autocrlf = input
 
 
@@ -101,3 +101,9 @@
     cmd = git rebase --abort
 [guitool "Pull with Rebase"]
     cmd = git pull --rebase
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
