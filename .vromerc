@@ -1,5 +1,5 @@
 " normalne wyszukiwanie
-unmap <C-f>
+“ unmap <C-f> - koliduje z cmd-f na osx
 " pokaz zrodlo
 unmap <M-d>
 " downloaded files
