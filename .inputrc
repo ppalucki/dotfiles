@@ -1,7 +1,15 @@
-# alternate mappings for "page up" and "page down" to search the history
-"\e[5~": history-search-backward
-"\e[6~": history-search-forward
+## alternate mappings for alt-p/alt-n for search the history
+"\ep": history-search-backward
+"\en": history-search-forward
 
-# ctrl+left, ctrl+right for words
+## alternate mappings for "page up" and "page down" to search the history
+# "\e[5~": history-search-backward
+# "\e[6~": history-search-forward
+
+## ctrl+left, ctrl+right for words
 #"\e[1;5C": forward-word
 #"\e[1;5D": backward-word
+
+## because mac os is by default case-insensitve but case-preserving
+# http://superuser.com/questions/90196/case-insensitive-tab-completion-in-bash
+set completion-ignore-case on
