@@ -26,7 +26,7 @@ alias ll='ls -alF'
 #############################################
 alias cdgm="workon getmedia;title getmedia"
 alias cdw='cd ~/workspace'
-alias cdd="cd ~/~ownloads/"
+alias cdd='cd ~/Downloads'
 alias cdg="export GOPATH=~/workspace/goprojects ; cd \$GOPATH/src ; export PATH=\$PATH:\$GOPATH/bin"
-alias cdvim="cd ~/.vim/bundle"
+alias cdvim='cd ~/.vim/bundle'
 
