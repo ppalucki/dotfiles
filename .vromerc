@@ -8,6 +8,11 @@ unmap <C-j>
 " nomrlane bookmark
 unmap <C-b>
 
+unimap <M-l>
+unimap <M-o>
+unimap <M-z>
+unimap <M-e>
+
 " skasuj zakladke
 map x dc
 " przywroc zakladke
