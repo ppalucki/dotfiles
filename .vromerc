@@ -9,10 +9,10 @@ unmap <C-j>
 unmap <C-b>
 
 " polskie znaki w trybie insert
-unimap <M-l>
-unimap <M-o>
-unimap <M-z>
-unimap <M-e>
+iunmap <M-l>
+iunmap <M-o>
+iunmap <M-z>
+iunmap <M-e>
 
 " skasuj zakladke
 map x dc
