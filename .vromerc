@@ -10,6 +10,12 @@ unmap <C-j>
 " nomrlane bookmark
 unmap <C-b>
 
+" polskie znaki w trybie insert
+iunmap <M-l>
+iunmap <M-o>
+iunmap <M-z>
+iunmap <M-e>
+
 " skasuj zakladke
 map x dc
 " przywroc zakladke
