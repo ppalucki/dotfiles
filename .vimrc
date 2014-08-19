@@ -551,6 +551,7 @@ let g:ConqueTerm_ReadUnfocused = 1
 " nie zamykaj screena bo czesto zabija mi dodatwkoeo konsole
 " domsylnie kiluje wszystkie screene! a bez tego musze dwa razy zamykac vima
 " let g:ScreenShellQuitOnVimExit = 0 
+let g:ScreenImpl = 'GnuScreen'
 let g:ScreenShellHeight = 10
 let g:ScreenShellGnuScreenVerticalSupport = 'native'
 " terminal bash vertical

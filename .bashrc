@@ -1,4 +1,5 @@
-export PATH=$PATH:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+# export PATH=$PATH:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+export PATH=/usr/local/bin:$PATH
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -17,7 +18,6 @@ shopt -s checkwinsize
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias vim='mvim -v'
 alias vi='vim'
 
 # Alias definitions.
@@ -28,6 +28,10 @@ fi
 # enable programmable completion features 
 if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
 . /opt/local/etc/profile.d/bash_completion.sh
+fi
+
+if [ -f ~/.profile ]; then
+    . ~/.profile
 fi
 
 ###########################################
@@ -62,12 +66,18 @@ parse_git_branch() {
 
 # export PS1="\u@\h:\w\$(parse_git_branch)$ "
 # (venv)blue(path)branch(red)$
-PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(parse_git_branch)\[\033[01;31m\]$\[\033[00m\] '
+# PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(parse_git_branch)\[\033[01;31m\]$\[\033[00m\] '
+source /usr/local/etc/bash_completion.d/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM=auto
+PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(__git_ps1 "(%s)")\[\033[01;31m\]$\[\033[00m\] '
+
 
 ###############################
 ### git-completions
 ###############################
-source /opt/local/share/bash-completion/completions/git
+source /usr/local/etc/bash_completion.d/git-completion.bash
+
 
 
 ###############################
