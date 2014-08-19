@@ -8,6 +8,7 @@ unmap <C-j>
 " nomrlane bookmark
 unmap <C-b>
 
+" polskie znaki w trybie insert
 unimap <M-l>
 unimap <M-o>
 unimap <M-z>
