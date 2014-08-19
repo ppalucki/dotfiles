@@ -71,6 +71,9 @@ source /usr/local/etc/bash_completion.d/git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUPSTREAM=auto
 PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(__git_ps1 "(%s)")\[\033[01;31m\]$\[\033[00m\] '
+## slighty faster versin with status color hints
+# export GIT_PS1_SHOWCOLORHINTS=1
+# PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
 
 
 ###############################
