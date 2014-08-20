@@ -1375,3 +1375,11 @@ let g:quickrun_config.c = {
       \ 'cmdopt': '`python-config --cflags --ldflags`',
       \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
       \ }
+
+
+""" vim-simpledb remapping
+" tutaj nie dziala wiec trzeba wyedytowac sciezke
+"/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
+" vnoremap <buffer> <enter> :SimpleDBExecuteSql<cr>
+" nnoremap <buffer> <leader><enter> m':SimpleDBExecuteSql <cr>g`'
+" nnoremap <buffer> <enter> m':'{,'}SimpleDBExecuteSql<cr>g`'
