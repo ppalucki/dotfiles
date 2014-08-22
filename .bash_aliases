@@ -16,10 +16,21 @@ alias pkille9='pkill -9 -ef'
 alias svi='set -o vi'
 ### screen focus change w screen
 alias f="screen -X focus"
-alias ll='ls -alF'
-# ls i utilki 
-#alias ll='ls -l'
-#alias ls='ls --color=auto'
+
+### grep 
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+### fix ack-grep dla vim i dla mnie
+alias ack-grep='ack'
+
+### ll
+alias ll='ls -alFG'
+alias ls='ls -FG'
+
+### vim
+alias vi='vim'
 
 #############################################
 ### ALIASES cd

@@ -15,11 +15,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-alias vi='vim'
-alias ack-grep='ack'
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then

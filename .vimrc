@@ -1,8 +1,84 @@
-"""-------- pathogen
-execute pathogen#infect()
-syntax on
+""" ----------------------- VUNDLE -----------------------
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+""" GITHUBs
+Plugin 'Chiel92/vim-autoformat'
+Plugin 'Raimondi/delimitMate'
+Plugin 'Rykka/riv.vim'
+Plugin 'Shougo/neocomplcache.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'alfredodeza/coveragepy.vim'
+Plugin 'chrisbra/Recover.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'endel/ctrlp-filetype.vim'
+Plugin 'ervandew/screen'
+Plugin 'ervandew/supertab'
+Plugin 'fisadev/vim-ctrlp-cmdpalette'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'ivalkeen/vim-simpledb'
+Plugin 'jasoncodes/ctrlp-modified.vim'
+Plugin 'kaneshin/ctrlp-filetype'
+Plugin 'kaneshin/ctrlp-git'
+Plugin 'kien/ctrlp.vim'
+Plugin 'klen/python-mode'
+Plugin 'majutsushi/tagbar'
+Plugin 'mileszs/ack.vim'
+Plugin 'mkitt/tabline.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'sjl/gundo.vim'
+Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'thinca/vim-visualstar'
+Plugin 'tlvince/vim-compiler-python'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-scripts/ctrlp-tjump'
+Plugin 'vim-scripts/screenpaste.vim'
+Plugin 'xolox/vim-misc'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Avoid a name conflict with L9
+"Plugin 'user/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+""" ----------------------- END OF VUNDLE -----------------------
+
+
+""" ---------- core settings!
 filetype plugin indent on
-:Helptags
+syntax on
 
 """ -------- GUI --------------
 set gfn=Bitstream\ Vera\ Sans\ Mono\ for\ Powerline\ 9
@@ -90,6 +166,7 @@ let g:pymode_lint_signs = 0
 let g:pymode_lint_config = 'pylint.rc2'
     
 
+let g:pymode_options_max_line_length = 0
 
 
 
@@ -1221,7 +1298,8 @@ let no_flake8_maps=1
 " uzyj ,L dla pylinta, ,l dla call Flake8 ,C-l dla SyntasticCheck
 nmap <leader><C-l> :SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
-let g:syntastic_quiet_warnings=0
+let g:syntastic_quiet_messages = {'level': 'warnings'}
+
 let g:syntastic_mode_map = { 'mode': 'active' }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 let g:syntastic_python_checkers = ['python', 'flake8']

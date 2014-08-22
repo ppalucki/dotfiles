@@ -1,0 +1,10 @@
+# coding: utf-8
+folder = get_ipython().getoutput(u'ls -1')
+out = []
+for f in folder:
+    l = get_ipython().getoutput(u'cd $f && git remote -v')
+    out.append(l)
+
+out = [x.fields(1)[0] for x in out]
+out = [x.split('github.com')[1].replace('.git','') for x in out if 'github.com' in x]
+print '\n'.join(out)
