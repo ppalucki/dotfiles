@@ -19,6 +19,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias vi='vim'
+alias ack-grep='ack'
 
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
@@ -208,8 +209,12 @@ export RUBY_HEAP_FREE_MIN=500000
 ########################################
 ## UTILITY FUNCTIONS
 ########################################
+# function title {
+# echo -en "\033]2;$1\007"
+# }
+
 function title {
-echo -en "\033]2;$1\007"
+    echo -ne "\033]0;"$*"\007"
 }
 
 ########################################
