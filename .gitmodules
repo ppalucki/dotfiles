@@ -139,3 +139,9 @@
 [submodule ".vim/bundle/vim-simpledb"]
 	path = .vim/bundle/vim-simpledb
 	url = https://github.com/ivalkeen/vim-simpledb.git
+[submodule ".vim/bundle/Vundle.vim"]
+	path = .vim/bundle/Vundle.vim
+	url = https://ppalucki@github.com/gmarik/Vundle.vim.git
+[submodule ".vim/bundle/gundo.vim"]
+	path = .vim/bundle/gundo.vim
+	url = https://ppalucki@github.com/sjl/gundo.vim.git
