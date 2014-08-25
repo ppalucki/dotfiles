@@ -22,9 +22,14 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 # enable programmable completion features 
-if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
-. /opt/local/etc/profile.d/bash_completion.sh
-fi
+# if [ -f /opt/local/etc/profile.d/bash_completion.sh ]; then
+# . /opt/local/etc/profile.d/bash_completion.sh
+# fi
+
+
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
 
 if [ -f ~/.profile ]; then
     . ~/.profile
@@ -281,5 +286,8 @@ NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
 # GOlang
 ################################
 #export PATH=$PATH:/usr/local/go/bin
-#export GOROOT=/usr/local/go
+export GOROOT=/usr/local/opt/go/libexec/
+export GOPATH=/Users/ppalucki/workspace/
+export PATH=$PATH:$GOROOT/bin
+source /usr/local/etc/bash_completion.d/go-completion.bash
 

@@ -52,6 +52,9 @@ Plugin 'vim-scripts/ctrlp-tjump'
 Plugin 'vim-scripts/screenpaste.vim'
 Plugin 'xolox/vim-misc'
 
+" GoLang development
+Plugin 'fatih/vim-go'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
