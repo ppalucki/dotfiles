@@ -1461,6 +1461,10 @@ let g:quickrun_config.c = {
 """ vim-simpledb remapping
 " tutaj nie dziala wiec trzeba wyedytowac sciezke
 "/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
-" vnoremap <buffer> <enter> :SimpleDBExecuteSql<cr>
-" nnoremap <buffer> <leader><enter> m':SimpleDBExecuteSql <cr>g`'
-" nnoremap <buffer> <enter> m':'{,'}SimpleDBExecuteSql<cr>g`'
+function SQLMapping()
+    vnoremap <buffer> <enter> :SimpleDBExecuteSql<cr>
+    nnoremap <buffer> <leader><enter> m':SimpleDBExecuteSql <cr>g`'
+    nnoremap <buffer> <enter> m':'{,'}SimpleDBExecuteSql<cr>g`'
+endfunction
+
+au FileType sql call SQLMapping()

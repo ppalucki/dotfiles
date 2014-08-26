@@ -145,3 +145,6 @@
 [submodule ".vim/bundle/gundo.vim"]
 	path = .vim/bundle/gundo.vim
 	url = https://ppalucki@github.com/sjl/gundo.vim.git
+[submodule ".vim/bundle/vim-go"]
+	path = .vim/bundle/vim-go
+	url = https://ppalucki@github.com/fatih/vim-go.git
