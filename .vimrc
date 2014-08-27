@@ -12,46 +12,72 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 """ GITHUBs
+" autoformatowanie zewnwtrznym programem
 Plugin 'Chiel92/vim-autoformat'
+" automatyczne zakmykanie nawiasow
 Plugin 'Raimondi/delimitMate'
+" obsluge ReST
 Plugin 'Rykka/riv.vim'
+" jakies lepsze uzupelenianien
 Plugin 'Shougo/neocomplcache.vim'
+" snippets
 Plugin 'SirVer/ultisnips'
-Plugin 'alfredodeza/coveragepy.vim'
+" lepsze okno dialogowe przy otwieraniu zepsutych plikow
 Plugin 'chrisbra/Recover.vim'
-Plugin 'davidhalter/jedi-vim'
+" ctrlp - plugins
+Plugin 'kien/ctrlp.vim'
 Plugin 'endel/ctrlp-filetype.vim'
-Plugin 'ervandew/screen'
-Plugin 'ervandew/supertab'
 Plugin 'fisadev/vim-ctrlp-cmdpalette'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'ivalkeen/vim-simpledb'
 Plugin 'jasoncodes/ctrlp-modified.vim'
 Plugin 'kaneshin/ctrlp-filetype'
 Plugin 'kaneshin/ctrlp-git'
-Plugin 'kien/ctrlp.vim'
-Plugin 'klen/python-mode'
-Plugin 'majutsushi/tagbar'
-Plugin 'mileszs/ack.vim'
-Plugin 'mkitt/tabline.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'sjl/gundo.vim'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'thinca/vim-visualstar'
-Plugin 'tlvince/vim-compiler-python'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/ctrlp-tjump'
-Plugin 'vim-scripts/screenpaste.vim'
+" screensend/screenattach
+Plugin 'ervandew/screen'
+" wszystko pod tabem
+Plugin 'ervandew/supertab'
+" colorschemes 
+Plugin 'flazz/vim-colorschemes'
+" PYTHON-related
+Plugin 'klen/python-mode'
+Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'alfredodeza/coveragepy.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'tlvince/vim-compiler-python'
+" jedi-py dla vim
+Plugin 'davidhalter/jedi-vim'
+" SQL execute
+Plugin 'ivalkeen/vim-simpledb'
+" tagbar
+Plugin 'majutsushi/tagbar'
+" nerdtree
+Plugin 'scrooloose/nerdtree'
+" ack-grep
+Plugin 'mileszs/ack.vim'
+" syntastic - multilanguage linter
+Plugin 'scrooloose/syntastic'
+" graphical gundo
+Plugin 'sjl/gundo.vim'
+" ???
+Plugin 'mkitt/tabline.vim'
+Plugin 'thinca/vim-visualstar'
+" dependensceies ???
 Plugin 'xolox/vim-misc'
-
+" comment with gcc
+Plugin 'tomtom/tcomment_vim'
+" uruchamianie w tle
+Plugin 'tpope/vim-dispatch'
+" GIT
+Plugin 'tpope/vim-fugitive'
+" ruby/RAILS
+Plugin 'tpope/vim-rails'
+" better repeats
+Plugin 'tpope/vim-repeat'
+" surround
+Plugin 'tpope/vim-surround'
+" better paste from screen (with leader+p)
+Plugin 'vim-scripts/screenpaste.vim'
 " GoLang development
 Plugin 'fatih/vim-go'
 
