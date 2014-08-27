@@ -18,10 +18,10 @@ try:
 
     @register_line_magic
     def gl(channel_id):
-        """c = get_channel_or_schannel_by_id(channel_id)"""
+        """c = get_channel_by_id(channel_id)"""
         ip = get_ipython()
         ip.ex('from getmedia.system.allimports import *')
-        cmd = 'c = get_channel_or_schannel_by_id(%i, show_test_live=True)'%int(channel_id)
+        cmd = 'c = get_channel_by_id(%i, show_test_live=True)'%int(channel_id)
         print (cmd)
         ip.ex(cmd)
     del gl
