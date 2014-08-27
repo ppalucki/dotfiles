@@ -69,7 +69,7 @@ parse_git_branch() {
 # (venv)blue(path)branch(red)$
 # PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(parse_git_branch)\[\033[01;31m\]$\[\033[00m\] '
 source /usr/local/etc/bash_completion.d/git-prompt.sh
-export GIT_PS1_SHOWDIRTYSTATE=1
+# export GIT_PS1_SHOWDIRTYSTATE=1
 # export GIT_PS1_SHOWUPSTREAM=auto # TO SLOW
 PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(__git_ps1 "(%s)")\[\033[01;31m\]$\[\033[00m\] '
 ## slighty faster versin with status color hints
