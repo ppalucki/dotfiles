@@ -151,3 +151,6 @@
 [submodule ".vim/bundle/vim-ctrlp-tjump"]
 	path = .vim/bundle/vim-ctrlp-tjump
 	url = https://ppalucki@github.com/ivalkeen/vim-ctrlp-tjump.git
+[submodule ".vim/bundle/neocomplete.vim"]
+	path = .vim/bundle/neocomplete.vim
+	url = https://ppalucki@github.com/Shougo/neocomplete.vim.git
