@@ -148,3 +148,6 @@
 [submodule ".vim/bundle/vim-go"]
 	path = .vim/bundle/vim-go
 	url = https://ppalucki@github.com/fatih/vim-go.git
+[submodule ".vim/bundle/vim-ctrlp-tjump"]
+	path = .vim/bundle/vim-ctrlp-tjump
+	url = https://ppalucki@github.com/ivalkeen/vim-ctrlp-tjump.git
