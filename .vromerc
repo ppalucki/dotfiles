@@ -1,14 +1,22 @@
+""" bash shortcuts for edition
+" alt-f - forward word
+imap <M-f> <M-l>
+" alt-b - backward word
+imap <M-b> <M-h>
+" ctrl-w - delete back word
+imap <C-w> <M-y>
+
 " normalne wyszukiwanie
-unmap <C-f> 
+"unmap <C-f> 
 " koliduje z cmd-f na osx
 unmap <M-f> 
 " pokaz zrodlo
-unmap <M-d>
+"unmap <M-d>
 " downloaded files
-unmap <C-j>
+"unmap <C-j>
 " unmap <C-u>
 " nomrlane bookmark
-unmap <C-b>
+"unmap <C-b>
 
 " polskie znaki w trybie insert
 iunmap <M-l>
