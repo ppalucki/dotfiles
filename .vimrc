@@ -6,7 +6,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" call vundle#begin('/Users/ppalucki/.vim/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -19,7 +19,9 @@ Plugin 'Raimondi/delimitMate'
 " obsluge ReST
 Plugin 'Rykka/riv.vim'
 " jakies lepsze uzupelenianien
-Plugin 'Shougo/neocomplcache.vim'
+" Plugin 'Shougo/neocomplcache.vim'
+" gdy mam lua to lepsze jest
+Plugin 'Shougo/neocomplete.vim'
 " snippets
 Plugin 'SirVer/ultisnips'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
@@ -32,7 +34,8 @@ Plugin 'jasoncodes/ctrlp-modified.vim'
 Plugin 'kaneshin/ctrlp-filetype'
 Plugin 'kaneshin/ctrlp-git'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'vim-scripts/ctrlp-tjump'
+" Plugin 'vim-scripts/ctrlp-tjump'
+Plugin 'ivalkeen/vim-ctrlp-tjump'
 " screensend/screenattach
 Plugin 'ervandew/screen'
 " wszystko pod tabem
@@ -438,7 +441,7 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f .tags/tags --verbose=yes --recurse=yes --exclude=tmp --exclude=rhodecode/lib/dbmigrate -fields=zK . <cr>
+map <leader><F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp . <cr>
 map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
@@ -448,7 +451,7 @@ au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
 "
 """ tags file
 " specjalnie nizej w podkatalogu aby nie psulo mi wyszukiwania w pycharmie
-set tags=.tags/tags
+set tags=.tags/tags,.tags
 "set tags+=./.tags
 "set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
 "set tags+=$HOME/.vim/tags/python.ctags
@@ -1000,7 +1003,9 @@ let g:ctrlp_match_window_bottom = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '\v(\.git)'
 
+" ctrl tjump
 nmap <c-]> :CtrlPtjump<cr>
+let g:ctrlp_tjump_only_silent = 1
 
 " repeat last movement
 noremap \ ;
