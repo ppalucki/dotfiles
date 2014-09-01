@@ -12,6 +12,8 @@ iunmap <M-o>
 iunmap <M-z>
 iunmap <M-e>
 iunmap <M-n>
+iunmap <M-a>
+
 
 " restore deleted tab
 map X u
