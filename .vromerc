@@ -6,10 +6,9 @@ imap <M-b> <M-h>
 " ctrl-w - delete back word
 imap <C-w> <M-y>
 
-" normalne wyszukiwanie
-"unmap <C-f> 
 " koliduje z cmd-f na osx
 unmap <M-f> 
+
 " pokaz zrodlo
 "unmap <M-d>
 " downloaded files
