@@ -1,39 +1,29 @@
-""" bash shortcuts for edition
-" alt-f - forward word
+" dzialajce cmd-f (szukaj)
+unmap <M-f>
+
+" insert mode (next word, backward word, delete back word)
 imap <M-f> <M-l>
-" alt-b - backward word
 imap <M-b> <M-h>
-" ctrl-w - delete back word
 imap <C-w> <M-y>
 
-" koliduje z cmd-f na osx
-unmap <M-f> 
-
-" pokaz zrodlo
-"unmap <M-d>
-" downloaded files
-"unmap <C-j>
-" unmap <C-u>
-" nomrlane bookmark
-"unmap <C-b>
-
-" polskie znaki w trybie insert
+" polish characters
 iunmap <M-l>
 iunmap <M-o>
 iunmap <M-z>
 iunmap <M-e>
+iunmap <M-n>
 
-" skasuj zakladke
-map x dc
-" przywroc zakladke
+" restore deleted tab
 map X u
 
-" Set your hintkeys instead of the default 0123456789
-" set hintkeys=0123456789
-
-" by default, hints use numbers. You can have both numbers AND strings (view custom JS below). 
 " Or you can use strings only as hints and overwrite the number commands
 set useletters=0
 
 " Disable Vrome in those sites, Multiple URLs can be separated with ','
 set disablesites=mail.google.com, reader.google.com, www.epochconverter.com, triton.ironhelmet.com
+
+" Disable autocomplete
+set noautocomplete
+
+" Follow new opened tab or not. 1 follow, 0 doesn't
+set follow_new_tab=0
