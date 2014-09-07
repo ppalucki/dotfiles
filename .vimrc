@@ -12,8 +12,8 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 """ GITHUBs
-" autoformatowanie zewnwtrznym programem - gq
-Plugin 'Chiel92/vim-autoformat'
+" autoformatowanie zewnwtrznym programem - gq - nie dziala na osx
+" Plugin 'Chiel92/vim-autoformat' 
 " automatyczne zakmykanie nawiasow
 Plugin 'Raimondi/delimitMate'
 " obsluge ReST
@@ -43,8 +43,6 @@ Plugin 'kien/ctrlp.vim'
 " Plugin 'vim-scripts/ctrlp-tjump'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
 
-" screensend/screenattach
-Plugin 'ervandew/screen'
 " wszystko pod tabem
 Plugin 'ervandew/supertab'
 " colorschemes 
@@ -88,6 +86,9 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
 " surround
 Plugin 'tpope/vim-surround'
+" screensend/screenattach - because of osx path_max limit breaks Vim
+" runtimepath
+Plugin 'ervandew/screen'
 " better paste from screen (with leader+p)
 Plugin 'vim-scripts/screenpaste.vim'
 " GoLang development
