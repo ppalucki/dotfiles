@@ -69,9 +69,11 @@ Plugin 'mileszs/ack.vim'
 Plugin 'scrooloose/syntastic'
 " graphical gundo
 Plugin 'sjl/gundo.vim'
-" ???
-Plugin 'mkitt/tabline.vim'
-Plugin 'thinca/vim-visualstar'
+"" lepsze title dla taby
+" Plugin 'mkitt/tabline.vim'
+"" In other words, you can search your selection text in |Visual-mode|.
+" Plugin 'thinca/vim-visualstar'
+"
 " dependensceies ???
 Plugin 'xolox/vim-misc'
 " comment with gcc
