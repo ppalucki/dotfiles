@@ -96,6 +96,12 @@ Plugin 'fatih/vim-go'
 " zamiennik powerline
 Plugin 'bling/vim-airline'
 
+" QuickRun
+Plugin 'thinca/vim-quickrun'
+
+" PyTest
+Plugin 'alfredodeza/pytest.vim'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -281,6 +287,10 @@ function! PythonMappings()
     vmap <buffer> <F9> :QuickRun -split 10<cr>
 	" map <F9> :up<bar>!/usr/bin/env python %<CR>
 	map <leader><F9> :up<bar>!/usr/bin/env python %  
+	map <buffer> <F10> :up<bar>Pytest file<cr>
+	map <buffer> <s-F10> :up<bar>Pytest function<cr>
+	map <buffer> <m-F10> :up<bar>Pytest method<cr>
+	map <buffer> <c-F10> :up<bar>Pytest class<cr>
     "
     " map <leader>g :RopeGotoDefinition<cr>
     " works badly
@@ -1355,7 +1365,7 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 let g:syntastic_mode_map = { 'mode': 'active' }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
-let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_always_populate_loc_list=1
 " let g:syntastic_python_flake8_args="--config=setup.cfg"
 
