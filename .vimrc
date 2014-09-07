@@ -12,7 +12,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 """ GITHUBs
-" autoformatowanie zewnwtrznym programem
+" autoformatowanie zewnwtrznym programem - gq
 Plugin 'Chiel92/vim-autoformat'
 " automatyczne zakmykanie nawiasow
 Plugin 'Raimondi/delimitMate'
@@ -26,16 +26,23 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'SirVer/ultisnips'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
 Plugin 'chrisbra/Recover.vim'
-" ctrlp - plugins
+
+"""" ctrlp and plugins
 Plugin 'kien/ctrlp.vim'
-Plugin 'endel/ctrlp-filetype.vim'
-Plugin 'fisadev/vim-ctrlp-cmdpalette'
-Plugin 'jasoncodes/ctrlp-modified.vim'
-Plugin 'kaneshin/ctrlp-filetype'
-Plugin 'kaneshin/ctrlp-git'
-Plugin 'tacahiroy/ctrlp-funky'
+"" This plugin allow you to use CtrlP finder to execute setfiletype easily - :CtrlPFiletype
+" Plugin 'endel/ctrlp-filetype.vim' 
+"" This extension adds a new CtrlP command, the :CtrlPCmdPalette, which allows you to find and run vim commands (internal or custom).
+" Plugin 'fisadev/vim-ctrlp-cmdpalette'
+"" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
+" Plugin 'jasoncodes/ctrlp-modified.vim'
+"" GIT related: branch, diff, log
+" Plugin 'kaneshin/ctrlp-git'
+"" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
+" Plugin 'tacahiroy/ctrlp-funky'
+"" tjump
 " Plugin 'vim-scripts/ctrlp-tjump'
 Plugin 'ivalkeen/vim-ctrlp-tjump'
+
 " screensend/screenattach
 Plugin 'ervandew/screen'
 " wszystko pod tabem
@@ -83,6 +90,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-scripts/screenpaste.vim'
 " GoLang development
 Plugin 'fatih/vim-go'
+" zamiennik powerline
+Plugin 'bling/vim-airline'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -146,11 +155,17 @@ set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%)
 " set nonumber
 
 """ ------- powerline
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
-" inny colorscheme aby byla czarna lina przy vertical split
-let g:Powerline_colorscheme='skwp' 
+" python from powerline.vim import setup as powerline_setup
+" python powerline_setup()
+" python del powerline_setup
+" " inny colorscheme aby byla czarna lina przy vertical split
+" let g:Powerline_colorscheme='skwp' 
+"
+""" ----- airline
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'powerlineish'
+
+""" cos innego
 " wplywa na multipolcenie taloe jak leader \ev \es \s
 set timeoutlen=1000
 set scrolloff=6
@@ -441,8 +456,8 @@ let NERDTreeQuitOnOpen = 1
 let NERDTreeIgnore = ['\.pyc$', '\~$']
 
 """ -------- Ctags
-map <leader><F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp . <cr>
-map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=dbmigrate --fields=zK .. <cr>
+map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp . <cr>
+map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
@@ -1004,7 +1019,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '\v(\.git)'
 
 " ctrl tjump
-nmap <c-]> :CtrlPtjump<cr>
+nnoremap <c-]> :CtrlPtjump<cr>
+vnoremap <c-]> :CtrlPtjumpVisual<cr>
 let g:ctrlp_tjump_only_silent = 1
 
 " repeat last movement
