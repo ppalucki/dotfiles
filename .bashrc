@@ -287,7 +287,7 @@ NODE_PATH='/usr/local/lib/jsctags:${NODE_PATH}'
 ################################
 #export PATH=$PATH:/usr/local/go/bin
 export GOROOT=/usr/local/opt/go/libexec/
-export GOPATH=/Users/ppalucki/workspace/
+export GOPATH=/Users/ppalucki/workspace/golang
 export PATH=$PATH:$GOROOT/bin
 source /usr/local/etc/bash_completion.d/go-completion.bash
 

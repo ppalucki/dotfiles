@@ -1,3 +1,4 @@
 --ignore-dir=tmp
+--ignore-file=.tags
 --literal
 --type-set=rst=.rst
