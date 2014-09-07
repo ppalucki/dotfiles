@@ -80,8 +80,8 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-dispatch'
 " GIT
 Plugin 'tpope/vim-fugitive'
-" ruby/RAILS
-Plugin 'tpope/vim-rails'
+" " ruby/RAILS
+" Plugin 'tpope/vim-rails'
 " better repeats
 Plugin 'tpope/vim-repeat'
 " surround
