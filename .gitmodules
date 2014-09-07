@@ -154,3 +154,6 @@
 [submodule ".vim/bundle/neocomplete.vim"]
 	path = .vim/bundle/neocomplete.vim
 	url = https://ppalucki@github.com/Shougo/neocomplete.vim.git
+[submodule ".vim/bundle/vim-airline"]
+	path = .vim/bundle/vim-airline
+	url = https://ppalucki@github.com/bling/vim-airline.git
