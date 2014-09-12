@@ -102,6 +102,12 @@ Plugin 'thinca/vim-quickrun'
 " PyTest
 Plugin 'alfredodeza/pytest.vim'
 
+" clojure plugin
+Plugin 'tpope/vim-fireplace'
+
+" DistractionFreeMode light version
+Plugin 'bilalq/lite-dfm'
+
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -1423,10 +1429,11 @@ let g:paredit_disable_clojure = 1
 "----------------------- Clojure mappings
 function! ClojureMappings()
     nmap <buffer> gd [<C-D>
+    vmap <buffer> gq :!/Users/ppalucki/bin/clformat <cr>
 endfunction
+au FileType clojure call ClojureMappings()
 
 " ------------------------ tagbar go
-au FileType clojure call ClojureMappings()
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [

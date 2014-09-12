@@ -35,7 +35,6 @@ alias vi='vim'
 #############################################
 ### ALIASES cd
 #############################################
-alias cdgm="workon getmedia;title getmedia"
 alias cdw='cd ~/workspace'
 alias cdd='cd ~/Downloads'
 alias cdvim='cd ~/.vim/bundle'

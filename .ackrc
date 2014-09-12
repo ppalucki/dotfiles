@@ -1,4 +1,6 @@
 --ignore-dir=tmp
---ignore-file=.tags
+--ignore-dir=is:.tags
+--ignore-file=is:.tags
 --literal
 --type-set=rst=.rst
+
