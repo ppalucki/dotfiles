@@ -291,3 +291,6 @@ export GOPATH=/Users/ppalucki/workspace/golang
 export PATH=$PATH:$GOROOT/bin
 source /usr/local/etc/bash_completion.d/go-completion.bash
 
+### OSX iterm2 hsplit,new_tab,vsplit and others
+source ~/dotfiles/osxiterm2_api.sh
+

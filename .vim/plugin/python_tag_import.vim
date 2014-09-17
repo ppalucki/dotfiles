@@ -67,7 +67,7 @@
 "           let g:python_path = ['/usr/lib/python2.4/site-packages/']
 "==================================================
 
-if v:version < 700 || has('python3')
+if v:version < 700
     finish
 endif
 
@@ -97,10 +97,6 @@ endif
 if !exists("g:pythontagimport_full")
     let g:pythontagimport_full  = 1
 endif
-
-if !exists("g:pythontagimport_prefix")
-    let g:pythontagimport_prefix  = ''
-endif
 " ----------------------------
 
 " Autocommands:
@@ -113,9 +109,9 @@ menu <silent>       &Tools.Python\ Tag\ Complete\ Stop           :call PythonTag
 " Function Definations:
 
 function! PythonTagImportStart()
-    " exec "silent! iunmap  <buffer> ".g:pythontagimportkey
-    " exec "inoremap <buffer> ".g:pythontagimportkey."  <c-r>=PythonTagImportComplete()<cr>"
-    exec "nnoremap <buffer> ".g:pythontagimportcurrentword."  yiwO<esc>pA<C-R>=PythonTagImportComplete()<CR><esc>"
+    exec "silent! iunmap  <buffer> ".g:pythontagimportkey
+    exec "inoremap <buffer> ".g:pythontagimportkey."  <c-r>=PythonTagImportComplete()<cr>"
+    exec "nnoremap <buffer> ".g:pythontagimportcurrentword."  yiwO<esc>pA<C-R>=PythonTagImportComplete()<CR>"
 endfunction
 
 function! PythonTagImportStop()
@@ -157,7 +153,7 @@ function!PythonTagImportComplete()
                     let modname = a_modname[-1]
 
                     if (g:pythontagimport_from)
-                        let from_import = 'from '. g:pythontagimport_prefix . filename . " import " . curtag
+                        let from_import = 'from ' . filename . " import " . curtag
                         let s:pythontagcomplete_list += [from_import]
                     endif
 

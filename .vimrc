@@ -17,7 +17,7 @@ Plugin 'gmarik/Vundle.vim'
 " automatyczne zakmykanie nawiasow
 Plugin 'Raimondi/delimitMate'
 " obsluge ReST
-Plugin 'Rykka/riv.vim'
+"Plugin 'Rykka/riv.vim' - colids with <c-e>
 " jakies lepsze uzupelenianien
 " Plugin 'Shougo/neocomplcache.vim'
 " gdy mam lua to lepsze jest
@@ -107,6 +107,10 @@ Plugin 'tpope/vim-fireplace'
 
 " DistractionFreeMode light version
 Plugin 'bilalq/lite-dfm'
+
+" import tag
+" nie dziala bo zla sciezka jest
+"Plugin 'mjbrownie/Python-Tag-Import'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -276,12 +280,13 @@ nmap ]m ]M
 nmap [m [M
 
 function! PythonMappings()
-	nmap <buffer> <leader>iP ofrom IPython import embed;embed()<ESC>:w<cr>
-	nmap <buffer> <leader>ip ofrom vipdb import embed;embed()<ESC>:w<cr>
+	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
+    " uzytecznosc mala przez !brak screen!
+	" nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
 	" ipython debug 
-	nmap <buffer> <leader>id oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
-	nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
+	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
+	" nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
+	" nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>l :PymodeLint<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
 	" " pudb debugger
@@ -312,6 +317,15 @@ function! PythonMappings()
     " termianal python 
     map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
     map <leader>ti :up<bar>call ScreenShellSend("ipython -i <c-r>%")<cr>
+
+    """ Testing
+    " terminal yank test
+    nmap <leader>ty :py make_current_test()<cr>
+    " terminal global test
+    nmap <leader>tg :py make_last_test()<cr>
+
+    " termianl yank all tests
+    nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
 
 endfunction
 au FileType python call PythonMappings()
@@ -757,13 +771,6 @@ def debuging_on():
 EOF
 endif
 
-" terminal yank test
-nmap <leader>ty :py make_current_test()<cr>
-" terminal global test
-nmap <leader>tg :py make_last_test()<cr>
-
-" termianl yank all tests
-nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
 
 
 """ pi_paren
@@ -1133,13 +1140,13 @@ if exists("+undofile")
   set undofile
 endif
 
-" python import
+" python import python_tag_import
 let g:pythontagimportcurrentword = "<leader>a"
 let g:pythontagimport_from = 1
 let g:pythontagimport_from_mod = 0
 let g:pythontagimport_as = 0
 let g:pythontagimport_full  = 0
-let g:pythontagimport_prefix = 'getmedia.'
+" let g:pythontagimport_prefix = 'getmedia.'
 
 " yank current buffer filename to register
 " http://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
@@ -1430,6 +1437,8 @@ let g:paredit_disable_clojure = 1
 function! ClojureMappings()
     nmap <buffer> gd [<C-D>
     vmap <buffer> gq :!/Users/ppalucki/bin/clformat <cr>
+    nmap <buffer> <leader>tt :update<bar>RunTests<cr>
+    nmap <buffer> <leader>ty :update<bar>RunAllTests<cr>
 endfunction
 au FileType clojure call ClojureMappings()
 
