@@ -541,6 +541,7 @@ au FileType rst call RstMappings()
 " fix na spell, ze spellcap mi nie oznacza eelementow, ktore maja nie poprawne
 " skladanie (duza litera na poaczatku)
 highlight SpellCap ctermbg=None
+highlight SpellBad term=reverse cterm=bold ctermfg=16 ctermbg=208 gui=bold guifg=#000000 guibg=#FD971F
 " fixnij za pomoca pierwszego dopasowania
 nmap z9 1z=
 
@@ -957,25 +958,37 @@ set modeline
 """""""""""" mkd - markdown & textile
 " surround with asterisk
 " bold/em
-au FileType mkd set nofoldenable
-au FileType mkd nmap <leader>e ysiw*
-au FileType mkd vmap <leader>e S*
-au FileType mkd nmap <leader>E ,el,e
-au FileType mkd vmap <leader>E ,el,e
-
-au FileType mkd nmap ds* F*xf*xb
-
-au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
-au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
-
-au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
-au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
+au FileType markdown set nofoldenable
+" au FileType mkd nmap <leader>e ysiw*
+" au FileType mkd vmap <leader>e S*
+" au FileType mkd nmap <leader>E ,el,e
+" au FileType mkd vmap <leader>E ,el,e
+"
+" au FileType mkd nmap ds* F*xf*xb
+"
+" au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
+" au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
+"
+" au FileType mkd hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
+" au FileType mkd hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
 
 " zwykly markdowna
+au FileType markdown hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
+au FileType markdown hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
+
+au FileType markdown hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
+au FileType markdown hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
+
+" surround with * (normal end visual mode)
 au FileType markdown nmap <leader>e ysiw*
 au FileType markdown vmap <leader>e S*
-au FileType markdown nmap <leader>E ,el,e
-au FileType markdown vmap <leader>E ,el,e
+
+au FileType markdown nmap <leader><c-e> ysiw`
+au FileType markdown vmap <leader><c-e> S`
+
+au FileType markdown nmap <leader>E <leader>el<leader>e
+au FileType markdown vmap <leader>E <leader>el<leader>e
+" delete surround'ing 
 au FileType markdown nmap ds* F*xf*xb
 
 " testtile
