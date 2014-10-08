@@ -142,22 +142,11 @@ filetype plugin indent on    " required
 filetype plugin indent on
 syntax on
 
-""" -------- GUI --------------
-set gfn=Bitstream\ Vera\ Sans\ Mono\ for\ Powerline\ 9
-" set guioptions-=TrRlLb
-" set guioptions+=ic
-set guioptions=aegmtic
-
-"""------- kolorki
-" Show whitespace
-" MUST be inserted BEFORE the colorscheme command
-""autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-""au InsertLeave * match ExtraWhitespace /\s\+$/
-
 "podglad numerow kolorow ~/download/xtrem-colortest -w -r syntax on musi byc "przed kolorkami
 set t_Co=256
 let g:molokai_original = 0
 colorscheme molokai
+" autocomplete ctrl-n colors
 hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
 hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
 hi PmenuSbar ctermbg=6
@@ -166,24 +155,12 @@ hi PmenuThumb ctermfg=3
 """ ------ cursorline
 " set cursorline
 " hi CursorLine cterm=NONE ctermbg=234 guibg=NONE
-
-""" ------ statusline
-hi StatusLine ctermbg=black
-hi StatusLineNC ctermbg=black
-set laststatus=2
-set statusline=%<\ %f\ %h%r%=%l/%L\ (%p%%) 
-
 " set nonumber
 
-""" ------- powerline
-" python from powerline.vim import setup as powerline_setup
-" python powerline_setup()
-" python del powerline_setup
-" " inny colorscheme aby byla czarna lina przy vertical split
-" let g:Powerline_colorscheme='skwp' 
-"
-""" ----- airline
-let g:airline_powerline_fonts = 1
+""" ----- airline/statusline
+" turn on status line always
+set laststatus=2
+let g:airline_powerline_fonts = 0
 let g:airline_theme = 'powerlineish'
 
 """ cos innego
@@ -203,9 +180,8 @@ map <space> \
 """--------- hidden allow edited buffers
 set hidden
 
-" set clipboard=unnamedplus
-set clipboard=unnamed
-" set clipboard=autoselect
+""" -------- kopiowanie do globanego bufora
+set clipboard=unnamedplus
 
 """----------------------------- Python
 """--------- pythonmode
@@ -236,11 +212,6 @@ let g:pymode_lint_config = 'pylint.rc2'
 
 let g:pymode_options_max_line_length = 0
 
-
-
-
-
-"
 " PyMode Syntax Highlight
 "
 let g:pymode_syntax = 1 
@@ -278,8 +249,6 @@ let g:pymode_run = 0
 let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
-nmap ]m ]M
-nmap [m [M
 
 function! PythonMappings()
 	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
@@ -329,6 +298,9 @@ function! PythonMappings()
     " termianl yank all tests
     nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
 
+    """ next method remaping
+    nmap ]m ]M
+    nmap [m [M
 endfunction
 au FileType python call PythonMappings()
 

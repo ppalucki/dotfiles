@@ -20,3 +20,7 @@ function title {
     echo -ne "\033]0;"$*"\007"
 }
 
+#############################################
+# alt-n/alt-p history-search-backwad/forward'
+bind '"\ep":history-search-backward'
+bind '"\en":history-search-forward'
