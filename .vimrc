@@ -2,6 +2,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" -------- vundle installation
+" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -21,7 +23,7 @@ Plugin 'Raimondi/delimitMate'
 " jakies lepsze uzupelenianien
 " Plugin 'Shougo/neocomplcache.vim'
 " gdy mam lua to lepsze jest
-Plugin 'Shougo/neocomplete.vim'
+" Plugin 'Shougo/neocomplete.vim'
 " snippets
 Plugin 'SirVer/ultisnips'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
@@ -1426,7 +1428,6 @@ if has("gui_running")
 endif
 
 " i like mouse too much :p
-set mouse=a
 set scrolloff=6
 
 

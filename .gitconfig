@@ -1,10 +1,5 @@
-[gui]
-	fontdiff = -family \"courier new\" -size 9 -weight normal -slant roman -underline 0 -overstrike 0
-	recentrepo = /home/ppalucki/tmp/foo4
-	recentrepo = /home/ppalucki/workspace_rr/muzomedia
-
 [color]
-  diff = auto
+    diff = auto
     ui = true
 	grep = auto
 
@@ -27,12 +22,10 @@
 
 [user]
 	name = Pawel Palucki
-	email = pawel.palucki@gmail.com
+	email = pawel.palucki@intel.com
 
 [core]
-	excludesfile = /Users/ppalucki/.gitignore_global
-	autocrlf = input
-
+	excludesfile = /home/ppalucki/.gitignore_global
 
 [alias]
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
@@ -48,28 +41,11 @@
     civ = commit --verbose
     ciav = commit -a --verbose
     unstash = stash pop
-    stagingdiff = !comm -12 <(git branch --no-merged master) <(git branch --merged staging)
     mt = mergetool
-    pullr = pull --rebase
-    # wg. ale nie dziala bo nie mam zsh http://stackoverflow.com/questions/1527234/finding-a-branch-point-with-git
-	branchdiff = !sh -c \"git diff `git oldest-ancestor`..\"
-	branchlog = !sh -c \"git log `git oldest-ancestor`..\"
-	branchd = !sh -c \"git d `git oldest-ancestor`..\"
-	branchlg = !sh -c \"git lg `git oldest-ancestor`..\"
-	oldest-ancestor = !zsh -c 'diff --old-line-format= --new-line-format= <(git rev-list --first-parent \"${1:-master}\") <(git rev-list --first-parent \"${2:-HEAD}\") | head -1' -
 
 [diff]
     tool = vimdiff 
 	guitool = diffuse 
-
-[giggle]
-	main-window-maximized = true
-	main-window-geometry = 0x0+0+0
-	main-window-view = HistoryView
-	show-graph = true
-	history-view-vpane-position = 439
-	file-view-vpane-position = 565
-	file-view-hpane-position = 285
 
 [merge]
 	defaultToUpstream = true
@@ -79,31 +55,8 @@
 [push]
 	default = upstream
 
-[mergetool "diffconflicts"]
-	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
-	; trustExitCode = false
-	keepBackup = false
-
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
 
-
 [github]
 	user = ppalucki
-[guitool "Rebase onto..."]
-    cmd = git rebase
-    revprompt = yes
-[guitool "Rebase/Continue"]
-    cmd = git rebase --continue
-[guitool "Rebase/Skip"]
-    cmd = git rebase --skip
-[guitool "Rebase/Abort"]
-    cmd = git rebase --abort
-[guitool "Pull with Rebase"]
-    cmd = git pull --rebase
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true

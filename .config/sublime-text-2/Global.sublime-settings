@@ -1,7 +1,0 @@
-// Place user-specific overrides in this file, to ensure they're preserved
-// when upgrading
-{
-    // Set to true to insert spaces when tab is pressed
-    "translate_tabs_to_spaces": true,
-    "close_windows_when_empty": false
-}
