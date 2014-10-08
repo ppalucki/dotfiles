@@ -1,0 +1,5 @@
+export EDITOR=vim
+bind '"\ep":history-search-backward'
+bind '"\en":history-search-forward'
+alias aptinst='sudo apt-get install'
+alias aptsearch='apt-cache search'

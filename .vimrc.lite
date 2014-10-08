@@ -1,0 +1,93 @@
+" vim: ft=vim
+" instalation 
+" scp -P 2222 ~/dotfiles/.vimrc.lite vagrant@127.0.0.1:~/.vimrc
+filetype plugin indent on
+syntax on
+let mapleader = " "
+noremap ; :
+inoremap jj <ESC>
+
+set bg=dark
+set t_Co=256
+set history=700
+set undolevels=700
+set autoindent
+set expandtab
+set hidden
+set hlsearch
+set ignorecase
+set incsearch
+set nowrap
+set smartcase
+set smarttab
+
+set tabstop=4 sw=4 softtabstop=4
+au FileType ruby set ts=2 sw=2 softtabstop=2
+au FileType html set ts=2 sw=2 softtabstop=2 nocindent
+au FileType python set ts=4 sw=4 softtabstop=4
+
+""" ------  Last position
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call setpos(".", getpos("'\""))
+augroup END
+
+""" ------ sudo write
+command! W w !sudo tee % > /dev/null
+
+" ---------- manual --------------
+" Put the cursor on foo.
+" Press * to search for the next occurrence.
+" Type ciw (change inner word) then bar then press Escape.
+" Press n (move to next occurrence) then . (repeat change).
+" Repeat last step
+
+" window navigation
+nmap <C-J> <C-W>j
+nmap <C-K> <C-W>k
+nmap <C-l> <C-W>l
+nmap <C-h> <C-W>h
+
+""" clear search
+map <leader>/ :nohlsearch<cr>
+
+""" ---- saveall shortcut
+map ZA :wall<CR>
+map ZW :qa<CR>
+map <leader>w :up<CR>
+map <leader>q :q<CR>
+
+""" ---- buffers
+map <leader>bd :bd<cr>
+map <leader>bn :bn<cr>
+map <leader>bp :bp<cr>
+
+""" json
+autocmd BufNewFile,BufRead *.json set ft=javascript
+
+""" insert mode navigation
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+
+" cmdline-editing bash style
+cnoremap <C-A> <Home>
+cnoremap <C-F> <Right>
+cnoremap <C-B> <Left>
+cnoremap <Esc>b <S-Left>
+cnoremap <Esc>f <S-Right>
+" alt-p, alt-n history search
+cnoremap p <Up>
+cnoremap n <Down>
+
+" find occurences - search current word but without scroll
+nmap <leader>f "myiwh/<c-r>m<cr>
+
+" Open last/alternate buffer
+noremap <Leader><Leader> <C-^>
+
+" s for subsitute inner word from yanked text
+" change inner word and in insert mode yank from " and exit inster mode :)
+nnoremap <leader>s "_ciw<c-r>"<esc>
+
+" numberlines toggle
+nnoremap <leader>n :set invnumber<cr>
