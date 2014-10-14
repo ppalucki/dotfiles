@@ -1,5 +1,5 @@
-" dzialajce cmd-f (szukaj)
-unmap <M-f>
+" dzialajce ctrl-f (szukaj)
+unmap <C-f>
 
 " insert mode (next word, backward word, delete back word)
 imap <M-f> <M-l>

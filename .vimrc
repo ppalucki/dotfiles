@@ -450,7 +450,7 @@ set backspace=indent,eol,start
 map <silent> <F2> :NERDTreeToggle<CR>
 map <silent> <leader><F2> :NERDTreeFind<CR>
 let NERDTreeShowBookmarks = 0
-let NERDChristmasTree = 1
+let NERDChristmasTree = 0
 " set Enter/Return to activate a node
 let NERDTreeMapActivateNode='<CR>'
 " always change CWD
