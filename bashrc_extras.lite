@@ -1,3 +1,4 @@
+### ------------- mystuff ------------
 export EDITOR=vim
 bind '"\ep":history-search-backward'
 bind '"\en":history-search-forward'
