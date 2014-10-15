@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+; http://www.win.tue.nl/~aeb/linux/kbd/scancodes-1.html
+; http://www.experts-exchange.com/OS/Microsoft_Operating_Systems/Windows/A_2155-Keyboard-Remapping-CAPSLOCK-to-Ctrl-and-Beyond.html
+; 1c00 - enter
+; 3a00 - capslock
+; 38e0 - left alt
+; 1de0 - right ctrl
+; 6 - oznacza 3 sekwencji
+; 1c00 3a00 - zamien capslock w enter
+; 38e0 1de0 - zamien right ctrl w right alt
+; 1de0 38e0 - zamien right alt w right ctrl
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Keyboard Layout]
+"Scancode Map"=hex:00,00,00,00,00,00,00,00,06,00,00,00,1c,00,3a,00,38,e0,1d,e0,1d,e0,38,e0,00,00,00,00
