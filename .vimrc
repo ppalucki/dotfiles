@@ -170,7 +170,6 @@ let g:airline_theme = 'powerlineish'
 """ cos innego
 " wplywa na multipolcenie taloe jak leader \ev \es \s
 set timeoutlen=1000
-set scrolloff=6
 
 """ -------- leader
 " let mapleader = ","
@@ -1404,7 +1403,7 @@ if has("gui_running")
 endif
 
 " i like mouse too much :p
-set scrolloff=6
+set scrolloff=2
 
 
 let g:lite_dfm_normal_bg_cterm = 232
