@@ -1,0 +1,13 @@
+--------------------------- VBox
+VBoxManage internalcommands sethduuid /path/to/virtualdisk.vdi
+
+------------------------ Putty
+xterm-256color
+for ((color = 0; color <= 255; color++)); do tput setaf "$color"; printf "test"; done
+
+--------------------------------
+vi /etc/modules 
+vboxsf
+
+vi /etc/fstab
+Documents   /home/dev/Documents vboxsf  uid=dev,gid=dev,dmode=774,fmode=664 0       1
