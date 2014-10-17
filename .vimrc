@@ -134,7 +134,7 @@ Plugin 'kana/vim-fakeclip'
 "
 Plugin 'christoomey/vim-tmux-navigator'
 
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -148,15 +148,20 @@ filetype plugin indent on    " required
 filetype plugin indent on
 syntax on
 
+"""""""""""""""""""""""""""""""""" colorscheme
 "podglad numerow kolorow ~/download/xtrem-colortest -w -r syntax on musi byc "przed kolorkami
 set t_Co=256
 let g:molokai_original = 0
 colorscheme molokai
+" colorscheme desert256
 " autocomplete ctrl-n colors
-hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
-hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
-hi PmenuSbar ctermbg=6
-hi PmenuThumb ctermfg=3
+" hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
+" hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
+" hi PmenuSbar ctermbg=6
+" hi PmenuThumb ctermfg=3
+"
+" colorscheme molokai
+" let g:molokai_original = 1
 
 """ ------ cursorline
 " set cursorline
@@ -167,7 +172,7 @@ hi PmenuThumb ctermfg=3
 " turn on status line always
 set laststatus=2
 let g:airline_powerline_fonts = 0
-let g:airline_theme = 'powerlineish'
+" let g:airline_theme = 'powerlineish'
 
 """ cos innego
 " wplywa na multipolcenie taloe jak leader \ev \es \s
@@ -288,17 +293,17 @@ function! PythonMappings()
     " wytlacz elcim i signs
 
     " terminal test
-    nmap <silent> <leader>tt :w<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+    """nmap <silent> <leader>tt :w<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
-    map <leader>ti :up<bar>call ScreenShellSend("ipython -i <c-r>%")<cr>
+    """map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
+    """map <leader>ti :up<bar>call ScreenShellSend("ipython -i <c-r>%")<cr>
 
     """ Testing
     " terminal yank test
-    nmap <leader>ty :py make_current_test()<cr>
+    """" nmap <leader>ty :py make_current_test()<cr>
     " terminal global test
-    nmap <leader>tg :py make_last_test()<cr>
+    """" nmap <leader>tg :py make_last_test()<cr>
 
     " termianl yank all tests
     nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
@@ -917,15 +922,6 @@ let g:EclimPythonValidate = 0
 let g:EclimShowErrors = 1
 " let g:EclimSignLevel = 0
 
-"""""""""""""""""""""""""""""""""" colore rerun
-" set t_Co=256
-" colorscheme desert256
-" colorscheme molokai
-" let g:molokai_original = 1
-" hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
-" hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
-" hi PmenuSbar ctermbg=6
-" hi PmenuThumb ctermfg=3
 "
 "
 """"""""""""" spell
@@ -1539,3 +1535,15 @@ function SQLMapping()
 endfunction
 
 au FileType sql call SQLMapping()
+
+
+
+""" FAKE CLIP
+" yank
+nmap <leader>ty <Plug>(fakeclip-screen-Y)
+vmap <leader>ty <Plug>(fakeclip-screen-y)
+
+" paste from
+nmap <leader>tp <Plug>(fakeclip-screen-p)
+
+"let g:fakeclip_no_default_key_mappings = 'tmux'
