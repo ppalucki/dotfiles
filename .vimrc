@@ -110,6 +110,8 @@ Plugin 'tpope/vim-fireplace'
 " DistractionFreeMode light version
 Plugin 'bilalq/lite-dfm'
 
+Plugin 'kana/vim-fakeclip'
+
 " import tag
 " nie dziala bo zla sciezka jest
 "Plugin 'mjbrownie/Python-Tag-Import'
@@ -1265,6 +1267,10 @@ nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
 " some dummmy mappings!!!
 map <Leader>xP1 <Plug>ScreenpasteGPutBefore	
 map <Leader>xP2 <Plug>ScreenpasteGPut		
+
+
+""" --------------- screen copy buffer int screen's paster buffer
+" nnoremap <silent><leader> :call writefile( split(@", "\n"), '/tmp/screen-exchange' )<CR>
 
 """ ------------------------------------------------------------
 """ -------------------- debuging ------------------------------

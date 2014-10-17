@@ -3,7 +3,7 @@
 # backup
 sudo cp /usr/share/themes/Ambiance/gtk-3.0/apps/gnome-terminal.css /usr/share/themes/Ambiance/gtk-3.0/apps/gnome-terminal.css.backup
 # overwrite
-sudo cp /home/ppalucki/dotfiles/gnome-terminal.css /usr/share/themes/Ambiance/gtk-3.0/apps/gnome-terminal.css
+sudo cp ~/dotfiles/gnome-terminal.css /usr/share/themes/Ambiance/gtk-3.0/apps/gnome-terminal.css
 
 # sudo cp /home/ppalucki/dotfiles/gnome-terminal.css /usr/share/themes/Radiance/gtk-3.0/apps/gnome-terminal.css
 
