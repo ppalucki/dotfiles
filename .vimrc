@@ -1548,7 +1548,7 @@ au FileType sql call SQLMapping()
 
 """ FAKE CLIP
 " yank
-nmap <leader>ty <Plug>(fakeclip-screen-Y)
+nmap <leader>ty <Plug>(fakeclip-screen-Y):silent !tmux paste-buffer -t !<cr>
 vmap <leader>ty <Plug>(fakeclip-screen-y)
 
 " paste from
