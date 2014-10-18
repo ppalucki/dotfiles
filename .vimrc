@@ -127,6 +127,8 @@ Plugin 'bilalq/lite-dfm'
 "Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
+"
+Plugin 'DrawIt'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -1450,8 +1452,8 @@ let g:paredit_disable_clojure = 1
 function! ClojureMappings()
     nmap <buffer> gd [<C-D>
     vmap <buffer> gq :!/Users/ppalucki/bin/clformat <cr>
-    nmap <buffer> <leader>tt :update<bar>RunTests<cr>
-    nmap <buffer> <leader>ty :update<bar>RunAllTests<cr>
+    nmap <buffer> <leader>tt :Require!<bar>:update<bar>RunTests<cr>
+    nmap <buffer> <leader>ty :Require!<bar>:update<bar>RunAllTests<cr>
 endfunction
 au FileType clojure call ClojureMappings()
 
