@@ -25,7 +25,7 @@
 	email = pawel.palucki@intel.com
 
 [core]
-	excludesfile = /home/ppalucki/.gitignore_global
+	excludesfile = ~/.gitignore_global
 
 [alias]
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
