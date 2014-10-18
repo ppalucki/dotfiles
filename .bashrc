@@ -1,8 +1,22 @@
+## instalation 
+# echo 'source ~/dotfiles/.bashrc' >>~/.bashrc
+
+################ aliases
+source ~/dotfiles/.bash_aliases
+
+################ History
+source ~/dotfiles/.bashrc_history
+
 ###############################
 #### PS1 (git - current branch) 
 ###############################
 # (venv)blue(path)branch(red)$
-source /etc/bash_completion.d/git-prompt
+### LINUX
+if [[ $OSTYPE == 'linux-gnu' ]]; then
+    source /etc/bash_completion.d/git-prompt
+elif [[ $OSTYPE == 'darwin13' ]]; then
+    source /usr/local/etc/bash_completion.d/git-prompt.sh
+fi
 export PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(__git_ps1)\[\033[01;31m\]$\[\033[00m\] '
 
 ###############################
@@ -19,8 +33,3 @@ export PSQL_EDITOR="vi -c 'setf sql'"
 function title {
     echo -ne "\033]0;"$*"\007"
 }
-
-#############################################
-# alt-n/alt-p history-search-backwad/forward'
-bind '"\ep":history-search-backward'
-bind '"\en":history-search-forward'

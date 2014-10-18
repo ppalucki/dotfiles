@@ -191,7 +191,15 @@ map <space> \
 set hidden
 
 """ -------- kopiowanie do globanego bufora
-set clipboard=unnamedplus
+if has("mac")
+    set clipboard=unnamed
+elseif has("unix")
+    set clipboard=unnamedplus
+elseif has("win32")
+  " do stuff under windows "
+  " ???
+endif
+
 
 """----------------------------- Python
 """--------- pythonmode

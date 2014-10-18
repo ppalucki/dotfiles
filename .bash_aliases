@@ -2,8 +2,12 @@
 #### ALIASES core and other
 ##############################
 
-### screen focus change w screen
-alias f="screen -X focus"
+if [[ $OSTYPE == 'linux-gnu' ]]; then
+    alias ll='ls -al --color=auto'
+elif [[ $OSTYPE == 'darwin13' ]]; then
+    alias ll='ls -alG'
+fi
+
 
 ### grep 
 alias grep='grep --color=auto'
