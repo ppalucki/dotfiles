@@ -17,6 +17,9 @@ alias egrep='egrep --color=auto'
 ### vim
 alias vi='vim'
 
+### tmux 256 colors
+alias tmux='tmux -2'
+
 #############################################
 ### ALIASES cd
 #############################################

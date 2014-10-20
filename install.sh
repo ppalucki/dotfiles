@@ -1,7 +1,8 @@
 #!/bin/bash
-ln -sv `pwd`/.vimrc ~/.vimrc
-ln -sv `pwd`/.screenrc ~/.screenrc
-ln -sv `pwd`/.vim ~/.vim
-ln -sv `pwd`/.gitconfig ~/.gitconfig
+ln -sv ~/dotfiles/.vimrc ~/.vimrc
+ln -sv ~/dotfiles/.screenrc ~/.screenrc
+ln -sv ~/dotfiles/.vim ~/.vim
+ln -sv ~/dotfiles/.gitconfig ~/.gitconfig
+ln -sv ~/dotfiles/.tmux.conf ~/.tmux.conf
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo done
