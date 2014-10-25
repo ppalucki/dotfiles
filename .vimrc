@@ -68,7 +68,7 @@ Plugin 'mileszs/ack.vim'
 " syntastic - multilanguage linter
 Plugin 'scrooloose/syntastic'
 " graphical gundo
-Plugin 'sjl/gundo.vim'
+" Plugin 'sjl/gundo.vim'
 "" lepsze title dla taby
 " Plugin 'mkitt/tabline.vim'
 "" In other words, you can search your selection text in |Visual-mode|.
@@ -90,11 +90,11 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 " screensend/screenattach - because of osx path_max limit breaks Vim
 " runtimepath
-Plugin 'ervandew/screen'
+" Plugin 'ervandew/screen'
 " better paste from screen (with leader+p)
-Plugin 'vim-scripts/screenpaste.vim'
+" Plugin 'vim-scripts/screenpaste.vim'
 " GoLang development
-Plugin 'fatih/vim-go'
+" Plugin 'fatih/vim-go'
 " zamiennik powerline
 Plugin 'bling/vim-airline'
 
@@ -105,12 +105,13 @@ Plugin 'thinca/vim-quickrun'
 Plugin 'alfredodeza/pytest.vim'
 
 " clojure plugin
-Plugin 'tpope/vim-fireplace'
+" Plugin 'tpope/vim-fireplace'
 
 " DistractionFreeMode light version
-Plugin 'bilalq/lite-dfm'
+" Plugin 'bilalq/lite-dfm'
 
-Plugin 'kana/vim-fakeclip'
+" udawane registry
+" Plugin 'kana/vim-fakeclip'
 
 " import tag
 " nie dziala bo zla sciezka jest
