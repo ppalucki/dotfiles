@@ -13,6 +13,9 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+" porowanienie kataklogow
+Plugin 'vim-scripts/DirDiff.vim'
+
 """ GITHUBs
 " autoformatowanie zewnwtrznym programem - gq - nie dziala na osx
 " Plugin 'Chiel92/vim-autoformat' 
@@ -1555,3 +1558,7 @@ vmap <leader>ty <Plug>(fakeclip-screen-y)
 nmap <leader>tp <Plug>(fakeclip-screen-p)
 
 "let g:fakeclip_no_default_key_mappings = 'tmux'
+"
+"
+""""""""""""""" DirDiff
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp" 

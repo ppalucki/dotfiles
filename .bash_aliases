@@ -34,3 +34,8 @@ alias cdvim='cd ~/.vim/bundle'
 alias aptinst='sudo apt-get install'
 alias aptsearch='apt-cache search'
 
+
+#############################################
+# devstack
+alias cds='cd /opt/stack'
+alias cdds='cd /opt/stack/devstack'
