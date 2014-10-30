@@ -33,3 +33,9 @@ export PSQL_EDITOR="vi -c 'setf sql'"
 function title {
     echo -ne "\033]0;"$*"\007"
 }
+
+######################################
+# PIP Python
+#####################################
+export PIP_DOWNLOAD_CACHE=~/.pip
+mkdir -p $PIP_DOWNLOAD_CACHE
