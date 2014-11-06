@@ -21,14 +21,23 @@ setxkbmap -option caps:none
 # Remap Enter to Caps-lock
 xmodmap -e 'keycode 66 = Return NoSymbol Return'
 
+
 ### ---------------------- !Swap right control and right alt
 # 108 - to fizyczny prawy Alt
 # 105 - to fizyczny prawy Ctrl
 
-# 1.Turn off right Ctrl
+# 1.Turn off right Ctrl (remove Control_R from "control")
+# This  removes  all  keys containing the given keysyms from the indicated modifier map.
 xmodmap -e 'remove control = Control_R'
+xmodmap -e 'remove mod1 = Alt_R'
+
 # 2. Physical right Ctrl acts as Alt
 xmodmap -e 'keycode 105 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift'
-# 3. Physical right alt (108) acts as Control R
+
+# 3. Physical right Alt (108) acts as Control R
 xmodmap -e 'keycode 108 = Control_R'
+
+# 4. This adds all keys containing the given keysyms to the indicated modifier map.
+xmodmap -e 'remove mod1 = Control_R'
 xmodmap -e 'add control = Control_R'
+xmodmap -e 'add mod1 = Alt_R'

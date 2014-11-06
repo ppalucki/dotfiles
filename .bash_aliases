@@ -39,3 +39,4 @@ alias aptsearch='apt-cache search'
 # devstack
 alias cds='cd /opt/stack'
 alias cdds='cd /opt/stack/devstack'
+alias openrc='source /opt/stack/devstack/openrc admin'

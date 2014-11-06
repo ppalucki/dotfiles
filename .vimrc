@@ -1563,3 +1563,6 @@ nmap <leader>tp <Plug>(fakeclip-screen-p)
 "
 """"""""""""""" DirDiff
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp" 
+
+" conf file tupe
+au BufRead,BufNewFile *.conf set filetype=cfg
