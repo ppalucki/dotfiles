@@ -257,3 +257,10 @@ foo
 subnodes
 pids
 exmaple
+unittest
+serviceA
+localhost
+zookeeperd
+sudo
+nosetests
+venv

@@ -307,7 +307,7 @@ function! PythonMappings()
     " wytlacz elcim i signs
 
     " terminal test
-    nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests <c-r>=tagbar#currenttag('%s','')<cr>")<bar>call VimuxSendKeys("enter")<cr>
+    nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
     map <leader>tp :up<bar>call VimuxRunCommand("python <c-r>%")<cr>
