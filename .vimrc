@@ -138,6 +138,8 @@ Plugin 'alfredodeza/pytest.vim'
 "
 Plugin 'christoomey/vim-tmux-navigator'
 
+Plugin 'benmills/vimux'
+
 " Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
@@ -709,19 +711,22 @@ let g:ScreenImpl = 'GnuScreen'
 let g:ScreenShellHeight = 10
 let g:ScreenShellGnuScreenVerticalSupport = 'native'
 " terminal bash vertical
-map <leader>tb :ScreenShellVertical bash<cr>
+" map <leader>tb :ScreenShellVertical bash<cr>
 " terminal base horizontal
-map <leader>tB :ScreenShell bash<cr>
-" terminal send
-vmap <leader>ts :ScreenSend<cr>
+" map <leader>tB :ScreenShell bash<cr>
+
+" terminal send ---- REPLACED by vimux
+" vmap <leader>ts :ScreenSend<cr>
+
+
 " termianal rerun 
-map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
+" map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
 " terminal exit
-map <leader>te :call ScreenShellSend('exit')<cr>
+" map <leader>te :call ScreenShellSend('exit')<cr>
 " terminal line - begin then send visual till end and terminal send
-nmap <leader>tl _v$<leader>ts
+" nmap <leader>tl _v$<leader>ts
 " terminal all
-nmap <leader>ta ggvG$<leader>ts
+" nmap <leader>ta ggvG$<leader>ts
 
 function! ScreenSendPaste1()
   let g:ScreenShellSendPrefix = '%cpaste'
@@ -734,7 +739,10 @@ endfunction
 " terminal paste
 vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
 " terminal word - (send)
-nmap <leader>tw viw<leader>ts
+" nmap <leader>tw viw<leader>ts
+"
+" NOTE all of this move to the vimux configuration
+
 """ Dispatch & Make
 
 " ORGinal nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
@@ -1567,3 +1575,39 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
 " conf file tupe
 au BufRead,BufNewFile *.conf set filetype=cfg
 au BufRead,BufNewFile *.ini set filetype=cfg
+au BufRead,BufNewFile .tmux.conf set filetype=conf
+
+
+"
+" """"""""""""""" vimux
+" better vertical
+let g:VimuxOrientation = "h"
+let g:VimuxHeight = "40"
+
+function! VimuxSlime()
+   call VimuxOpenRunner()
+   call VimuxSendText(@v)
+   call VimuxSendKeys("Enter")
+endfunction
+
+" terminal bash vertical
+map <leader>tb :call VimuxOpenRunner()<cr>
+
+" terminal send 
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+vmap <leader>ts "vy:call VimuxSlime()<cr>
+
+" termianal rerun 
+map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
+"
+" terminal exit
+map <leader>te :call VimuxRunCommand('exit')<cr>
+
+" terminal all
+"nmap <leader>ta ggvG$<leader>ts
+
+" terminal line - begin then send visual till end and terminal send
+nmap <leader>tl _v$<leader>ts
+
+" terminal word - (send)
+nmap <leader>tw viw<leader>ts
