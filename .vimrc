@@ -1566,3 +1566,4 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
 
 " conf file tupe
 au BufRead,BufNewFile *.conf set filetype=cfg
+au BufRead,BufNewFile *.ini set filetype=cfg

@@ -39,6 +39,7 @@
     ciam = commit -a -m
     cim = commit -m
     civ = commit --verbose
+    cia = commit --amend
     ciav = commit -a --verbose
     unstash = stash pop
     mt = mergetool
