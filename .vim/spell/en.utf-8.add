@@ -252,3 +252,8 @@ pid
 servicesgroups
 ZKSession
 ZooKeeper
+RuntimeError
+foo
+subnodes
+pids
+exmaple
