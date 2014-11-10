@@ -161,10 +161,10 @@ let g:molokai_original = 0
 colorscheme molokai
 " colorscheme desert256
 " autocomplete ctrl-n colors
-" hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
-" hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
-" hi PmenuSbar ctermbg=6
-" hi PmenuThumb ctermfg=3
+hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
+hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
+hi PmenuSbar ctermbg=6
+hi PmenuThumb ctermfg=3
 "
 " colorscheme molokai
 " let g:molokai_original = 1
@@ -282,8 +282,8 @@ function! PythonMappings()
 	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
 	" nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
 	" nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>l :PymodeLint<cr>
-    nmap <buffer> <leader>L :call Flake8()<cr>
+	nmap <buffer> <leader>L :PymodeLint<cr>
+    nmap <buffer> <leader>l :call Flake8()<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 	"" fix na diff doget - z brancha johntyree python-mode
@@ -307,11 +307,11 @@ function! PythonMappings()
     " wytlacz elcim i signs
 
     " terminal test
-    """nmap <silent> <leader>tt :w<bar>call ScreenShellSend("./run_tests.py <c-r>=tagbar#currenttag('%s','')<cr>")<cr>
+    nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests <c-r>=tagbar#currenttag('%s','')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    """map <leader>tp :up<bar>call ScreenShellSend("python <c-r>%")<cr>
-    """map <leader>ti :up<bar>call ScreenShellSend("ipython -i <c-r>%")<cr>
+    map <leader>tp :up<bar>call VimuxRunCommand("python <c-r>%")<cr>
+    map <leader>ti :up<bar>call VimuxRunCommand("ipython -i <c-r>%")<cr>
 
     """ Testing
     " terminal yank test
@@ -665,9 +665,8 @@ nnoremap <Leader>vd :Gdiff<cr>
 "switch back to current file and closes fugitive buffer
 nnoremap <Leader>vD :diffoff!<cr><c-w>h:bd<cr>
 nnoremap <Leader>vs :Gstatus<cr>
-nnoremap <Leader>vc :Gcommit<cr>
-nnoremap <Leader>vvc :Gcommit --verbose<cr>
-nnoremap <Leader>vac :Gcommit --amend<cr>
+nnoremap <Leader>vc :Gcommit --verbose<cr>
+nnoremap <Leader>va :Gcommit --amend<cr>
 " log current file
 nnoremap <silent> <Leader>vl :Glog -n 50<cr>
 " last 10 commits
@@ -1383,7 +1382,10 @@ set diffopt=filler,vertical
 let no_flake8_maps=1
 
 """ syntastic
-" uzyj ,L dla pylinta, ,l dla call Flake8 ,C-l dla SyntasticCheck
+" bindingi sa wczesniej
+" l dla flake8
+" L dla [pymode]
+" C-l dla SyntasticCheck
 nmap <leader><C-l> :SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 let g:syntastic_quiet_messages = {'level': 'warnings'}
@@ -1523,7 +1525,7 @@ let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldfla
 
 " c mappngs
 " clang
-function CMappings()
+function! CMappings()
 
     nmap <F9> :up<cr>:QuickRun<cr>
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
@@ -1548,7 +1550,7 @@ let g:quickrun_config.c = {
 """ vim-simpledb remapping
 " tutaj nie dziala wiec trzeba wyedytowac sciezke
 "/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
-function SQLMapping()
+function! SQLMapping()
     vnoremap <buffer> <enter> :SimpleDBExecuteSql<cr>
     nnoremap <buffer> <leader><enter> m':SimpleDBExecuteSql <cr>g`'
     nnoremap <buffer> <enter> m':'{,'}SimpleDBExecuteSql<cr>g`'
