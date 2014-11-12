@@ -37,10 +37,10 @@
     branchesall = branch -a -vv
     co = checkout
     ciam = commit -a -m
+    ciav = commit -a --verbose
     cim = commit -m
     civ = commit --verbose
-    cia = commit --amend
-    ciav = commit -a --verbose
+    ca = commit --amend
     unstash = stash pop
     mt = mergetool
 

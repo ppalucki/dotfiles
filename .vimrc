@@ -668,9 +668,10 @@ nnoremap <Leader>vs :Gstatus<cr>
 nnoremap <Leader>vc :Gcommit --verbose<cr>
 nnoremap <Leader>va :Gcommit --amend<cr>
 " log current file
-nnoremap <silent> <Leader>vl :Glog -n 50<cr>
+nnoremap <silent> <Leader>vl :Gllog -n 50<cr>
 " last 10 commits
-nnoremap <Leader>vL :Glog -n 50 --<cr>
+nnoremap <Leader>vL :Gllog -n 50 --<cr>
+" use lopen to list
 " gblame
 nnoremap <Leader>vb :Gblame<cr>
 vnoremap <Leader>vb :Gblame<cr>
@@ -1394,7 +1395,7 @@ let g:syntastic_mode_map = { 'mode': 'active' }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_always_populate_loc_list=1
-" let g:syntastic_python_flake8_args="--config=setup.cfg"
+let g:syntastic_python_flake8_args="--config=tox.ini"
 
 "" Removes trailing spaces
 function! TrimWhiteSpace() "{{{
