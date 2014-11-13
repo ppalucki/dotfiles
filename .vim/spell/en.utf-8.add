@@ -264,3 +264,8 @@ zookeeperd
 sudo
 nosetests
 venv
+py
+TypeError
+NoneType
+iterable
+hypervisor

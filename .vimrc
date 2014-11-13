@@ -144,7 +144,6 @@ Plugin 'benmills/vimux'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 """ ----------------------- END OF VUNDLE -----------------------
@@ -707,9 +706,9 @@ let g:ConqueTerm_ReadUnfocused = 1
 " nie zamykaj screena bo czesto zabija mi dodatwkoeo konsole
 " domsylnie kiluje wszystkie screene! a bez tego musze dwa razy zamykac vima
 " let g:ScreenShellQuitOnVimExit = 0 
-let g:ScreenImpl = 'GnuScreen'
-let g:ScreenShellHeight = 10
-let g:ScreenShellGnuScreenVerticalSupport = 'native'
+" let g:ScreenImpl = 'GnuScreen'
+" let g:ScreenShellHeight = 10
+" let g:ScreenShellGnuScreenVerticalSupport = 'native'
 " terminal bash vertical
 " map <leader>tb :ScreenShellVertical bash<cr>
 " terminal base horizontal
@@ -728,16 +727,17 @@ let g:ScreenShellGnuScreenVerticalSupport = 'native'
 " terminal all
 " nmap <leader>ta ggvG$<leader>ts
 
-function! ScreenSendPaste1()
-  let g:ScreenShellSendPrefix = '%cpaste'
-  let g:ScreenShellSendSuffix = '--'
-endfunction 
-function! ScreenSendPaste2()
-  let g:ScreenShellSendPrefix = ''
-  let g:ScreenShellSendSuffix = ''
-endfunction 
+" function! ScreenSendPaste1()
+"   let g:ScreenShellSendPrefix = '%cpaste'
+"   let g:ScreenShellSendSuffix = '--'
+" endfunction 
+" function! ScreenSendPaste2()
+"   let g:ScreenShellSendPrefix = ''
+"   let g:ScreenShellSendSuffix = ''
+" endfunction 
 " terminal paste
-vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
+" vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
+
 " terminal word - (send)
 " nmap <leader>tw viw<leader>ts
 "
@@ -1280,13 +1280,13 @@ let g:yankring_replace_n_nkey = '<c-q>'
 
 """ ------------- screenpaste
 " screen paste normal mode only
-nmap  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
-nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
+" nmap  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
+" nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
 " map! <Leader>p  <Plug>ScreenpastePut		" Insert, Command-line mode
 " map  <Leader>gp <Plug>ScreenpasteGPut		" Normal, Visual mode
-" some dummmy mappings!!!
-map <Leader>xP1 <Plug>ScreenpasteGPutBefore	
-map <Leader>xP2 <Plug>ScreenpasteGPut		
+" " some dummmy mappings!!!
+" map <Leader>xP1 <Plug>ScreenpasteGPutBefore	
+" map <Leader>xP2 <Plug>ScreenpasteGPut		
 
 
 """ --------------- screen copy buffer int screen's paster buffer
@@ -1321,7 +1321,7 @@ def find_buffer(filename):
 
 def debug_loc(cmd=None):
     if cmd is not None:
-        c('call ScreenShellSend("%s")'%cmd)
+        c('call VimuxRunCommand("%s")'%cmd)
         time.sleep(0.01) # 10ms
 
     import vipdb
@@ -1588,10 +1588,23 @@ let g:VimuxOrientation = "h"
 let g:VimuxHeight = "40"
 
 function! VimuxSlime()
+   """ uwaga nie potrafi wyslac np. $ do basha
+   " call VimuxRunCommand(@v)
    call VimuxOpenRunner()
    call VimuxSendText(@v)
    call VimuxSendKeys("Enter")
 endfunction
+
+function! VimuxSlimeCpaste()
+    """ wersja dla ipytohn wykorzystujacego cpaste i konczoce sie dwa znakami
+   call VimuxOpenRunner()
+   call VimuxSendText('%cpaste')
+   call VimuxSendKeys('Enter')
+   call VimuxSendText(@v)
+   call VimuxSendKeys('- -')
+   call VimuxSendKeys('Enter')
+endfunction
+
 
 " terminal bash vertical
 map <leader>tb :call VimuxOpenRunner()<cr>
@@ -1599,18 +1612,23 @@ map <leader>tb :call VimuxOpenRunner()<cr>
 " terminal send 
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 vmap <leader>ts "vy:call VimuxSlime()<cr>
+vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
 
 " termianal rerun 
-map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
+" map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
+map <leader>tr :up<bar>VimuxRunCommand 'c-p'<cr>
 "
-" terminal exit
+" terminal exit (edit c-d)
 map <leader>te :call VimuxRunCommand('exit')<cr>
+" map <leader>te :call VimuxSendKeys('c-c')<cr>
+" map <leader>te :call VimuxSendKeys('c-d')<cr>
+" map <leader>te :call VimuxInterruptRunner()<cr>
 
 " terminal all
 "nmap <leader>ta ggvG$<leader>ts
 
 " terminal line - begin then send visual till end and terminal send
-nmap <leader>tl _v$<leader>ts
+nmap <leader>tl _vg_<leader>ts
 
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
