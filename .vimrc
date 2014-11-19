@@ -1659,6 +1659,7 @@ let g:airline#extensions#tabline#show_buffers = 1
 nmap ]b :bn<cr>
 nmap [b :bp<cr>
 
-nmap <C-]> :bn<cr>
-nmap <C-[> :bp<cr>
+" breaks ctrl-p 
+" nmap <C-]> :bn<cr>
+" nmap <C-[> :bp<cr>
 
