@@ -279,8 +279,7 @@ function! PythonMappings()
 	" nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
 	" ipython debug 
 	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
-	" nmap <buffer> <leader>ic oimport vipdb;vipdb.cond=True<ESC>:w<cr>
-	" nmap <buffer> <leader>ir oimport vipdb<cr>if hasattr(vipdb,'cond'):vipdb.set_trace()<ESC>:w<cr>
+	nmap <buffer> <leader>iv oimport vipdb;vipdb.cond=True<ESC>:w<cr>
 	nmap <buffer> <leader>L :PymodeLint<cr>
     nmap <buffer> <leader>l :call Flake8()<cr>
 	" " pudb debugger
@@ -791,6 +790,7 @@ au FileType rst set nofoldenable
 set nofoldenable
 au FileType python set nofoldenable
 au FileType python set foldmethod=manual
+"
 " au FileType python :NoMatchParen
 " au FileType go :NoMatchParen
 
@@ -1324,22 +1324,25 @@ def debug_loc(cmd=None):
         c('call VimuxRunCommand("%s")'%cmd)
         time.sleep(0.01) # 10ms
 
-    import vipdb
-    filename, line = vipdb.get_location()
-    # print repr(filename), repr(line)
-    if filename is not None and not filename.endswith('.pyc') and filename.endswith('.py'):
-        line = int(line)
-        buf = find_buffer(filename)
-        if buf is not None:
-            # print 'buf found', buf.number, 'going', line
-            if vim.current.buffer.number != buf.number:
-                # print 'switching', buf.number
-                c('buffer %s'%buf.number)
-            c(str(line))
-            # c('normal z.')
-        else:
-            # print 'tryin to open', filename, line
-            c('edit +%i %s'%(line, filename))
+    try:
+        import vipdb
+        filename, line = vipdb.get_location()
+        # print repr(filename), repr(line)
+        if filename is not None and not filename.endswith('.pyc') and filename.endswith('.py'):
+            line = int(line)
+            buf = find_buffer(filename)
+            if buf is not None:
+                # print 'buf found', buf.number, 'going', line
+                if vim.current.buffer.number != buf.number:
+                    # print 'switching', buf.number
+                    c('buffer %s'%buf.number)
+                c(str(line))
+                # c('normal z.')
+            else:
+                # print 'tryin to open', filename, line
+                c('edit +%i %s'%(line, filename))
+    except ImportError:
+        pass
 
 EOF
 
@@ -1632,3 +1635,30 @@ nmap <leader>tl _vg_<leader>ts
 
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
+
+
+""" git gerrit review
+" Enable spell checking, which is not on by default for commit messages.
+au FileType gitcommit setlocal spell
+" Reset textwidth if you've previously overridden it.
+au FileType gitcommit setlocal textwidth=72
+
+""" comment new shortcut (compatibile z ideavim)
+nmap <C-g> gccj
+vmap <C-g> gc
+
+
+" -------------------------------------                      *airline-tabline*
+" * enable/disable enhanced tabline. >
+let g:airline#extensions#tabline#enabled = 1
+
+" * enable/disable displaying buffers with a single tab. >
+let g:airline#extensions#tabline#show_buffers = 1
+
+" buffers navigation
+nmap ]b :bn<cr>
+nmap [b :bp<cr>
+
+nmap <C-]> :bn<cr>
+nmap <C-[> :bp<cr>
+

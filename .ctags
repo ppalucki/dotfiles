@@ -1,2 +1,3 @@
 --python-kinds=-i
-
+--exclude=.tox
+--exclude=tmp
