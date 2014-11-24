@@ -1394,7 +1394,9 @@ nmap <leader><C-l> :SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 let g:syntastic_quiet_messages = {'level': 'warnings'}
 
-let g:syntastic_mode_map = { 'mode': 'active' }
+" Syntastic wlaczony wylaczony
+" let g:syntastic_mode_map = { 'mode': 'active' }
+let g:syntastic_mode_map = { 'mode': 'passive' }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_always_populate_loc_list=1
@@ -1627,11 +1629,16 @@ map <leader>te :call VimuxRunCommand('exit')<cr>
 " map <leader>te :call VimuxSendKeys('c-d')<cr>
 " map <leader>te :call VimuxInterruptRunner()<cr>
 
+map <Leader>tc :VimuxInterruptRunner<cr>
 " terminal all
 "nmap <leader>ta ggvG$<leader>ts
 
 " terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _vg_<leader>ts
+nmap <leader>tt <leader>tl
+
+" terminal-terminal in visual mode sends all
+vmap <leader>tt <leader>ts
 
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
@@ -1663,3 +1670,6 @@ nmap [b :bp<cr>
 " nmap <C-]> :bn<cr>
 " nmap <C-[> :bp<cr>
 
+" aka shift-alt
+nmap } :bn<cr>
+nmap { :bp<cr>

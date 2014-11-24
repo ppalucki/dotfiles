@@ -37,5 +37,6 @@ function title {
 ######################################
 # PIP Python
 #####################################
-export PIP_DOWNLOAD_CACHE=~/.pip/cache
-mkdir -p $PIP_DOWNLOAD_CACHE
+# moved to ~/.pip/pip.conf
+# export PIP_DOWNLOAD_CACHE=~/.pip/cache
+# mkdir -p $PIP_DOWNLOAD_CACHE
