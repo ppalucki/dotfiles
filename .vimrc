@@ -97,7 +97,7 @@ Plugin 'tpope/vim-surround'
 " better paste from screen (with leader+p)
 " Plugin 'vim-scripts/screenpaste.vim'
 " GoLang development
-" Plugin 'fatih/vim-go'
+Plugin 'fatih/vim-go'
 " zamiennik powerline
 Plugin 'bling/vim-airline'
 
@@ -140,6 +140,7 @@ Plugin 'christoomey/vim-tmux-navigator'
 
 Plugin 'benmills/vimux'
 
+Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
@@ -280,8 +281,8 @@ function! PythonMappings()
 	" ipython debug 
 	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader>iv oimport vipdb;vipdb.cond=True<ESC>:w<cr>
-	nmap <buffer> <leader>L :PymodeLint<cr>
-    nmap <buffer> <leader>l :call Flake8()<cr>
+	nmap <buffer> <leader><c-l> :PymodeLint<cr>
+    nmap <buffer> <leader>L :call Flake8()<cr>
 	" " pudb debugger
 	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
 	"" fix na diff doget - z brancha johntyree python-mode
@@ -305,7 +306,8 @@ function! PythonMappings()
     " wytlacz elcim i signs
 
     " terminal test
-    nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
+    " TESTY OFF
+    " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
     map <leader>tp :up<bar>call VimuxRunCommand("python <c-r>%")<cr>
@@ -631,7 +633,7 @@ vmap <leader>y :s///gc<left><left><left>
 " or manual procedure
 " ---------- manual --------------
 " Put the cursor on foo.
-" Press * to search for the next occurrence.
+" Press * or f (follow) to search for the next occurrence.
 " Type ciw (change inner word) then bar then press Escape.
 " Press n (move to next occurrence) then . (repeat change).
 " Repeat last step
@@ -1128,6 +1130,7 @@ autocmd FileType python setlocal completeopt-=preview
 
 " Open last/alternate buffer
 noremap <Leader><Leader> <C-^>
+noremap <Leader><space> <C-^>
 
 " Map Q to repeat the last recorded macro
 " exmode sie czasem jednak przydaje - a jednak nie dziala jak chce (lepiej
@@ -1361,8 +1364,8 @@ nmap gl :py debug_loc()<cr>
 nmap gu :py debug_loc('up')<cr>
 " go bottom aka down stack
 nmap gb :py debug_loc('down')<cr>
-" go untIl 
-nmap gi :py debug_loc('until')<cr>
+" go end function (until) (gi was reserverd for go last insert position)
+" nmap ge :py debug_loc('until')<cr>
 nmap gj :call ScreenShellSend('jump ' . line('.'))<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 
@@ -1387,10 +1390,10 @@ let no_flake8_maps=1
 
 """ syntastic
 " bindingi sa wczesniej
-" l dla flake8
-" L dla [pymode]
-" C-l dla SyntasticCheck
-nmap <leader><C-l> :SyntasticCheck<Cr>
+" L dla flake8
+" c-l dla [pymode]
+" l dla SyntasticCheck
+nmap <leader>l :up<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 let g:syntastic_quiet_messages = {'level': 'warnings'}
 
@@ -1399,8 +1402,9 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
 let g:syntastic_mode_map = { 'mode': 'passive' }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_python_flake8_args="--config=tox.ini"
+let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E501, E128"
 
 "" Removes trailing spaces
 function! TrimWhiteSpace() "{{{
@@ -1629,7 +1633,7 @@ map <leader>te :call VimuxRunCommand('exit')<cr>
 " map <leader>te :call VimuxSendKeys('c-d')<cr>
 " map <leader>te :call VimuxInterruptRunner()<cr>
 
-map <Leader>tc :VimuxInterruptRunner<cr>
+map <Leader>tc :call VimuxOpenRunner()<bar>VimuxInterruptRunner<cr>
 " terminal all
 "nmap <leader>ta ggvG$<leader>ts
 
@@ -1639,6 +1643,8 @@ nmap <leader>tt <leader>tl
 
 " terminal-terminal in visual mode sends all
 vmap <leader>tt <leader>ts
+" alias tl na tt
+vmap <leader>tl <leader>tt 
 
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
@@ -1657,10 +1663,10 @@ vmap <C-g> gc
 
 " -------------------------------------                      *airline-tabline*
 " * enable/disable enhanced tabline. >
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 
 " * enable/disable displaying buffers with a single tab. >
-let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_buffers = 0
 
 " buffers navigation
 nmap ]b :bn<cr>
@@ -1673,3 +1679,7 @@ nmap [b :bp<cr>
 " aka shift-alt
 nmap } :bn<cr>
 nmap { :bp<cr>
+
+
+" put line after Ctrl-Shift-P
+" nmap <C-S-P> :put<cr>
