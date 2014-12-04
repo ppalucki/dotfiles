@@ -1,4 +1,5 @@
-### ------------- mystuff ------------
+# cat ~/dotfiles/.bashrc.lite | ssh user@somewhere "cat >>.bashrc"
+# sudo update-alternatives --config editor 
 export EDITOR=vim
 bind '"\ep":history-search-backward'
 bind '"\en":history-search-forward'

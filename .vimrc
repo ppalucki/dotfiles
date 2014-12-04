@@ -280,7 +280,7 @@ function! PythonMappings()
 	" nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
 	" ipython debug 
 	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>iv oimport vipdb;vipdb.cond=True<ESC>:w<cr>
+	nmap <buffer> <leader>iv oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
 	nmap <buffer> <leader><c-l> :PymodeLint<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
 	" " pudb debugger
@@ -310,8 +310,8 @@ function! PythonMappings()
     " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>call VimuxRunCommand("python <c-r>%")<cr>
-    map <leader>ti :up<bar>call VimuxRunCommand("ipython -i <c-r>%")<cr>
+    map <leader>tp :up<bar>call VimuxOpenRunner()<bar>call VimuxRunCommand("python <c-r>%")<cr>
+    map <leader>ti :up<bar>call VimuxOpenRunner()<bar>call VimuxRunCommand("ipython -i <c-r>%")<cr>
 
     """ Testing
     " terminal yank test
@@ -1329,6 +1329,7 @@ def debug_loc(cmd=None):
 
     try:
         import vipdb
+        print 'installed!'
         filename, line = vipdb.get_location()
         # print repr(filename), repr(line)
         if filename is not None and not filename.endswith('.pyc') and filename.endswith('.py'):
@@ -1345,6 +1346,7 @@ def debug_loc(cmd=None):
                 # print 'tryin to open', filename, line
                 c('edit +%i %s'%(line, filename))
     except ImportError:
+        print 'vipdb not installed!'
         pass
 
 EOF
