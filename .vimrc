@@ -1,3 +1,24 @@
+"  PYTHON keybindings
+"  <leader>id intrupt debugger
+"  <leader>iv intrupt vipdb debugger
+"  <leader>ip intrupt ipython embeded
+"
+"  gn - go next
+"  gs - go step
+"  go - continue exit
+"  gr - go return
+"  gu - up frame
+"  gb - go "bottom" (down frame)
+"
+" TMUX keybindinds
+"  <leader>tr - terminal repeat
+"  <leader>te> - terminal exit
+"  <leader>tt/tl - send line
+"  <leader>ts - send selection
+"  <leader>tS - send python CPaste selection
+"  <leader>tw - send word
+"  <leader>tc - send Ctrl-C
+"  <leader>tb - terminal bash
 """ ----------------------- VUNDLE -----------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -1315,7 +1336,7 @@ py <<EOF
 #         # print repr(l)
 #         el = send_escape(l)
 #         send_line(el)
-import time
+import time, vim
 
 def find_buffer(filename):
     for b in vim.buffers:
@@ -1324,12 +1345,18 @@ def find_buffer(filename):
 
 def debug_loc(cmd=None):
     if cmd is not None:
-        c('call VimuxRunCommand("%s")'%cmd)
-        time.sleep(0.01) # 10ms
+        if cmd=='jump':
+            cmd = 'jump %s'%vim.eval("line('.')")
 
+        print 'debbuger:', cmd
+        time.sleep(0.1) # 10ms
+        c('call VimuxRunCommand("%s")'%cmd)
+        time.sleep(0.1) # 10ms
+
+    # go to location
+    ### requires vipdb to work
     try:
         import vipdb
-        print 'installed!'
         filename, line = vipdb.get_location()
         # print repr(filename), repr(line)
         if filename is not None and not filename.endswith('.pyc') and filename.endswith('.py'):
@@ -1346,7 +1373,6 @@ def debug_loc(cmd=None):
                 # print 'tryin to open', filename, line
                 c('edit +%i %s'%(line, filename))
     except ImportError:
-        print 'vipdb not installed!'
         pass
 
 EOF
@@ -1362,13 +1388,14 @@ nmap gs :py debug_loc('step')<cr>
 nmap gr :py debug_loc('return')<cr>
 " go location
 nmap gl :py debug_loc()<cr>
-" go up stack
-nmap gu :py debug_loc('up')<cr>
-" go bottom aka down stack
-nmap gb :py debug_loc('down')<cr>
-" go end function (until) (gi was reserverd for go last insert position)
-" nmap ge :py debug_loc('until')<cr>
-nmap gj :call ScreenShellSend('jump ' . line('.'))<cr>
+" go up stack up - wysyla klawisz 'up'!
+nmap gu :py debug_loc('u')<cr> 
+" go bottom aka down stack - down wysyla klawisze 'down'! dlatego w skrocona
+" wersja
+nmap gb :py debug_loc('d')<cr>
+" go "end function" (until) (gi was reserverd for go last insert position)
+nmap ge :py debug_loc('until')<cr>
+nmap gj :py debug_loc('jump')<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 
 let g:COMMAND_MAP = {
