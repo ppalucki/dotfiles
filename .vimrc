@@ -810,7 +810,7 @@ set noshowmatch
 au FileType rst set nofoldenable
 " au FileType rst :NoMatchParen
 
-set nofoldenable
+" set nofoldenable
 au FileType python set nofoldenable
 au FileType python set foldmethod=manual
 "
