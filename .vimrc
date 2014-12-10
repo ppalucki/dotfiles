@@ -159,7 +159,9 @@ Plugin 'alfredodeza/pytest.vim'
 "
 Plugin 'christoomey/vim-tmux-navigator'
 
-Plugin 'benmills/vimux'
+" Plugin 'benmills/vimux'
+" patch-1 branch for fix the issues with copy-pasting $
+Plugin 'ppalucki/vimux' 
 
 Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'altercation/vim-colors-solarized'
