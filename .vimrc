@@ -165,6 +165,8 @@ Plugin 'ppalucki/vimux'
 
 Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'altercation/vim-colors-solarized'
+"
+Plugin 'guyzmo/vim-etherpad'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -1714,3 +1716,23 @@ nmap { :bp<cr>
 
 " put line after Ctrl-Shift-P
 " nmap <C-S-P> :put<cr>
+"
+"
+""" Etherpad !!!
+"
+" " To connect to the pad at URI http://localhost:9001/p/test per default:
+" let g:epad_host = "etherpad.amr.corp.intel.com" " Hostname to connect to
+" let g:epad_port = "80"      " Port to connect to
+" let g:epad_path = "/"        " URL Path to the pad
+" let g:epad_pad = "sdiref"       " Name of the pad to connect to
+" " http://etherpad.amr.corp.intel.com/sdiref
+" "
+" " " GUI feel
+" let g:epad_updatetime = 5000  " lower this for more realtime, higher this
+" "
+" " " GUI look
+" let g:epad_attributes = 1     " set to 1 to display attributes (works only
+" let g:epad_authors = 1        " set to 1 to display authors (works only in
+" "
+" " " Enable verbosity
+" let g:epad_verbose = 2        " set to 1 for INFO level, 2 for DEBUG level))
