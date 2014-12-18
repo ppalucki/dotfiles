@@ -5,7 +5,9 @@
 source ~/dotfiles/.bash_aliases
 
 ################ History
-source ~/dotfiles/.bashrc_history
+if [[ $OSTYPE == 'linux-gnu' ]]; then
+    source ~/dotfiles/.bashrc_history
+fi
 
 ###############################
 #### PS1 (git - current branch) 
