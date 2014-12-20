@@ -166,7 +166,7 @@ Plugin 'ppalucki/vimux'
 Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'altercation/vim-colors-solarized'
 "
-Plugin 'guyzmo/vim-etherpad'
+" Plugin 'guyzmo/vim-etherpad'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
