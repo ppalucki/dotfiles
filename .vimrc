@@ -404,7 +404,7 @@ function! GoMappings()
     nnoremap <buffer> <Leader>a :exe 'GoImport ' . expand('<cword>')<CR>
 
     " test current pkg
-    nmap <leader>tt :up<bar>GoTestVerbose<cr>
+    nmap <leader>tt :up<bar>GoTest<cr>
 
     nmap <silent> <leader>m :up\|make<cr>
 
