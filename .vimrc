@@ -386,7 +386,8 @@ function! GoMappings()
 	imap <buffer> <F9> <Esc><f9>
 	nmap <buffer> <leader><F9> :up\|Make<cr>
     
-    map <leader>tp :up<bar>call ScreenShellSend("go run <c-r>%")<bar><cr>
+
+    map <leader>tp :up<bar>call VimuxRunCommand("go run <c-r>%")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
@@ -400,7 +401,7 @@ function! GoMappings()
     " make supertab works better
     let g:SuperTabDefaultCompletionType = "context"
 
-    nnoremap <buffer> <Leader>a :exe 'Import ' . expand('<cword>')<CR>
+    nnoremap <buffer> <Leader>a :exe 'GoImport ' . expand('<cword>')<CR>
 
     " test current pkg
     nmap <leader>tt :up<bar>GoTestVerbose<cr>
@@ -1432,7 +1433,8 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
-let g:syntastic_mode_map = { 'mode': 'passive' }
+let g:syntastic_mode_map = { "mode": "passive",
+                           \ "active_filetypes": ["go"] }
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
