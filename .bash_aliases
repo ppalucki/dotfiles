@@ -15,7 +15,7 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 ### vim
-alias vi='vim'
+# alias vi='vim' # wrong habbit
 
 ### tmux 256 colors
 alias tmux='tmux -2'
