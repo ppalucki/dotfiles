@@ -75,3 +75,6 @@
 	trustExitCode = true
 [gitreview]
 	username = pawel.palucki
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
