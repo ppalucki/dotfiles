@@ -13,12 +13,19 @@
 " TMUX keybindinds
 "  <leader>tr - terminal repeat
 "  <leader>te> - terminal exit
-"  <leader>tt/tl - send line
+"  <leader>tl (tt) - send line
+"  <leader>tt - run tests
 "  <leader>ts - send selection
 "  <leader>tS - send python CPaste selection
 "  <leader>tw - send word
 "  <leader>tc - send Ctrl-C
 "  <leader>tb - terminal bash
+"
+" F9 - quick run
+" <leader>r - rename (python/go oraz quickrun) 
+" F8 - generate tags
+" gd - go to def
+" K - documentation
 """ ----------------------- VUNDLE -----------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -50,6 +57,7 @@ Plugin 'Raimondi/delimitMate'
 " Plugin 'Shougo/neocomplete.vim'
 " snippets
 Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets.git'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
 Plugin 'chrisbra/Recover.vim'
 
@@ -382,7 +390,8 @@ function! GoMappings()
 	""" ruby run
 	" nmap <buffer> <F9> :up\|!go run %<cr> 
 	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
-	nmap <buffer> <leader>r <f9>
+	" nmap <buffer> <leader>r <f9>
+	nmap <buffer> <leader>r :GoRename<cr>
 	imap <buffer> <F9> <Esc><f9>
 	nmap <buffer> <leader><F9> :up\|Make<cr>
     
@@ -549,7 +558,7 @@ au FileType haskell call HaskellMappings()
 
 
 "" repeat last command
-map <leader>r @:
+" map <leader>r @:
 
 """ rest doc riv run 
 function! RstMappings()
