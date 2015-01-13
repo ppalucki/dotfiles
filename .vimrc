@@ -14,7 +14,7 @@
 "  <leader>tr - terminal repeat
 "  <leader>te> - terminal exit
 "  <leader>tl (tt) - send line
-"  <leader>tt - run tests
+"  <leader>tt - terminal termina (run tests depracted!)
 "  <leader>ts - send selection
 "  <leader>tS - send python CPaste selection
 "  <leader>tw - send word
@@ -129,6 +129,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'fatih/vim-go'
 " zamiennik powerline
 Plugin 'bling/vim-airline'
+
+" not required bundled with vim-go ??
+" Plugin 'nsf/gocode', {'rtp': 'vim/'}
+
+" real live completion for vim-go
+" Plugin 'Valloric/YouCompleteMe'
 
 " QuickRun
 Plugin 'thinca/vim-quickrun'
@@ -393,7 +399,7 @@ function! GoMappings()
 	" nmap <buffer> <leader>r <f9>
 	nmap <buffer> <leader>r :GoRename<cr>
 	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :up\|Make<cr>
+	nmap <buffer> <leader><F9> :up\|GoBuild<cr>
     
 
     map <leader>tp :up<bar>call VimuxRunCommand("go run <c-r>%")<cr>
@@ -409,11 +415,12 @@ function! GoMappings()
     
     " make supertab works better
     let g:SuperTabDefaultCompletionType = "context"
+    " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
     nnoremap <buffer> <Leader>a :exe 'GoImport ' . expand('<cword>')<CR>
 
     " test current pkg
-    nmap <leader>tt :up<bar>GoTest<cr>
+    " nmap <leader>tt :up<bar>GoTest<cr>
 
     nmap <silent> <leader>m :up\|make<cr>
 
@@ -655,6 +662,8 @@ au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
 au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
 au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
 au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
+au FileType go map <buffer> <leader>h "ayiw:Ack! --go "<C-r>a"
+au FileType go vmap <buffer> <leader>h "ay:Ack! --go "<C-r>a"
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "
 """ Search and replace
@@ -1065,6 +1074,8 @@ hi DiffText ctermbg=52
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
 let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
+" 0 not working
+let g:UltiSnipsEnableSnipMate = ""
 
 """ ----- ctrlp
 map <F3> :CtrlPBufTag<CR>
@@ -1504,7 +1515,8 @@ let g:paredit_disable_clojure = 1
 function! ClojureMappings()
     nmap <buffer> gd [<C-D>
     vmap <buffer> gq :!/Users/ppalucki/bin/clformat <cr>
-    nmap <buffer> <leader>tt :update<bar>RunTests<cr>
+    " tt terminal-terminal
+    " nmap <buffer> <leader>tt :update<bar>RunTests<cr> 
     nmap <buffer> <leader>ty :update<bar>RunAllTests<cr>
 endfunction
 au FileType clojure call ClojureMappings()
@@ -1554,8 +1566,11 @@ set lazyredraw
 
 
 " godef
-let g:godef_split=0
+let g:godef_split=1
 let g:godef_same_file_in_same_window=1
+
+" vim-go
+" let g:go_auto_type_info = 1
 
 
 """ wymaga align
@@ -1684,9 +1699,9 @@ map <Leader>tc :call VimuxOpenRunner()<bar>VimuxInterruptRunner<cr>
 " terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _vg_<leader>ts
 nmap <leader>tt <leader>tl
-
 " terminal-terminal in visual mode sends all
 vmap <leader>tt <leader>ts
+
 " alias tl na tt
 vmap <leader>tl <leader>tt 
 
