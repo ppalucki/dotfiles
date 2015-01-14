@@ -26,6 +26,7 @@
 " F8 - generate tags
 " gd - go to def
 " K - documentation
+" <c-w>o - zOom window aka to tmux <c-a>z
 """ ----------------------- VUNDLE -----------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -181,6 +182,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'altercation/vim-colors-solarized'
 "
 " Plugin 'guyzmo/vim-etherpad'
+"
+Plugin 'vim-scripts/ZoomWin'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -1059,7 +1062,9 @@ map <leader>m "qdt,dwep"qpb
 map <leader>u :GundoToggle<CR>
 
 " find occurences - search current word but without scroll
+" follow
 nmap <leader>f "myiwh/<c-r>m<cr>
+au FileType go nmap <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
 
 " fix na colory diffa (change bez tla - bylo szare)
 " sprawdz kolory: colortest -w -s (w bashu!)
