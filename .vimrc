@@ -402,8 +402,10 @@ function! GoMappings()
 	" nmap <buffer> <leader>r <f9>
 	nmap <buffer> <leader>r :GoRename<cr>
 	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :up\|GoBuild<cr>
+	nmap <buffer> <leader><F9> :up\|GoBuild %s<cr>
     
+	nmap <buffer> <F10> :up<bar>GoTest %s<cr>
+	nmap <buffer> <leader><F10> :up<bar>GoTest<cr>
 
     map <leader>tp :up<bar>call VimuxRunCommand("go run <c-r>%")<cr>
     """ navgigation goto
