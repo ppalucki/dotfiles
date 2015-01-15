@@ -1212,7 +1212,8 @@ let g:pythontagimport_full  = 0
 
 " yank current buffer filename to register
 " http://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
-nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
+" nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
+nmap cp :let @" = expand("%:p")<cr>
 
 " xml syntax fix
 hi link xmlTagName Identifier
