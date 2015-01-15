@@ -1163,6 +1163,12 @@ let g:SuperTabLongestHighlight = 1
 " let g:SuperTabDefaultCompletionType = "context"
 " let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
+" ----- previe/scratch when omnicomplete is used
+" automaticly hide
+let g:SuperTabClosePreviewOnPopupClose = 1
+" disable complettly
+set completeopt-=preview
+
 " Settings for jedi-vim
 " jedi-vim
 " cd ~/.vim/bundle
