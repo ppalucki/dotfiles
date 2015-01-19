@@ -1,6 +1,21 @@
-snippet errf "if err != nil { log.Fatalf(err)}"
+snippet errf "if err != nil { log.Fatalln('err:', err)}"
 if err != nil {
-	log.Fatalf("Fatal error: %s\n", err)
+	log.Fatalln("${1:Fatal} error:", err)
 }
+${0}
 endsnippet
 
+snippet errF "if err != nil { log.Fatalf('err: %s, err)}"
+if err != nil {
+	log.Fatalf("${1:Fatal} error: %s\n", err)
+}
+${0}
+endsnippet
+
+
+snippet tf "if err != nil { t.Fatalln('err:', err)}"
+if err != nil {
+	t.Fatalf("${1:Fatal} error: %s\n", err)
+}
+${0}
+endsnippet
