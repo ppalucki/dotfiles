@@ -20,6 +20,7 @@
 "  <leader>tw - send word
 "  <leader>tc - send Ctrl-C
 "  <leader>tb - terminal bash
+"  <leader>tu - termian tests - run tests in termianl
 "
 " F9 - quick run
 " <leader>r - rename (python/go oraz quickrun) 
@@ -397,17 +398,23 @@ au BufRead,BufNewFile *.thor set filetype=ruby
 "------------------------ Golang
 function! GoMappings()
 	""" ruby run
-	" nmap <buffer> <F9> :up\|!go run %<cr> 
-	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
 	" nmap <buffer> <leader>r <f9>
 	nmap <buffer> <leader>r :GoRename<cr>
-	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :up\|GoBuild %s<cr>
-    
-	nmap <buffer> <F10> :up<bar>GoTest %s<cr>
-	nmap <buffer> <leader><F10> :up<bar>GoTest<cr>
 
-    map <leader>tp :up<bar>call VimuxRunCommand("go run <c-r>%")<cr>
+
+    """ running & building
+	" nmap <buffer> <F9> :up\|!go run %<cr> 
+	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
+	imap <buffer> <F9> <Esc><f9>
+	nmap <buffer> <leader><F9> :up\|GoBuild <c-r>%<cr>
+    
+    """ testing 
+	nmap <buffer> <F10> :up<bar>GoTest ./<c-r>%<cr>
+	nmap <buffer> <leader><F10> :up<bar>GoTest ./...<cr>
+
+    """ running in terminal
+    map <leader>tu :up<bar>call VimuxRunCommand("go test ./...")<cr>
+    map <leader>tp :up<bar>call VimuxRunCommand("go run ./<c-r>%")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
@@ -430,6 +437,9 @@ function! GoMappings()
     nmap <silent> <leader>m :up\|make<cr>
 
     nmap <buffer> <leader>w :silent up<cr>
+
+	" automatic import
+	nmap <leader>A :GoImports<cr>
 
 endfunction
 au FileType go call GoMappings()
