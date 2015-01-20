@@ -186,6 +186,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 "
 Plugin 'vim-scripts/ZoomWin'
 
+Plugin 'rhysd/vim-go-impl'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 " To ignore plugin indent changes, instead use:
@@ -413,7 +415,11 @@ function! GoMappings()
 	nmap <buffer> <leader><F10> :up<bar>GoTest ./...<cr>
 
     """ running in terminal
-    map <leader>tu :up<bar>call VimuxRunCommand("go test ./...")<cr>
+	""" selected file
+    map <leader>tu :up<bar>call VimuxRunCommand("go test -v ./<c-r>%")<cr>
+	""" all tests
+    map <leader>tU :up<bar>call VimuxRunCommand("go test -v ./...")<cr>
+	"" run
     map <leader>tp :up<bar>call VimuxRunCommand("go run ./<c-r>%")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
@@ -1731,6 +1737,9 @@ vmap <leader>tl <leader>tt
 
 " terminal word - (send)
 nmap <leader>tw viw<leader>ts
+
+" terminal directory set
+map <Leader>td :call VimuxOpenRunner()<bar>VimuxRunCommand('cd ' . eval('getcwd()'))<cr>
 
 
 """ git gerrit review
