@@ -22,8 +22,15 @@
 "  <leader>tb - terminal bash
 "  <leader>tu - termian tests - run tests in termianl
 "
-" F9 - quick run
-" <leader>r - rename (python/go oraz quickrun) 
+" golang:
+" <leader>a - autoimports all
+" <leader>A - autoimports this keyword
+" F9 - quick run (this file) with QuickRun
+" <leader>F9 - build (this file)
+" F10 - test this file
+" <leader>F10 - test all (./...)
+
+" <leader>r - rename (python/go) 
 " F8 - generate tags
 " gd - go to def
 " K - documentation
@@ -435,7 +442,7 @@ function! GoMappings()
     let g:SuperTabDefaultCompletionType = "context"
     " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
-    nnoremap <buffer> <Leader>a :exe 'GoImport ' . expand('<cword>')<CR>
+    nnoremap <buffer> <Leader>A :exe 'GoImport ' . expand('<cword>')<CR>
 
     " test current pkg
     " nmap <leader>tt :up<bar>GoTest<cr>
@@ -445,7 +452,7 @@ function! GoMappings()
     nmap <buffer> <leader>w :silent up<cr>
 
 	" automatic import
-	nmap <leader>A :GoImports<cr>
+	nmap <leader>a :GoImports<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1795,3 +1802,6 @@ nmap { :bp<cr>
 " "
 " " " Enable verbosity
 " let g:epad_verbose = 2        " set to 1 for INFO level, 2 for DEBUG level))
+"
+"
+au BufRead,BufNewFile Gomfile setlocal ft=ruby
