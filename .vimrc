@@ -191,7 +191,8 @@ Plugin 'ekalinin/Dockerfile.vim'
 "
 " Plugin 'guyzmo/vim-etherpad'
 "
-Plugin 'vim-scripts/ZoomWin'
+" broken because in restored I cannot save file again (and slow!)
+" Plugin 'vim-scripts/ZoomWin' 
 
 Plugin 'rhysd/vim-go-impl'
 
@@ -452,7 +453,7 @@ function! GoMappings()
     nmap <buffer> <leader>w :silent up<cr>
 
 	" automatic import
-	nmap <leader>a :GoImports<cr>
+	nmap <leader>a :GoImports<cr>:up<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1805,4 +1806,23 @@ nmap { :bp<cr>
 " let g:epad_verbose = 2        " set to 1 for INFO level, 2 for DEBUG level))
 "
 "
+
+" Gomfile as ruby
 au BufRead,BufNewFile Gomfile setlocal ft=ruby
+
+
+""" simple better zoomwindow
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <C-w>o :ZoomToggle<CR>
