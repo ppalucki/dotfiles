@@ -76,5 +76,6 @@
 [gitreview]
 	username = pawel.palucki
 
+# (deprecated) Its is much better to generate token and create ~/.netrc for github
 # [url "git@github.com:"]
 #     insteadOf = https://github.com/

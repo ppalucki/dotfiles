@@ -533,6 +533,7 @@ au FileType ruby set ts=2 sw=2 softtabstop=2
 au FileType html set ts=2 sw=2 softtabstop=2 nocindent
 au FileType python set ts=4 sw=4 softtabstop=4
 au FileType mkd set shiftwidth=2
+au FileType yaml set shiftwidth=2
 
 """ wyjscie z trybu insert przez wpisanie dwa razy jj
 inoremap jj <ESC>
