@@ -2,9 +2,11 @@
 #### ALIASES core and other
 ##############################
 
-if [[ $OSTYPE == 'linux-gnu' ]]; then
+if [[ $OSTYPE == 'linux-gnu' ]]
+then
     alias ll='ls -al --color=auto'
-elif [[ $OSTYPE == 'darwin13' ]]; then
+elif [[ $OSTYPE == 'darwin13.4.0' ]]
+then
     alias ll='ls -alG'
 fi
 
@@ -41,3 +43,26 @@ alias aptsearch='apt-cache search'
 alias cds='cd /opt/stack'
 alias cdds='cd /opt/stack/devstack'
 alias openrc='source /opt/stack/devstack/openrc admin'
+
+
+##############################################
+## go debugger
+function gogdb {
+echo compile...
+go build -gcflags "-N -l" $1
+if [ $? == 0 ] ;then
+    read -p "starting cgdb (press a key) ..."
+    cgdb $2 
+fi
+}
+
+# example 
+function gotestgdb {
+echo compile...
+go test -c $1
+if [ $? == 0 ] ;then
+    export $(go test -work -c -gcflags "-N -l" $1 2>&1)
+    read -p "starting cgdb (press a key) ..."
+    cgdb $2 -- -d $WORK
+fi
+}
