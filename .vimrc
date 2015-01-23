@@ -724,6 +724,8 @@ vmap <leader>y :s///gc<left><left><left>
 " Type ciw (change inner word) then bar then press Escape.
 " Press n (move to next occurrence) then . (repeat change).
 " Repeat last step
+" OR BETTER new way!
+" cgn then . or n
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""
