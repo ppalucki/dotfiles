@@ -10,6 +10,13 @@
 "  gu - up frame
 "  gb - go "bottom" (down frame)
 "
+"  gd - goto definition
+"  gD - goto definition in vertical split
+"
+"
+"  gf - goto file (under cursor)
+"  <c-w>f - goto file (new window)
+"
 " TMUX keybindinds
 "  <leader>tr - terminal repeat
 "  <leader>te> - terminal exit
@@ -454,6 +461,12 @@ function! GoMappings()
 
 	" automatic import
 	nmap <leader>a :GoImports<cr>:up<cr>
+
+
+    " based on:
+    " /home/dev/dotfiles/.vim/bundle/vim-go/ftplugin/go/commands.vim:60
+    command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
+    nmap <silent> gD :GoDefVsplit<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1826,3 +1839,6 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-w>z :ZoomToggle<CR>
+
+
+

@@ -1,3 +1,6 @@
+###########################
+# error handling
+##########################
 snippet errf "if err != nil { log.Fatalln('err:', err)}"
 if err != nil {
 	log.Fatalln("${1:Fatal} error:", err)
@@ -12,7 +15,6 @@ if err != nil {
 ${0}
 endsnippet
 
-
 snippet tf "if err != nil { t.Fatalln('err:', err)}"
 if err != nil {
 	t.Fatalf("${1:Fatal} error: %s\n", err)
@@ -20,54 +22,82 @@ if err != nil {
 ${0}
 endsnippet
 
-snippet pack "package"
-package ${1:main}
-${0}
-endsnippet
-
+###########################
+# convey
+##########################
 snippet impc "import convey"
-import . "github.com/smartystreets/goconvey/convey"
+. "github.com/smartystreets/goconvey/convey"
 endsnippet
 
-snippet so "So()"
+snippet so "So(Equal)"
 So($1, ShouldEqual, $2)
 $0
 endsnippet
 
-snippet son "So()"
-So(${1:nil}, ShouldBeNill)
+snippet son "So( BeNil )"
+So(${1:nil}, ShouldBeNil)
 $0
 endsnippet
 
+snippet sonn "So(, NotBeNil )"
+So(${1:nil}, ShouldNotBeNil)
+$0
+endsnippet
+
+snippet se "ShouldEqual"
+ShouldEqual
+endsnippet
+
+snippet sr "ShouldResemble"
+ShouldResemble
+endsnippet
+
 snippet conv "Convey()"
-Convey("some test", t, func(){
-	$1
+Convey("${1:description}", t, func(){
+	$2
 })
 endsnippet
 
+###########################
+# builtin functions
+##########################
 snippet ap "append"
 append(${1:slice}, ${0:value})
 endsnippet
 
-snippet bo "bool"
-bool
-endsnippet
 
-snippet by "byte"
-byte
-endsnippet
+##########################
+# flow control
+#########################
 
 snippet br "break"
 break
 endsnippet
 
-snippet ch "channel"
-chan ${0:int}
-endsnippet
-
 snippet cs
 case ${1:value}:
 	${0}
+endsnippet
+
+snippet cont "continue"
+continue
+endsnippet
+
+snippet def
+defer ${0:func}()
+endsnippet
+
+##########################
+# keywords structs/break/continu
+#########################
+
+snippet var "var name Type"
+var ${1:name} ${2:Type}
+endsnippet
+
+snippet pack "package"
+package ${1:main}
+${0}
 endsnippet
 
 snippet const
@@ -79,22 +109,6 @@ const (
 	${1:NAME1} = iota
 	${0:NAME2}
 )
-endsnippet
-
-snippet cont "continue"
-continue
-endsnippet
-
-snippet def
-defer ${0:func}()
-endsnippet
-
-snippet in "int"
-int
-endsnippet
-
-snippet i6 "int64"
-int64
 endsnippet
 
 snippet im "import"
@@ -119,8 +133,50 @@ interface{
 $0
 endsnippet
 
+snippet str "struct"
+struct
+endsnippet
+
+snippet struct "struct {}"
+struct{
+	$1
+}
+$0
+endsnippet
+
+###########################
+# slices/channels/literals
+##########################
+
+snippet ch "channel"
+chan ${0:int}
+endsnippet
+
+###########################
+# builtin types
+##########################
+snippet bo "bool"
+bool
+endsnippet
+
+snippet by "byte"
+byte
+endsnippet
+
+snippet in "int"
+int
+endsnippet
+
+snippet i6 "int64"
+int64
+endsnippet
+
 snippet fa "false"
 false
+endsnippet
+
+snippet tr "true"
+true
 endsnippet
 
 snippet fl "float32"
@@ -139,13 +195,3 @@ snippet st
 string
 endsnippet
 
-snippet str "struct"
-struct
-endsnippet
-
-snippet struct "struct {}"
-struct{
-	$1
-}
-$0
-endsnippet
