@@ -24,3 +24,24 @@ snippet pack "package"
 package ${1:main}
 ${0}
 endsnippet
+
+snippet impc "import convey"
+import . "github.com/smartystreets/goconvey/convey"
+endsnippet
+
+snippet so "So()"
+So($1, ShouldEqual, $2)
+$0
+endsnippet
+
+snippet son "So()"
+So(${1:nil}, ShouldBeNill)
+$0
+endsnippet
+
+snippet conv "Convey()"
+Convey("some test", t, func(){
+	$1
+})
+$0
+endsnippet
