@@ -43,5 +43,109 @@ snippet conv "Convey()"
 Convey("some test", t, func(){
 	$1
 })
+endsnippet
+
+snippet ap "append"
+append(${1:slice}, ${0:value})
+endsnippet
+
+snippet bo "bool"
+bool
+endsnippet
+
+snippet by "byte"
+byte
+endsnippet
+
+snippet br "break"
+break
+endsnippet
+
+snippet ch "channel"
+chan ${0:int}
+endsnippet
+
+snippet cs
+case ${1:value}:
+	${0}
+endsnippet
+
+snippet const
+const ${1:NAME} = ${0:0}
+endsnippet
+
+snippet const( "const ( iota)"
+const (
+	${1:NAME1} = iota
+	${0:NAME2}
+)
+endsnippet
+
+snippet cont "continue"
+continue
+endsnippet
+
+snippet def
+defer ${0:func}()
+endsnippet
+
+snippet in "int"
+int
+endsnippet
+
+snippet i6 "int64"
+int64
+endsnippet
+
+snippet im "import"
+import
+endsnippet
+
+snippet import "import ()"
+import (
+	"${1:package}"
+)
+endsnippet
+
+# interface
+snippet int "interface"
+interface
+endsnippet
+
+snippet interface "interface {}"
+interface{
+	$1
+}
+$0
+endsnippet
+
+snippet fa "false"
+false
+endsnippet
+
+snippet fl "float32"
+float32
+endsnippet
+
+snippet f3 "float32"
+float32
+endsnippet
+
+snippet f6 "float64"
+float64
+endsnippet
+
+snippet st
+string
+endsnippet
+
+snippet str "struct"
+struct
+endsnippet
+
+snippet struct "struct {}"
+struct{
+	$1
+}
 $0
 endsnippet

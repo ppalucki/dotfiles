@@ -34,7 +34,7 @@
 " F8 - generate tags
 " gd - go to def
 " K - documentation
-" <c-w>o - zOom window aka to tmux <c-a>z
+" <c-w>z - zOom window aka to tmux <c-a>z
 """ ----------------------- VUNDLE -----------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -1825,4 +1825,4 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
-nnoremap <silent> <C-w>o :ZoomToggle<CR>
+nnoremap <silent> <C-w>z :ZoomToggle<CR>
