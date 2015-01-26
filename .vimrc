@@ -468,6 +468,11 @@ function! GoMappings()
     command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
     nmap <silent> gD :GoDefVsplit<cr>
 
+    " vim-go syntax highlihgting
+    let g:go_highlight_functions = 1
+    let g:go_highlight_methods = 1
+    let g:go_highlight_structs = 1
+
 endfunction
 au FileType go call GoMappings()
 
