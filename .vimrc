@@ -1848,4 +1848,10 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-w>z :ZoomToggle<CR>
 
 
+"""
+" Highlight merge conflict markers
+match Todo '\v^(\<|\=|\>){7}([^=].+)?$'
 
+" Jump to next/previous merge conflict marker
+nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
+nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
