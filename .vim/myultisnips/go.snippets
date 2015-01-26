@@ -30,23 +30,19 @@ snippet impc "import convey"
 endsnippet
 
 snippet so "So(Equal)"
-So($1, ShouldEqual, $2)
-$0
+So(${1:got}, ShouldEqual, ${2:expected})
 endsnippet
 
 snippet sor "So(Resemble)"
-So($1, ShouldResemble, $2)
-$0
+So(${1:got}, ShouldResemble, ${2:expected})
 endsnippet
 
 snippet son "So( BeNil )"
 So(${1:nil}, ShouldBeNil)
-$0
 endsnippet
 
 snippet sonn "So(, NotBeNil )"
 So(${1:nil}, ShouldNotBeNil)
-$0
 endsnippet
 
 snippet se "ShouldEqual"

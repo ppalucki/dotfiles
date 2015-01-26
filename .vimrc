@@ -203,6 +203,9 @@ Plugin 'ekalinin/Dockerfile.vim'
 
 Plugin 'rhysd/vim-go-impl'
 
+
+Plugin 'elzr/vim-json'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 " To ignore plugin indent changes, instead use:
@@ -465,13 +468,12 @@ function! GoMappings()
 
     " based on:
     " /home/dev/dotfiles/.vim/bundle/vim-go/ftplugin/go/commands.vim:60
-    command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
-    nmap <silent> gD :GoDefVsplit<cr>
+    nmap <c-w>d <Plug>(go-def-vertical)
+    nmap gD <Plug>(go-def-split)
 
-    " vim-go syntax highlihgting
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
+    " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
+    " nmap <silent> gD :GoDefVsplit<cr>
+
 
 endfunction
 au FileType go call GoMappings()
@@ -789,8 +791,12 @@ map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
 map <leader>bn :bn<cr>
 
-""" json
-autocmd BufNewFile,BufRead *.json set ft=javascript
+""" json - vim-json used for json
+" autocmd BufNewFile,BufRead *.json set ft=javascript
+" autocmd BufNewFile,BufRead *.json set ft=javascript
+au FileType json set foldmethod=syntax
+au FileType json set foldlevel=100
+let g:vim_json_syntax_conceal = 0
 
 """ ConqueTerm
 let g:ConqueTerm_ReadUnfocused = 1
@@ -1634,6 +1640,10 @@ let g:godef_same_file_in_same_window=1
 " vim-go
 " let g:go_auto_type_info = 1
 
+" vim-go syntax highlihgting
+let g:go_highlight_functions = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_methods = 0
 
 """ wymaga align
 " sqlutils i sqluformatter
