@@ -1855,3 +1855,22 @@ match Todo '\v^(\<|\=|\>){7}([^=].+)?$'
 " Jump to next/previous merge conflict marker
 nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
 nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
+
+" based on http://vim.wikia.com/wiki/Encryption
+" to encrypt file for the first time
+" ccrypt -e filename.txt
+" then vim filename.txt.cpt
+" ccrypt
+augroup CPT
+  au!
+  au BufReadPre *.cpt set bin
+  au BufReadPre *.cpt set viminfo=
+  au BufReadPre *.cpt set noswapfile
+  au BufReadPost *.cpt let $vimpass = inputsecret("Password: ")
+  au BufReadPost *.cpt silent '[,']!ccrypt -cb -E vimpass
+  au BufReadPost *.cpt set nobin
+  au BufWritePre *.cpt set bin
+  au BufWritePre *.cpt '[,']!ccrypt -e -E vimpass
+  au BufWritePost *.cpt u
+  au BufWritePost *.cpt set nobin
+augroup END
