@@ -1070,6 +1070,9 @@ au FileType markdown hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
 au FileType markdown hi htmlItalic term=bold cterm=bold gui=bold ctermfg=231
 au FileType markdown hi htmlBold term=bold cterm=bold gui=bold ctermfg=229
 
+" nie chcemy widziec bledow markdown np. xxx_xxx_xxx
+au FileType markdown hi link markdownError NONE
+
 " surround with * (normal end visual mode)
 au FileType markdown nmap <leader>e ysiw*
 au FileType markdown vmap <leader>e S*
