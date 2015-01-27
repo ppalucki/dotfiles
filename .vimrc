@@ -513,7 +513,8 @@ nnoremap <leader>s "_ciw<c-r>"<esc>
 nnoremap <leader>n :set invnumber<cr>
 
 " 
-" nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
+nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
+
 
 " quickfixclear
 " nmap <leader>qc :QuickFixClear<cr>
@@ -1759,6 +1760,9 @@ vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
 " termianal rerun 
 " map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
 map <leader>tr :up<bar>VimuxRunCommand 'c-p'<cr>
+
+" termian quit and rerun
+map <leader>tq :up<bar>VimuxInterruptRunner<cr>:VimuxRunCommand 'c-p'<cr>
 "
 " terminal exit (edit c-d)
 map <leader>te :call VimuxRunCommand('exit')<cr>
