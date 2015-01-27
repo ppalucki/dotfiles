@@ -473,6 +473,7 @@ function! GoMappings()
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
     " nmap <silent> gD :GoDefVsplit<cr>
+    nmap <leader>K <Plug>(go-doc-browser)
 
 
 endfunction
