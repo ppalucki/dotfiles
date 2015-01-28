@@ -604,6 +604,11 @@ let g:ctrlp_buftag_types = {
   \ },
 \ }
 
+" \'go' : {
+"   \ 'bin': '/Users/ppalucki/work/go/bin/gotags',
+"   \ 'args': ''
+"   \ },
+
 """ HaskMappings
 function! HaskellMappings()
 	map <F9> :!ghc %<cr>
