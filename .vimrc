@@ -22,7 +22,7 @@
 "  <leader>te> - terminal exit
 "  <leader>tl (tt) - send line
 "  <leader>tt - terminal termina (run tests depracted!)
-"  <c-i>  - terminal terminal and go to next line !!!
+"  <c-u>  - terminal terminal and go to next line !!!
 "  <leader>ts - send selection
 "  <leader>tS - send python CPaste selection
 "  <leader>tw - send word
@@ -1786,7 +1786,8 @@ nmap <leader>tt <leader>tl
 vmap <leader>tt <leader>ts
 
 " better shoruct dla kopiowanie (line and move down)
-nmap <c-i> <leader>ttj
+" cannot use <c-i> because it is the same as tab
+nmap <c-u> <leader>ttj
 
 " alias tl na tt
 vmap <leader>tl <leader>tt 
