@@ -22,7 +22,7 @@
 "  <leader>te> - terminal exit
 "  <leader>tl (tt) - send line
 "  <leader>tt - terminal termina (run tests depracted!)
-"  <c-u>  - terminal terminal and go to next line !!!
+"  <c-x>  - (execute!) terminal terminal and go to next line !!!
 "  <leader>ts - send selection
 "  <leader>tS - send python CPaste selection
 "  <leader>tw - send word
@@ -476,6 +476,8 @@ function! GoMappings()
     " nmap <silent> gD :GoDefVsplit<cr>
     nmap <leader>K <Plug>(go-doc-browser)
 
+    " calles/usage
+    nmap <leader>z :GoCallees<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -513,7 +515,7 @@ nnoremap <leader>s "_ciw<c-r>"<esc>
 nnoremap <leader>n :set invnumber<cr>
 
 " 
-nnoremap <leader>p :set paste<cr>p:set nopaste<cr>
+nnoremap <leader>p :set paste!<cr>
 
 
 " quickfixclear
@@ -1523,7 +1525,7 @@ let no_flake8_maps=1
 " L dla flake8
 " c-l dla [pymode]
 " l dla SyntasticCheck
-nmap <leader>l :up<cr>:SyntasticCheck<Cr>
+nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 let g:syntastic_quiet_messages = {'level': 'warnings'}
 
@@ -1787,7 +1789,7 @@ vmap <leader>tt <leader>ts
 
 " better shoruct dla kopiowanie (line and move down)
 " cannot use <c-i> because it is the same as tab
-nmap <c-u> <leader>ttj
+nmap <c-x> <leader>ttj
 
 " alias tl na tt
 vmap <leader>tl <leader>tt 

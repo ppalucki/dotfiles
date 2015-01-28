@@ -1,4 +1,11 @@
 ###########################
+# special constructs
+##########################
+snippet impl "type implements var _ = (*Type)(nil)"
+var _ ${1:Interface}= (*${2:Type})(nil) // check interface implementation
+endsnippet
+
+###########################
 # error handling
 ##########################
 snippet errf "if err != nil { log.Fatalln('err:', err)}"
