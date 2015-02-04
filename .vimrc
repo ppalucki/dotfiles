@@ -1,3 +1,6 @@
+""" -------------------------------------------
+"""         key bindings and shortcuts  
+""" -------------------------------------------
 "  PYTHON keybindings
 "  <leader>id intrupt debugger
 "  <leader>iv intrupt vipdb debugger
@@ -45,7 +48,10 @@
 " gd - go to def
 " K - documentation
 " <c-w>z - zOom window aka to tmux <c-a>z
-""" ----------------------- VUNDLE -----------------------
+
+""" -------------------------------------------
+"""          Vundle (plugins)
+""" -------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -213,14 +219,15 @@ Plugin 'elzr/vim-json'
 call vundle#end()            " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-""" ----------------------- END OF VUNDLE -----------------------
-
-
-""" ---------- core settings!
+""" -------------------------------------------
+"""         Core settings
+""" -------------------------------------------
 filetype plugin indent on
 syntax on
 
-"""""""""""""""""""""""""""""""""" colorscheme
+""" -------------------------------------------
+"""         colorscheme
+""" -------------------------------------------
 "podglad numerow kolorow ~/download/xtrem-colortest -w -r syntax on musi byc "przed kolorkami
 set t_Co=256
 let g:molokai_original = 0
@@ -235,25 +242,31 @@ hi PmenuThumb ctermfg=3
 " colorscheme molokai
 " let g:molokai_original = 1
 
-""" ------ cursorline
+""" -------------------------------------------
+"""         cursorline
+""" -------------------------------------------
 " set cursorline
 " hi CursorLine cterm=NONE ctermbg=234 guibg=NONE
 " set nonumber
 
-""" ----- airline/statusline
+""" -------------------------------------------
+"""         airline/statusline
+""" -------------------------------------------
 " turn on status line always
 set laststatus=2
 let g:airline_powerline_fonts = 0
 " let g:airline_theme = 'powerlineish'
 
-"
+""" ?????????????????
 set lazyredraw
 
 """ cos innego
 " wplywa na multipolcenie taloe jak leader \ev \es \s
 set timeoutlen=1000
 
-""" -------- leader
+""" -------------------------------------------
+"""         leader
+""" -------------------------------------------
 " let mapleader = ","
 " let mapleader = " " - zmiast tego musze uzywac tych dwoch lini ponizej, zeby
 " macvim nie czekaj na spacje po wcisnieciu
@@ -262,10 +275,14 @@ let mapleader = "\\"
 map <space> \
 " nmap , <space> # second leader key ! lepiej nie zeby sie odzwyaczic
 
-"""--------- hidden allow edited buffers
+""" -------------------------------------------
+"""          hidden allow edited buffers
+""" -------------------------------------------
 set hidden
 
-""" -------- kopiowanie do globanego bufora
+""" -------------------------------------------
+"""         clibboard (global buffer integration)
+""" -------------------------------------------
 if has("mac")
     set clipboard=unnamed
 elseif has("unix")
@@ -276,7 +293,10 @@ elseif has("win32")
 endif
 
 
-"""----------------------------- Python
+""" -------------------------------------------
+"""         Python
+""" -------------------------------------------
+
 """--------- pythonmode
 let g:pymode_motion = 1
 let g:pymode_doc = 0
@@ -342,7 +362,9 @@ let g:pymode_run = 0
 let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
-
+""" -------------------------------------------
+"""         Python (mappings)
+""" -------------------------------------------
 function! PythonMappings()
 	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
     " uzytecznosc mala przez !brak screen!
@@ -431,13 +453,17 @@ au FileType python call PythonMappings()
 """ flake8 vim - F7 or L
 let no_flake8_maps=1
 
-"----------------------- XML mappings
+""" -------------------------------------------
+"""         XML mappings
+""" -------------------------------------------
 function! XMLMappings()
     vmap <buffer> gq :!xmllint --format -<cr>
 endfunction
 au FileType xml call XMLMappings()
 
-"------------------------ RUBY
+""" -------------------------------------------
+"""         RUBY
+""" -------------------------------------------
 function! RubyMappings()
 	""" binding pry 
 	nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
@@ -455,7 +481,9 @@ au FileType ruby call RubyMappings()
 " ruby/thor
 au BufRead,BufNewFile *.thor set filetype=ruby
 
-"------------------------ Golang
+""" -------------------------------------------
+"""         Golang
+""" -------------------------------------------
 function! GoMappings()
 	""" ruby run
 	" nmap <buffer> <leader>r <f9>
@@ -521,10 +549,6 @@ function! GoMappings()
 endfunction
 au FileType go call GoMappings()
 
-function! SQLMappings()
-    map gq :SQLUFormatter<cr>
-endfunction
-au FileType sql call SQLMappings()
 
 
 "----------------------------- OTHER hacks
@@ -848,11 +872,6 @@ let g:vim_json_syntax_conceal = 0
 
 """ ConqueTerm
 let g:ConqueTerm_ReadUnfocused = 1
-
-
-
-
-
 
 """ pi_paren
 " bez oznaczania nawiasow
@@ -1660,11 +1679,9 @@ endfunction
 au FileType c call CMappings()
 let g:clang_close_preview = 1
 
-
 """ -------------------------------------------
-"""         SQL
+"""         Clang (quickrun)
 """ -------------------------------------------
-
 let g:quickrun_config = {}
 
 let g:quickrun_config.c = {
@@ -1673,20 +1690,19 @@ let g:quickrun_config.c = {
       \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
       \ }
 
-
 """ -------------------------------------------
 """         SQL
 """ -------------------------------------------
-""" vim-simpledb remapping
-" tutaj nie dziala wiec trzeba wyedytowac sciezke
-"/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
-function! SQLMapping()
+function! SQLMappings()
+    map gq :SQLUFormatter<cr>
+    """ vim-simpledb remapping
+    " tutaj nie dziala wiec trzeba wyedytowac sciezke
+    "/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
     vnoremap <buffer> <enter> :SimpleDBExecuteSql<cr>
     nnoremap <buffer> <leader><enter> m':SimpleDBExecuteSql <cr>g`'
     nnoremap <buffer> <enter> m':'{,'}SimpleDBExecuteSql<cr>g`'
 endfunction
-
-au FileType sql call SQLMapping()
+au FileType sql call SQLMappings()
 
 """ -------------------------------------------
 """         FAKE CLIP (???)
