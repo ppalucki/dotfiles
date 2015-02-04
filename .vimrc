@@ -22,7 +22,9 @@
 "  <leader>te> - terminal exit
 "  <leader>tl (tt) - send line
 "  <leader>tt - terminal termina (run tests depracted!)
+"  <leader>ta - terminal terminal ALL
 "  <c-x>  - (execute!) terminal terminal and go to next line !!!
+"  <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
 "  <leader>ts - send selection
 "  <leader>tS - send python CPaste selection
 "  <leader>tw - send word
@@ -1755,6 +1757,33 @@ function! VimuxSlimeCpaste()
    call VimuxSendKeys('Enter')
 endfunction
 
+" SEND TO ALL TERMINALS
+
+if has("python")
+py << EOP
+import vim,os,subprocess,string,time
+def sendtmux(text, target_pane):
+    # for line in text.split('\n'):
+    #     if not line:
+    #         continue
+    cmd = ("tmux send-keys -t %s "%target_pane).split()
+    cmd.append(text)
+        # cmd.append('enter')
+    subprocess.call(cmd)
+
+def sendalltmux(text):
+    allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' '))
+    allpanes = map(lambda x: string.strip(x, "'"), filter(None, allpanesout.split("\n")))
+    currentout = subprocess.check_output("tmux display-message -p #P".split(' '))
+    current_id = currentout.strip().strip("'")
+    for pane_id in allpanes:
+        if pane_id == current_id:
+            continue
+        sendtmux(text, pane_id)
+
+EOP
+endif
+
 
 " terminal bash vertical
 map <leader>tb :call VimuxOpenRunner()<cr>
@@ -1791,6 +1820,14 @@ vmap <leader>tt <leader>ts
 " cannot use <c-i> because it is the same as tab
 nmap <c-x> <leader>ttj
 
+" to all terminals
+vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
+
+" normal mode take line
+nmap <leader>ta _v$<leader>ta
+
+" visaul version all terminal
+
 " alias tl na tt
 vmap <leader>tl <leader>tt 
 
@@ -1799,6 +1836,8 @@ nmap <leader>tw viw<leader>ts
 
 " terminal directory set
 map <Leader>td :call VimuxOpenRunner()<bar>VimuxRunCommand('cd ' . eval('getcwd()'))<cr>
+
+
 
 
 """ git gerrit review
@@ -1904,3 +1943,5 @@ augroup CPT
   au BufWritePost *.cpt u
   au BufWritePost *.cpt set nobin
 augroup END
+
+
