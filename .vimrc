@@ -1767,7 +1767,15 @@ def sendtmux(text, target_pane):
     #     if not line:
     #         continue
     cmd = ("tmux send-keys -t %s "%target_pane).split()
-    cmd.append(text)
+    # handle c-keys correctly
+    if text.startswith("c-"):
+        text = text.split()
+        for subtext in text:
+            # throw out enters
+            subtext = subtext.strip('\n\r')
+            cmd.append(subtext)
+    else:
+        cmd.append(text)
         # cmd.append('enter')
     subprocess.call(cmd)
 
@@ -1785,13 +1793,17 @@ EOP
 endif
 
 
+
 " terminal bash vertical
-map <leader>tb :call VimuxOpenRunner()<cr>
+" map <leader>tb :call VimuxOpenRunner()<cr>
+
+" cpaste
+" vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
 
 " terminal send 
 " If text is selected, save it in the v buffer and send that buffer it to tmux
-vmap <leader>ts "vy:call VimuxSlime()<cr>
-vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
+" vmap <leader>ts "vy:call VimuxSlime()<cr>
+vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), vim.eval("g:VimuxRunnerIndex"))<cr>
 
 " termianal rerun 
 " map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
@@ -1811,7 +1823,7 @@ map <Leader>tc :call VimuxOpenRunner()<bar>VimuxInterruptRunner<cr>
 "nmap <leader>ta ggvG$<leader>ts
 
 " terminal line - begin then send visual till end and terminal send
-nmap <leader>tl _vg_<leader>ts
+nmap <leader>tl _v$<leader>ts
 nmap <leader>tt <leader>tl
 " terminal-terminal in visual mode sends all
 vmap <leader>tt <leader>ts
