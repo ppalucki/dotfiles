@@ -157,6 +157,8 @@ Plugin 'bling/vim-airline'
 
 " not required bundled with vim-go ??
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
+" the same as gocode (bundled standalone and not required)
+" Plugin 'dgryski/vim-godef'
 
 " real live completion for vim-go
 " Plugin 'Valloric/YouCompleteMe'
@@ -1647,9 +1649,9 @@ let g:ctrlp_buftag_types = {
 """ -------------------------------------------
 """            godef
 """ -------------------------------------------
-let g:godef_split=1
-let g:godef_same_file_in_same_window=1
-
+" let g:godef_split=1
+" let g:godef_same_file_in_same_window=1
+"
 """ -------------------------------------------
 """           vim-go
 """ -------------------------------------------
