@@ -551,6 +551,9 @@ function! GoMappings()
     " calles/usage
     nmap <leader>z :GoCallees<cr>
 
+    " syntastic active mode - now I can disable Syntastic with ToggleMode
+    let g:syntastic_mode_map = { 'mode': 'active' }
+
 endfunction
 au FileType go call GoMappings()
 
@@ -1508,7 +1511,11 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_mode_map = { "mode": "passive",
-                           \ "active_filetypes": ["go"] }
+                            \}
+" zabardzo trwa na golonagu - jak checsz miec tylko aktive to przestaw sobie w
+" GoMappings - i nie daje sie tego wylaczyc za pomoca SyntasticToggleMode
+                           " \ "active_filetypes": ["go"]
+                           
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
