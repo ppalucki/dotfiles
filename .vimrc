@@ -523,8 +523,8 @@ function! GoMappings()
     " autocmd FileType go autocmd BufWritePre <buffer> Fmt
     
     " make supertab works better
-    let g:SuperTabDefaultCompletionType = "context"
-    " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    " let g:SuperTabDefaultCompletionType = "context"
+    let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
     nnoremap <buffer> <Leader>A :exe 'GoImport ' . expand('<cword>')<CR>
 
