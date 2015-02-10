@@ -580,6 +580,7 @@ nnoremap [l :execute "try \n lprevious \n catch \n  llast \n endtry"<cr>
 " S for subsitute inner word from yanked text
 " change inner word and in insert mode yank from " and exit inster mode :)
 nnoremap <leader>s "_ciw<c-r>"<esc>
+vnoremap <leader>s "_dP
 
 " numberlines toggle
 nnoremap <leader>n :set invnumber<cr>
