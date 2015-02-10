@@ -410,27 +410,27 @@ function! PythonMappings()
     " original version 
     " nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
     if !has('python3')
-    py <<EOF
-    last_test_tag = None
-    from vim import eval as e
-    from vim import command as c
-    def _make_test(tag):
-        c(':up')
-        c(':compiler! python')
-        c(r":set makeprg=XTB\=off\ ./run_tests.py\ %s"%tag)
-        c(':Make')
+py <<EOF
+last_test_tag = None
+from vim import eval as e
+from vim import command as c
+def _make_test(tag):
+    c(':up')
+    c(':compiler! python')
+    c(r":set makeprg=XTB\=off\ ./run_tests.py\ %s"%tag)
+    c(':Make')
 
-    def make_current_test():
-        'run current tag in Make'
-        global last_test_tag
-        last_test_tag = e("tagbar#currenttag('%s','')")
-        _make_test(last_test_tag)
+def make_current_test():
+    'run current tag in Make'
+    global last_test_tag
+    last_test_tag = e("tagbar#currenttag('%s','')")
+    _make_test(last_test_tag)
 
-    def make_last_test():
-        'rerun last runned test'
-        if not last_test_tag:
-            return
-        _make_test(last_test_tag)
+def make_last_test():
+    'rerun last runned test'
+    if not last_test_tag:
+        return
+    _make_test(last_test_tag)
 
 EOF
     endif
@@ -449,6 +449,11 @@ EOF
     nmap [m [M
 endfunction
 au FileType python call PythonMappings()
+
+""" -------------------------------------------
+"""         Python disassembled
+""" -------------------------------------------
+au BufRead,BufNewFile *.pyc_dis set filetype=python
 
 """ flake8 vim - F7 or L
 let no_flake8_maps=1
