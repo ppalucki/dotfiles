@@ -2002,4 +2002,10 @@ augroup CPT
   au BufWritePost *.cpt set nobin
 augroup END
 
-
+""" -------------------------------------------
+""" GoLang oracle by hand
+""" -------------------------------------------
+" find offset be on function
+" py print vim.eval('line2byte(line("."))+col(".")')
+" execute oracle
+" oracle  -pos=learn.go:#632 callers github.com/intelsdilabs/nerp
