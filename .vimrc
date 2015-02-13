@@ -14,7 +14,7 @@
 "  gb - go "bottom" (down frame)
 "
 "  gd - goto definition
-"  gD - goto definition in vertical split
+"  gD or <leader>gd or <c-w>d - goto definition in vertical split
 "
 "
 "  gf - goto file (under cursor)
@@ -150,8 +150,12 @@ Plugin 'tpope/vim-surround'
 " Plugin 'ervandew/screen'
 " better paste from screen (with leader+p)
 " Plugin 'vim-scripts/screenpaste.vim'
+"
 " GoLang development
-Plugin 'fatih/vim-go'
+" Plugin 'fatih/vim-go'
+" with GoImport fix (python based solution not accepted by upstream)
+Plugin 'ppalucki/vim-go' 
+
 " zamiennik powerline
 Plugin 'bling/vim-airline'
 
@@ -201,7 +205,7 @@ Plugin 'alfredodeza/pytest.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 
 " Plugin 'benmills/vimux'
-" patch-1 branch for fix the issues with copy-pasting $
+" fork with 'escaping $ fix'
 Plugin 'ppalucki/vimux' 
 
 Plugin 'ekalinin/Dockerfile.vim'
@@ -543,7 +547,10 @@ function! GoMappings()
 
     " based on:
     " /home/dev/dotfiles/.vim/bundle/vim-go/ftplugin/go/commands.vim:60
+    " go def vertical
     nmap <c-w>d <Plug>(go-def-vertical)
+    nmap <leader>gd <Plug>(go-def-vertical)
+    " go def horizontal
     nmap gD <Plug>(go-def-split)
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
