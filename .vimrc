@@ -1,3 +1,6 @@
+""" -------------------------------------------
+"""         key bindings and shortcuts  
+""" -------------------------------------------
 "  PYTHON keybindings
 "  <leader>id intrupt debugger
 "  <leader>iv intrupt vipdb debugger
@@ -11,7 +14,7 @@
 "  gb - go "bottom" (down frame)
 "
 "  gd - goto definition
-"  gD - goto definition in vertical split
+"  gD or <leader>gd or <c-w>d - goto definition in vertical split
 "
 "
 "  gf - goto file (under cursor)
@@ -22,7 +25,9 @@
 "  <leader>te> - terminal exit
 "  <leader>tl (tt) - send line
 "  <leader>tt - terminal termina (run tests depracted!)
+"  <leader>ta - terminal terminal ALL
 "  <c-x>  - (execute!) terminal terminal and go to next line !!!
+"  <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
 "  <leader>ts - send selection
 "  <leader>tS - send python CPaste selection
 "  <leader>tw - send word
@@ -43,7 +48,10 @@
 " gd - go to def
 " K - documentation
 " <c-w>z - zOom window aka to tmux <c-a>z
-""" ----------------------- VUNDLE -----------------------
+
+""" -------------------------------------------
+"""          Vundle (plugins)
+""" -------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -142,13 +150,19 @@ Plugin 'tpope/vim-surround'
 " Plugin 'ervandew/screen'
 " better paste from screen (with leader+p)
 " Plugin 'vim-scripts/screenpaste.vim'
+"
 " GoLang development
-Plugin 'fatih/vim-go'
+" Plugin 'fatih/vim-go'
+" with GoImport fix (python based solution not accepted by upstream)
+Plugin 'ppalucki/vim-go' 
+
 " zamiennik powerline
 Plugin 'bling/vim-airline'
 
 " not required bundled with vim-go ??
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
+" the same as gocode (bundled standalone and not required)
+" Plugin 'dgryski/vim-godef'
 
 " real live completion for vim-go
 " Plugin 'Valloric/YouCompleteMe'
@@ -191,7 +205,7 @@ Plugin 'alfredodeza/pytest.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 
 " Plugin 'benmills/vimux'
-" patch-1 branch for fix the issues with copy-pasting $
+" fork with 'escaping $ fix'
 Plugin 'ppalucki/vimux' 
 
 Plugin 'ekalinin/Dockerfile.vim'
@@ -211,14 +225,15 @@ Plugin 'elzr/vim-json'
 call vundle#end()            " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-""" ----------------------- END OF VUNDLE -----------------------
-
-
-""" ---------- core settings!
+""" -------------------------------------------
+"""         Core settings
+""" -------------------------------------------
 filetype plugin indent on
 syntax on
 
-"""""""""""""""""""""""""""""""""" colorscheme
+""" -------------------------------------------
+"""         colorscheme
+""" -------------------------------------------
 "podglad numerow kolorow ~/download/xtrem-colortest -w -r syntax on musi byc "przed kolorkami
 set t_Co=256
 let g:molokai_original = 0
@@ -233,22 +248,31 @@ hi PmenuThumb ctermfg=3
 " colorscheme molokai
 " let g:molokai_original = 1
 
-""" ------ cursorline
+""" -------------------------------------------
+"""         cursorline
+""" -------------------------------------------
 " set cursorline
 " hi CursorLine cterm=NONE ctermbg=234 guibg=NONE
 " set nonumber
 
-""" ----- airline/statusline
+""" -------------------------------------------
+"""         airline/statusline
+""" -------------------------------------------
 " turn on status line always
 set laststatus=2
 let g:airline_powerline_fonts = 0
 " let g:airline_theme = 'powerlineish'
 
+""" ?????????????????
+set lazyredraw
+
 """ cos innego
 " wplywa na multipolcenie taloe jak leader \ev \es \s
 set timeoutlen=1000
 
-""" -------- leader
+""" -------------------------------------------
+"""         leader
+""" -------------------------------------------
 " let mapleader = ","
 " let mapleader = " " - zmiast tego musze uzywac tych dwoch lini ponizej, zeby
 " macvim nie czekaj na spacje po wcisnieciu
@@ -257,10 +281,14 @@ let mapleader = "\\"
 map <space> \
 " nmap , <space> # second leader key ! lepiej nie zeby sie odzwyaczic
 
-"""--------- hidden allow edited buffers
+""" -------------------------------------------
+"""          hidden allow edited buffers
+""" -------------------------------------------
 set hidden
 
-""" -------- kopiowanie do globanego bufora
+""" -------------------------------------------
+"""         clibboard (global buffer integration)
+""" -------------------------------------------
 if has("mac")
     set clipboard=unnamed
 elseif has("unix")
@@ -271,7 +299,10 @@ elseif has("win32")
 endif
 
 
-"""----------------------------- Python
+""" -------------------------------------------
+"""         Python
+""" -------------------------------------------
+
 """--------- pythonmode
 let g:pymode_motion = 1
 let g:pymode_doc = 0
@@ -337,7 +368,9 @@ let g:pymode_run = 0
 let g:pymode_virtualenv = 1
 "let g:pymode_run_key = '<leader>r'
 
-
+""" -------------------------------------------
+"""         Python (mappings)
+""" -------------------------------------------
 function! PythonMappings()
 	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
     " uzytecznosc mala przez !brak screen!
@@ -377,6 +410,37 @@ function! PythonMappings()
     map <leader>tp :up<bar>call VimuxOpenRunner()<bar>call VimuxRunCommand("python <c-r>%")<cr>
     map <leader>ti :up<bar>call VimuxOpenRunner()<bar>call VimuxRunCommand("ipython -i <c-r>%")<cr>
 
+    """ -----------------------------
+    """ Python python functions
+    """ -----------------------------
+    " original version 
+    " nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
+    if !has('python3')
+py <<EOF
+last_test_tag = None
+from vim import eval as e
+from vim import command as c
+def _make_test(tag):
+    c(':up')
+    c(':compiler! python')
+    c(r":set makeprg=XTB\=off\ ./run_tests.py\ %s"%tag)
+    c(':Make')
+
+def make_current_test():
+    'run current tag in Make'
+    global last_test_tag
+    last_test_tag = e("tagbar#currenttag('%s','')")
+    _make_test(last_test_tag)
+
+def make_last_test():
+    'rerun last runned test'
+    if not last_test_tag:
+        return
+    _make_test(last_test_tag)
+
+EOF
+    endif
+
     """ Testing
     " terminal yank test
     """" nmap <leader>ty :py make_current_test()<cr>
@@ -392,13 +456,25 @@ function! PythonMappings()
 endfunction
 au FileType python call PythonMappings()
 
-"----------------------- XML mappings
+""" -------------------------------------------
+"""         Python disassembled
+""" -------------------------------------------
+au BufRead,BufNewFile *.pyc_dis set filetype=python
+
+""" flake8 vim - F7 or L
+let no_flake8_maps=1
+
+""" -------------------------------------------
+"""         XML mappings
+""" -------------------------------------------
 function! XMLMappings()
     vmap <buffer> gq :!xmllint --format -<cr>
 endfunction
 au FileType xml call XMLMappings()
 
-"------------------------ RUBY
+""" -------------------------------------------
+"""         RUBY
+""" -------------------------------------------
 function! RubyMappings()
 	""" binding pry 
 	nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
@@ -416,7 +492,9 @@ au FileType ruby call RubyMappings()
 " ruby/thor
 au BufRead,BufNewFile *.thor set filetype=ruby
 
-"------------------------ Golang
+""" -------------------------------------------
+"""         Golang
+""" -------------------------------------------
 function! GoMappings()
 	""" ruby run
 	" nmap <buffer> <leader>r <f9>
@@ -451,8 +529,8 @@ function! GoMappings()
     " autocmd FileType go autocmd BufWritePre <buffer> Fmt
     
     " make supertab works better
-    let g:SuperTabDefaultCompletionType = "context"
-    " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    " let g:SuperTabDefaultCompletionType = "context"
+    let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
     nnoremap <buffer> <Leader>A :exe 'GoImport ' . expand('<cword>')<CR>
 
@@ -469,7 +547,10 @@ function! GoMappings()
 
     " based on:
     " /home/dev/dotfiles/.vim/bundle/vim-go/ftplugin/go/commands.vim:60
+    " go def vertical
     nmap <c-w>d <Plug>(go-def-vertical)
+    nmap <leader>gd <Plug>(go-def-vertical)
+    " go def horizontal
     nmap gD <Plug>(go-def-split)
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
@@ -479,14 +560,12 @@ function! GoMappings()
     " calles/usage
     nmap <leader>z :GoCallees<cr>
 
+    " syntastic active mode - now I can disable Syntastic with ToggleMode
+    let g:syntastic_mode_map = { 'mode': 'active' }
+
 endfunction
 au FileType go call GoMappings()
 
-function! SQLMappings()
-    map gq :SQLUFormatter<cr>
-
-endfunction
-au FileType sql call SQLMappings()
 
 
 "----------------------------- OTHER hacks
@@ -510,6 +589,7 @@ nnoremap [l :execute "try \n lprevious \n catch \n  llast \n endtry"<cr>
 " S for subsitute inner word from yanked text
 " change inner word and in insert mode yank from " and exit inster mode :)
 nnoremap <leader>s "_ciw<c-r>"<esc>
+vnoremap <leader>s "_dP
 
 " numberlines toggle
 nnoremap <leader>n :set invnumber<cr>
@@ -810,84 +890,6 @@ let g:vim_json_syntax_conceal = 0
 
 """ ConqueTerm
 let g:ConqueTerm_ReadUnfocused = 1
-
-""" -----------------------------
-""" Screen Terminal
-""" -----------------------------
-" nie zamykaj screena bo czesto zabija mi dodatwkoeo konsole
-" domsylnie kiluje wszystkie screene! a bez tego musze dwa razy zamykac vima
-" let g:ScreenShellQuitOnVimExit = 0 
-" let g:ScreenImpl = 'GnuScreen'
-" let g:ScreenShellHeight = 10
-" let g:ScreenShellGnuScreenVerticalSupport = 'native'
-" terminal bash vertical
-" map <leader>tb :ScreenShellVertical bash<cr>
-" terminal base horizontal
-" map <leader>tB :ScreenShell bash<cr>
-
-" terminal send ---- REPLACED by vimux
-" vmap <leader>ts :ScreenSend<cr>
-
-
-" termianal rerun 
-" map <leader>tr :up<bar>call ScreenShellSend("!!")<cr>
-" terminal exit
-" map <leader>te :call ScreenShellSend('exit')<cr>
-" terminal line - begin then send visual till end and terminal send
-" nmap <leader>tl _v$<leader>ts
-" terminal all
-" nmap <leader>ta ggvG$<leader>ts
-
-" function! ScreenSendPaste1()
-"   let g:ScreenShellSendPrefix = '%cpaste'
-"   let g:ScreenShellSendSuffix = '--'
-" endfunction 
-" function! ScreenSendPaste2()
-"   let g:ScreenShellSendPrefix = ''
-"   let g:ScreenShellSendSuffix = ''
-" endfunction 
-" terminal paste
-" vmap <leader>tp :<bs><bs><bs><bs><bs>call ScreenSendPaste1()<bar>'<,'>ScreenSend<cr>:call ScreenSendPaste2()<cr>
-
-" terminal word - (send)
-" nmap <leader>tw viw<leader>ts
-"
-" NOTE all of this move to the vimux configuration
-
-""" Dispatch & Make
-
-" ORGinal nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
-if !has('python3')
-py <<EOF
-last_test_tag = None
-from vim import eval as e
-from vim import command as c
-def _make_test(tag):
-    c(':up')
-    c(':compiler! python')
-    c(r":set makeprg=XTB\=off\ ./run_tests.py\ %s"%tag)
-    c(':Make')
-
-def make_current_test():
-    'run current tag in Make'
-    global last_test_tag
-    last_test_tag = e("tagbar#currenttag('%s','')")
-    _make_test(last_test_tag)
-
-def make_last_test():
-    'rerun last runned test'
-    if not last_test_tag:
-        return
-    _make_test(last_test_tag)
-
-def debuging_on():
-    'prepare synchronize in ipdb'
-    pass
-
-EOF
-endif
-
-
 
 """ pi_paren
 " bez oznaczania nawiasow
@@ -1405,19 +1407,6 @@ let g:yankring_replace_n_pkey = '<c-n>'
 let g:yankring_replace_n_nkey = '<c-q>'
 
 
-""" ------------- screenpaste
-" screen paste normal mode only
-" nmap  <Leader>p  <Plug>ScreenpastePut		" Normal, Visual mode
-" nmap <Leader>P  <Plug>ScreenpastePutBefore	" Normal mode
-" map! <Leader>p  <Plug>ScreenpastePut		" Insert, Command-line mode
-" map  <Leader>gp <Plug>ScreenpasteGPut		" Normal, Visual mode
-" " some dummmy mappings!!!
-" map <Leader>xP1 <Plug>ScreenpasteGPutBefore	
-" map <Leader>xP2 <Plug>ScreenpasteGPut		
-
-
-""" --------------- screen copy buffer int screen's paster buffer
-" nnoremap <silent><leader> :call writefile( split(@", "\n"), '/tmp/screen-exchange' )<CR>
 
 """ ------------------------------------------------------------
 """ -------------------- debuging ------------------------------
@@ -1517,10 +1506,10 @@ let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length
 """ diff
 set diffopt=filler,vertical
 
-""" flake8 vim - F7 or L
-let no_flake8_maps=1
 
-""" syntastic
+""" -------------------------------------------
+"""         syntastic
+""" -------------------------------------------
 " bindingi sa wczesniej
 " L dla flake8
 " c-l dla [pymode]
@@ -1532,35 +1521,45 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_mode_map = { "mode": "passive",
-                           \ "active_filetypes": ["go"] }
+                            \}
+" zabardzo trwa na golonagu - jak checsz miec tylko aktive to przestaw sobie w
+" GoMappings - i nie daje sie tego wylaczyc za pomoca SyntasticToggleMode
+                           " \ "active_filetypes": ["go"]
+                           
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E501, E128"
+" python h ???
+let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
 
+
+""" -------------------------------------------
+"""         trim white spaces
+""" -------------------------------------------
 "" Removes trailing spaces
 function! TrimWhiteSpace() "{{{
     let cursor_pos = getpos('.')
     silent! %s/\s\+$//
     call setpos('.', cursor_pos)
 endfunction "}}}
-
 " nnoremap <silent> <Leader>rtw :call TrimWhiteSpace()<CR>
 nnoremap <Leader>xw :call TrimWhiteSpace()<CR><bar>:up<cr>
 
-" screen focus change
-nmap f<cr> :silent !screen -X focus<cr>
+""" -------------------------------------------
+"""         screen focus change
+""" -------------------------------------------
+" nmap f<cr> :silent !screen -X focus<cr>
 
+""" -------------------------------------------
 au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
+""" -------------------------------------------
 
-" encryption
-set cryptmethod=blowfish
 
-" distraction mode litedfm
-nmap <leader>o :LiteDFMToggle<CR>
-let g:lite_dfm_left_offset = 22
-
+""" -------------------------------------------
+"""         gui with mouse
+""" -------------------------------------------
 if has("gui_running")
     set mouse=a
     " for better scrolling when using the mouse
@@ -1569,27 +1568,37 @@ if has("gui_running")
     " set guioptions+=T 
 endif
 
-" i like mouse too much :p
+""" -------------------------------------------
+""" i like mouse too much :p ????
+""" -------------------------------------------
 set scrolloff=2
 
-
+""" -------------------------------------------
+"""     lite dfm - distraction free mode
+""" -------------------------------------------
+" distraction mode litedfm
+nmap <leader>o :LiteDFMToggle<CR>
+let g:lite_dfm_left_offset = 22
 let g:lite_dfm_normal_bg_cterm = 232
 let g:lite_dfm_normal_bg_gui = '#abcabc'
 
-" calculator, calc
+""" -------------------------------------------
+"""         calculator, calc
+""" -------------------------------------------
 " Then, just type 8*8<C-A> you will get 8*8 = 64
 inoremap <C-A> <C-O>yiW<End> = <C-R>=<C-R>0<CR>
 " or CTRL-R followed by = then, for example, 2+2 and press Enter.
-"
-"
-""" paredit
 
+
+""" -------------------------------------------
+"""         paredit
+""" -------------------------------------------
 let g:paredit_leader = ','
 let g:paredit_disable_clojure = 1
 
-""" clojure
-
-"----------------------- Clojure mappings
+""" -------------------------------------------
+"""         Clojure
+""" -------------------------------------------
 function! ClojureMappings()
     nmap <buffer> gd [<C-D>
     vmap <buffer> gq :!/Users/ppalucki/bin/clformat <cr>
@@ -1599,7 +1608,9 @@ function! ClojureMappings()
 endfunction
 au FileType clojure call ClojureMappings()
 
-" ------------------------ tagbar go
+""" -------------------------------------------
+"""            tagbar golang
+""" -------------------------------------------
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -1631,6 +1642,9 @@ let g:tagbar_type_go = {
 " let g:ctrlp_buftag_ctags_bin='/home/ppalucki/workspace/goprojects/bin/gotags'
 "
 "
+""" -------------------------------------------
+"""           ctrlp buftags for Golang
+""" -------------------------------------------
 let g:ctrlp_buftag_types = {
 \ 'go' : {
   \ 'bin': 'ctags',
@@ -1639,15 +1653,15 @@ let g:ctrlp_buftag_types = {
 \ }
 
 
-
-set lazyredraw
-
-
-" godef
-let g:godef_split=1
-let g:godef_same_file_in_same_window=1
-
-" vim-go
+""" -------------------------------------------
+"""            godef
+""" -------------------------------------------
+" let g:godef_split=1
+" let g:godef_same_file_in_same_window=1
+"
+""" -------------------------------------------
+"""           vim-go
+""" -------------------------------------------
 " let g:go_auto_type_info = 1
 
 " vim-go syntax highlihgting
@@ -1655,40 +1669,41 @@ let g:go_highlight_functions = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_methods = 0
 
+
+""" -------------------------------------------
+"""    sqlutils i sqluformatter
+""" -------------------------------------------
 """ wymaga align
-" sqlutils i sqluformatter
 let g:sqlutil_align_comma = 1 " tnij po przecinku
 let g:sqlutil_align_first_word = 1  
 let g:sqlutil_align_keyword_right = 0 " wyrownaj keywords do prawej
 let g:sqlutil_keyword_case = '\L' " zmieni wilkosc selectow
 let g:sqlutil_align_where = 0 " w where = wartosc wyrownaj
 let g:sqlutil_stmt_keywords = 'select,insert,update,delete,with,merge,join,limit,group,union,on'
-
 " ignore all mappings from align plugn
 let g:loaded_AlignMapsPlugin = "v42"
 
 
-" convert timestamp ct
+""" -------------------------------------------
+""" convert timestamp ct
+""" -------------------------------------------
 nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r>")<cr>
 
-" python h
-let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
 
-" c mappngs
-" clang
+""" -------------------------------------------
+"""         c / C language
+""" -------------------------------------------
 function! CMappings()
-
     nmap <F9> :up<cr>:QuickRun<cr>
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
     nmap gd <c-]>
-
-
 endfunction
-
+au FileType c call CMappings()
 let g:clang_close_preview = 1
 
-au FileType c call CMappings()
-
+""" -------------------------------------------
+"""         Clang (quickrun)
+""" -------------------------------------------
 let g:quickrun_config = {}
 
 let g:quickrun_config.c = {
@@ -1697,46 +1712,57 @@ let g:quickrun_config.c = {
       \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
       \ }
 
-
-""" vim-simpledb remapping
-" tutaj nie dziala wiec trzeba wyedytowac sciezke
-"/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
-function! SQLMapping()
+""" -------------------------------------------
+"""         SQL
+""" -------------------------------------------
+function! SQLMappings()
+    map gq :SQLUFormatter<cr>
+    """ vim-simpledb remapping
+    " tutaj nie dziala wiec trzeba wyedytowac sciezke
+    "/Users/ppalucki/dotfiles/.vim/bundle/vim-simpledb/ftplugin/sql.vim
     vnoremap <buffer> <enter> :SimpleDBExecuteSql<cr>
     nnoremap <buffer> <leader><enter> m':SimpleDBExecuteSql <cr>g`'
     nnoremap <buffer> <enter> m':'{,'}SimpleDBExecuteSql<cr>g`'
 endfunction
+au FileType sql call SQLMappings()
 
-au FileType sql call SQLMapping()
-
-
-
-""" FAKE CLIP
-" yank
+""" -------------------------------------------
+"""         FAKE CLIP (???)
+""" -------------------------------------------
+""" yank
 nmap <leader>ty <Plug>(fakeclip-screen-Y):silent !tmux paste-buffer -t !<cr>
 vmap <leader>ty <Plug>(fakeclip-screen-y)
 
-" paste from
+""" paste from
 nmap <leader>tp <Plug>(fakeclip-screen-p)
 
 "let g:fakeclip_no_default_key_mappings = 'tmux'
-"
-"
-""""""""""""""" DirDiff
+
+""" -------------------------------------------
+"""         DirDiff
+""" -------------------------------------------
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp" 
 
-" conf file tupe
+
+""" -------------------------------------------
+""" configuration file types
+""" -------------------------------------------
 au BufRead,BufNewFile *.conf set filetype=cfg
 au BufRead,BufNewFile *.ini set filetype=cfg
 au BufRead,BufNewFile .tmux.conf set filetype=conf
 
 
-"
-" """"""""""""""" vimux
+""" -------------------------------------------
+"""             vimux
+""" -------------------------------------------
 " better vertical
 let g:VimuxOrientation = "h"
 let g:VimuxHeight = "40"
 
+
+""" -------------------------------------------
+"""          tmux - copying
+""" -------------------------------------------
 function! VimuxSlime()
    """ uwaga nie potrafi wyslac np. $ do basha
    " call VimuxRunCommand(@v)
@@ -1755,88 +1781,159 @@ function! VimuxSlimeCpaste()
    call VimuxSendKeys('Enter')
 endfunction
 
+""" -------------------------------------------
+"""   tmux - send to all terminals
+""" -------------------------------------------
+if has("python")
+py << EOP
+import vim,os,subprocess,string,time
+def sendtmux(text, target_pane):
+    if target_pane is None:
+        # if int(vim.eval("exists('g:VimuxRunnerIndex')")):
+        #     target_pane = vim.eval("g:VimuxRunnerIndex")
+        # else:
+        # just next to me
+        target_pane = int(_current_pane_idx())+1
 
-" terminal bash vertical
-map <leader>tb :call VimuxOpenRunner()<cr>
+    # for line in text.split('\n'):
+    #     if not line:
+    #         continue
+    cmd = ("tmux send-keys -t %s "%target_pane).split()
+    # handle c-keys correctly
+    if text.startswith("c-"):
+        text = text.split()
+        for subtext in text:
+            # throw out enters
+            subtext = subtext.strip('\n\r')
+            cmd.append(subtext)
+    else:
+        cmd.append(text)
+        # cmd.append('enter')
+    subprocess.call(cmd)
 
-" terminal send 
+def _current_pane_idx():
+    currentout = subprocess.check_output("tmux display-message -p #P".split(' '))
+    return currentout.strip().strip("'")
+
+def _all_panes_idxs():
+    allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' '))
+    allpanes = map(lambda x: string.strip(x, "'"), filter(None, allpanesout.split("\n")))
+    return allpanes
+
+def sendalltmux(text):
+    current_id = _current_pane_idx()
+    allpanes = _all_panes_idxs()
+    
+    for pane_id in allpanes:
+        if pane_id == current_id:
+            continue
+        sendtmux(text, pane_id)
+EOP
+endif
+
+""" terminal bash vertical
+" map <leader>tb :call VimuxOpenRunner()<cr>
+
+""" cpaste
+" vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
+
+""" terminal send 
 " If text is selected, save it in the v buffer and send that buffer it to tmux
-vmap <leader>ts "vy:call VimuxSlime()<cr>
-vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
+" vmap <leader>ts "vy:call VimuxSlime()<cr>
+vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), None)<cr>
 
-" termianal rerun 
+""" terminal rerun 
 " map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
 map <leader>tr :up<bar>VimuxRunCommand 'c-p'<cr>
 
-" termian quit and rerun
+""" terminal quit and rerun
 map <leader>tq :up<bar>VimuxInterruptRunner<cr>:VimuxRunCommand 'c-p'<cr>
-"
-" terminal exit (edit c-d)
+
+""" terminal exit (edit c-d)
 map <leader>te :call VimuxRunCommand('exit')<cr>
 " map <leader>te :call VimuxSendKeys('c-c')<cr>
 " map <leader>te :call VimuxSendKeys('c-d')<cr>
 " map <leader>te :call VimuxInterruptRunner()<cr>
 
+""" terminal ctrl-c
 map <Leader>tc :call VimuxOpenRunner()<bar>VimuxInterruptRunner<cr>
-" terminal all
+
+""" terminal all (send everything)
 "nmap <leader>ta ggvG$<leader>ts
 
-" terminal line - begin then send visual till end and terminal send
-nmap <leader>tl _vg_<leader>ts
+""" terminal line - begin then send visual till end and terminal send
+nmap <leader>tl _v$<leader>ts
+""" terminal-terminal (just better shortcut)
 nmap <leader>tt <leader>tl
-" terminal-terminal in visual mode sends all
+
+""" terminal-line alias na terminal-terminal
+vmap <leader>tl <leader>tt 
+""" terminal-terminal in visual mode sends all selected
 vmap <leader>tt <leader>ts
 
-" better shoruct dla kopiowanie (line and move down)
-" cannot use <c-i> because it is the same as tab
+""" terminal-terminal and down
 nmap <c-x> <leader>ttj
 
-" alias tl na tt
-vmap <leader>tl <leader>tt 
+""" terminal-all (selection)
+vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
 
-" terminal word - (send)
+""" terminal-all (just this line)
+nmap <leader>ta _v$<leader>ta
+
+""" terminal word (send)
 nmap <leader>tw viw<leader>ts
 
-" terminal directory set
+""" terminal directory (change current directory to path of current file)
 map <Leader>td :call VimuxOpenRunner()<bar>VimuxRunCommand('cd ' . eval('getcwd()'))<cr>
 
 
-""" git gerrit review
+""" -------------------------------------------
+""" git gerrit review - setspell and textwidth
+""" -------------------------------------------
 " Enable spell checking, which is not on by default for commit messages.
 au FileType gitcommit setlocal spell
 " Reset textwidth if you've previously overridden it.
 au FileType gitcommit setlocal textwidth=72
 
-""" comment new shortcut (compatibile z ideavim)
+""" -------------------------------------------
+""" Tcomment new shortcut (compatibile z ideavim)
+""" -------------------------------------------
+" other shortucts to c-/
 nmap <C-g> gccj
 vmap <C-g> gc
 
-
-" -------------------------------------                      *airline-tabline*
+""" -------------------------------------------
+"""    airline-tabline
+""" -------------------------------------------
 " * enable/disable enhanced tabline. >
 let g:airline#extensions#tabline#enabled = 0
-
 " * enable/disable displaying buffers with a single tab. >
 let g:airline#extensions#tabline#show_buffers = 0
 
-" buffers navigation
+""" -------------------------------------------
+""" buffers navigation
+""" -------------------------------------------
 nmap ]b :bn<cr>
 nmap [b :bp<cr>
-
-" breaks ctrl-p 
+"" breaks ctrl-p 
 " nmap <C-]> :bn<cr>
 " nmap <C-[> :bp<cr>
 
+""" -------------------------------------------
 " aka shift-alt
+""" -------------------------------------------
 nmap } :bn<cr>
 nmap { :bp<cr>
 
 
+""" -------------------------------------------
 " put line after Ctrl-Shift-P
+""" -------------------------------------------
 " nmap <C-S-P> :put<cr>
-"
-"
+
+""" -------------------------------------------
 """ Etherpad !!!
+""" -------------------------------------------
 "
 " " To connect to the pad at URI http://localhost:9001/p/test per default:
 " let g:epad_host = "etherpad.amr.corp.intel.com" " Hostname to connect to
@@ -1857,11 +1954,14 @@ nmap { :bp<cr>
 "
 "
 
+""" -------------------------------------------
 " Gomfile as ruby
+""" -------------------------------------------
 au BufRead,BufNewFile Gomfile setlocal ft=ruby
 
-
+""" -------------------------------------------
 """ simple better zoomwindow
+""" -------------------------------------------
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
     if exists('t:zoomed') && t:zoomed
@@ -1878,7 +1978,9 @@ command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-w>z :ZoomToggle<CR>
 
 
-"""
+""" -------------------------------------------
+""" Merge conflicts
+""" -------------------------------------------
 " Highlight merge conflict markers
 match Todo '\v^(\<|\=|\>){7}([^=].+)?$'
 
@@ -1886,6 +1988,11 @@ match Todo '\v^(\<|\=|\>){7}([^=].+)?$'
 nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
 nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 
+""" -------------------------------------------
+""" Encryption (ccrypt)
+""" -------------------------------------------
+" encryption
+set cryptmethod=blowfish
 " based on http://vim.wikia.com/wiki/Encryption
 " to encrypt file for the first time
 " ccrypt -e filename.txt
@@ -1904,3 +2011,11 @@ augroup CPT
   au BufWritePost *.cpt u
   au BufWritePost *.cpt set nobin
 augroup END
+
+""" -------------------------------------------
+""" GoLang oracle by hand
+""" -------------------------------------------
+" find offset be on function
+" py print vim.eval('line2byte(line("."))+col(".")')
+" execute oracle
+" oracle  -pos=learn.go:#632 callers github.com/intelsdilabs/nerp
