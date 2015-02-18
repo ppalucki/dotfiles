@@ -21,6 +21,8 @@ alias egrep='egrep --color=auto'
 
 ### tmux 256 colors
 alias tmux='tmux -2'
+# most useful alias on earth
+alias ta='tmux a'
 
 #############################################
 ### ALIASES cd
