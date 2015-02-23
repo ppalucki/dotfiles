@@ -28,9 +28,9 @@
 "  <leader>ta - terminal terminal ALL
 "  <c-x>  - (execute!) terminal terminal and go to next line !!!
 "  <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
-"  <leader>ts - send selection
-"  <leader>tS - send python CPaste selection
-"  <leader>tw - send word
+"  <leader>ts - send selection + enter
+"  <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
+"  <leader>tw - send word (+enter)
 "  <leader>tc - send Ctrl-C
 "  <leader>tb - terminal bash
 "  <leader>tu - termian tests - run tests in termianl
@@ -1827,7 +1827,10 @@ endfunction
 if has("python")
 py << EOP
 import vim,os,subprocess,string,time
-def sendtmux(text, target_pane):
+def sendtmux(text, target_pane, append_enter=False):
+    """
+    if text contains c-X it will be split by space and each word send seperatly
+    """
     if target_pane is None:
         # if int(vim.eval("exists('g:VimuxRunnerIndex')")):
         #     target_pane = vim.eval("g:VimuxRunnerIndex")
@@ -1840,15 +1843,18 @@ def sendtmux(text, target_pane):
     #         continue
     cmd = ("tmux send-keys -t %s "%target_pane).split()
     # handle c-keys correctly
-    if text.startswith("c-"):
-        text = text.split()
+    if "c-" in text or "enter" in text:
+        text = text.split() 
         for subtext in text:
             # throw out enters
             subtext = subtext.strip('\n\r')
             cmd.append(subtext)
     else:
         cmd.append(text)
-        # cmd.append('enter')
+
+    if append_enter and not 'enter' in cmd:
+        cmd.append('enter')
+
     subprocess.call(cmd)
 
 def _current_pane_idx():
@@ -1877,10 +1883,11 @@ endif
 """ cpaste
 " vmap <leader>tS "vy:call VimuxSlimeCpaste()<cr>
 
-""" terminal send 
+""" terminal send (with enter by default) tS without enter
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 " vmap <leader>ts "vy:call VimuxSlime()<cr>
-vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), None)<cr>
+vmap <leader>tS "vy:py sendtmux(vim.eval("@v"), None)<cr>
+vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), None, append_enter=True)<cr>
 
 """ terminal rerun 
 " map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
