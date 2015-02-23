@@ -1585,7 +1585,7 @@ function! TrimWhiteSpace() "{{{
     call setpos('.', cursor_pos)
 endfunction "}}}
 " nnoremap <silent> <Leader>rtw :call TrimWhiteSpace()<CR>
-nnoremap <Leader>xw :call TrimWhiteSpace()<CR><bar>:up<cr>
+nnoremap <Leader>Xw :call TrimWhiteSpace()<CR><bar>:up<cr>
 
 """ -------------------------------------------
 """         screen focus change
@@ -1827,16 +1827,19 @@ endfunction
 if has("python")
 py << EOP
 import vim,os,subprocess,string,time
-def sendtmux(text, target_pane, append_enter=False):
+def sendlinetmux(append_enter):
+    sendtmux(vim.current.line, int(vim.eval("v:count")), append_enter=append_enter)
+
+def sendtmux(text, target_pane=None, append_enter=False):
     """
-    if text contains c-X it will be split by space and each word send seperatly
+    if text contains c-(something) or enter it will be split by space and each word send seperatly
     """
-    if target_pane is None:
-        # if int(vim.eval("exists('g:VimuxRunnerIndex')")):
-        #     target_pane = vim.eval("g:VimuxRunnerIndex")
-        # else:
+
+    # where to send - when None or 0 just take next pane
+    if not target_pane: 
         # just next to me
         target_pane = int(_current_pane_idx())+1
+
 
     # for line in text.split('\n'):
     #     if not line:
@@ -1914,12 +1917,13 @@ nmap <leader>tl _v$<leader>ts
 nmap <leader>tt <leader>tl
 
 """ terminal-line alias na terminal-terminal
-vmap <leader>tl <leader>tt 
-""" terminal-terminal in visual mode sends all selected
+
 vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
-nmap <c-x> <leader>ttj
+" nmap <c-x> <leader>ttj
+nmap <c-x> :py sendlinetmux(True)<cr>j
+nmap <leader>x :py sendlinetmux(True)<cr>
 
 """ terminal-all (selection)
 vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
