@@ -28,6 +28,9 @@
 "  <leader>ta - terminal terminal ALL
 "  <c-x>  - (execute!) terminal terminal and go to next line !!!
 "  <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
+" normal [target]x - send current line to target pane
+" visual [target]x - send visual selection to target pane
+
 "  <leader>ts - send selection + enter
 "  <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
 "  <leader>tw - send word (+enter)
@@ -407,8 +410,8 @@ function! PythonMappings()
     " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>call VimuxOpenRunner()<bar>call VimuxRunCommand("python <c-r>%")<cr>
-    map <leader>ti :up<bar>call VimuxOpenRunner()<bar>call VimuxRunCommand("ipython -i <c-r>%")<cr>
+    map <leader>tp :up<bar>py sendtmux("python <c-r>%", enter=True)<cr>
+    map <leader>ti :up<bar>py sendtmux("ipython -i <c-r>%", enter=True)<cr>
 
     """ -----------------------------
     """ Python python functions
@@ -1827,10 +1830,17 @@ endfunction
 if has("python")
 py << EOP
 import vim,os,subprocess,string,time
-def sendlinetmux(append_enter):
-    sendtmux(vim.current.line, int(vim.eval("v:count")), append_enter=append_enter)
 
-def sendtmux(text, target_pane=None, append_enter=False):
+def sendlinetmux(enter):
+    target = int(vim.eval("v:count"))
+    sendtmux(vim.current.line, target, enter=enter)
+
+def sendselectiontmux():
+    target = int(vim.eval("v:count"))
+    for line in vim.current.range:
+        sendtmux(line, target, enter=True)
+
+def sendtmux(text, target_pane=None, enter=False):
     """
     if text contains c-(something) or enter it will be split by space and each word send seperatly
     """
@@ -1855,7 +1865,7 @@ def sendtmux(text, target_pane=None, append_enter=False):
     else:
         cmd.append(text)
 
-    if append_enter and not 'enter' in cmd:
+    if enter and not 'enter' in cmd:
         cmd.append('enter')
 
     subprocess.call(cmd)
@@ -1889,24 +1899,22 @@ endif
 """ terminal send (with enter by default) tS without enter
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 " vmap <leader>ts "vy:call VimuxSlime()<cr>
-vmap <leader>tS "vy:py sendtmux(vim.eval("@v"), None)<cr>
-vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), None, append_enter=True)<cr>
+vmap <leader>tS "vy:py sendtmux(vim.eval("@v"))<cr>
+vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), enter=True)<cr>
 
 """ terminal rerun 
 " map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
-map <leader>tr :up<bar>VimuxRunCommand 'c-p'<cr>
+map <leader>tr :up<bar>:py sendtmux('c-p')<cr>
 
 """ terminal quit and rerun
-map <leader>tq :up<bar>VimuxInterruptRunner<cr>:VimuxRunCommand 'c-p'<cr>
+map <Leader>tq :py sendtmux('c-c c-p', enter=True)<cr>
 
-""" terminal exit (edit c-d)
-map <leader>te :call VimuxRunCommand('exit')<cr>
-" map <leader>te :call VimuxSendKeys('c-c')<cr>
-" map <leader>te :call VimuxSendKeys('c-d')<cr>
-" map <leader>te :call VimuxInterruptRunner()<cr>
+""" terminal "exit"
+map <leader>te :py sendtmux('exit', enter=True)<cr>
 
 """ terminal ctrl-c
-map <Leader>tc :call VimuxOpenRunner()<bar>VimuxInterruptRunner<cr>
+map <Leader>tc :py sendtmux('c-c', enter=True)<cr>
+
 
 """ terminal all (send everything)
 "nmap <leader>ta ggvG$<leader>ts
@@ -1917,13 +1925,13 @@ nmap <leader>tl _v$<leader>ts
 nmap <leader>tt <leader>tl
 
 """ terminal-line alias na terminal-terminal
-
 vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
 " nmap <c-x> <leader>ttj
 nmap <c-x> :py sendlinetmux(True)<cr>j
 nmap <leader>x :py sendlinetmux(True)<cr>
+vmap <leader>x :py sendselectiontmux()<cr>
 
 """ terminal-all (selection)
 vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
@@ -1935,7 +1943,7 @@ nmap <leader>ta _v$<leader>ta
 nmap <leader>tw viw<leader>ts
 
 """ terminal directory (change current directory to path of current file)
-map <Leader>td :call VimuxOpenRunner()<bar>VimuxRunCommand('cd ' . eval('getcwd()'))<cr>
+map <Leader>td :py sendtmux('cd ' + vim.eval('getcwd()'), enter=True)<cr>
 
 
 """ -------------------------------------------
