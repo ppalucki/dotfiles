@@ -1861,7 +1861,7 @@ def sendtmux(text, target_pane=None, enter=False):
         for subtext in text:
             # throw out enters
             subtext = subtext.strip('\n\r')
-            cmd.append(subtext)
+            cmd.append(subtext+" ")
     else:
         cmd.append(text)
 
