@@ -410,8 +410,8 @@ function! PythonMappings()
     " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>py sendtmux("python <c-r>%", enter=True)<cr>
-    map <leader>ti :up<bar>py sendtmux("ipython -i <c-r>%", enter=True)<cr>
+    map <leader>tp :up<bar>py sendtmux("python <c-r>%")<cr>
+    map <leader>ti :up<bar>py sendtmux("ipython -i <c-r>%")<cr>
 
     """ -----------------------------
     """ Python python functions
@@ -1570,8 +1570,9 @@ let g:syntastic_mode_map = { "mode": "passive",
                            " \ "active_filetypes": ["go"]
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
-" let g:syntastic_python_checkers = ['python', 'flake8']
-let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
+" do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...
+let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E501, E128"
 " python h ???
@@ -1831,16 +1832,18 @@ if has("python")
 py << EOP
 import vim,os,subprocess,string,time
 
-def sendlinetmux(enter):
+def sendlinetmux():
+    """ send current line to selected by count tmux pane"""
     target = int(vim.eval("v:count"))
-    sendtmux(vim.current.line, target, enter=enter)
+    sendtmux(vim.current.line, target)
 
 def sendselectiontmux():
+    """ get selection visual mode and send it line by line to tmux """
     target = int(vim.eval("v:count"))
     for line in vim.current.range:
-        sendtmux(line, target, enter=True)
+        sendtmux(line, target)
 
-def sendtmux(text, target_pane=None, enter=False):
+def sendtmux(text, target_pane=None, enter=True):
     """
     if text contains c-(something) or enter it will be split by space and each word send seperatly
     """
@@ -1866,8 +1869,15 @@ def sendtmux(text, target_pane=None, enter=False):
         cmd.append(text)
 
     if enter and not 'enter' in cmd:
+        # fix some problems if last commands ends with ;
+        # check this out tmux send-keys 'ls;' enter 
+        # >>> unknown command 'enter'
+        if cmd[-1].endswith(';'):
+            cmd[-1] = cmd[-1]+' ' # append space to last but one command before enter
+
         cmd.append('enter')
 
+    # print cmd
     subprocess.call(cmd)
 
 def _current_pane_idx():
@@ -1886,7 +1896,7 @@ def sendalltmux(text):
     for pane_id in allpanes:
         if pane_id == current_id:
             continue
-        sendtmux(text, pane_id)
+        sendtmux(text, pane_id, enter=False)
 EOP
 endif
 
@@ -1899,21 +1909,21 @@ endif
 """ terminal send (with enter by default) tS without enter
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 " vmap <leader>ts "vy:call VimuxSlime()<cr>
-vmap <leader>tS "vy:py sendtmux(vim.eval("@v"))<cr>
-vmap <leader>ts "vy:py sendtmux(vim.eval("@v"), enter=True)<cr>
+vmap <leader>tS "vy:py sendtmux(vim.eval("@v"), enter=False)<cr>
+vmap <leader>ts "vy:py sendtmux(vim.eval("@v"))<cr>
 
 """ terminal rerun 
 " map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
 map <leader>tr :up<bar>:py sendtmux('c-p')<cr>
 
 """ terminal quit and rerun
-map <Leader>tq :py sendtmux('c-c c-p', enter=True)<cr>
+map <Leader>tq :py sendtmux('c-c c-p')<cr>
 
 """ terminal "exit"
-map <leader>te :py sendtmux('exit', enter=True)<cr>
+map <leader>te :py sendtmux('exit')<cr>
 
 """ terminal ctrl-c
-map <Leader>tc :py sendtmux('c-c', enter=True)<cr>
+map <Leader>tc :py sendtmux('c-c')<cr>
 
 
 """ terminal all (send everything)
@@ -1929,8 +1939,8 @@ vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
 " nmap <c-x> <leader>ttj
-nmap <c-x> :py sendlinetmux(True)<cr>j
-nmap <leader>x :py sendlinetmux(True)<cr>
+nmap <c-x> :py sendlinetmux()<cr>j
+nmap <leader>x :py sendlinetmux()<cr>
 vmap <leader>x :py sendselectiontmux()<cr>
 
 """ terminal-all (selection)
@@ -1943,7 +1953,7 @@ nmap <leader>ta _v$<leader>ta
 nmap <leader>tw viw<leader>ts
 
 """ terminal directory (change current directory to path of current file)
-map <Leader>td :py sendtmux('cd ' + vim.eval('getcwd()'), enter=True)<cr>
+map <Leader>td :py sendtmux('cd ' + vim.eval('getcwd()'))<cr>
 
 
 """ -------------------------------------------
