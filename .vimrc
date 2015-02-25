@@ -1859,7 +1859,7 @@ def sendtmux(text, target_pane=None, enter=True):
     #         continue
     cmd = ("tmux send-keys -t %s "%target_pane).split()
     # handle c-keys correctly
-    if "c-" in text or "enter" in text:
+    if ' c-' in text or text.startswith('c-') or "enter" in text:
         text = text.split() 
         for subtext in text:
             # throw out enters
