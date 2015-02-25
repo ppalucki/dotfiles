@@ -516,11 +516,11 @@ function! GoMappings()
 
     """ running in terminal
 	""" selected file
-    map <leader>tu :up<bar>call VimuxRunCommand("go test -v ./<c-r>%")<cr>
+    map <leader>tu :up<bar>:py sendtmux("go test -v ./<c-r>%")<cr>
 	""" all tests
-    map <leader>tU :up<bar>call VimuxRunCommand("go test -v ./...")<cr>
+    map <leader>tU :up<bar>:py sendtmux("go test -v ./...")<cr>
 	"" run
-    map <leader>tp :up<bar>call VimuxRunCommand("go run ./<c-r>%")<cr>
+    map <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
@@ -1864,7 +1864,8 @@ def sendtmux(text, target_pane=None, enter=True):
         for subtext in text:
             # throw out enters
             subtext = subtext.strip('\n\r')
-            cmd.append(subtext+" ")
+            cmd.append(subtext)
+            # cmd.append(subtext+" ") # this is sometimes required !
     else:
         cmd.append(text)
 
