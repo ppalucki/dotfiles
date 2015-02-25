@@ -1833,8 +1833,24 @@ py << EOP
 import vim,os,subprocess,string,time
 
 def sendlinetmux():
-    """ send current line to selected by count tmux pane"""
+    """ send current line to selected by count tmux pane
+    8 - tmux split -h 
+    9 - tmux split
+    """
     target = int(vim.eval("v:count"))
+
+    ### on 8 repeat do -h split
+    if target == 8:
+        # do split !
+        subprocess.call(('tmux', 'split', '-h', '-d'))
+        target = None
+
+    ### on 9 repeat do split
+    if target == 9:
+        # do split !
+        subprocess.call(('tmux', 'split', '-d'))
+        target = None
+
     sendtmux(vim.current.line, target)
 
 def sendselectiontmux():
