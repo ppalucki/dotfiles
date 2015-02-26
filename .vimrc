@@ -663,8 +663,10 @@ let NERDTreeChDirMode = 2
 " more colors 
 let NERDTreeMinimalUI = 1
 "let NERDTreeDirArrows=1
-let NERDTreeQuitOnOpen = 1
+let NERDTreeQuitOnOpen = 0
 let NERDTreeIgnore = ['\.pyc$', '\~$']
+
+let NERDTreeMouseMode = 3
 
 """ -------- Ctags
 map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp . <cr>
@@ -1605,17 +1607,39 @@ au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
 """         gui with mouse
 """ -------------------------------------------
 if has("gui_running")
+    mouseon
+endif
+
+function Mouseon()
     set mouse=a
     " for better scrolling when using the mouse
-    " set scrolloff
+    set scrolloff=2
     " Toolbar
     " set guioptions+=T 
-endif
+    " for better golang navigation
+    " TO PSUJE scrollowanie
+    map <C-LeftMouse> gd 
+    nmap <2-LeftMouse> gd
+    nmap <RightMouse> <c-o>
+endfunction
 
 """ -------------------------------------------
 """ i like mouse too much :p ????
 """ -------------------------------------------
-set scrolloff=2
+" set scrolloff=2
+"
+call Mouseon()
+
+" from h wheel
+" map <M-Esc>[62~ <ScrollWheelUp>
+" map! <M-Esc>[62~ <ScrollWheelUp>
+" map <M-Esc>[63~ <ScrollWheelDown>
+" map! <M-Esc>[63~ <ScrollWheelDown>
+" map <M-Esc>[64~ <S-ScrollWheelUp>
+" map! <M-Esc>[64~ <S-ScrollWheelUp>
+" map <M-Esc>[65~ <S-ScrollWheelDown>
+" map! <M-Esc>[65~ <S-ScrollWheelDown>
+
 
 """ -------------------------------------------
 """     lite dfm - distraction free mode
