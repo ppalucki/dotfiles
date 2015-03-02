@@ -2,6 +2,6 @@
 --ignore-dir=is:.tags
 --ignore-dir=is:.tox
 --ignore-file=is:.tags
---literal
+# --literal
 --type-set=rst=.rst
 
