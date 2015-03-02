@@ -184,6 +184,12 @@ func init(){
 $0
 endsnippet
 
+# according to: http://golang.org/pkg/go/build/
+snippet build "// build +ignore"
+// +build ${1:foo}
+
+$0
+endsnippet
 
 ###########################
 # slices/channels/literals

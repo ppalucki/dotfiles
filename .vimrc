@@ -562,6 +562,7 @@ function! GoMappings()
 
     " calles/usage
     nmap <leader>z :GoCallees<cr>
+    nmap <leader>Z :GoImplements<cr>
 
     " syntastic active mode - now I can disable Syntastic with ToggleMode
     let g:syntastic_mode_map = { 'mode': 'active' }
@@ -757,8 +758,8 @@ command! W w !sudo tee % > /dev/null
 """ tagbar
 map <leader><F3> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
-let g:tagbar_autoclose = 1
-let g:tagbar_width = 60
+let g:tagbar_autoclose = 0
+let g:tagbar_width = 80
 
 """ ----- fuzzyfinder
 " map <F3> :FufBufferTag<CR>
@@ -944,6 +945,7 @@ set noshowmatch
 
 """ disable fold
 au FileType rst set nofoldenable
+au FileType vim set nofoldenable
 " au FileType rst :NoMatchParen
 
 " set nofoldenable
@@ -990,6 +992,8 @@ set undolevels=700
 au FileType ruby set nocursorline
 set foldmethod=manual 
 au FileType rst set nocursorline
+
+set nofoldenable
 
 " ----------------------------------------- JAVA ECLIM
 function! JavaMapping()
@@ -1214,9 +1218,11 @@ let g:ctrlp_custom_ignore = {
 	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
 	\ }
 
+" let g:ctrlp_switch_buffer = 'eT'
 let g:ctrlp_match_window_bottom = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '\v(\.git)'
+let g:ctrlp_use_caching = 0
 
 " ctrl tjump
 nnoremap <c-]> :CtrlPtjump<cr>
@@ -1603,14 +1609,7 @@ au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
 """ -------------------------------------------
 
 
-""" -------------------------------------------
-"""         gui with mouse
-""" -------------------------------------------
-if has("gui_running")
-    mouseon
-endif
-
-function Mouseon()
+function! Mouseon()
     set mouse=a
     " for better scrolling when using the mouse
     set scrolloff=2
@@ -1628,7 +1627,7 @@ endfunction
 """ -------------------------------------------
 " set scrolloff=2
 "
-call Mouseon()
+" call Mouseon()
 
 " from h wheel
 " map <M-Esc>[62~ <ScrollWheelUp>
@@ -1734,8 +1733,10 @@ let g:ctrlp_buftag_types = {
 
 " vim-go syntax highlihgting
 let g:go_highlight_functions = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_structs = 0
 let g:go_highlight_methods = 0
+let g:go_highlight_operators = 0
+let g:go_highlight_build_constraints = 1
 
 
 """ -------------------------------------------
