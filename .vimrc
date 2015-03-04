@@ -207,9 +207,8 @@ Plugin 'alfredodeza/pytest.vim'
 "
 Plugin 'christoomey/vim-tmux-navigator'
 
-" Plugin 'benmills/vimux'
 " fork with 'escaping $ fix'
-Plugin 'ppalucki/vimux' 
+Plugin 'benmills/vimux'
 
 Plugin 'ekalinin/Dockerfile.vim'
 " Plugin 'altercation/vim-colors-solarized'
@@ -561,8 +560,8 @@ function! GoMappings()
     nmap <leader>K <Plug>(go-doc-browser)
 
     " calles/usage
-    nmap <leader>z :GoCallees<cr>
-    nmap <leader>Z :GoImplements<cr>
+    nmap <leader>z :GoImplements<cr>
+    nmap <leader>Z :GoCallees<cr>
 
     " syntastic active mode - now I can disable Syntastic with ToggleMode
     let g:syntastic_mode_map = { 'mode': 'active' }
@@ -1618,9 +1617,13 @@ function! Mouseon()
     " for better golang navigation
     " TO PSUJE scrollowanie
     map <C-LeftMouse> gd 
-    nmap <2-LeftMouse> gd
     nmap <RightMouse> <c-o>
+
+    nmap <2-LeftMouse> gd
+    " nmap <expr> <2-LeftMouse> (&buftype is# "quickfix" ? "" : "gd")
 endfunction
+
+" autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 """ -------------------------------------------
 """ i like mouse too much :p ????
@@ -2130,3 +2133,8 @@ augroup END
 " py print vim.eval('line2byte(line("."))+col(".")')
 " execute oracle
 " oracle  -pos=learn.go:#632 callers github.com/intelsdilabs/nerp
+"
+"
+" In the quickfix window, <CR> is used to jump to the error under the
+" " cursor, so undefine the mapping there.
+" autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
