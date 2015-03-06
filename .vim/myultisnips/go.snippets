@@ -29,6 +29,10 @@ if err != nil {
 ${0}
 endsnippet
 
+snippet errp "if err != nil {panic(err)}"
+if err != nil { panic(err) }
+endsnippet
+
 ###########################
 # convey
 ##########################
@@ -38,6 +42,12 @@ endsnippet
 
 snippet conv "Convey()"
 Convey("${1:description}", t, func(){
+	$2
+})
+endsnippet
+
+snippet conv2 "internal Convey()"
+Convey("${1:description}", func(){
 	$2
 })
 endsnippet
@@ -191,6 +201,10 @@ snippet build "// build +ignore"
 $0
 endsnippet
 
+snippet ty "type"
+type 
+endsnippet
+
 ###########################
 # slices/channels/literals
 ##########################
@@ -242,3 +256,17 @@ snippet st "string" w
 string
 endsnippet
 
+##############################
+# big types
+###############################
+
+snippet boot "bootstrap code" w
+package main
+
+import "fmt"
+
+func main() {
+	${1}
+	fmt.Println(${2:"hello world"})
+}
+endsnippet

@@ -223,6 +223,8 @@ Plugin 'rhysd/vim-go-impl'
 
 Plugin 'elzr/vim-json'
 
+Plugin 'guns/xterm-color-table.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 " To ignore plugin indent changes, instead use:
@@ -565,6 +567,9 @@ function! GoMappings()
 
     " syntastic active mode - now I can disable Syntastic with ToggleMode
     let g:syntastic_mode_map = { 'mode': 'active' }
+
+    nmap <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
+    nmap <leader>F "myiwh/<c-r>m<cr>:GoDescribe<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1180,7 +1185,6 @@ map <leader>u :GundoToggle<CR>
 " find occurences - search current word but without scroll
 " follow
 nmap <leader>f "myiwh/<c-r>m<cr>
-au FileType go nmap <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
 
 " fix na colory diffa (change bez tla - bylo szare)
 " sprawdz kolory: colortest -w -s (w bashu!)
@@ -1630,7 +1634,7 @@ endfunction
 """ -------------------------------------------
 " set scrolloff=2
 "
-" call Mouseon()
+call Mouseon()
 
 " from h wheel
 " map <M-Esc>[62~ <ScrollWheelUp>
@@ -1741,6 +1745,7 @@ let g:go_highlight_methods = 0
 let g:go_highlight_operators = 0
 let g:go_highlight_build_constraints = 1
 
+let g:go_fmt_autosave = 1
 
 """ -------------------------------------------
 """    sqlutils i sqluformatter
@@ -2138,3 +2143,21 @@ augroup END
 " In the quickfix window, <CR> is used to jump to the error under the
 " " cursor, so undefine the mapping there.
 " autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+"
+"
+""" -------------------------------------------
+""" Diff highlight
+""" -------------------------------------------
+
+
+" dodane
+hi DiffAdd        term=NONE ctermbg=234
+" skasowane
+hi DiffDelete     term=NONE ctermfg=0 ctermbg=234 
+"hi DiffDelete     term=NONE ctermfg=162 ctermbg=53 
+
+" zmiany -  teksty
+hi DiffChange     term=NONE ctermfg=6
+
+" konflikt tekstu
+hi DiffText       term=NONE cterm=NONE ctermfg=3 ctermbg=234
