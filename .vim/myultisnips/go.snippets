@@ -79,7 +79,22 @@ So(${1:nil}, ShouldNotBeNil)
 endsnippet
 
 snippet soe "So(err, BeNil)"
-So(err, ShouldNotBeNil)
+So(err, ShouldBeNil)
+endsnippet
+
+snippet sobe "So(collection, BeEmpty)"
+So(${1:collecion}, ShouldBeEmpty)
+endsnippet
+
+snippet sonbe "So(collection, NotEmpty)"
+So(${1:collecion}, ShouldNotBeEmpty)
+endsnippet
+
+snippet soc "So(collection, ShouldContain, element)"
+So(${1:collecion}, ShouldContain, ${2:element})
+endsnippet
+snippet sonc "So(collection, ShouldNotContain, element)"
+So(${1:collecion}, ShouldNotContain, ${2:element})
 endsnippet
 
 ###### just assertions
@@ -98,6 +113,23 @@ endsnippet
 
 snippet sr "ShouldResemble"
 ShouldResemble
+endsnippet
+
+snippet sbe "ShouldBeEmpty"
+ShouldBeEmpty
+endsnippet
+
+snippet sbne "ShouldNotBeEmpty"
+ShouldNotBeEmpty
+endsnippet
+
+####### convey printing
+snippet pr- "Printf(\n---%v\n---, )"
+Printf("\n---\n%v\n---\n", ${0})
+endsnippet
+
+snippet pr "Printf(\n%v, )"
+Printf("\n%v", ${0})
 endsnippet
 
 

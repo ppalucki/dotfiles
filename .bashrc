@@ -21,6 +21,9 @@ elif [[ $OSTYPE == 'darwin13' ]]; then
 fi
 export PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(__git_ps1)\[\033[01;31m\]$\[\033[00m\] '
 
+# shorten the path according to given depth
+export PROMPT_DIRTRIM=3
+
 ###############################
 ### VIM: default editor
 ###############################
