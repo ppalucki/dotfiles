@@ -161,7 +161,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'ppalucki/vim-go' 
 
 " zamiennik powerline
-Plugin 'bling/vim-airline'
+" Plugin 'bling/vim-airline'
 
 " not required bundled with vim-go ??
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
@@ -575,6 +575,9 @@ function! GoMappings()
 
     " just rerun last command
 	nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
+
+
+    nmap <buffer> <leader>H :GoReferrers<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1744,11 +1747,11 @@ let g:ctrlp_buftag_types = {
 " let g:go_auto_type_info = 1
 
 " vim-go syntax highlihgting
-let g:go_highlight_functions = 1
-let g:go_highlight_structs = 1
+let g:go_highlight_functions = 0
+let g:go_highlight_structs = 0
+let g:go_highlight_build_constraints = 0
 let g:go_highlight_methods = 0
 let g:go_highlight_operators = 0
-let g:go_highlight_build_constraints = 1
 
 let g:go_fmt_autosave = 1
 
