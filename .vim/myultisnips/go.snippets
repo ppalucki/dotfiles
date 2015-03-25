@@ -5,6 +5,18 @@ snippet impl "type implements var _ = (*Type)(nil)"
 var _ ${1:Interface}= (*${2:Type})(nil) // check interface implementation
 endsnippet
 
+
+snippet doc "// comment"
+// ${0}
+endsnippet
+
+snippet mdoc "/* multiline comment */"
+/*
+${0}
+*/
+endsnippet
+
+
 ###########################
 # error handling
 ##########################

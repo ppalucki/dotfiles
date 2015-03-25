@@ -579,6 +579,37 @@ function! GoMappings()
 
     nmap <buffer> <leader>H :GoReferrers<cr>
 
+    " hiper dubugging with go
+    map <Leader>ti :py startgdb()<cr>
+    map <Leader>to :py gdbbreak()<cr>
+    map <Leader>tk :py gdbrun()<cr>
+    map <leader>gn :py sendtmux("next")<cr>
+    map <leader>gs :py sendtmux("step")<cr>
+
+py <<EOF
+from vim import eval
+from vim import command 
+def current_test():
+    return eval("tagbar#currenttag('%s','')")[:-2] # without ()
+
+def current_file():
+    return eval("expand('%:t')")
+
+def current_line():
+    return eval("line('.')")
+
+def startgdb():
+    sendtmux('export $( go test -work -c -gcflags "-N -l" -o test.test 2>&1 )')
+    sendtmux('cgdb ./test.test -- -d $WORK')
+
+def gdbbreak():
+    sendtmux('b %s:%s'%(current_file(), current_line()))
+
+def gdbrun():
+    sendtmux('run -test.run=%s'%current_test())
+
+EOF
+
 endfunction
 au FileType go call GoMappings()
 
@@ -1984,6 +2015,7 @@ map <leader>te :py sendtmux('exit')<cr>
 map <Leader>tc :py sendtmux('c-c')<cr>
 
 
+
 """ terminal all (send everything)
 "nmap <leader>ta ggvG$<leader>ts
 
@@ -2199,3 +2231,6 @@ fu! SeeTab()
   endif
 endfunc
 com! -nargs=0 SeeTab :call SeeTab()
+
+
+
