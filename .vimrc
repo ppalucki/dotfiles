@@ -610,6 +610,11 @@ def gdbrun():
 
 EOF
 
+    """ have to be more intelignejt - looking na all files or just selected on
+    " ignore search in --no-testgo files - if you want all just do H
+    map <buffer> <leader>h "ayiw:Ack! --go "<C-r>a" --no-testgo 
+    vmap <buffer> <leader>h "ay:Ack! --go "<C-r>a" --no-testgo
+
 endfunction
 au FileType go call GoMappings()
 
@@ -843,16 +848,14 @@ set nomousehide
 "--py Ack bez jumpa
 map <leader>h "ayiw:Ack! "<C-r>a"
 vmap <leader>h "ay:Ack! "<C-r>a"
-map <leader>H "ayiw:Ack! --all "<C-r>a"
-vmap <leader>H "ay:Ack! --all "<C-r>a"
+map <leader>H "ayiw:Ack! --known-types "<C-r>a"
+vmap <leader>H "ay:Ack! --known-types "<C-r>a"
 au FileType python map <buffer> <leader>h "ayiw:Ack! --python "<C-r>a"
 au FileType python vmap <buffer> <leader>h "ay:Ack! --python  "<C-r>a"
 au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
 au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
 au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
 au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
-au FileType go map <buffer> <leader>h "ayiw:Ack! --go "<C-r>a"
-au FileType go vmap <buffer> <leader>h "ay:Ack! --go "<C-r>a"
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "
 "
@@ -1786,6 +1789,11 @@ let g:go_highlight_operators = 0
 
 let g:go_fmt_autosave = 1
 
+" Disable opening browser after posting to your snippet to 
+let g:go_play_open_browser = 0
+" I have syntastic for that
+let g:go_fmt_fail_silently = 1
+
 """ -------------------------------------------
 """    sqlutils i sqluformatter
 """ -------------------------------------------
@@ -1798,6 +1806,7 @@ let g:sqlutil_align_where = 0 " w where = wartosc wyrownaj
 let g:sqlutil_stmt_keywords = 'select,insert,update,delete,with,merge,join,limit,group,union,on'
 " ignore all mappings from align plugn
 let g:loaded_AlignMapsPlugin = "v42"
+
 
 
 """ -------------------------------------------
