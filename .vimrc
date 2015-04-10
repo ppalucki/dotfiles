@@ -161,7 +161,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'ppalucki/vim-go' 
 
 " zamiennik powerline
-" Plugin 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 
 " not required bundled with vim-go ??
 " Plugin 'nsf/gocode', {'rtp': 'vim/'}
@@ -225,6 +225,8 @@ Plugin 'rhysd/vim-go-impl'
 Plugin 'elzr/vim-json'
 
 Plugin 'guns/xterm-color-table.vim'
+
+" Plugin 'justmao945/vim-clang'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -718,8 +720,8 @@ let NERDTreeIgnore = ['\.pyc$', '\~$']
 let NERDTreeMouseMode = 3
 
 """ -------- Ctags
-map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp . <cr>
-map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=dbmigrate --fields=zK .. <cr>
+map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=build . <cr>
+map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
@@ -1824,6 +1826,7 @@ function! CMappings()
     nmap gd <c-]>
 endfunction
 au FileType c call CMappings()
+au FileType cpp call CMappings()
 let g:clang_close_preview = 1
 
 """ -------------------------------------------
@@ -2243,3 +2246,5 @@ com! -nargs=0 SeeTab :call SeeTab()
 
 
 
+" CLANG
+let g:clang_exec = 'clang-3.5'

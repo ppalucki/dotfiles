@@ -1,4 +1,5 @@
 --ignore-dir=tmp
+--ignore-dir=build
 --ignore-dir=is:.tags
 --ignore-dir=is:.tox
 --ignore-file=is:.tags
