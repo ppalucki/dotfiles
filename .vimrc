@@ -47,7 +47,7 @@
 " F10 - test this file
 " <leader>F10 - test all (./...)
 
-" <leader>r - rename (python/go) 
+" <leader>R - rename (python/go) 
 " F8 - generate tags
 " gd - go to def
 " K - documentation
@@ -227,6 +227,8 @@ Plugin 'elzr/vim-json'
 Plugin 'guns/xterm-color-table.vim'
 
 " Plugin 'justmao945/vim-clang'
+"
+Plugin 'vim-scripts/a.vim.git'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -460,6 +462,11 @@ EOF
     """ next method remaping
     nmap ]m ]M
     nmap [m [M
+
+
+    "" jedi rename (mapping by hand because, we want <leader>r as rerun
+    nnoremap <silent> <buffer> <localleader>R :call jedi#rename()<cr>
+	nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
 endfunction
 au FileType python call PythonMappings()
 
@@ -2026,7 +2033,8 @@ map <leader>te :py sendtmux('exit')<cr>
 """ terminal ctrl-c
 map <Leader>tc :py sendtmux('c-c')<cr>
 
-
+""" terminal ctrl-z
+map <Leader>tz :py sendtmux('c-z')<cr>
 
 """ terminal all (send everything)
 "nmap <leader>ta ggvG$<leader>ts
