@@ -5,5 +5,6 @@
 --ignore-file=is:.tags
 --literal
 --type-set=rst=.rst
+--type-set=proto=.proto
 # can be used as --no-testgo or --test-go
 --type-set=testgo:match:/_test.go/

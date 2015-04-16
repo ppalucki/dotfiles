@@ -727,7 +727,7 @@ let NERDTreeIgnore = ['\.pyc$', '\~$']
 let NERDTreeMouseMode = 3
 
 """ -------- Ctags
-map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=build . <cr>
+map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* . <cr>
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>

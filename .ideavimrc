@@ -23,3 +23,6 @@ set noshowmode
 "
 " Exit insert mode 
 imap jj <ESC>
+nmap / :action Find<CR>
+nmap n :action FindNext<CR>
+nmap N :action FindPrevious<CR>
