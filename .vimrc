@@ -29,6 +29,8 @@
 "  <leader>ta - terminal terminal ALL
 "  <c-x>  - (execute!) terminal terminal and go to next line !!!
 "  <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
+"  8<c-x> or <leader>x - split vertical + terminal terminal 
+"  9<c-x> or <ledeer>x - split horizontal + terminal terminal 
 " normal [target]x - send current line to target pane
 " visual [target]x - send visual selection to target pane
 
@@ -1898,23 +1900,23 @@ let g:VimuxHeight = "40"
 """ -------------------------------------------
 """          tmux - copying
 """ -------------------------------------------
-function! VimuxSlime()
-   """ uwaga nie potrafi wyslac np. $ do basha
-   " call VimuxRunCommand(@v)
-   call VimuxOpenRunner()
-   call VimuxSendText(@v)
-   call VimuxSendKeys("Enter")
-endfunction
-
-function! VimuxSlimeCpaste()
-    """ wersja dla ipytohn wykorzystujacego cpaste i konczoce sie dwa znakami
-   call VimuxOpenRunner()
-   call VimuxSendText('%cpaste')
-   call VimuxSendKeys('Enter')
-   call VimuxSendText(@v)
-   call VimuxSendKeys('- -')
-   call VimuxSendKeys('Enter')
-endfunction
+" function! VimuxSlime()
+"    """ uwaga nie potrafi wyslac np. $ do basha
+"    " call VimuxRunCommand(@v)
+"    call VimuxOpenRunner()
+"    call VimuxSendText(@v)
+"    call VimuxSendKeys("Enter")
+" endfunction
+"
+" function! VimuxSlimeCpaste()
+"     """ wersja dla ipytohn wykorzystujacego cpaste i konczoce sie dwa znakami
+"    call VimuxOpenRunner()
+"    call VimuxSendText('%cpaste')
+"    call VimuxSendKeys('Enter')
+"    call VimuxSendText(@v)
+"    call VimuxSendKeys('- -')
+"    call VimuxSendKeys('Enter')
+" endfunction
 
 """ -------------------------------------------
 """   tmux - send to all terminals
