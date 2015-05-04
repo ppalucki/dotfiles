@@ -11,3 +11,6 @@ doc/tags-ja
 *.patch
 .dbg_history
 .gdb_history
+Cmakelist
+.clang
+CMakeLists.txt
