@@ -30,7 +30,7 @@ alias ta='tmux a'
 alias cdw='cd ~/work'
 alias cdgo='export GOPATH=~/work/go/;cd $GOPATH'
 alias cdd='cd ~/Downloads'
-alias cdvim='cd ~/.vim/bundle'
+alias cdvim='cd ~/.vim/plugged'
 
 
 #############################################

@@ -55,185 +55,198 @@
 " K - documentation
 " <c-w>z - zOom window aka to tmux <c-a>z
 
-""" -------------------------------------------
-"""          Vundle (plugins)
-""" -------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" -------- vundle installation
+""" -------------------------------------------
+"""          VIM-Plug (plugins)
+""" -------------------------------------------
+" autoinstalltion
+" Load vim-plug
+if empty(glob("~/.vim/autoload/plug.vim"))
+   execute '!mkdir -p ~/.vim/autoload'
+   execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
+" (depracted)-------- vundle installation
 " git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-" call vundle#begin('/Users/ppalucki/.vim/bundle')
-
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Plug 'gmarik/Vundle.vim'
+"
+"
+""" VIM-plug url format
+let g:plug_url_format = 'https://github.com/%s.git'
+
+call plug#begin('~/.vim/plugged')
 
 " porowanienie kataklogow
-Plugin 'vim-scripts/DirDiff.vim'
+Plug 'vim-scripts/DirDiff.vim'
 
 """ GITHUBs
 " autoformatowanie zewnwtrznym programem - gq - nie dziala na osx
-" Plugin 'Chiel92/vim-autoformat' 
+" Plug 'Chiel92/vim-autoformat' 
 " automatyczne zakmykanie nawiasow
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 " obsluge ReST
-"Plugin 'Rykka/riv.vim' - colids with <c-e>
+"Plug 'Rykka/riv.vim' - colids with <c-e>
 " jakies lepsze uzupelenianien
-" Plugin 'Shougo/neocomplcache.vim'
+" Plug 'Shougo/neocomplcache.vim'
 " gdy mam lua to lepsze jest
-" Plugin 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
 " snippets
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets.git'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
-Plugin 'chrisbra/Recover.vim'
+Plug 'chrisbra/Recover.vim'
 
 """" ctrlp and plugins
-Plugin 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 "" This plugin allow you to use CtrlP finder to execute setfiletype easily - :CtrlPFiletype
-" Plugin 'endel/ctrlp-filetype.vim' 
+" Plug 'endel/ctrlp-filetype.vim' 
 "" This extension adds a new CtrlP command, the :CtrlPCmdPalette, which allows you to find and run vim commands (internal or custom).
-" Plugin 'fisadev/vim-ctrlp-cmdpalette'
+" Plug 'fisadev/vim-ctrlp-cmdpalette'
 "" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
-" Plugin 'jasoncodes/ctrlp-modified.vim'
+" Plug 'jasoncodes/ctrlp-modified.vim'
 "" GIT related: branch, diff, log
-" Plugin 'kaneshin/ctrlp-git'
+" Plug 'kaneshin/ctrlp-git'
 "" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
-" Plugin 'tacahiroy/ctrlp-funky'
+" Plug 'tacahiroy/ctrlp-funky'
 "" tjump
-" Plugin 'vim-scripts/ctrlp-tjump'
-Plugin 'ivalkeen/vim-ctrlp-tjump'
+" Plug 'vim-scripts/ctrlp-tjump'
+Plug 'ivalkeen/vim-ctrlp-tjump'
 
 " wszystko pod tabem
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 " colorschemes 
-Plugin 'flazz/vim-colorschemes'
-" PYTHON-related
-Plugin 'klen/python-mode'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'alfredodeza/coveragepy.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'tlvince/vim-compiler-python'
+Plug 'flazz/vim-colorschemes'
+" --------------- PYTHON-related
+Plug 'klen/python-mode', { 'for':  'python' }
+Plug 'hynek/vim-python-pep8-indent', { 'for':  'python' }
+Plug 'alfredodeza/coveragepy.vim', { 'for':  'python' }
+Plug 'nvie/vim-flake8', { 'for':  'python' }
+Plug 'tlvince/vim-compiler-python', { 'for':  'python' }
+" PyTest
+Plug 'alfredodeza/pytest.vim'
 " jedi-py dla vim
-Plugin 'davidhalter/jedi-vim'
+Plug 'davidhalter/jedi-vim', { 'for':  'python' }
+
 " SQL execute
-Plugin 'ivalkeen/vim-simpledb'
+Plug 'ivalkeen/vim-simpledb'
 " tagbar
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 " nerdtree
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
 " ack-grep
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim'
 " syntastic - multilanguage linter
-Plugin 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " graphical gundo
-" Plugin 'sjl/gundo.vim'
+" Plug 'sjl/gundo.vim'
 "" lepsze title dla taby
-" Plugin 'mkitt/tabline.vim'
+" Plug 'mkitt/tabline.vim'
 "" In other words, you can search your selection text in |Visual-mode|.
-" Plugin 'thinca/vim-visualstar'
+" Plug 'thinca/vim-visualstar'
 "
 " dependensceies ???
-Plugin 'xolox/vim-misc'
+Plug 'xolox/vim-misc'
 " comment with gcc
-Plugin 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim'
 " uruchamianie w tle
-Plugin 'tpope/vim-dispatch'
+" Plug 'tpope/vim-dispatch'
 " GIT
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " " ruby/RAILS
-" Plugin 'tpope/vim-rails'
+" Plug 'tpope/vim-rails'
 " better repeats
-Plugin 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 " surround
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " screensend/screenattach - because of osx path_max limit breaks Vim
 " runtimepath
-" Plugin 'ervandew/screen'
+" Plug 'ervandew/screen'
 " better paste from screen (with leader+p)
-" Plugin 'vim-scripts/screenpaste.vim'
+" Plug 'vim-scripts/screenpaste.vim'
 "
-" GoLang development
-" Plugin 'fatih/vim-go'
+" ------------- GoLang development
+" Plug 'fatih/vim-go'
 " with GoImport fix (python based solution not accepted by upstream)
-Plugin 'ppalucki/vim-go' 
+Plug 'ppalucki/vim-go', { 'for':  'go', 'branch': 'fatih'}
+Plug 'rhysd/vim-go-impl', { 'for':  'go' }
 
 " zamiennik powerline
-Plugin 'bling/vim-airline'
+Plug 'bling/vim-airline'
 
 " not required bundled with vim-go ??
-" Plugin 'nsf/gocode', {'rtp': 'vim/'}
+" Plug 'nsf/gocode', {'rtp': 'vim/'}
 " the same as gocode (bundled standalone and not required)
-" Plugin 'dgryski/vim-godef'
+" Plug 'dgryski/vim-godef'
 
 " real live completion for vim-go
-" Plugin 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 
 " QuickRun
-Plugin 'thinca/vim-quickrun'
+Plug 'thinca/vim-quickrun'
 
-" PyTest
-Plugin 'alfredodeza/pytest.vim'
 
 " clojure plugin
-" Plugin 'tpope/vim-fireplace'
+" Plug 'tpope/vim-fireplace'
 
 " DistractionFreeMode light version
-" Plugin 'bilalq/lite-dfm'
+" Plug 'bilalq/lite-dfm'
 
 " udawane registry
-" Plugin 'kana/vim-fakeclip'
+" Plug 'kana/vim-fakeclip'
 
 " import tag
 " nie dziala bo zla sciezka jest
-"Plugin 'mjbrownie/Python-Tag-Import'
+"Plug 'mjbrownie/Python-Tag-Import'
 
 " The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
+" Keep Plug commands between vundle#begin/end.
 " plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
+"Plug 'L9'
 " Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
+"Plug 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
+"Plug 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
-"Plugin 'user/L9', {'name': 'newL9'}
+"Plug 'user/L9', {'name': 'newL9'}
 "
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 
 " fork with 'escaping $ fix'
-Plugin 'benmills/vimux'
+Plug 'benmills/vimux'
 
-Plugin 'ekalinin/Dockerfile.vim'
-" Plugin 'altercation/vim-colors-solarized'
+Plug 'ekalinin/Dockerfile.vim'
+" Plug 'altercation/vim-colors-solarized'
 "
-" Plugin 'guyzmo/vim-etherpad'
+" Plug 'guyzmo/vim-etherpad'
 "
 " broken because in restored I cannot save file again (and slow!)
-" Plugin 'vim-scripts/ZoomWin' 
-
-Plugin 'rhysd/vim-go-impl'
+" Plug 'vim-scripts/ZoomWin' 
 
 
-Plugin 'elzr/vim-json'
 
-Plugin 'guns/xterm-color-table.vim'
+Plug 'elzr/vim-json'
 
-" Plugin 'justmao945/vim-clang'
+Plug 'guns/xterm-color-table.vim'
+
+" Plug 'justmao945/vim-clang'
 "
-Plugin 'vim-scripts/a.vim.git'
+Plug 'vim-scripts/a.vim'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+" call vundle#end()            " required
+call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 """ -------------------------------------------
@@ -557,8 +570,8 @@ function! GoMappings()
 
     nmap <buffer> <leader>w :silent up<cr>
 
-	" automatic import
-	nmap <leader>a :GoImports<cr>:up<cr>
+    " automatic import
+    nmap <leader>a :GoImports<cr>:up<cr>
 
 
     " based on:
@@ -585,7 +598,7 @@ function! GoMappings()
     nmap <leader>F "myiwh/<c-r>m<cr>:GoDescribe<cr>
 
     " just rerun last command
-	nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
+	  nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
 
 
     nmap <buffer> <leader>H :GoReferrers<cr>
@@ -679,6 +692,11 @@ set hlsearch
 " highlight search reset
 map <leader>/ :nohlsearch<cr>
 "<bar>QuickFixClear<cr>:SignClearAll<cr>
+"
+
+" visual search selected text
+" http://vim.wikia.com/wiki/Search_for_visually_selected_text
+vnoremap // y/<C-R>"<CR>"
 
 " delete without yank
 " nmap <silent> <leader>d "_d
@@ -703,6 +721,7 @@ au FileType html set ts=2 sw=2 softtabstop=2 nocindent
 au FileType python set ts=4 sw=4 softtabstop=4
 au FileType mkd set shiftwidth=2
 au FileType yaml set ts=2 sw=2 sts=2
+au FileType cpp set ts=2 sw=2 sts=2
 
 """ wyjscie z trybu insert przez wpisanie dwa razy jj
 inoremap jj <ESC>
@@ -1832,7 +1851,15 @@ nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r
 function! CMappings()
     nmap <F9> :up<cr>:QuickRun<cr>
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
-    nmap gd <c-]>
+    " nmap gd <c-]>
+   
+    " allow "go to file" to find headr files for projects that have include
+    " files in some specific folders
+    set path+=include
+
+    " just rerun last command
+	  nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
+
 endfunction
 au FileType c call CMappings()
 au FileType cpp call CMappings()
