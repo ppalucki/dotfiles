@@ -146,8 +146,10 @@ Plug 'mileszs/ack.vim'
 Plug 'scrooloose/syntastic'
 " graphical gundo
 " Plug 'sjl/gundo.vim'
+"
 "" lepsze title dla taby
-" Plug 'mkitt/tabline.vim'
+Plug 'mkitt/tabline.vim'
+
 "" In other words, you can search your selection text in |Visual-mode|.
 " Plug 'thinca/vim-visualstar'
 "
@@ -156,7 +158,7 @@ Plug 'xolox/vim-misc'
 " comment with gcc
 Plug 'tomtom/tcomment_vim'
 " uruchamianie w tle
-" Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-dispatch'
 " GIT
 Plug 'tpope/vim-fugitive'
 " " ruby/RAILS
@@ -686,7 +688,7 @@ set comments=
 """ search
 set incsearch
 set smartcase
-set ignorecase
+" set ignorecase
 " highlight search
 set hlsearch
 " highlight search reset
@@ -752,6 +754,7 @@ map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=bu
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
+au FileType cpp map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
@@ -886,6 +889,8 @@ au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
 au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
 au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
 au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
+au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp "<C-r>a"
+au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp "<C-r>a"
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "
 "
@@ -1642,7 +1647,7 @@ set diffopt=filler,vertical
 " l dla SyntasticCheck
 nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
-let g:syntastic_quiet_messages = {'level': 'warnings'}
+let g:syntastic_quiet_messages = {'level': 'warrnings'}
 
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
@@ -1657,7 +1662,7 @@ let g:syntastic_mode_map = { "mode": "passive",
 let g:syntastic_python_checkers = ['python', 'flake8']
 " let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E501, E128"
+let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E"
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
 
@@ -1855,7 +1860,15 @@ function! CMappings()
    
     " allow "go to file" to find headr files for projects that have include
     " files in some specific folders
+    " mesos specific inclues
+    " dzieki vim-dispatch w tle
+    " kompiujemy przez Make -C ../build/src/ -j8 mesos-master
     set path+=include
+    set path+=src
+    set path+=3rdparty/libprocess/include
+    set path+=3rdparty/libprocess/include
+    set path+=3rdparty/libprocess/3rdparty/stout/include
+    set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
 
     " just rerun last command
 	  nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
