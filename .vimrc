@@ -196,7 +196,7 @@ Plug 'thinca/vim-quickrun'
 " Plug 'tpope/vim-fireplace'
 
 " DistractionFreeMode light version
-" Plug 'bilalq/lite-dfm'
+Plug 'bilalq/lite-dfm'
 
 " udawane registry
 " Plug 'kana/vim-fakeclip'
