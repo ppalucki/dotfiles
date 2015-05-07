@@ -1647,7 +1647,7 @@ set diffopt=filler,vertical
 " l dla SyntasticCheck
 nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
-let g:syntastic_quiet_messages = {'level': 'warnings'}
+let g:syntastic_quiet_messages = {'level': 'warrnings'}
 
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
@@ -1662,7 +1662,7 @@ let g:syntastic_mode_map = { "mode": "passive",
 let g:syntastic_python_checkers = ['python', 'flake8']
 " let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E501, E128"
+let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E"
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
 
