@@ -1,6 +1,19 @@
 """ -------------------------------------------
 """         key bindings and shortcuts  
 """ -------------------------------------------
+" file navigation (function keys)
+" F2 - NerdTree 
+" <leader>F2 - NertTree locate file
+" F3 - go to buffer symbol local  (ctrlpbuftag)
+" <leader>F3 - tagbar toggle
+" F4 - last files
+" <leader> F4 - global last files
+" F5 - symbols (from tags)
+" F6 - modified files
+" F7 - buffers
+" F8 - generate tags
+" F9/F10 - build/run/test or compile - lang dependent
+
 "  PYTHON keybindings
 "  <leader>id intrupt debugger
 "  <leader>iv intrupt vipdb debugger
@@ -109,7 +122,8 @@ Plug 'kien/ctrlp.vim'
 "" This extension adds a new CtrlP command, the :CtrlPCmdPalette, which allows you to find and run vim commands (internal or custom).
 " Plug 'fisadev/vim-ctrlp-cmdpalette'
 "" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
-" Plug 'jasoncodes/ctrlp-modified.vim'
+" mappend to F6
+Plug 'jasoncodes/ctrlp-modified.vim' 
 "" GIT related: branch, diff, log
 " Plug 'kaneshin/ctrlp-git'
 "" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
@@ -138,7 +152,7 @@ Plug 'ivalkeen/vim-simpledb'
 " tagbar
 Plug 'majutsushi/tagbar'
 " nerdtree
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 
 " ack-grep
 Plug 'mileszs/ack.vim'
@@ -273,6 +287,9 @@ hi PmenuThumb ctermfg=3
 "
 " colorscheme molokai
 " let g:molokai_original = 1
+"
+""" better visual selection
+hi Visual ctermbg=238
 
 """ -------------------------------------------
 """         cursorline
@@ -612,7 +629,10 @@ function! GoMappings()
     map <leader>gn :py sendtmux("next")<cr>
     map <leader>gs :py sendtmux("step")<cr>
 
+    set path=,,$GOPATH/src
+    " set path=$GOPATH/src
 py <<EOF
+
 from vim import eval
 from vim import command 
 def current_test():
@@ -2047,8 +2067,14 @@ def sendalltmux(text):
         if pane_id == current_id:
             continue
         sendtmux(text, pane_id, enter=False)
+
+def offset():
+    print vim.eval('line2byte(line("."))+col(".")')
+
 EOP
 endif
+
+command! Offset py offset()
 
 """ terminal bash vertical
 " map <leader>tb :call VimuxOpenRunner()<cr>
@@ -2250,6 +2276,7 @@ augroup END
 """ -------------------------------------------
 """ Diff highlight
 """ -------------------------------------------
+
 
 
 " dodane
