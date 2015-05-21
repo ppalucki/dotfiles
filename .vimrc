@@ -25,6 +25,7 @@
 "  gr - go return
 "  gu - up frame
 "  gb - go "bottom" (down frame)
+"  <leader>tb - set breakpoint
 "
 "  gd - goto definition
 "  gD or <leader>gd or <c-w>d - goto definition in vertical split
@@ -51,7 +52,6 @@
 "  <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
 "  <leader>tw - send word (+enter)
 "  <leader>tc - send Ctrl-C
-"  <leader>tb - terminal bash
 "  <leader>tu - termian tests - run tests in termianl
 "
 " golang:
@@ -1593,16 +1593,8 @@ def find_buffer(filename):
         if b.name == filename:
             return b
 
-def debug_loc(cmd=None):
-    if cmd is not None:
-        if cmd=='jump':
-            cmd = 'jump %s'%vim.eval("line('.')")
-
-        print 'debbuger:', cmd
-        time.sleep(0.1) # 10ms
-        c('call VimuxRunCommand("%s")'%cmd)
-        time.sleep(0.1) # 10ms
-
+def loc():
+    #### IPDB STYLE
     # go to location
     ### requires vipdb to work
     try:
@@ -1616,14 +1608,28 @@ def debug_loc(cmd=None):
                 # print 'buf found', buf.number, 'going', line
                 if vim.current.buffer.number != buf.number:
                     # print 'switching', buf.number
-                    c('buffer %s'%buf.number)
-                c(str(line))
-                # c('normal z.')
+                    vim.command('buffer %s'%buf.number)
+                vim.command(str(line))
+                # vim.command('normal z.')
             else:
                 # print 'tryin to open', filename, line
-                c('edit +%i %s'%(line, filename))
+                vim.command('edit +%i %s'%(line, filename))
     except ImportError:
-        pass
+        #### GDB STYLE
+        sendtmux('''py gdb.execute("shell tmux set-buffer -b 9 "+"'+%i %s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))''')
+        loc = subprocess.check_output(['tmux','show-buffer', '-b', '9'])
+        vim.command('edit %s'%loc)
+
+def debug_loc(cmd=None):
+    if cmd is not None:
+        if cmd=='jump':
+            cmd = 'jump %s'%vim.eval("line('.')")
+
+        # send command to tmux
+        sendtmux(cmd)
+
+    # loc()
+
 
 EOF
 
@@ -1637,7 +1643,7 @@ nmap gs :py debug_loc('step')<cr>
 " nmap gu :py debug_loc('until')<cr>
 nmap gr :py debug_loc('return')<cr>
 " go location
-nmap gl :py debug_loc()<cr>
+nmap gl :py loc()<cr>
 " go up stack up - wysyla klawisz 'up'!
 nmap gu :py debug_loc('u')<cr> 
 " go bottom aka down stack - down wysyla klawisze 'down'! dlatego w skrocona
@@ -2143,6 +2149,9 @@ map <Leader>td :py sendtmux('cd ' + vim.eval('expand("%:p:h")'))<cr>
 map <Leader>tD :py sendtmux('cd ' + vim.eval('getcwd()'))<cr>
 
 
+""" DEBUG - set breakpoint
+map <leader>tb :py sendtmux("b '%s'" % vim.eval('expand("%:p") . ":" . line(".")'))<cr>
+
 """ -------------------------------------------
 """ git gerrit review - setspell and textwidth
 """ -------------------------------------------
@@ -2337,8 +2346,3 @@ let g:clang_exec = 'clang-3.5'
 
 
 
-""" GDB v2
-"""" in gdb execute this
-" py gdb.execute("shell tmux set-buffer -b 9 "+"'+%i %s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))
-"""" then in vim
-" let @a = system('tmux show-buffer -b 9') | edit <C-R>a

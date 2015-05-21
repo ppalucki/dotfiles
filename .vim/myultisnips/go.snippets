@@ -287,6 +287,10 @@ snippet i6 "int64" w
 int64
 endsnippet
 
+snippet u6 "int64" w
+uint64
+endsnippet
+
 snippet fa "false" w
 false
 endsnippet
@@ -312,16 +316,15 @@ string
 endsnippet
 
 ##############################
-# big types
+# v, err := 
 ###############################
 
-snippet boot "bootstrap code" w
-package main
-
-import "fmt"
-
-func main() {
-	${1}
-	fmt.Println(${2:"hello world"})
+snippet verr "v, err := code" w
+${2:v}, err := ${1}
+if err != nil { 
+	panic(err) 
 }
+${0}
 endsnippet
+
+###############################
