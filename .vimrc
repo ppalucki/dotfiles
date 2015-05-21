@@ -260,6 +260,9 @@ Plug 'guns/xterm-color-table.vim'
 "
 Plug 'vim-scripts/a.vim'
 
+" GDB 
+" Plug 'skibyte/gdb-from-vim'
+
 " All of your Plugins must be added before the following line
 " call vundle#end()            " required
 call plug#end()
@@ -304,6 +307,10 @@ hi Visual ctermbg=238
 " turn on status line always
 set laststatus=2
 let g:airline_powerline_fonts = 0
+" let g:airline#extensions#branch#enabled = 1
+" let g:airline#extensions#syntastic#enabled = 1
+" let g:airline#extensions#tagbar#enabled = 1
+
 " let g:airline_theme = 'powerlineish'
 
 """ ?????????????????
@@ -2325,3 +2332,11 @@ com! -nargs=0 SeeTab :call SeeTab()
 
 " CLANG
 let g:clang_exec = 'clang-3.5'
+
+
+
+""" GDB v2
+"""" in gdb execute this
+" py gdb.execute("shell tmux set-buffer -b 9 "+"'+%i %s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))
+"""" then in vim
+" let @a = system('tmux show-buffer -b 9') | edit <C-R>a
