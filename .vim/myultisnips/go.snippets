@@ -42,7 +42,9 @@ ${0}
 endsnippet
 
 snippet errp "if err != nil {panic(err)}"
-if err != nil { panic(err) }
+if err != nil { 
+	panic(err) 
+}
 endsnippet
 
 ###########################
@@ -140,13 +142,18 @@ ShouldNotBeEmpty
 endsnippet
 
 ####### convey printing
-snippet pr- "Printf(\n---%v\n---, )"
-Printf("\n---\n%v\n---\n", ${0})
+# snippet pr- "Printf(\n---%v\n---, )"
+# Printf("\n---\n%v\n---\n", ${0})
+# endsnippet
+
+# snippet pr "Printf(\n%v, )"
+# Printf("\n%v", ${0})
+# endsnippet
+
+snippet pr "println"
+println($0)
 endsnippet
 
-snippet pr "Printf(\n%v, )"
-Printf("\n%v", ${0})
-endsnippet
 
 
 ###########################
