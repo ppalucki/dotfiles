@@ -212,7 +212,7 @@ Plug 'thinca/vim-quickrun'
 " Plug 'tpope/vim-fireplace'
 
 " DistractionFreeMode light version
-" Plug 'bilalq/lite-dfm'
+Plug 'bilalq/lite-dfm'
 
 " udawane registry
 " Plug 'kana/vim-fakeclip'
@@ -2138,7 +2138,9 @@ nmap <leader>ta _v$<leader>ta
 nmap <leader>tw viw<leader>ts
 
 """ terminal directory (change current directory to path of current file)
-map <Leader>td :py sendtmux('cd ' + vim.eval('getcwd()'))<cr>
+map <Leader>td :py sendtmux('cd ' + vim.eval('expand("%:p:h")'))<cr>
+""" terminal Director of cwd
+map <Leader>tD :py sendtmux('cd ' + vim.eval('getcwd()'))<cr>
 
 
 """ -------------------------------------------
