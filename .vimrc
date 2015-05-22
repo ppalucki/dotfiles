@@ -58,7 +58,7 @@
 " <leader>a - autoimports all
 " <leader>A - autoimports this keyword
 " F9 - quick run (this file) with QuickRun
-" <leader>F9 - build (this file)
+" <leader>F9 - build this package (current folder)
 " F10 - test this file
 " <leader>F10 - test all (./...)
 
@@ -265,6 +265,10 @@ Plug 'vim-scripts/a.vim'
 
 " All of your Plugins must be added before the following line
 " call vundle#end()            " required
+"
+
+Plug 'terryma/vim-multiple-cursors'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -560,7 +564,7 @@ function! GoMappings()
 	" nmap <buffer> <F9> :up\|!go run %<cr> 
 	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
 	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :up\|GoBuild <c-r>%<cr>
+	nmap <buffer> <leader><F9> :up\|GoBuild<cr>
     
     """ testing 
 	nmap <buffer> <F10> :up<bar>GoTest ./<c-r>%<cr>
