@@ -42,8 +42,8 @@ ${0}
 endsnippet
 
 snippet errp "if err != nil {panic(err)}"
-if err != nil { 
-	panic(err) 
+if err != nil {
+	panic(err)
 }
 endsnippet
 
@@ -72,11 +72,15 @@ snippet so "So(Equal)"
 So(${1:got}, ShouldEqual, ${2:expected})
 endsnippet
 
-snippet sogt "So(ShouldBeGreaterThan)"
+snippet sone "So(NotEqual)"
+So(${1:got}, ShouldNotEqual, ${2:expected})
+endsnippet
+
+snippet sogt "So(BeGreaterThan)"
 So(${1:more}, ShouldBeGreaterThan, ${2:less})
 endsnippet
 
-snippet solt "So(ShouldBeLessThan)"
+snippet solt "So(BeLessThan)"
 So(${1:less}, ShouldBeLessThan, ${2:more})
 endsnippet
 
@@ -257,7 +261,7 @@ $0
 endsnippet
 
 snippet ty "type"
-type 
+type
 endsnippet
 
 ###########################
@@ -281,6 +285,14 @@ endsnippet
 
 snippet in "int" w
 int
+endsnippet
+
+snippet i3 "int32" w
+int32
+endsnippet
+
+snippet u3 "uint32" w
+uint32
 endsnippet
 
 snippet i6 "int64" w
@@ -316,13 +328,13 @@ string
 endsnippet
 
 ##############################
-# v, err := 
+# v, err :=
 ###############################
 
 snippet verr "v, err := code" w
 ${2:v}, err := ${1}
-if err != nil { 
-	panic(err) 
+if err != nil {
+	panic(err)
 }
 ${0}
 endsnippet

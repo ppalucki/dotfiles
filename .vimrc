@@ -14,47 +14,52 @@
 " F8 - generate tags
 " F9/F10 - build/run/test or compile - lang dependent
 
-"  PYTHON keybindings
-"  <leader>id intrupt debugger
-"  <leader>iv intrupt vipdb debugger
-"  <leader>ip intrupt ipython embeded
-"
-"  gn - go next
-"  gs - go step
-"  go - continue exit
-"  gr - go return
-"  gu - up frame
-"  gb - go "bottom" (down frame)
-"  <leader>tb - set breakpoint
-"
-"  gd - goto definition
-"  gD or <leader>gd or <c-w>d - goto definition in vertical split
+" PYTHON keybindings
+" <leader>id intrupt debugger
+" <leader>iv intrupt vipdb debugger
+" <leader>ip intrupt ipython embeded
 "
 "
-"  gf - goto file (under cursor)
-"  <c-w>f - goto file (new window)
+" ---------------- debugger ----------------
+" gn - go next
+" gs - go step
+" go - continue exit
+" gu - go up frame
+" gb - go bottom (down) frame
+" gl - 'go location' of cursor
+" gf - go finish
+" ge - 'go end' (gdb finish)
+" gj - 'go jump' run until location of cursor
+" until/finish
+" <leader>tb - set breakpoint
 "
-" TMUX keybindinds
-"  <leader>r - terminal rerun  (was rename)
-"  <leader>tr - terminal repeat
-"  <leader>te> - terminal exit
-"  <leader>tl (tt) - send line
-"  <leader>tt - terminal termina (run tests depracted!)
-"  <leader>ta - terminal terminal ALL
-"  <c-x>  - (execute!) terminal terminal and go to next line !!!
-"  <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
-"  8<c-x> or <leader>x - split vertical + terminal terminal 
-"  9<c-x> or <ledeer>x - split horizontal + terminal terminal 
+" ------------ go to definition ---------
+" gd - goto definition
+" <leader>gd - goto definition in horizontal split
+" <c-w>d or gD- goto definition in vertical split
+"
+" gf - goto file (under cursor)
+" <c-w>f - goto file (new window)
+"
+" ------------ tmux -------------------
+" <leader>r - terminal rerun  (was rename)
+" <leader>tr - terminal repeat
+" <leader>te - terminal exit
+" <leader>tl (tt) - send line
+" <leader>tt - terminal termina (run tests depracted!)
+" <leader>ta - terminal terminal ALL
+" <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
+" 8<c-x> or <leader>x - split vertical + terminal terminal 
+" 9<c-x> or <ledeer>x - split horizontal + terminal terminal 
 " normal [target]x - send current line to target pane
 " visual [target]x - send visual selection to target pane
-
-"  <leader>ts - send selection + enter
-"  <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
-"  <leader>tw - send word (+enter)
-"  <leader>tc - send Ctrl-C
-"  <leader>tu - termian tests - run tests in termianl
+" <leader>ts - send selection + enter
+" <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
+" <leader>tw - send word (+enter)
+" <leader>tc - send Ctrl-C
+" <leader>tu - termian tests - run tests in termianl
 "
-" golang:
+" ------- golang ---------:
 " <leader>a - autoimports all
 " <leader>A - autoimports this keyword
 " F9 - quick run (this file) with QuickRun
@@ -63,8 +68,6 @@
 " <leader>F10 - test all (./...)
 
 " <leader>R - rename (python/go) 
-" F8 - generate tags
-" gd - go to def
 " K - documentation
 " <c-w>z - zOom window aka to tmux <c-a>z
 
@@ -563,18 +566,17 @@ function! GoMappings()
     """ running & building
 	" nmap <buffer> <F9> :up\|!go run %<cr> 
 	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
-	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :up\|GoBuild<cr>
+	imap <buffer> <leader><F9> :GoRun<cr>
     
     """ testing 
-	nmap <buffer> <F10> :up<bar>GoTest ./<c-r>%<cr>
-	nmap <buffer> <leader><F10> :up<bar>GoTest ./...<cr>
+	nmap <buffer> <F10> :up<bar>GoBuild<cr>
+	nmap <buffer> <leader><F10> :up<bar>GoTest<cr>
 
     """ running in terminal
 	""" selected file
-    map <leader>tu :up<bar>:py sendtmux("go test -v ./<c-r>%")<cr>
+    map <leader>tu :up<bar>:py sendtmux("go test -v")<cr>
 	""" all tests
-    map <leader>tU :up<bar>:py sendtmux("go test -v ./...")<cr>
+    map <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
 	"" run
     map <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
     """ navgigation goto
@@ -596,7 +598,7 @@ function! GoMappings()
     " test current pkg
     " nmap <leader>tt :up<bar>GoTest<cr>
 
-    nmap <silent> <leader>m :up\|make<cr>
+    " nmap <silent> <leader>m :up\|make<cr>
 
     nmap <buffer> <leader>w :silent up<cr>
 
@@ -608,9 +610,9 @@ function! GoMappings()
     " /home/dev/dotfiles/.vim/bundle/vim-go/ftplugin/go/commands.vim:60
     " go def vertical
     nmap <c-w>d <Plug>(go-def-vertical)
-    nmap <leader>gd <Plug>(go-def-vertical)
+    nmap gD <Plug>(go-def-vertical)
     " go def horizontal
-    nmap gD <Plug>(go-def-split)
+    nmap <leader>gd <Plug>(go-def-split)
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
     " nmap <silent> gD :GoDefVsplit<cr>
@@ -1592,11 +1594,31 @@ py <<EOF
 #         send_line(el)
 import time, vim
 
-def find_buffer(filename):
-    for b in vim.buffers:
-        if b.name == filename:
-            return b
 
+def open_or_edit(filename, line):
+
+    def find_buffer(filename):
+        for b in vim.buffers:
+            if b.name == filename:
+                return b
+
+    # print repr(filename), repr(line)
+    # and not filename.endswith('.pyc') and filename.endswith('.py')
+    if filename is not None:
+        line = int(line)
+        buf = find_buffer(filename)
+        if buf is not None:
+            # print 'buf found', buf.number, 'going', line
+            if vim.current.buffer.number != buf.number:
+                # print 'switching', buf.number
+                vim.command('buffer %s'%buf.number)
+            vim.command(str(line))
+            # vim.command('normal z.')
+        else:
+            # print 'tryin to open', filename, line
+            vim.command('edit +%i %s'%(line, filename))
+
+import subprocess
 def loc():
     #### IPDB STYLE
     # go to location
@@ -1604,25 +1626,18 @@ def loc():
     try:
         import vipdb
         filename, line = vipdb.get_location()
-        # print repr(filename), repr(line)
-        if filename is not None and not filename.endswith('.pyc') and filename.endswith('.py'):
-            line = int(line)
-            buf = find_buffer(filename)
-            if buf is not None:
-                # print 'buf found', buf.number, 'going', line
-                if vim.current.buffer.number != buf.number:
-                    # print 'switching', buf.number
-                    vim.command('buffer %s'%buf.number)
-                vim.command(str(line))
-                # vim.command('normal z.')
-            else:
-                # print 'tryin to open', filename, line
-                vim.command('edit +%i %s'%(line, filename))
+        open_or_edit(filename, line)
     except ImportError:
         #### GDB STYLE
-        sendtmux('''py gdb.execute("shell tmux set-buffer -b 9 "+"'+%i %s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))''')
-        loc = subprocess.check_output(['tmux','show-buffer', '-b', '9'])
-        vim.command('edit %s'%loc)
+        vim.command("silent! tmux set-buffer ':'")
+        sendtmux('''py gdb.execute("shell tmux set-buffer "+"'%i:%s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))''')
+        time.sleep(0.1)
+        loc = subprocess.check_output(['tmux','show-buffer'])
+        line, filename = loc.split(':')
+        if line and filename:
+            open_or_edit(filename, line)
+        else:
+            print 'nothing found'
 
 def debug_loc(cmd=None):
     if cmd is not None:
@@ -1632,7 +1647,7 @@ def debug_loc(cmd=None):
         # send command to tmux
         sendtmux(cmd)
 
-    # loc()
+    loc()
 
 
 EOF
@@ -1642,21 +1657,20 @@ endif
 nmap go :py debug_loc('continue')<cr>
 " go next
 nmap gn :py debug_loc('next')<cr>
-" go step (inside)
+" go step
 nmap gs :py debug_loc('step')<cr>
-" nmap gu :py debug_loc('until')<cr>
-nmap gr :py debug_loc('return')<cr>
+" go end
+nmap ge :py debug_loc('finish')<cr>
 " go location
 nmap gl :py loc()<cr>
 " go up stack up - wysyla klawisz 'up'!
 nmap gu :py debug_loc('u')<cr> 
 " go bottom aka down stack - down wysyla klawisze 'down'! dlatego w skrocona
-" wersja
 nmap gb :py debug_loc('d')<cr>
 " go "end function" (until) (gi was reserverd for go last insert position)
-nmap ge :py debug_loc('until')<cr>
 nmap gj :py debug_loc('jump')<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
+nmap gp yiw:py sendtmux("print <c-r>"")<cr>
 
 let g:COMMAND_MAP = {
     \ "hit" : "echo 'HIT'",
@@ -1859,6 +1873,7 @@ let g:go_highlight_build_constraints = 0
 let g:go_highlight_methods = 0
 let g:go_highlight_operators = 0
 
+let g:go_fmt_command = "goimports"
 let g:go_fmt_autosave = 1
 
 " Disable opening browser after posting to your snippet to 
