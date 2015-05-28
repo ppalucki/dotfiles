@@ -68,3 +68,21 @@ if [ $? == 0 ] ;then
     cgdb $2 -- -d $WORK
 fi
 }
+
+##############################################
+#
+# git (doing reviews)
+#
+##############################################
+function reviewstat { 
+    git d --stat `git merge-base master HEAD` $@  
+}
+
+function reviewdiff { 
+    git d `git merge-base master HEAD` $@  
+}
+
+function reviewlg { 
+    git lg `git merge-base master HEAD`..HEAD -- $@ 
+}
+
