@@ -33,6 +33,7 @@
     st = status
     ci = commit
     d = difftool
+    ds = diff --stat
     branches = branch -vv
     branchesall = branch -a -vv
     co = checkout
