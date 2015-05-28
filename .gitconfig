@@ -59,6 +59,7 @@
 
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+    keepBackup = false
 
 [github]
 	user = ppalucki

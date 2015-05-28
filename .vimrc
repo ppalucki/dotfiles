@@ -30,6 +30,7 @@
 " gf - go finish
 " ge - 'go end' (gdb finish)
 " gj - 'go jump' run until location of cursor
+" ga - 'go advanced' continue program up to given location
 " until/finish
 " <leader>tb - set breakpoint
 "
@@ -42,8 +43,7 @@
 " <c-w>f - goto file (new window)
 "
 " ------------ tmux -------------------
-" <leader>r - terminal rerun  (was rename)
-" <leader>tr - terminal repeat
+" <leader>r or tr - terminal rerun  (was rename)
 " <leader>te - terminal exit
 " <leader>tl (tt) - send line
 " <leader>tt - terminal termina (run tests depracted!)
@@ -558,7 +558,6 @@ au BufRead,BufNewFile *.thor set filetype=ruby
 """         Golang
 """ -------------------------------------------
 function! GoMappings()
-	""" ruby run
 	" nmap <buffer> <leader>r <f9>
 	nmap <buffer> <leader>R :GoRename<cr>
 
@@ -629,50 +628,22 @@ function! GoMappings()
     nmap <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
     nmap <leader>F "myiwh/<c-r>m<cr>:GoDescribe<cr>
 
-    " just rerun last command
-	  nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
 
 
     nmap <buffer> <leader>H :GoReferrers<cr>
 
-    " hiper dubugging with go
-    map <Leader>ti :py startgdb()<cr>
-    map <Leader>to :py gdbbreak()<cr>
-    map <Leader>tk :py gdbrun()<cr>
-    map <leader>gn :py sendtmux("next")<cr>
-    map <leader>gs :py sendtmux("step")<cr>
 
     set path=,,$GOPATH/src
     " set path=$GOPATH/src
-py <<EOF
-
-from vim import eval
-from vim import command 
-def current_test():
-    return eval("tagbar#currenttag('%s','')")[:-2] # without ()
-
-def current_file():
-    return eval("expand('%:t')")
-
-def current_line():
-    return eval("line('.')")
-
-def startgdb():
-    sendtmux('export $( go test -work -c -gcflags "-N -l" -o test.test 2>&1 )')
-    sendtmux('cgdb ./test.test -- -d $WORK')
-
-def gdbbreak():
-    sendtmux('b %s:%s'%(current_file(), current_line()))
-
-def gdbrun():
-    sendtmux('run -test.run=%s'%current_test())
-
-EOF
 
     """ have to be more intelignejt - looking na all files or just selected on
     " ignore search in --no-testgo files - if you want all just do H
     map <buffer> <leader>h "ayiw:Ack! --go "<C-r>a" --no-testgo 
     vmap <buffer> <leader>h "ay:Ack! --go "<C-r>a" --no-testgo
+
+    " hiper dubugging with go
+    map <Leader>ti :py startgdb()<cr>
+    map <Leader>tk :py gdbrun()<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1573,7 +1544,7 @@ let g:yankring_replace_n_nkey = '<c-q>'
 
 
 """ ------------------------------------------------------------
-""" -------------------- debuging ------------------------------
+""" -------------------- debugging ------------------------------
 """ ------------------------------------------------------------
 if !has('python3')
 py <<EOF
@@ -1593,7 +1564,32 @@ py <<EOF
 #         el = send_escape(l)
 #         send_line(el)
 import time, vim
+import subprocess
 
+def current_test():
+    return vim.eval("tagbar#currenttag('%s','')")[:-2] # without ()
+
+def current_file():
+    return vim.eval("expand('%:t')")
+
+def current_line():
+    return vim.eval("line('.')")
+
+def golang_gdbrun_test():
+    sendtmux('run -test.run=%s'%current_test())
+
+def golang_startgdb_test():
+    sendtmux('export $( go test -work -c -gcflags "-N -l" -o test.test 2>&1 )')
+    sendtmux('cgdb ./test.test -- -d $WORK')
+
+def set_breakpoint():
+    """ DEBUG - set breakpoint """
+    # map <leader>tb :py sendtmux("b '%s'" % vim.eval('expand("%:p") . ":" . line(".")'))<cr>
+    sendtmux('break %s:%s'%(current_file(), current_line()))
+
+def gdb_adanvce():
+    """ continue up to given location """
+    sendtmux('advance %s:%s'%(current_file(), current_line()))
 
 def open_or_edit(filename, line):
 
@@ -1618,19 +1614,20 @@ def open_or_edit(filename, line):
             # print 'tryin to open', filename, line
             vim.command('edit +%i %s'%(line, filename))
 
-import subprocess
 def loc():
-    #### IPDB STYLE
+    """ try to locate source file """
     # go to location
-    ### requires vipdb to work
     try:
+        #### IPDB STYLE
+        ### requires vipdb to work
         import vipdb
         filename, line = vipdb.get_location()
         open_or_edit(filename, line)
     except ImportError:
         #### GDB STYLE
-        vim.command("silent! tmux set-buffer ':'")
-        sendtmux('''py gdb.execute("shell tmux set-buffer "+"'%i:%s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))''')
+        # vim.command("silent! tmux set-buffer ':'")
+        # moved as hook to ~/.gdbinit
+        # sendtmux('''py gdb.execute("shell tmux set-buffer "+"'%i:%s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))''')
         time.sleep(0.1)
         loc = subprocess.check_output(['tmux','show-buffer'])
         line, filename = loc.split(':')
@@ -1639,13 +1636,15 @@ def loc():
         else:
             print 'nothing found'
 
-def debug_loc(cmd=None):
+def debug_loc(cmd=None, lookup=True):
+    """ send a command to terminal and then try to locate source file """
+    
     if cmd is not None:
         if cmd=='jump':
             cmd = 'jump %s'%vim.eval("line('.')")
 
         # send command to tmux
-        sendtmux(cmd)
+        sendtmux(cmd, lookup=lookup)
 
     loc()
 
@@ -1661,16 +1660,23 @@ nmap gn :py debug_loc('next')<cr>
 nmap gs :py debug_loc('step')<cr>
 " go end
 nmap ge :py debug_loc('finish')<cr>
+" go run
+nmap gr :py debug_loc('run')<cr>
 " go location
 nmap gl :py loc()<cr>
-" go up stack up - wysyla klawisz 'up'!
-nmap gu :py debug_loc('u')<cr> 
-" go bottom aka down stack - down wysyla klawisze 'down'! dlatego w skrocona
-nmap gb :py debug_loc('d')<cr>
+" go up stack up 
+nmap gu :py debug_loc('up', lookup=False)<cr> 
+" go bottom aka down stack - down 
+nmap gb :py debug_loc('down', lookup=False)<cr>
 " go "end function" (until) (gi was reserverd for go last insert position)
 nmap gj :py debug_loc('jump')<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 nmap gp yiw:py sendtmux("print <c-r>"")<cr>
+vmap gp y:py sendtmux("print <c-r>"")<cr>
+
+nmap <leader>tb :py set_breakpoint()<cr>
+" advance
+nmap ga :py gdb_adanvce()<cr>
 
 let g:COMMAND_MAP = {
     \ "hit" : "echo 'HIT'",
@@ -1922,8 +1928,6 @@ function! CMappings()
     set path+=3rdparty/libprocess/3rdparty/stout/include
     set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
 
-    " just rerun last command
-	  nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
 
 endfunction
 au FileType c call CMappings()
@@ -1940,6 +1944,8 @@ let g:quickrun_config.c = {
       \ 'cmdopt': '`python-config --cflags --ldflags`',
       \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
       \ }
+
+let g:quickrun_no_default_key_mappings = 1
 
 """ -------------------------------------------
 """         SQL
@@ -2044,9 +2050,10 @@ def sendselectiontmux():
     for line in vim.current.range:
         sendtmux(line, target)
 
-def sendtmux(text, target_pane=None, enter=True):
+def sendtmux(text, target_pane=None, enter=True, lookup=True):
     """
     if text contains c-(something) or enter it will be split by space and each word send seperatly
+    lookup - if true up,ctrl,enter are recognized and sent as key.
     """
 
     # where to send - when None or 0 just take next pane
@@ -2058,7 +2065,7 @@ def sendtmux(text, target_pane=None, enter=True):
     # for line in text.split('\n'):
     #     if not line:
     #         continue
-    cmd = ("tmux send-keys -t %s "%target_pane).split()
+    cmd = ("tmux send-keys %s -t %s "%('' if lookup else '-l', target_pane)).split()
     # handle c-keys correctly
     if ' c-' in text or text.startswith('c-') or "enter" in text:
         text = text.split() 
@@ -2071,16 +2078,23 @@ def sendtmux(text, target_pane=None, enter=True):
         cmd.append(text)
 
     if enter and not 'enter' in cmd:
-        # fix some problems if last commands ends with ;
-        # check this out tmux send-keys 'ls;' enter 
-        # >>> unknown command 'enter'
-        if cmd[-1].endswith(';'):
-            cmd[-1] = cmd[-1]+' ' # append space to last but one command before enter
+        if lookup: # only when lookup is enabled
+            # fix some problems if last commands ends with ;
+            # check this out tmux send-keys 'ls;' enter 
+            # >>> unknown command 'enter'
+            if cmd[-1].endswith(';'):
+                cmd[-1] = cmd[-1]+' ' # append space to last but one command before enter
 
-        cmd.append('enter')
+            cmd.append('enter')
 
-    # print cmd
+    # call actual command 
     subprocess.call(cmd)
+
+    if enter and not lookup:
+        # send addtional tmux command to emulate enter
+        subprocess.call(("tmux send-keys -t %s enter"%target_pane).split())
+
+
 
 def _current_pane_idx():
     currentout = subprocess.check_output("tmux display-message -p #P".split(' '))
@@ -2120,9 +2134,9 @@ command! Offset py offset()
 vmap <leader>tS "vy:py sendtmux(vim.eval("@v"), enter=False)<cr>
 vmap <leader>ts "vy:py sendtmux(vim.eval("@v"))<cr>
 
-""" terminal rerun 
-" map <leader>tr :up<bar>call VimuxOpenRunner()<cr>:call VimuxSendKeys("C-p C-M")<cr>
+""" terminal rerun  (tr or just r)
 map <leader>tr :up<bar>:py sendtmux('c-p')<cr>
+nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
 
 """ terminal quit and rerun
 map <Leader>tq :py sendtmux('c-c c-p')<cr>
@@ -2168,8 +2182,6 @@ map <Leader>td :py sendtmux('cd ' + vim.eval('expand("%:p:h")'))<cr>
 map <Leader>tD :py sendtmux('cd ' + vim.eval('getcwd()'))<cr>
 
 
-""" DEBUG - set breakpoint
-map <leader>tb :py sendtmux("b '%s'" % vim.eval('expand("%:p") . ":" . line(".")'))<cr>
 
 """ -------------------------------------------
 """ git gerrit review - setspell and textwidth

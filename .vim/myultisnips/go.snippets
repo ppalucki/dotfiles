@@ -51,7 +51,9 @@ endsnippet
 # convey
 ##########################
 snippet impc "import convey"
-. "github.com/smartystreets/goconvey/convey"
+import (
+	. "github.com/smartystreets/goconvey/convey"
+)
 endsnippet
 
 snippet conv "Convey()"
@@ -339,4 +341,44 @@ if err != nil {
 ${0}
 endsnippet
 
+##############################
+# big types
 ###############################
+
+snippet boot "bootstrap code" w
+package main
+
+import "fmt"
+
+func main() {
+	${1}
+	fmt.Println(${2:"hello world"})
+}
+endsnippet
+
+
+snippet boottest "bootstrap testing" w
+package ${1:main}
+
+import "testing"
+
+func TestFunction(t *testing.T) {
+	${0}
+}
+endsnippet
+
+snippet bootconv "bootstrap convey testing" w
+package ${1:main}
+
+import (
+	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
+)
+
+func TestFunction(t *testing.T) {
+	Convey("description", t, func() {
+		${0}
+	})
+}
+endsnippet
