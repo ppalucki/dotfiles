@@ -272,6 +272,9 @@ Plug 'vim-scripts/a.vim'
 
 Plug 'terryma/vim-multiple-cursors'
 
+"
+Plug 'terryma/vim-smooth-scroll'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -320,8 +323,6 @@ let g:airline_powerline_fonts = 0
 
 " let g:airline_theme = 'powerlineish'
 
-""" ?????????????????
-set lazyredraw
 
 """ cos innego
 " wplywa na multipolcenie taloe jak leader \ev \es \s
@@ -354,6 +355,16 @@ elseif has("win32")
   " do stuff under windows "
   " ???
 endif
+
+
+""" wrap lines
+set nowrap
+set showbreak=↪
+
+
+" Display incomplete commands below the status line
+set showcmd
+
 
 
 """ -------------------------------------------
@@ -698,6 +709,7 @@ set hlsearch
 " highlight search reset
 map <leader>/ :nohlsearch<cr>
 "<bar>QuickFixClear<cr>:SignClearAll<cr>
+set gdefault   " Use global search by default
 "
 
 " visual search selected text
@@ -2136,7 +2148,7 @@ vmap <leader>ts "vy:py sendtmux(vim.eval("@v"))<cr>
 
 """ terminal rerun  (tr or just r)
 map <leader>tr :up<bar>:py sendtmux('c-p')<cr>
-nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
+map <leader>r :up<bar>:py sendtmux('c-p')<cr>
 
 """ terminal quit and rerun
 map <Leader>tq :py sendtmux('c-c c-p')<cr>
@@ -2345,7 +2357,9 @@ hi DiffText       term=NONE cterm=NONE ctermfg=3 ctermbg=234
 " invisiable characters like tabs and etcjj
 " http://vim.wikia.com/wiki/See_the_tabs_in_your_file
 """ --------------------------------------------
+set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
 
+" very bright and visible
 " SeeTab: toggles between showing tabs and using standard listchars
 fu! SeeTab()
   if !exists("g:SeeTabEnabled")
@@ -2375,5 +2389,52 @@ com! -nargs=0 SeeTab :call SeeTab()
 " CLANG
 let g:clang_exec = 'clang-3.5'
 
+" vim-smooth-scroll
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 4)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 4)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+" shor message at startup
+set shortmess=afilnxtToOI
 
 
+""" BACKUPS
+" Don't make a backup before overwriting a file
+" set nobackup
+" set nowritebackup
+
+" Disable swap files
+" set updatecount=0
+
+"" =============================================================================
+" Performance
+" =============================================================================
+
+" See :help slow-terminal
+
+" Optimize for fast terminal connections
+set ttyfast
+
+" Time out on key codes but not mappings
+set notimeout
+set ttimeout
+set ttimeoutlen=100
+
+" Update syntax highlighting for more lines increased scrolling performance
+syntax sync minlines=256
+
+" Don't syntax highlight long lines
+set synmaxcol=256
+
+" Don't redraw screen while executing macros, registers
+set lazyredraw
+
+" Maximum number of lines to scroll the screen
+set ttyscroll=3
+
+" Jump by more lines when scrolling
+set scrolljump=2
+
+" default
+set cmdheight=1
