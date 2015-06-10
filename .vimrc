@@ -56,6 +56,7 @@
 " <leader>ts - send selection + enter
 " <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
 " <leader>tw - send word (+enter)
+" <leader>tW - send word (wo enter)
 " <leader>tc - send Ctrl-C
 " <leader>tu - termian tests - run tests in termianl
 "
@@ -1213,7 +1214,7 @@ set modeline
 """""""""""" mkd - markdown & textile
 
 " extension md as markdown filetype
-au BufRead,BufNewFile .md set filetype=markdown
+au BufRead,BufNewFile *.md set filetype=markdown
 " surround with asterisk
 " bold/em
 au FileType markdown set nofoldenable
@@ -2192,8 +2193,11 @@ vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
 """ terminal-all (just this line)
 nmap <leader>ta _v$<leader>ta
 
-""" terminal word (send)
+""" terminal word (send) + enter
 nmap <leader>tw viw<leader>ts
+
+""" terminal word (send) wo enter
+nmap <leader>tW viw<leader>tS
 
 """ terminal directory (change current directory to path of current file)
 map <Leader>td :py sendtmux('cd ' + vim.eval('expand("%:p:h")'))<cr>
