@@ -2445,3 +2445,8 @@ set scrolljump=2
 
 " default
 set cmdheight=1
+
+" 
+" http://vim.wikia.com/wiki/VimTip167
+" Using vim as a man-page viewer under Unix
+let $PAGER=''
