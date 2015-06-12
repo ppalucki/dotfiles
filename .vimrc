@@ -276,6 +276,9 @@ Plug 'terryma/vim-multiple-cursors'
 "
 Plug 'terryma/vim-smooth-scroll'
 
+
+Plug 'junkblocker/patchreview-vim'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -2401,10 +2404,10 @@ com! -nargs=0 SeeTab :call SeeTab()
 let g:clang_exec = 'clang-3.5'
 
 " vim-smooth-scroll
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 4)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 4)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 4)<CR>
+" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 4)<CR>
+" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " shor message at startup
 set shortmess=afilnxtToOI
