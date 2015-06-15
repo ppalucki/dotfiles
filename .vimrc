@@ -279,6 +279,9 @@ Plug 'terryma/vim-smooth-scroll'
 
 Plug 'junkblocker/patchreview-vim'
 
+" set filetype based on shebang
+Plug 'vitalk/vim-shebang'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
