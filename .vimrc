@@ -710,7 +710,7 @@ set comments=
 """ search
 set incsearch
 set smartcase
-" set ignorecase
+set ignorecase
 " highlight search
 set hlsearch
 " highlight search reset
@@ -1652,6 +1652,13 @@ def loc():
         # moved as hook to ~/.gdbinit
         # sendtmux('''py gdb.execute("shell tmux set-buffer "+"'%i:%s'"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename))''')
         time.sleep(0.1)
+        def exists(fn):
+            return os.path.isfile(os.path.expanduser(fn))
+
+        if not exists('~/.gdbinit') or not exists('~/.gdb.py'):
+           print 'ERROR: missing gdbinit & gdb.py installed fro gdb'
+           return
+
         loc = subprocess.check_output(['tmux','show-buffer'])
         line, filename = loc.split(':')
         if line and filename:
@@ -1757,7 +1764,7 @@ function! TrimWhiteSpace() "{{{
     call setpos('.', cursor_pos)
 endfunction "}}}
 " nnoremap <silent> <Leader>rtw :call TrimWhiteSpace()<CR>
-nnoremap <Leader>Xw :call TrimWhiteSpace()<CR><bar>:up<cr>
+" nnoremap <Leader>Xw :call TrimWhiteSpace()<CR><bar>:up<cr>
 
 """ -------------------------------------------
 """         screen focus change
@@ -2193,6 +2200,9 @@ nmap <c-x> :py sendlinetmux()<cr>j
 nmap <leader>x :py sendlinetmux()<cr>
 vmap <leader>x :py sendselectiontmux()<cr>
 
+" execute current line (wo tmux)
+nmap <Leader>X :.w !bash<cr>
+
 """ terminal-all (selection)
 vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
 
@@ -2460,3 +2470,5 @@ set cmdheight=1
 " http://vim.wikia.com/wiki/VimTip167
 " Using vim as a man-page viewer under Unix
 let $PAGER=''
+
+
