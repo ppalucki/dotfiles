@@ -1656,11 +1656,17 @@ def loc():
             return os.path.isfile(os.path.expanduser(fn))
 
         if not exists('~/.gdbinit') or not exists('~/.gdb.py'):
-           print 'ERROR: missing gdbinit & gdb.py installed fro gdb'
+           raise Exception('ERROR: missing gdbinit & gdb.py installed fro gdb')
            return
 
+        # if you are getting 'failed to connect to server' check if you are not running your exec with sudo!
         loc = subprocess.check_output(['tmux','show-buffer'])
-        line, filename = loc.split(':')
+        try:
+            line, filename = loc.split(':')
+        except ValueError:
+            raise Exception('cannot split loc with : %r'%loc)
+
+        
         if line and filename:
             open_or_edit(filename, line)
         else:

@@ -5,6 +5,7 @@ def setloc():
     try:
         # loc = "%i:%s"%(gdb.newest_frame().find_sal().line, gdb.newest_frame().find_sal().symtab.filename)
         loc = "%i:%s"%(gdb.selected_frame().find_sal().line, gdb.selected_frame().find_sal().symtab.filename)
+        # print(loc)
     except gdb.error:
         pass
 
