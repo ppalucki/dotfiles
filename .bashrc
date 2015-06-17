@@ -66,5 +66,7 @@ function title {
 # export PAGER='vim -R -c "set ft=man nonu nolist" -'
 # http://vim.wikia.com/wiki/VimTip167
 # doesn't work with git lg
-export VIM_PAGER="/bin/sh -c \"unset PAGER;col -b -x | vim -R -c 'set ft=man nomod nolist' -c 'map q :q<cr>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
-alias man='PAGER=$VIM_PAGER man'
+
+# doesn't work with fedorea :(
+# export VIM_PAGER="/bin/sh -c \"unset PAGER;col -b -x -p | vim -R -c 'set ft=man nomod nolist' -c 'map q :q<cr>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+# alias man='PAGER=$VIM_PAGER man'
