@@ -15,7 +15,15 @@ fi
 # (venv)blue(path)branch(red)$
 ### LINUX
 if [[ $OSTYPE == 'linux-gnu' ]]; then
-    source /etc/bash_completion.d/git-prompt
+
+    if [[ -f /etc/bash_completion.d/git-prompt ]]; then
+        # ubuntu
+        source /etc/bash_completion.d/git-prompt
+    else
+        # fedora
+        source /usr/share/git-core/contrib/completion/git-prompt.sh
+    fi
+
 elif [[ $OSTYPE == 'darwin13' ]]; then
     source /usr/local/etc/bash_completion.d/git-prompt.sh
 fi
