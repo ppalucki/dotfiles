@@ -45,6 +45,8 @@
     caa = commit -a --amend
     unstash = stash pop
     mt = mergetool
+    # moved to aliases
+    # grepall = git rev-list --all | xargs git grep 
 
 [diff]
     tool = vimdiff 

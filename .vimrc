@@ -364,13 +364,6 @@ elseif has("win32")
 endif
 
 
-""" wrap lines
-set nowrap
-set showbreak=↪
-
-
-" Display incomplete commands below the status line
-set showcmd
 
 
 
@@ -473,7 +466,6 @@ function! PythonMappings()
     " works badly
     " inoremap <silent> <buffer> <tab> <C-R>=RopeCodeAssistInsertMode()<CR>
     "
-    set nonumber
     compiler python
     " wytlacz elcim i signs
 
@@ -666,6 +658,13 @@ function! GoMappings()
 endfunction
 au FileType go call GoMappings()
 
+""" -------------------------------------------
+"""         Shell
+""" -------------------------------------------
+function! ShMappings()
+    let g:SuperTabDefaultCompletionType = "<c-x><c-n>"
+endfunction
+au FileType sh call ShMappings()
 
 
 "----------------------------- OTHER hacks
@@ -693,6 +692,8 @@ vnoremap <leader>s "_dP
 
 " numberlines toggle
 nnoremap <leader>n :set invnumber<cr>
+" wrap toggle
+nnoremap <leader>N :set invwrap<cr>
 
 " 
 nnoremap <leader>p :set paste!<cr>
@@ -702,8 +703,13 @@ nnoremap <leader>p :set paste!<cr>
 " nmap <leader>qc :QuickFixClear<cr>
 
 """ -------- Standard options
-" set nonumber
-set nowrap
+""" wrap lines
+set showbreak=↪
+
+" Display incomplete commands below the status line
+set showcmd
+set nonumber
+set wrap
 "set paste
 set comments=
 
@@ -780,6 +786,7 @@ au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --language
 au FileType cpp map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
+au FileType go map <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
 " au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
 "
 """ tags file
@@ -912,8 +919,8 @@ au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
 au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
 au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
 au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
-au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp "<C-r>a"
-au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp "<C-r>a"
+au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
+au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "
 "
@@ -1296,7 +1303,6 @@ hi DiffDelete ctermbg=53
 hi DiffAdd ctermbg=53
 hi DiffText ctermbg=52 
 
-" set number
 
 """ ----- ultisnip
 let g:UltiSnipsListSnippets = '<c-l>'
@@ -2201,8 +2207,8 @@ nmap <leader>tt <leader>tl
 vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
-" nmap <c-x> <leader>ttj
 nmap <c-x> :py sendlinetmux()<cr>j
+vmap <c-x> :py sendselectiontmux()<cr>`>j
 nmap <leader>x :py sendlinetmux()<cr>
 vmap <leader>x :py sendselectiontmux()<cr>
 
