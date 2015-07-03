@@ -648,8 +648,8 @@ function! GoMappings()
 
     """ have to be more intelignejt - looking na all files or just selected on
     " ignore search in --no-testgo files - if you want all just do H
-    map <buffer> <leader>h "ayiw:Ack! --go "<C-r>a" --no-testgo 
-    vmap <buffer> <leader>h "ay:Ack! --go "<C-r>a" --no-testgo
+    map <buffer> <leader>h "ayiw:Ack! --no-testgo --go "<C-r>a" 
+    vmap <buffer> <leader>h "ay:Ack! --no-testgo --go "<C-r>a" 
 
     " hiper dubugging with go
     map <Leader>ti :py startgdb()<cr>
@@ -1043,6 +1043,11 @@ map <leader>bn :bn<cr>
 " autocmd BufNewFile,BufRead *.json set ft=javascript
 au FileType json set foldmethod=syntax
 au FileType json set foldlevel=100
+
+" aci/appc/rkt manifest and pod are json files
+au BufRead,BufNewFile manifest set filetype=json
+au BufRead,BufNewFile pod set filetype=json
+
 let g:vim_json_syntax_conceal = 0
 
 """ ConqueTerm
@@ -1225,6 +1230,7 @@ set spellcapcheck=0
 set modeline
 
 """""""""""" mkd - markdown & textile
+
 
 " extension md as markdown filetype
 au BufRead,BufNewFile *.md set filetype=markdown
