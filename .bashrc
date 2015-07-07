@@ -32,6 +32,13 @@ export PS1='\[\033[01;34m\]\w\[\033[01;32m\]$(__git_ps1)\[\033[01;31m\]$\[\033[0
 # shorten the path according to given depth
 export PROMPT_DIRTRIM=3
 
+# go get github.com/sivel/powerline-shell-go
+# fonts: https://github.com/powerline/fonts
+# function _update_ps1() {
+#    export PS1="$(powerline-shell-go $? 2> /dev/null)"
+# }
+# export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+#
 ###############################
 ### VIM: default editor
 ###############################
