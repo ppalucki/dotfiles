@@ -34,11 +34,14 @@ export PROMPT_DIRTRIM=3
 
 # go get github.com/sivel/powerline-shell-go
 # fonts: https://github.com/powerline/fonts
-# function _update_ps1() {
-#    export PS1="$(powerline-shell-go $? 2> /dev/null)"
-# }
-# export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-#
+# condtional install powerline-shell-go if installed
+if hash powerline-shell-go 2>/dev/null ; then 
+    function _update_ps1() {
+       export PS1="$(powerline-shell-go $? 2> /dev/null)"
+    }
+    export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+
 ###############################
 ### VIM: default editor
 ###############################
