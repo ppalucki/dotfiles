@@ -24,8 +24,17 @@
 	name = Pawel Palucki
 	email = pawel.palucki@intel.com
 
+[github]
+	user = ppalucki
+
+[gitreview]
+	username = pawel.palucki
+
 [core]
 	excludesfile = ~/dotfiles/.gitignore_global
+
+[push]
+	default = upstream
 
 [alias]
     l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 30 --no-merges
@@ -33,6 +42,7 @@
     st = status
     ci = commit
     d = difftool
+    dd = difftool -t dirdiff -d
     ds = diff --stat
     branches = branch -vv
     branchesall = branch -a -vv
@@ -47,25 +57,36 @@
     mt = mergetool
     # moved to aliases
     # grepall = git rev-list --all | xargs git grep 
-
+    #
+    
 [diff]
     tool = vimdiff 
+    # can be called with -t dirdiff -d
+    # tool = dirdiff 
 	guitool = diffuse 
+
+[difftool "dirdiff"]
+    cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
+    options = --symlinks
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
 
 [merge]
 	defaultToUpstream = true
 	tool = fugitive
     options = --no-edit
 
-[push]
-	default = upstream
-
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
     keepBackup = false
 
-[github]
-	user = ppalucki
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+
 
 ; #[http]
 	; proxy = http://proxy-jf.intel.com:911
@@ -75,14 +96,6 @@
 # [http]
 #     sslVerify = false
 
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[gitreview]
-	username = pawel.palucki
 
 # (deprecated) Its is much better to generate token and create ~/.netrc for github
 # [url "git@github.com:"]

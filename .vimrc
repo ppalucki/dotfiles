@@ -2032,7 +2032,11 @@ nmap <leader>tp <Plug>(fakeclip-screen-p)
 """ -------------------------------------------
 """         DirDiff
 """ -------------------------------------------
-let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp" 
+let g:DirDiffExcludes = ".tags,CVS,*.class,*.exe,.*.swp,.git" 
+
+" \dg \dp \dj \dk 
+" cannot reload config because of this - not useful as much
+" let g:DirDiffEnableMappings = 1
 
 
 """ -------------------------------------------
@@ -2041,6 +2045,17 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
 au BufRead,BufNewFile *.conf set filetype=cfg
 au BufRead,BufNewFile *.ini set filetype=cfg
 au BufRead,BufNewFile .tmux.conf set filetype=conf
+
+
+" systemd  unit types
+au BufRead,BufNewFile *.target set filetype=cfg
+au BufRead,BufNewFile *.service set filetype=cfg
+au BufRead,BufNewFile *.mount set filetype=cfg
+au BufRead,BufNewFile *.socket set filetype=cfg
+
+" know bash scripts (rkt)
+au BufRead,BufNewFile install set filetype=sh
+
 
 
 
