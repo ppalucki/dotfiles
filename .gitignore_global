@@ -8,7 +8,6 @@ doc/tags-ja
 *.pyc
 /.idea
 *.swp
-*.patch
 .dbg_history
 .gdb_history
 Cmakelist
