@@ -324,7 +324,7 @@ hi Visual ctermbg=238
 """ -------------------------------------------
 " turn on status line always
 set laststatus=2
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 " let g:airline#extensions#branch#enabled = 1
 " let g:airline#extensions#syntastic#enabled = 1
 " let g:airline#extensions#tagbar#enabled = 1
@@ -1809,6 +1809,14 @@ function! Mouseon()
     nmap <2-LeftMouse> gd
     " nmap <expr> <2-LeftMouse> (&buftype is# "quickfix" ? "" : "gd")
 endfunction
+
+
+""" -------------------------------------------
+""" gui
+""" -------------------------------------------
+set guioptions-=r
+set guioptions-=L
+set guifont=Inconsolata\ for\ Powerline\ Mod:h14
 
 " autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
