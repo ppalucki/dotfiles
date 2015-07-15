@@ -49,6 +49,7 @@
 " <leader>tt - terminal termina (run tests depracted!)
 " <leader>ta - terminal terminal ALL
 " <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
+" <leader>-X  - execut current line wo tmux
 " 8<c-x> or <leader>x - split vertical + terminal terminal 
 " 9<c-x> or <ledeer>x - split horizontal + terminal terminal 
 " normal [target]x - send current line to target pane
@@ -774,7 +775,7 @@ let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 1
 "let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen = 0
-let NERDTreeIgnore = ['\.pyc$', '\~$']
+let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$']
 
 let NERDTreeMouseMode = 3
 
@@ -1333,7 +1334,7 @@ let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
-	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
+	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
 	\ }
 
 " let g:ctrlp_switch_buffer = 'eT'
@@ -2502,6 +2503,6 @@ set cmdheight=1
 " 
 " http://vim.wikia.com/wiki/VimTip167
 " Using vim as a man-page viewer under Unix
-let $PAGER=''
+" let $PAGER=''
 
 

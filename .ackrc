@@ -2,6 +2,7 @@
 --ignore-dir=build
 --ignore-dir=is:.tags
 --ignore-dir=is:.tox
+--ignore-dir=is:linux-4.1.1
 --ignore-file=is:.tags
 --literal
 --type-set=rst=.rst
