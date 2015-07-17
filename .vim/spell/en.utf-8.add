@@ -350,3 +350,5 @@ bzImage
 symlinks
 systemd
 ld
+veth
+netlink
