@@ -725,10 +725,16 @@ map <leader>/ :nohlsearch<cr>
 "<bar>QuickFixClear<cr>:SignClearAll<cr>
 set gdefault   " Use global search by default
 "
+"
+" search search raw text plain
+" http://vim.wikia.com/wiki/Searching_for_expressions_which_include_slashes
+command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 
 " visual search selected text
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
-vnoremap // y/<C-R>"<CR>"
+" vnoremap // y/<C-R>"<CR>"
+vnoremap // y:Ss <C-R>"<CR>
+
 
 " delete without yank
 " nmap <silent> <leader>d "_d
