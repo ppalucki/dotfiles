@@ -58,6 +58,8 @@
     # moved to aliases
     # grepall = git rev-list --all | xargs git grep 
     #
+    upstream = rev-parse --abbrev-ref --symbolic-full-name @{u}
+    # or for scripting git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)
     
 [diff]
     tool = vimdiff 

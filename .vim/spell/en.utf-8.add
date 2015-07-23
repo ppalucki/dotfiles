@@ -343,7 +343,7 @@ perf
 cgroup
 #hortcommings
 KVM
-nspwan
+#spwan
 lkvm
 kvm
 bzImage
@@ -352,3 +352,4 @@ systemd
 ld
 veth
 netlink
+nspawn
