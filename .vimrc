@@ -2244,6 +2244,7 @@ vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
 nmap <c-x> :py sendlinetmux()<cr>j
+" warning conflicts with vim multicursors - skip
 vmap <c-x> :py sendselectiontmux()<cr>`>j
 nmap <leader>x :py sendlinetmux()<cr>
 vmap <leader>x :py sendselectiontmux()<cr>
