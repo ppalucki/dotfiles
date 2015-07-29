@@ -92,6 +92,9 @@
 [guitool "reset file"]
 	cmd = git checkout $REVISION -- $FILENAME
 
+[guitool "remove file"]
+	cmd = rm $FILENAME
+
 
 ; #[http]
 	; proxy = http://proxy-jf.intel.com:911

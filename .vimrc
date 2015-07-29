@@ -928,6 +928,8 @@ au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
 au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
 au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
 au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
+au FileType c map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
+au FileType c vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "
 "
@@ -1977,6 +1979,7 @@ nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r
 function! CMappings()
     nmap <F9> :up<cr>:QuickRun<cr>
     let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+    " got to definition remapping
     " nmap gd <c-]>
    
     " allow "go to file" to find headr files for projects that have include
