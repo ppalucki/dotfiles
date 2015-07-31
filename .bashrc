@@ -80,3 +80,9 @@ function title {
 # doesn't work with fedorea :(
 # export VIM_PAGER="/bin/sh -c \"unset PAGER;col -b -x -p | vim -R -c 'set ft=man nomod nolist' -c 'map q :q<cr>' -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
 # alias man='PAGER=$VIM_PAGER man'
+
+
+#####################################
+# disable Ctrl-s freeze
+#####################################
+stty -ixon
