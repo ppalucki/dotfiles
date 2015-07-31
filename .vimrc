@@ -647,10 +647,6 @@ function! GoMappings()
     set path=,,$GOPATH/src
     " set path=$GOPATH/src
 
-    """ have to be more intelignejt - looking na all files or just selected on
-    " ignore search in --no-testgo files - if you want all just do H
-    map <buffer> <leader>h "ayiw:Ack! --no-testgo --go "<C-r>a" 
-    vmap <buffer> <leader>h "ay:Ack! --no-testgo --go "<C-r>a" 
 
     " hiper dubugging with go
     map <Leader>ti :py startgdb()<cr>
@@ -914,12 +910,26 @@ set nomousehide
 " let Grep_Shell_Escape_Char = '\'
 "NOT USED
 "
+
+
+
+""" -------------------------------------------
+"""         ack-grep
+""" -------------------------------------------
+
+let g:ack_use_dispatch = 0
+let g:ack_autofold_results = 0
+" let g:ackprg = 'ag --nogroup --nocolor --column'
+" let g:ackprg = 'ag --vimgrep' " to old version I have :P
+" ag wont support things liks --python --cc and my .ackrc
+"
 "map <leader><F6> :Rfgrep<CR> map <leader>h :Rfgrep<cr> map <leader>h :Ack
 "--py Ack bez jumpa
 map <leader>h "ayiw:Ack! "<C-r>a"
 vmap <leader>h "ay:Ack! "<C-r>a"
 map <leader>H "ayiw:Ack! --known-types "<C-r>a"
 vmap <leader>H "ay:Ack! --known-types "<C-r>a"
+
 au FileType python map <buffer> <leader>h "ayiw:Ack! --python "<C-r>a"
 au FileType python vmap <buffer> <leader>h "ay:Ack! --python  "<C-r>a"
 au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
@@ -930,7 +940,18 @@ au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
 au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
 au FileType c map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
 au FileType c vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
-" let g:ackprg = 'ag --nogroup --nocolor --column'
+""" have to be more intelignejt - looking na all files or just selected on
+" ignore search in --no-testgo files - if you want all just do H
+au FileType go map <buffer> <leader>h "ayiw:Ack! --no-testgo --go "<C-r>a" 
+au FileType go vmap <buffer> <leader>h "ay:Ack! --no-testgo --go "<C-r>a" 
+
+" Ack z jumpa
+" map <leader>H yiw:Ack! "<C-r>""
+" vmap <leader>H y:Ack! "<C-r>""
+" au FileType python map <leader>H yiw:Ack --python "<C-r>""
+" au FileType python vmap <leader>H y:Ack --python  "<C-r>""
+" au FileType ruby map <leader>H yiw:Ack --ruby "<C-r>""
+" au FileType ruby vmap <leader>H y:Ack --ruby "<C-r>""
 "
 "
 "
@@ -990,13 +1011,6 @@ vmap <leader>y :s///gc<left><left><left>
 " OR BETTER new way!
 " cgn then . or n
 
-" Ack z jumpa
-" map <leader>H yiw:Ack! "<C-r>""
-" vmap <leader>H y:Ack! "<C-r>""
-" au FileType python map <leader>H yiw:Ack --python "<C-r>""
-" au FileType python vmap <leader>H y:Ack --python  "<C-r>""
-" au FileType ruby map <leader>H yiw:Ack --ruby "<C-r>""
-" au FileType ruby vmap <leader>H y:Ack --ruby "<C-r>""
 
 
 """ ---- saveall shortcut

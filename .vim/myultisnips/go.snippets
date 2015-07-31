@@ -20,19 +20,37 @@ endsnippet
 ###########################
 # error handling
 ##########################
-snippet errf "if err != nil { log.Fatalln('err:', err)}"
+snippet errf "if err != nil { return Errorf() }"
 if err != nil {
-	log.Fatalln("${1:Fatal} error:", err)
+	return fmt.Errorf("${1:`!v tagbar#currenttag('%s','')` error}: %v", err)
 }
-${0}
 endsnippet
 
-snippet errF "if err != nil { log.Fatalf('err: %s, err)}"
+snippet errf, "if err != nil { return nil, Errorf() }"
 if err != nil {
-	log.Fatalf("${1:Fatal} error: %s\n", err)
+	return nil, fmt.Errorf("${1:`!v tagbar#currenttag('%s','')` error}: %v", err)
 }
-${0}
 endsnippet
+
+# snippet errf, "if err != nil { return Errorf(),nil }"
+# if err != nil {
+# 	return fmt.Errorf("${1:error}: %v", err)
+# }
+# endsnippet
+
+# snippet errf "if err != nil { log.Fatalln('err:', err)}"
+# if err != nil {
+# 	log.Fatalln("${1:Fatal} error:", err)
+# }
+# ${0}
+# endsnippet
+#
+# snippet errF "if err != nil { log.Fatalf('err: %s, err)}"
+# if err != nil {
+# 	log.Fatalf("${1:Fatal} error: %s\n", err)
+# }
+# ${0}
+# endsnippet
 
 snippet tf "if err != nil { t.Fatalln('err:', err)}"
 if err != nil {
@@ -160,6 +178,10 @@ snippet pr "println"
 println($0)
 endsnippet
 
+# f verbose
+snippet fv "fmt.Printf( %v )"
+fmt.Printf("${1:${VISUAL}} = %#v\n", $1)
+endsnippet
 
 
 ###########################
