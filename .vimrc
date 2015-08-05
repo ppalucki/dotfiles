@@ -2538,3 +2538,15 @@ set cmdheight=1
 " let $PAGER=''
 
 
+"" =============================================================
+" highlight column textwidht
+"" =============================================================
+" for comments 
+" https://github.com/golang/go/wiki/CodeReviewComments#line-length
+set textwidth=80
+set colorcolumn=+1
+hi ColorColumn ctermbg=232 cterm=bold
+" hi ColorColumn guibg=#2d2d2d ctermbg=246
+" hi ColorColumn ctermbg=235 guibg=#2c2d27
+" hi ColorColumn guibg=#000000 ctermbg=0
+" let &colorcolumn=join(range(1,80),",")
