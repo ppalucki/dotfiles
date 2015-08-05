@@ -31,5 +31,7 @@ set disablesites=mail.google.com, reader.google.com, www.epochconverter.com, tri
 set follow_new_tab=0
 
 " alt-shift-[ ] swith tab (osx shortuct)
-map <M-{> gT
-map <M-}> gt
+" use: https://raw.githubusercontent.com/ppalucki/dotfiles/master/chrome-shortcut-manager.js
+" with chrome extension shortcut-manager
+" map <M-{> gT
+" map <M-}> gt
