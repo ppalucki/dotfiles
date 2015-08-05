@@ -2543,8 +2543,8 @@ set cmdheight=1
 "" =============================================================
 " for comments 
 " https://github.com/golang/go/wiki/CodeReviewComments#line-length
-set textwidth=80
-set colorcolumn=+1
+" set textwidth=80
+" set colorcolumn=+1
 hi ColorColumn ctermbg=232 cterm=bold
 " hi ColorColumn guibg=#2d2d2d ctermbg=246
 " hi ColorColumn ctermbg=235 guibg=#2c2d27
