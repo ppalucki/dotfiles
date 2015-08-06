@@ -49,7 +49,10 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump command-not-found common-aliases debian docker sudo tmux)
+plugins=(git autojump command-not-found common-aliases debian docker sudo tmux themes)
+
+### VI-mode - readline doesn't work
+#(vi-mode colemak) 
 
 # User configuration
 ZSH_TMUX_AUTOSTART=true
