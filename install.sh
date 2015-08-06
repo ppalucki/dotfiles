@@ -10,4 +10,5 @@ ln -sv ~/dotfiles/.bash_aliases ~/.bash_aliases
 ln -sv ~/dotfiles/.ideavimrc ~/.ideavimrc 
 ln -sv ~/dotfiles/.gdb.py ~/.gdb.py
 ln -sv ~/dotfiles/.gdbinit ~/.gdbinit
+ln -sv ~/dotfiles/.zshrc ~/.zshrc
 echo done

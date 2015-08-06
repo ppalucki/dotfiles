@@ -755,7 +755,9 @@ au FileType html set ts=2 sw=2 softtabstop=2 nocindent
 au FileType python set ts=4 sw=4 softtabstop=4
 au FileType mkd set shiftwidth=2
 au FileType yaml set ts=2 sw=2 sts=2
-au FileType cpp set ts=2 sw=2 sts=2
+au FileType cpp set ts=2 sw=2 sts=2 noexpandtab
+au FileType c set ts=2 sw=2 sts=2 noexpandtab
+au FileType go set ts=4 sw=4 sts=4 noexpandtab
 
 """ wyjscie z trybu insert przez wpisanie dwa razy jj
 inoremap jj <ESC>
@@ -2007,8 +2009,6 @@ function! CMappings()
     set path+=3rdparty/libprocess/include
     set path+=3rdparty/libprocess/3rdparty/stout/include
     set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
-
-
 endfunction
 au FileType c call CMappings()
 au FileType cpp call CMappings()
@@ -2465,9 +2465,9 @@ fu! SeeTab()
     redir END
     let g:SeeTabSpecialKey = @a
     let @a = regA
-    silent! hi SpecialKey guifg=black guibg=magenta ctermfg=black ctermbg=magenta
+    silent! hi SpecialKey guifg=black guibg=magenta ctermfg=black ctermbg=red
     set list
-    set listchars=tab:\|\
+    set listchars=tab:▸\  
   else
     let &list = g:SeeTab_list
     let &listchars = &listchars
