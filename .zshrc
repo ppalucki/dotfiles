@@ -69,6 +69,8 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+#
+export EDITOR=vim
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -88,9 +90,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # 
 
-# . /usr/share/autojump/autojump.zsh
-
-# autocompletion by 
+########## ITerm2 autocomplete feature!!! autocompletion by 
 # http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
 _tmux_pane_words() {
   local expl
