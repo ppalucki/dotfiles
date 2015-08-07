@@ -4,6 +4,7 @@
 --ignore-dir=is:.tox
 --ignore-dir=is:linux-4.1.1
 --ignore-file=is:.tags
+--ignore-dir=is:build-rkt-0.7.0+git
 --literal
 --type-set=rst=.rst
 --type-set=proto=.proto
