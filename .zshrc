@@ -49,13 +49,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump command-not-found common-aliases debian docker sudo tmux themes)
+plugins=(git autojump command-not-found common-aliases debian docker tmux)
 
 ### VI-mode - readline doesn't work
 #(vi-mode colemak) 
 
 # User configuration
-ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOSTART=false
 
 
 export PATH="/home/ppalucki/bin:/home/ppalucki/work/go/bin:/home/ppalucki/bin:/home/ppalucki/work/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/ppalucki/bin:/usr/local/go/bin:/home/ppalucki/bin:/usr/local/go/bin"
@@ -92,6 +92,14 @@ export EDITOR=vim
 #
 #
 # 
+export GOPATH=~/work/go
+
+# no share history between shells
+setopt no_share_history
+
+# fix ctrl-u
+# http://stackoverflow.com/questions/3483604/which-shortcut-in-zsh-does-the-same-as-ctrl-u-in-bash
+bindkey \^U backward-kill-line
 
 ########## ITerm2 autocomplete feature!!! autocompletion by 
 # http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
