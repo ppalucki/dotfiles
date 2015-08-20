@@ -927,25 +927,25 @@ let g:ack_autofold_results = 0
 "
 "map <leader><F6> :Rfgrep<CR> map <leader>h :Rfgrep<cr> map <leader>h :Ack
 "--py Ack bez jumpa
-map <leader>h "ayiw:Ack! "<C-r>a"
-vmap <leader>h "ay:Ack! "<C-r>a"
-map <leader>H "ayiw:Ack! --known-types "<C-r>a"
-vmap <leader>H "ay:Ack! --known-types "<C-r>a"
+map <leader>h "ayiw:Ack! -- "<C-r>a"
+vmap <leader>h "ay:Ack! -- "<C-r>a"
+map <leader>H "ayiw:Ack! --known-types -- "<C-r>a"
+vmap <leader>H "ay:Ack! --known-types -- "<C-r>a"
 
-au FileType python map <buffer> <leader>h "ayiw:Ack! --python "<C-r>a"
-au FileType python vmap <buffer> <leader>h "ay:Ack! --python  "<C-r>a"
-au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby "<C-r>a"
-au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby "<C-r>a"
-au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst "<C-r>a"
-au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst "<C-r>a"
-au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
-au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
-au FileType c map <buffer> <leader>h "ayiw:Ack! --cpp --cc "<C-r>a"
-au FileType c vmap <buffer> <leader>h "ay:Ack! --cpp --cc "<C-r>a"
+au FileType python map <buffer> <leader>h "ayiw:Ack! --python -- "<C-r>a"
+au FileType python vmap <buffer> <leader>h "ay:Ack! --python -- "<C-r>a"
+au FileType ruby map <buffer> <leader>h "ayiw:Ack! --ruby -- "<C-r>a"
+au FileType ruby vmap <buffer> <leader>h "ay:Ack! --ruby -- "<C-r>a"
+au FileType rst map <buffer> <leader>h "ayiw:Ack! --rst -- "<C-r>a"
+au FileType rst vmap <buffer> <leader>h "ay:Ack! --rst -- "<C-r>a"
+au FileType cpp map <buffer> <leader>h "ayiw:Ack! --cpp --cc -- "<C-r>a"
+au FileType cpp vmap <buffer> <leader>h "ay:Ack! --cpp --cc -- "<C-r>a"
+au FileType c map <buffer> <leader>h "ayiw:Ack! --cpp --cc -- "<C-r>a"
+au FileType c vmap <buffer> <leader>h "ay:Ack! --cpp --cc -- "<C-r>a"
 """ have to be more intelignejt - looking na all files or just selected on
 " ignore search in --no-testgo files - if you want all just do H
-au FileType go map <buffer> <leader>h "ayiw:Ack! --no-testgo --go "<C-r>a" 
-au FileType go vmap <buffer> <leader>h "ay:Ack! --no-testgo --go "<C-r>a" 
+au FileType go map <buffer> <leader>h "ayiw:Ack! --no-testgo --go -- "<C-r>a" 
+au FileType go vmap <buffer> <leader>h "ay:Ack! --no-testgo --go -- "<C-r>a" 
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""
