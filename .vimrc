@@ -729,7 +729,7 @@ command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 " visual search selected text
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " vnoremap // y/<C-R>"<CR>"
-vnoremap // y:Ss <C-R>"<CR>
+vnoremap // y:SS <C-R>"<CR>
 
 
 " delete without yank

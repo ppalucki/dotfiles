@@ -91,9 +91,19 @@
 # git gui helpers
 [guitool "reset file"]
 	cmd = git checkout $REVISION -- $FILENAME
-
 [guitool "remove file"]
 	cmd = rm $FILENAME
+[guitool "Rebase onto..."]
+    cmd = git rebase $REVISION
+    revprompt = yes
+[guitool "Rebase/Continue"]
+    cmd = git rebase --continue
+[guitool "Rebase/Skip"]
+    cmd = git rebase --skip
+[guitool "Rebase/Abort"]
+    cmd = git rebase --abort
+[guitool "Pull with Rebase"]
+    cmd = git pull --rebase
 
 
 ; #[http]
