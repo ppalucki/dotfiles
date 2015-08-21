@@ -123,3 +123,21 @@ zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
 export GOPATH=~/work/go
+
+##############################################
+#
+### git helpers
+#
+##############################################
+
+alias gitgrepall='git rev-list --all | xargs git grep'
+
+### git (doing reviews)
+
+# find common ancestor and then do stat or dirf or lg
+alias reviewstat="git d --stat \`git merge-base master HEAD\`"
+
+alias reviewdiff="git d \`git merge-base master HEAD\` $@"
+
+alias reviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
+

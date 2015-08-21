@@ -45,7 +45,6 @@ alias aptsearch='apt-cache search'
 alias cds='cd /opt/stack'
 alias cdds='cd /opt/stack/devstack'
 alias openrc='source /opt/stack/devstack/openrc admin'
-alias gitgrepall='git rev-list --all | xargs git grep'
 
 
 ##############################################
@@ -70,15 +69,4 @@ if [ $? == 0 ] ;then
 fi
 }
 
-##############################################
-#
-# git (doing reviews)
-#
-##############################################
-# find common ancestor and then do stat or dirf or lg
-alias reviewstat="git d --stat \`git merge-base master HEAD\`"
-
-alias reviewdiff="git d \`git merge-base master HEAD\` $@"
-
-alias reviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
 
