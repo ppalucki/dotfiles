@@ -245,7 +245,7 @@ Plug 'bilalq/lite-dfm'
 Plug 'christoomey/vim-tmux-navigator'
 
 " fork with 'escaping $ fix'
-Plug 'benmills/vimux'
+" Plug 'benmills/vimux'
 
 Plug 'ekalinin/Dockerfile.vim'
 " Plug 'altercation/vim-colors-solarized'
@@ -2089,8 +2089,8 @@ au BufRead,BufNewFile install set filetype=sh
 """             vimux
 """ -------------------------------------------
 " better vertical
-let g:VimuxOrientation = "h"
-let g:VimuxHeight = "40"
+" let g:VimuxOrientation = "h"
+" let g:VimuxHeight = "40"
 
 
 """ -------------------------------------------
