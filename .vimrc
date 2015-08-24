@@ -45,21 +45,21 @@
 " ------------ tmux -------------------
 " <leader>r or tr - terminal rerun  (was rename)
 " <leader>te - terminal exit
-" <leader>tl (tt) - send line
-" <leader>tt - terminal termina (run tests depracted!)
-" <leader>ta - terminal terminal ALL
-" <c-s-x>  - (execute!) terminal terminal ALL and go to next line 
+" <leader>tl - terminal line (also tt)
+" <leader>tt - terminal terminal (aka send line)
+" <leader>ta - terminal terminal ALL (send to all terminals)
 " <leader>-X  - execut current line wo tmux
+" <c-x> - terminal line + next line
+" <c-s-x>  - (execute!) terminal terminal ALL and go to next line  (all terminals)
+" NUMBER<c-x> - seletected by ctrl-a-q terminal - send line
 " 8<c-x> or <leader>x - split vertical + terminal terminal 
 " 9<c-x> or <ledeer>x - split horizontal + terminal terminal 
-" normal [target]x - send current line to target pane
-" visual [target]x - send visual selection to target pane
 " <leader>ts - send selection + enter
 " <leader>tS - send selection (wo enter) - was CPASTE (depracted) - TODO
 " <leader>tw - send word (+enter)
 " <leader>tW - send word (wo enter)
 " <leader>tc - send Ctrl-C
-" <leader>tu - termian tests - run tests in termianl
+" <leader>tu - terminal tests - run tests in termianl
 "
 " ------- golang ---------:
 " <leader>a - autoimports all
@@ -2247,9 +2247,6 @@ map <Leader>tc :py sendtmux('c-c')<cr>
 
 """ terminal ctrl-z
 map <Leader>tz :py sendtmux('c-z')<cr>
-
-""" terminal all (send everything)
-"nmap <leader>ta ggvG$<leader>ts
 
 """ terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _v$<leader>ts
