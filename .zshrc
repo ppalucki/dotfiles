@@ -51,6 +51,8 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git autojump command-not-found common-aliases debian docker tmux)
 
+
+
 ### VI-mode - readline doesn't work
 #(vi-mode colemak) 
 
@@ -141,3 +143,6 @@ alias reviewdiff="git d \`git merge-base master HEAD\` $@"
 
 alias reviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
 
+### history search
+bindkey '\ep' history-beginning-search-backward
+bindkey '\en' history-beginning-search-forward
