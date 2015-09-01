@@ -49,8 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump command-not-found common-aliases debian docker tmux)
-
+plugins=(git autojump command-not-found common-aliases docker tmux history)
 
 
 ### VI-mode - readline doesn't work
@@ -98,6 +97,7 @@ export GOPATH=~/work/go
 
 # no share history between shells
 setopt no_share_history
+setopt hist_ignore_all_dups
 
 # fix ctrl-u
 # http://stackoverflow.com/questions/3483604/which-shortcut-in-zsh-does-the-same-as-ctrl-u-in-bash
@@ -146,3 +146,22 @@ alias reviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
 ### history search
 bindkey '\ep' history-beginning-search-backward
 bindkey '\en' history-beginning-search-forward
+
+
+#############################################
+### ALIASES cd
+#############################################
+alias cdw='cd ~/work'
+alias cdgo='export GOPATH=~/work/go/;cd $GOPATH'
+
+#############################################
+### ubuntu apt-get
+#############################################
+alias aptinst='sudo apt-get install'
+alias aptsearch='apt-cache search'
+
+
+############################################
+### oh-my-zsh unaliasses
+###########################################
+unalias rm

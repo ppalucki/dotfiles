@@ -601,7 +601,20 @@ function! GoMappings()
     
     " make supertab works better
     " let g:SuperTabDefaultCompletionType = "context"
-    let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+	""" just works for go
+	" let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+	""" context version (works for comments/files etc...)
+	let g:SuperTabDefaultCompletionType = "context"
+	let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+	" tstsss
+    let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+	let g:SuperTabDefaultCompletionType = 'context'
+	autocmd FileType *
+	  \ if &omnifunc != '' |
+	  \   call SuperTabChain(&omnifunc, "<c-p>") |
+	  \ endif
+
+
 
     nnoremap <buffer> <Leader>A :exe 'GoImport ' . expand('<cword>')<CR>
 
@@ -784,7 +797,7 @@ let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$']
 let NERDTreeMouseMode = 3
 
 """ -------- Ctags
-map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* . <cr>
+map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' . <cr>
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
@@ -1419,11 +1432,13 @@ nnoremap ` '
 "
 """"""""""" supertab
 " let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabDefaultCompletionType = "<c-n>"
+" let g:SuperTabDefaultCompletionType = "<c-p>"
 let g:SuperTabLongestEnhanced = 0
 let g:SuperTabLongestHighlight = 1
-" let g:SuperTabDefaultCompletionType = "context"
-" let g:SuperTabContextDefaultCompletionType = "<c-n>"
+
+" context with default - to most generic one (previos keyword)
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 " ----- previe/scratch when omnicomplete is used
 " automaticly hide
