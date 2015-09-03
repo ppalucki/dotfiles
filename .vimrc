@@ -584,16 +584,16 @@ function! GoMappings()
 
     """ running in terminal
 	""" selected file
-    map <leader>tu :up<bar>:py sendtmux("go test -v")<cr>
+    map <buffer> <leader>tu :up<bar>:py sendtmux("go test -v")<cr>
 	""" all tests
-    map <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
+    map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
 	"" run
-    map <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
+    map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
 
-    nmap K :Godoc<cr>
+    nmap <buffer> K :Godoc<cr>
 
     " compiler go
 
@@ -632,38 +632,36 @@ function! GoMappings()
     " based on:
     " /home/dev/dotfiles/.vim/bundle/vim-go/ftplugin/go/commands.vim:60
     " go def vertical
-    nmap <c-w>d <Plug>(go-def-vertical)
-    nmap gD <Plug>(go-def-vertical)
+    nmap <buffer> <c-w>d <Plug>(go-def-vertical)
+    nmap <buffer> gD <Plug>(go-def-vertical)
     " go def horizontal
-    nmap <leader>gd <Plug>(go-def-split)
+    nmap <buffer> <leader>gd <Plug>(go-def-split)
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
     " nmap <silent> gD :GoDefVsplit<cr>
-    nmap <leader>K <Plug>(go-doc-browser)
+    nmap <buffer> <leader>K <Plug>(go-doc-browser)
 
     " calles/usage
-    nmap <leader>z :GoImplements<cr>
-    nmap <leader>Z :GoCallees<cr>
+    nmap <buffer> <leader>z :GoImplements<cr>
+    nmap <buffer> <leader>Z :GoCallees<cr>
 
     " syntastic active mode - now I can disable Syntastic with ToggleMode
     " takes to much time during drv/test cycle
     " let g:syntastic_mode_map = { 'mode': 'active' }
 
-    nmap <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
-    nmap <leader>F "myiwh/<c-r>m<cr>:GoDescribe<cr>
+    nmap <buffer> <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
+    nmap <buffer> <leader>F "myiwh/<c-r>m<cr>:GoDescribe<cr>
 
 
 
     nmap <buffer> <leader>H :GoReferrers<cr>
 
-
     set path=,,$GOPATH/src
     " set path=$GOPATH/src
 
-
     " hiper dubugging with go
-    map <Leader>ti :py startgdb()<cr>
-    map <Leader>tk :py gdbrun()<cr>
+    map <buffer> <Leader>ti :py startgdb()<cr>
+    map <buffer> <Leader>tk :py gdbrun()<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -1445,6 +1443,7 @@ let g:SuperTabContextDefaultCompletionType = "<c-p>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 " disable complettly
 set completeopt-=preview
+set completeopt+=menu,longest
 
 " Settings for jedi-vim
 " jedi-vim
@@ -1460,7 +1459,6 @@ let g:jedi#popup_select_first = 0
 let g:jedi#usages_command = "<leader>z"
 let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#show_call_signatures = 0
-autocmd FileType python setlocal completeopt-=preview
 
 " Open last/alternate buffer
 noremap <Leader><Leader> <C-^>
