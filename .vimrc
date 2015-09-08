@@ -593,7 +593,7 @@ function! GoMappings()
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
 
-    nmap <buffer> K :Godoc<cr>
+    nmap <buffer> K :GoDoc<cr>
 
     " compiler go
 
@@ -795,11 +795,11 @@ let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$']
 let NERDTreeMouseMode = 3
 
 """ -------- Ctags
-map <F8> :!ctags -f .tags --verbose=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' . <cr>
+map <F8> :!ctags -f .tags --verbose=no --totals=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' . <cr>
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
-au FileType cpp map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
+" au FileType cpp map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
 au FileType go map <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
@@ -1443,7 +1443,7 @@ let g:SuperTabContextDefaultCompletionType = "<c-p>"
 let g:SuperTabClosePreviewOnPopupClose = 1
 " disable complettly
 set completeopt-=preview
-set completeopt+=menu,longest
+set completeopt+=menu
 
 " Settings for jedi-vim
 " jedi-vim
@@ -2006,8 +2006,10 @@ nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r
 """         c / C language
 """ -------------------------------------------
 function! CMappings()
-    nmap <F9> :up<cr>:QuickRun<cr>
-    let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+    nmap <buffer> <F9> :up<cr>:QuickRun<cr>
+		nmap <buffer> <F10> :up<bar>Make<cr>
+		imap <buffer> <F10> <ESC><F10>
+    " let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
     " got to definition remapping
     " nmap gd <c-]>
    
@@ -2018,10 +2020,14 @@ function! CMappings()
     " kompiujemy przez Make -C ../build/src/ -j8 mesos-master
     set path+=include
     set path+=src
-    set path+=3rdparty/libprocess/include
-    set path+=3rdparty/libprocess/include
-    set path+=3rdparty/libprocess/3rdparty/stout/include
-    set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
+    " set path+=3rdparty/libprocess/include
+    " set path+=3rdparty/libprocess/include
+    " set path+=3rdparty/libprocess/3rdparty/stout/include
+    " set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
+		" regernate tags with (cd /usr/include/; sudo ctags -R .)
+		""" affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
+		" set tags+=/usr/include/tags
+		" set tags+=/usr/src/tags
 endfunction
 au FileType c call CMappings()
 au FileType cpp call CMappings()
@@ -2560,3 +2566,11 @@ hi ColorColumn ctermbg=232 cterm=bold
 " hi ColorColumn ctermbg=235 guibg=#2c2d27
 " hi ColorColumn guibg=#000000 ctermbg=0
 " let &colorcolumn=join(range(1,80),",")
+"
+"
+"" =============================================================
+" multicursor
+"" =============================================================
+let g:multi_cursor_exit_from_visual_mode=0
+let g:multi_cursor_exit_from_insert_mode=0
+
