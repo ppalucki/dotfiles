@@ -47,6 +47,7 @@
     branches = branch -vv
     branchesall = branch -a -vv
     co = checkout
+    cob = checkout -b
     ciam = commit -a -m
     ciav = commit -a --verbose
     cim = commit -m
