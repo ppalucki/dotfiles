@@ -2140,30 +2140,36 @@ if has("python")
 py << EOP
 import vim,os,subprocess,string,time
 
-def sendlinetmux():
-    """ send current line to selected by count tmux pane
-    8 - tmux split -h 
-    9 - tmux split
-    """
-    target = int(vim.eval("v:count"))
+def get_target():
+    return int(vim.eval("v:count"))
 
+def handle_splits(target):
+    """ with specific target 8 or 9, first create an split """
     ### on 8 repeat do -h split
     if target == 8:
         # do split !
         subprocess.call(('tmux', 'split', '-h', '-d'))
-        target = None
+        return None
 
     ### on 9 repeat do split
     if target == 9:
         # do split !
         subprocess.call(('tmux', 'split', '-d'))
-        target = None
+        return None
+    
+    return target
 
+def sendlinetmux():
+    """ send current line to selected by count tmux pane
+    8 - tmux split -h 
+    9 - tmux split
+    """
+    target = handle_splits(get_target())
     sendtmux(vim.current.line, target)
 
 def sendselectiontmux():
     """ get selection visual mode and send it line by line to tmux """
-    target = int(vim.eval("v:count"))
+    target = handle_splits(get_target())
     for line in vim.current.range:
         sendtmux(line, target)
 
@@ -2278,7 +2284,7 @@ vmap <leader>tt <leader>ts
 """ terminal-terminal and down
 nmap <c-x> :py sendlinetmux()<cr>j
 " warning conflicts with vim multicursors - skip
-vmap <c-x> :py sendselectiontmux()<cr>`>j
+vmap <c-x> :py sendselectiontmux()<cr>
 nmap <leader>x :py sendlinetmux()<cr>
 vmap <leader>x :py sendselectiontmux()<cr>
 
