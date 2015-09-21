@@ -241,8 +241,9 @@ Plug 'bilalq/lite-dfm'
 "Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Avoid a name conflict with L9
 "Plug 'user/L9', {'name': 'newL9'}
+" // disabled because is often a problem with vim pane zommed!
+" Plug 'christoomey/vim-tmux-navigator'
 "
-Plug 'christoomey/vim-tmux-navigator'
 
 " fork with 'escaping $ fix'
 " Plug 'benmills/vimux'
@@ -703,9 +704,12 @@ nnoremap <leader>n :set invnumber<cr>
 " wrap toggle
 nnoremap <leader>N :set invwrap<cr>
 
-" 
-nnoremap <leader>p :set paste!<cr>
-
+""" -------------------------------------------
+" put line after Ctrl-Shift-P
+" http://stackoverflow.com/questions/1346737/how-to-paste-in-a-new-line-with-vim
+""" -------------------------------------------
+" nnoremap <leader>p :set paste!<cr>
+nnoremap <leader>p :put<cr>
 
 " quickfixclear
 " nmap <leader>qc :QuickFixClear<cr>
@@ -1073,6 +1077,9 @@ map <leader>bo :BufOnly<cr>
 map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
 map <leader>bn :bn<cr>
+
+""" yaml
+au BufRead,BufNewFile user_data set filetype=yaml
 
 """ json - vim-json used for json
 " autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -2349,10 +2356,6 @@ nmap } :bn<cr>
 nmap { :bp<cr>
 
 
-""" -------------------------------------------
-" put line after Ctrl-Shift-P
-""" -------------------------------------------
-" nmap <C-S-P> :put<cr>
 
 """ -------------------------------------------
 """ Etherpad !!!
