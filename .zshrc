@@ -164,4 +164,6 @@ alias aptsearch='apt-cache search'
 ############################################
 ### oh-my-zsh unaliasses
 ###########################################
+# no interactive
 unalias rm
+unalias cp
