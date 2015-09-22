@@ -64,6 +64,12 @@ export PATH="/home/ppalucki/bin:/home/ppalucki/work/go/bin:/home/ppalucki/bin:/h
 
 source $ZSH/oh-my-zsh.sh
 
+
+################# fix git and hostname
+# based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
+PROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[grey]%}%m %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
+ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
