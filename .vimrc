@@ -141,6 +141,7 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'ervandew/supertab'
 " colorschemes 
 Plug 'flazz/vim-colorschemes'
+
 " --------------- PYTHON-related
 Plug 'klen/python-mode', { 'for':  'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for':  'python' }
@@ -148,7 +149,7 @@ Plug 'alfredodeza/coveragepy.vim', { 'for':  'python' }
 Plug 'nvie/vim-flake8', { 'for':  'python' }
 Plug 'tlvince/vim-compiler-python', { 'for':  'python' }
 " PyTest
-Plug 'alfredodeza/pytest.vim'
+Plug 'alfredodeza/pytest.vim', { 'for':  'python' }
 " jedi-py dla vim
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 
@@ -192,7 +193,7 @@ Plug 'tpope/vim-surround'
 " better paste from screen (with leader+p)
 " Plug 'vim-scripts/screenpaste.vim'
 "
-" ------------- GoLang development
+" ------------- golang development
 " Plug 'fatih/vim-go'
 " with GoImport fix (python based solution not accepted by upstream)
 Plug 'ppalucki/vim-go', { 'for':  'go', 'branch': 'fatih'}
