@@ -59,7 +59,7 @@ plugins=(git autojump command-not-found common-aliases docker tmux history)
 ZSH_TMUX_AUTOSTART=false
 
 
-export PATH="/home/ppalucki/bin:/home/ppalucki/work/go/bin:/home/ppalucki/bin:/home/ppalucki/work/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/ppalucki/bin:/usr/local/go/bin:/home/ppalucki/bin:/usr/local/go/bin"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin:$HOME/work/go/bin:$HOME/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
