@@ -45,6 +45,7 @@
     d = difftool
     dd = difftool -t dirdiff -d
     ds = diff --stat
+    b = branch -vv
     branches = branch -vv
     branchesall = branch -a -vv
     co = checkout
