@@ -197,6 +197,7 @@ Plug 'tpope/vim-surround'
 " with GoImport fix (python based solution not accepted by upstream)
 Plug 'ppalucki/vim-go', { 'for':  'go', 'branch': 'fatih'}
 Plug 'rhysd/vim-go-impl', { 'for':  'go' }
+Plug 'garyburd/go-explorer'
 
 " zamiennik powerline
 Plug 'bling/vim-airline'
