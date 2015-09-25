@@ -78,10 +78,17 @@
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 
+
 [merge]
 	defaultToUpstream = true
+    ### if you want "base" view then use vimdiff
 	tool = fugitive
     options = --no-edit
+    # ???????? http://stackoverflow.com/questions/11133290/git-merging-using-meld
+    conflictstyle = diff3
+
+[mergetool]
+	keepBackup = false
 
 [mergetool "fugitive"]
 	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
@@ -90,6 +97,13 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
+[mergetool "vimdiff"]
+	keepBackup = false
+
+# http://stackoverflow.com/questions/11133290/git-merging-using-meld
+[mergetool "mymeld"]
+    cmd = meld --auto-merge $LOCAL $BASE $REMOTE --diff $LOCAL $BASE $REMOTE --output $MERGED --diff $BASE $LOCAL --diff $BASE $REMOTE 
 
 # git gui helpers
 [guitool "reset file"]
