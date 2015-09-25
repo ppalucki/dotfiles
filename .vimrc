@@ -128,7 +128,7 @@ Plug 'kien/ctrlp.vim'
 " Plug 'fisadev/vim-ctrlp-cmdpalette'
 "" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
 " mappend to F6
-Plug 'jasoncodes/ctrlp-modified.vim' 
+" Plug 'jasoncodes/ctrlp-modified.vim' 
 "" GIT related: branch, diff, log
 " Plug 'kaneshin/ctrlp-git'
 "" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
@@ -154,24 +154,27 @@ Plug 'alfredodeza/pytest.vim', { 'for':  'python' }
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 
 " SQL execute
-Plug 'ivalkeen/vim-simpledb'
+" Plug 'ivalkeen/vim-simpledb'
 " tagbar
 Plug 'majutsushi/tagbar'
 " nerdtree
 Plug 'scrooloose/nerdtree'
 
-" ack-grep
+""" ----- ack-grep
 Plug 'mileszs/ack.vim'
-" syntastic - multilanguage linter
+
+""" ----- syntastic - multilanguage linter
 Plug 'scrooloose/syntastic'
-" graphical gundo
+
+""" ----- graphical gundo
 " Plug 'sjl/gundo.vim'
-"
-"" lepsze title dla taby
-Plug 'mkitt/tabline.vim'
+
+""" ----- lepsze title dla taby
+" Plug 'mkitt/tabline.vim'
 
 "" In other words, you can search your selection text in |Visual-mode|.
 " Plug 'thinca/vim-visualstar'
+" !replaced with * or //
 "
 " dependensceies ???
 Plug 'xolox/vim-misc'
@@ -196,9 +199,9 @@ Plug 'tpope/vim-surround'
 " ------------- golang development
 " Plug 'fatih/vim-go'
 " with GoImport fix (python based solution not accepted by upstream)
-Plug 'ppalucki/vim-go', { 'for':  'go', 'branch': 'fatih'}
+Plug 'fatih/vim-go', { 'for':  'go' }
 Plug 'rhysd/vim-go-impl', { 'for':  'go' }
-Plug 'garyburd/go-explorer'
+Plug 'garyburd/go-explorer', { 'for':  'go' }
 
 " zamiennik powerline
 Plug 'bling/vim-airline'
@@ -277,13 +280,13 @@ Plug 'vim-scripts/a.vim'
 
 Plug 'terryma/vim-multiple-cursors'
 
-"
-Plug 'terryma/vim-smooth-scroll'
+""" ----- smoth scrolling 
+" Plug 'terryma/vim-smooth-scroll'
 
-
+""" ----- patch review
 Plug 'junkblocker/patchreview-vim'
 
-" set filetype based on shebang
+""" ----- set filetype based on shebang
 Plug 'vitalk/vim-shebang'
 
 call plug#end()
