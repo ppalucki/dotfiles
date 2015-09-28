@@ -1370,7 +1370,7 @@ map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
 map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
 map <F5> :CtrlPTag<CR>
-map <F6> :CtrlPModified<CR>
+map <F6> :CtrlPLine<CR>
 map <leader><F6> :CtrlPBranch<CR>
 map <F7> :CtrlPBuffer<CR>
 " nmap <leader><F4> :CtrlPLine<cr>
@@ -2302,6 +2302,7 @@ vmap <leader>x :py sendselectiontmux()<cr>
 
 " execute current line (wo tmux)
 nmap <Leader>X :.w !bash<cr>
+vmap <Leader>X :w !bash<cr>
 
 """ terminal-all (selection)
 vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
