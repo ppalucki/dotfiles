@@ -82,7 +82,8 @@
 [merge]
 	defaultToUpstream = true
     ### if you want "base" view then use vimdiff
-	tool = fugitive
+	tool = vimdiff
+	# tool = fugitive
     options = --no-edit
     # ???????? http://stackoverflow.com/questions/11133290/git-merging-using-meld
     conflictstyle = diff3

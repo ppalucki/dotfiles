@@ -20,6 +20,10 @@ endsnippet
 ###########################
 # error handling
 ##########################
+snippet ferr "if err != nil { return Errorf() }"
+fmt.Errorf("${1:`!v tagbar#currenttag('%s','')` error}: %v", err)
+endsnippet
+
 snippet errf "if err != nil { return Errorf() }"
 if err != nil {
 	return fmt.Errorf("${1:`!v tagbar#currenttag('%s','')` error}: %v", err)
