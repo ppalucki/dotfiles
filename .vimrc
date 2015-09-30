@@ -713,8 +713,11 @@ nnoremap <leader>N :set invwrap<cr>
 " put line after Ctrl-Shift-P
 " http://stackoverflow.com/questions/1346737/how-to-paste-in-a-new-line-with-vim
 """ -------------------------------------------
-" nnoremap <leader>p :set paste!<cr>
 nnoremap <leader>p :put<cr>
+ 
+
+""" ---------------------- paster for pasting from other windows !!!!!!!!!!!!!!
+nnoremap <leader>P :set paste!<cr>
 
 " quickfixclear
 " nmap <leader>qc :QuickFixClear<cr>
@@ -941,8 +944,11 @@ set nomousehide
 
 let g:ack_use_dispatch = 0
 let g:ack_autofold_results = 0
+""" siler searcher
 " let g:ackprg = 'ag --nogroup --nocolor --column'
-" let g:ackprg = 'ag --vimgrep' " to old version I have :P
+"" requires new version
+" let g:ackprg = 'ag --vimgrep'
+"" new version supports this 0.31 but not .ackrc
 " ag wont support things liks --python --cc and my .ackrc
 "
 "map <leader><F6> :Rfgrep<CR> map <leader>h :Rfgrep<cr> map <leader>h :Ack
@@ -974,6 +980,17 @@ au FileType go vmap <buffer> <leader>h "ay:Ack! --no-testgo --go -- "<C-r>a"
 " au FileType python vmap <leader>H y:Ack --python  "<C-r>""
 " au FileType ruby map <leader>H yiw:Ack --ruby "<C-r>""
 " au FileType ruby vmap <leader>H y:Ack --ruby "<C-r>""
+"
+
+"grouping and folds - check the vim ~/.vim/ftplugin/qf_fold.vim
+"a
+"
+" zle bo sie samo unfolduje!!!
+" let g:ack_autofold_results = 1
+highlight Folded ctermfg=green 
+
+
+"
 "
 "
 "
@@ -2589,3 +2606,20 @@ hi ColorColumn ctermbg=232 cterm=bold
 let g:multi_cursor_exit_from_visual_mode=0
 let g:multi_cursor_exit_from_insert_mode=0
 
+
+"" -------------------------- quickfix window size
+" http://vim.wikia.com/wiki/Automatically_fitting_a_quickfix_window_height
+au FileType qf call AdjustWindowHeight(3, 30)
+function! AdjustWindowHeight(minheight, maxheight)
+    let l = 1
+    let n_lines = 0
+    let w_width = winwidth(0)
+    while l <= line('$')
+        " number to float for division
+        let l_len = strlen(getline(l)) + 0.0
+        let line_width = l_len/w_width
+        let n_lines += float2nr(ceil(line_width))
+        let l += 1
+    endw
+    exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
