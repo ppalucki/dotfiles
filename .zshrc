@@ -153,6 +153,9 @@ alias reviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
 bindkey '\ep' history-beginning-search-backward
 bindkey '\en' history-beginning-search-forward
 
+# git recover stash '
+alias gitrecover='git l $( git fsck --no-reflog | awk "/dangling commit/ {print \$3}" )'
+
 
 #############################################
 ### ALIASES cd

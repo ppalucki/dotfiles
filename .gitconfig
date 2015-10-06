@@ -38,8 +38,8 @@
 	default = upstream
 
 [alias]
-    l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 20 --no-merges
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 20 --date-order 
+    l = log --graph --oneline --decorate -n 10 
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit -n 10 --date-order 
     st = status
     ci = commit
     d = difftool
@@ -63,6 +63,8 @@
     #
     upstream = rev-parse --abbrev-ref --symbolic-full-name @{u}
     # or for scripting git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)
+    # http://stackoverflow.com/questions/89332/how-to-recover-a-dropped-stash-in-git
+    # recover = log --graph --oneline --decorate $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )
     
 [diff]
     tool = vimdiff 
@@ -82,8 +84,8 @@
 [merge]
 	defaultToUpstream = true
     ### if you want "base" view then use vimdiff
-	tool = vimdiff
-	# tool = fugitive
+	# tool = vimdiff
+	tool = fugitive
     options = --no-edit
     # ???????? http://stackoverflow.com/questions/11133290/git-merging-using-meld
     conflictstyle = diff3
