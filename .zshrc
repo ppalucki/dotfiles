@@ -176,3 +176,10 @@ alias aptsearch='apt-cache search'
 # no interactive
 unalias rm
 unalias cp
+
+
+###########################################
+### watch helper
+##########################################
+# this one helps to use existings aliases with watch command!
+alias watch='watch '
