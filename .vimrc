@@ -248,6 +248,7 @@ Plug 'bilalq/lite-dfm'
 "Plug 'user/L9', {'name': 'newL9'}
 " // disabled because is often a problem with vim pane zommed!
 " Plug 'christoomey/vim-tmux-navigator'
+Plug 'wellle/tmux-complete.vim'
 "
 
 " fork with 'escaping $ fix'
@@ -613,7 +614,7 @@ function! GoMappings()
 	let g:SuperTabDefaultCompletionType = "context"
 	let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
 	" tstsss
-    let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+  let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
 	let g:SuperTabDefaultCompletionType = 'context'
 	autocmd FileType *
 	  \ if &omnifunc != '' |
@@ -676,7 +677,23 @@ au FileType go call GoMappings()
 """         Shell
 """ -------------------------------------------
 function! ShMappings()
-    let g:SuperTabDefaultCompletionType = "<c-x><c-n>"
+  " works best
+  " let g:SuperTabDefaultCompletionType = "<c-x><c-n>"
+
+  " works with tmux-complete
+  let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+
+  """"""""""""""" TRASH
+  " let g:SuperTabDefaultCompletionType = "context"
+  " let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
+    " make supertab works better
+	""" just works for go
+	" let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+	""" context version (works for comments/files etc...)
+	" let g:SuperTabDefaultCompletionType = "context"
+	" let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+	" " tstsss
+
 endfunction
 au FileType sh call ShMappings()
 
@@ -2626,3 +2643,17 @@ function! AdjustWindowHeight(minheight, maxheight)
     endw
     exe max([min([n_lines, a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
+
+
+"" =============================================================
+" tmux-complete
+"" =============================================================
+" Use the #trigger option to tune the way you interact with tmux-complete by putting one of these lines into your .vimrc:
+" By default, tmux-complete sets Vim's completefunc, that can be invoked with <C-X><C-U>.
+let g:tmuxcomplete#trigger = 'completefunc'
+
+" Alternatively, you can use Vim's omnifunc, that can be invoked with <C-X><C-O>. This setting also integrates with YouCompleteMe so you can see Tmux completions when hitting <C-Space>.
+" let g:tmuxcomplete#trigger = 'omnifunc'
+" " If you're using the neocomplete integration, you probably don't need the additional trigger.
+" let g:tmuxcomplete#trigger = ''
+" " The trigger function itself is named tmuxcomplete#complete (in case you want to call it manually).
