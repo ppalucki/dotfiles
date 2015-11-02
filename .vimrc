@@ -152,6 +152,7 @@ Plug 'tlvince/vim-compiler-python', { 'for':  'python' }
 Plug 'alfredodeza/pytest.vim', { 'for':  'python' }
 " jedi-py dla vim
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
+Plug 'Rykka/doctest.vim', { 'for': 'python' }
 
 " SQL execute
 " Plug 'ivalkeen/vim-simpledb'
