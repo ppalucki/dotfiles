@@ -138,3 +138,7 @@
 # (deprecated) Its is much better to generate token and create ~/.netrc for github
 # [url "git@github.com:"]
 #     insteadOf = https://github.com/
+# example ~/.netrc
+# machine github.com
+# login ppalucki
+# password GENERATED_TOKEN_FROM_GITHUB
