@@ -1,7 +1,9 @@
 set history save
 
 # golang support
-source /usr/local/go/src/runtime/runtime-gdb.py
+# source /usr/local/go/src/runtime/runtime-gdb.py
+add-auto-load-safe-path /usr/share/go/src/runtime/runtime-gdb.py
+source /usr/share/go/src/runtime/runtime-gdb.py
 
 # full python tracebacks
 set python print-stack full
