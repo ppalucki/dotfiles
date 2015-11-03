@@ -59,8 +59,12 @@ plugins=(git autojump command-not-found common-aliases docker tmux history)
 ZSH_TMUX_AUTOSTART=false
 
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin:$HOME/work/go/bin:$HOME/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
+#
+############################################
+### PATH ~/bin
+###########################################
+export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -99,7 +103,6 @@ export EDITOR=vim
 #
 #
 # 
-export GOPATH=~/work/go
 
 # no share history between shells
 setopt no_share_history
@@ -161,7 +164,6 @@ alias gitrecover='git l $( git fsck --no-reflog | awk "/dangling commit/ {print 
 ### ALIASES cd
 #############################################
 alias cdw='cd ~/work'
-alias cdgo='export GOPATH=~/work/go/;cd $GOPATH'
 
 #############################################
 ### ubuntu apt-get
@@ -183,3 +185,9 @@ unalias cp
 ##########################################
 # this one helps to use existings aliases with watch command!
 alias watch='watch '
+
+###########################################
+### golang
+###########################################
+export GOPATH=~/work/go
+export PATH="/usr/local/go/bin:$HOME/work/go/bin:$PATH"

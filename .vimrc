@@ -249,8 +249,9 @@ Plug 'bilalq/lite-dfm'
 "Plug 'user/L9', {'name': 'newL9'}
 " // disabled because is often a problem with vim pane zommed!
 " Plug 'christoomey/vim-tmux-navigator'
-Plug 'wellle/tmux-complete.vim'
 "
+"""" SOME ERRORS like tmux cannot find
+" Plug 'wellle/tmux-complete.vim', { 'for':  'sh' }
 
 " fork with 'escaping $ fix'
 " Plug 'benmills/vimux'
@@ -679,10 +680,10 @@ au FileType go call GoMappings()
 """ -------------------------------------------
 function! ShMappings()
   " works best
-  " let g:SuperTabDefaultCompletionType = "<c-x><c-n>"
+  let g:SuperTabDefaultCompletionType = "<c-x><c-n>"
 
   " works with tmux-complete
-  let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
+  " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 
   """"""""""""""" TRASH
   " let g:SuperTabDefaultCompletionType = "context"
@@ -798,7 +799,7 @@ au FileType ruby set ts=2 sw=2 sts=2
 au FileType html set ts=2 sw=2 sts=2 nocindent
 au FileType python set ts=4 sw=4 sts=4
 au FileType mkd set shiftwidth=2
-au FileType yaml set ts=2 sw=2 sts=2
+au FileType yaml set ts=2 sw=2 sts=2 noautoindent nosmarttab
 au FileType cpp set ts=2 sw=2 sts=2 noexpandtab
 au FileType c set ts=2 sw=2 sts=2 noexpandtab
 au FileType go set ts=4 sw=4 sts=4 noexpandtab
@@ -2651,10 +2652,10 @@ endfunction
 "" =============================================================
 " Use the #trigger option to tune the way you interact with tmux-complete by putting one of these lines into your .vimrc:
 " By default, tmux-complete sets Vim's completefunc, that can be invoked with <C-X><C-U>.
-let g:tmuxcomplete#trigger = 'completefunc'
+" let g:tmuxcomplete#trigger = 'completefunc'
 
 " Alternatively, you can use Vim's omnifunc, that can be invoked with <C-X><C-O>. This setting also integrates with YouCompleteMe so you can see Tmux completions when hitting <C-Space>.
-" let g:tmuxcomplete#trigger = 'omnifunc'
+let g:tmuxcomplete#trigger = 'omnifunc'
 " " If you're using the neocomplete integration, you probably don't need the additional trigger.
 " let g:tmuxcomplete#trigger = ''
 " " The trigger function itself is named tmuxcomplete#complete (in case you want to call it manually).
