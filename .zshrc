@@ -191,3 +191,4 @@ alias watch='watch '
 ###########################################
 export GOPATH=~/work/go
 export PATH="/usr/local/go/bin:$HOME/work/go/bin:$PATH"
+alias cdgo='cd $(GOPATH)'

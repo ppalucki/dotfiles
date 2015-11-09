@@ -794,7 +794,7 @@ set tabstop=4
 set shiftwidth=4 
 set softtabstop=4
 
-au FileType sh set ts=2 sw=2 sts=2 smartindent
+au FileType sh set ts=2 sw=2 sts=2 smartindent expandtab
 au FileType ruby set ts=2 sw=2 sts=2
 au FileType html set ts=2 sw=2 sts=2 nocindent
 au FileType python set ts=4 sw=4 sts=4
