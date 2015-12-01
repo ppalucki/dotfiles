@@ -1120,7 +1120,6 @@ map <leader>bo :BufOnly<cr>
 " buffer next/previous
 map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
-map <leader>bn :bn<cr>
 
 """ yaml
 au BufRead,BufNewFile user_data set filetype=yaml

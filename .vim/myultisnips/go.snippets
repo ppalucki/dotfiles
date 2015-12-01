@@ -36,6 +36,7 @@ if err != nil {
 }
 endsnippet
 
+
 # snippet errf, "if err != nil { return Errorf(),nil }"
 # if err != nil {
 # 	return fmt.Errorf("${1:error}: %v", err)
@@ -67,6 +68,23 @@ snippet errp "if err != nil {panic(err)}"
 if err != nil {
 	panic(err)
 }
+endsnippet
+
+###########################
+# ok function and ok assertion
+# (readability counts)
+##########################
+
+snippet okfun "ok function"
+func ok(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+endsnippet
+
+snippet ok "ok function"
+ok(err)
 endsnippet
 
 ###########################
