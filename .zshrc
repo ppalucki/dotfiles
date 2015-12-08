@@ -197,5 +197,5 @@ alias cdgo='cd $(GOPATH)'
 ##########################################
 #### python
 ##########################################
-source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+[ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
