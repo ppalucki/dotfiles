@@ -743,7 +743,13 @@ nnoremap <leader>P :set paste!<cr>
 
 """ -------- Standard options
 """ wrap lines
-set showbreak=↪
+" set showbreak=↪
+
+""" --------------------------------------------
+" invisiable characters like tabs and etcjj
+" http://vim.wikia.com/wiki/See_the_tabs_in_your_file
+""" --------------------------------------------
+" set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
 
 " Display incomplete commands below the status line
 set showcmd
@@ -1121,7 +1127,6 @@ map <leader>bo :BufOnly<cr>
 " buffer next/previous
 map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
-map <leader>bn :bn<cr>
 
 """ yaml
 au BufRead,BufNewFile user_data set filetype=yaml
@@ -2517,11 +2522,6 @@ hi DiffChange     term=NONE ctermfg=6
 hi DiffText       term=NONE cterm=NONE ctermfg=3 ctermbg=234
 
 
-""" --------------------------------------------
-" invisiable characters like tabs and etcjj
-" http://vim.wikia.com/wiki/See_the_tabs_in_your_file
-""" --------------------------------------------
-set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
 
 " very bright and visible
 " SeeTab: toggles between showing tabs and using standard listchars

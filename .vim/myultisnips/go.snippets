@@ -36,6 +36,7 @@ if err != nil {
 }
 endsnippet
 
+
 # snippet errf, "if err != nil { return Errorf(),nil }"
 # if err != nil {
 # 	return fmt.Errorf("${1:error}: %v", err)
@@ -67,6 +68,58 @@ snippet errp "if err != nil {panic(err)}"
 if err != nil {
 	panic(err)
 }
+endsnippet
+
+###########################
+# ok function and ok assertion
+# (readability counts)
+##########################
+
+snippet okfun "ok function with panic"
+func ok(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+endsnippet
+
+snippet okfun2 "ok function with with location"
+func ok(err error) {
+	if err != nil {
+		pc, file, line, ok := runtime.Caller(1)
+		fn := runtime.FuncForPC(pc)
+		var name string
+		if fn != nil {
+			name = fn.Name()
+		} else {
+			name = file
+		}
+		if ok {
+			log.Fatalf("ERROR [%s:%d] %s\n", name, line, err)
+		}
+		panic(err)
+	}
+}
+endsnippet
+
+snippet ok "ok function"
+ok(err)
+endsnippet
+
+##############################
+# v, err :=
+###############################
+
+snippet verr "v, err := code" w
+${2:v}, err := ${1}
+if err != nil {
+	panic(err)
+}
+${0}
+endsnippet
+
+snippet ve "v, err := code" w
+${1:v}, err := ${0}
 endsnippet
 
 ###########################
@@ -359,17 +412,6 @@ snippet st "string" w
 string
 endsnippet
 
-##############################
-# v, err :=
-###############################
-
-snippet verr "v, err := code" w
-${2:v}, err := ${1}
-if err != nil {
-	panic(err)
-}
-${0}
-endsnippet
 
 ##############################
 # big types
