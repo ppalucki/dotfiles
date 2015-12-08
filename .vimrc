@@ -836,7 +836,8 @@ au FileType python map <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --language
 " au FileType cpp map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
 au FileType ruby map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <F8> :!regenerate-haskell-tag.sh<cr>
-au FileType go map <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
+" au FileType go map <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
+au FileType go map <F8> :!gotags -R -f .tags \.<cr>
 " au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
 "
 """ tags file
