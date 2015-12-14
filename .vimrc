@@ -292,6 +292,8 @@ Plug 'junkblocker/patchreview-vim'
 """ ----- set filetype based on shebang
 Plug 'vitalk/vim-shebang'
 
+""" better verbose
+Plug 'tpope/vim-scriptease'
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -2037,6 +2039,8 @@ let g:go_fmt_autosave = 1
 let g:go_play_open_browser = 0
 " I have syntastic for that
 let g:go_fmt_fail_silently = 1
+" disaable because of duplicates
+let g:go_autodetect_gopath = 0
 
 """ -------------------------------------------
 """    sqlutils i sqluformatter
