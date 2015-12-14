@@ -1132,6 +1132,7 @@ map <leader>bp :bp<cr>
 
 """ yaml
 au BufRead,BufNewFile user_data set filetype=yaml
+au BufRead,BufNewFile Supfile set filetype=yaml
 
 """ json - vim-json used for json
 " autocmd BufNewFile,BufRead *.json set ft=javascript
@@ -2033,14 +2034,18 @@ let g:go_highlight_methods = 0
 let g:go_highlight_operators = 0
 
 let g:go_fmt_command = "goimports"
+" let g:go_fmt_autosave = 1
 let g:go_fmt_autosave = 1
+
 
 " Disable opening browser after posting to your snippet to 
 let g:go_play_open_browser = 0
-" I have syntastic for that
+" I have syntastic for that (please disable for scp)
 let g:go_fmt_fail_silently = 1
 " disaable because of duplicates
 let g:go_autodetect_gopath = 0
+
+" autocmd VimEnter * if @% ~= ^scp | let g:go_fmt_fail_silently = 0 | endif
 
 """ -------------------------------------------
 """    sqlutils i sqluformatter
@@ -2124,12 +2129,14 @@ au FileType sql call SQLMappings()
 """ -------------------------------------------
 """         FAKE CLIP (???)
 """ -------------------------------------------
+""" fakeclip also provides a pseudo register to access a "paste buffer" if one of
+""" the following applications is available:
 """ yank
-nmap <leader>ty <Plug>(fakeclip-screen-Y):silent !tmux paste-buffer -t !<cr>
-vmap <leader>ty <Plug>(fakeclip-screen-y)
-
-""" paste from
-nmap <leader>tp <Plug>(fakeclip-screen-p)
+" nmap <leader>ty <Plug>(fakeclip-tmux-Y):silent !tmux paste-buffer -t !<cr>
+" vmap <leader>ty <Plug>(fakeclip-tmux-y)
+"
+" """ paste from
+" nmap <leader>tp <Plug>(fakeclip-tmux-p)
 
 "let g:fakeclip_no_default_key_mappings = 'tmux'
 
