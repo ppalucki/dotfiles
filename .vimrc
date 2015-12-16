@@ -1552,7 +1552,7 @@ let g:pythontagimport_full  = 0
 " yank current buffer filename to register
 " http://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
 " nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
-nmap cp :let @+ = expand("%:p")<cr>
+nmap cp :let @+ = expand("%:p")<bar>echo @+<cr>
 " nmap cp :let @" = expand("%:p")<cr>
 
 " xml syntax fix
@@ -2667,3 +2667,9 @@ let g:tmuxcomplete#trigger = 'omnifunc'
 " " If you're using the neocomplete integration, you probably don't need the additional trigger.
 " let g:tmuxcomplete#trigger = ''
 " " The trigger function itself is named tmuxcomplete#complete (in case you want to call it manually).
+"
+"
+""" ====================================
+" vertical goto file
+""" ===================================
+map <leader>gf :vertical wincmd f<CR>
