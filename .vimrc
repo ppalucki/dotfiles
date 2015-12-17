@@ -294,6 +294,13 @@ Plug 'vitalk/vim-shebang'
 
 """ better verbose
 Plug 'tpope/vim-scriptease'
+
+
+""" c/c++ complete
+" requires: aptinst libclang1
+" .clang_complete file in project
+Plug 'Rip-Rip/clang_complete'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -1848,7 +1855,8 @@ set diffopt=filler,vertical
 " L dla flake8
 " c-l dla [pymode]
 " l dla SyntasticCheck
-nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
+" nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
+nmap <leader>l :up<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 let g:syntastic_quiet_messages = {'level': 'warrnings'}
 
@@ -1868,6 +1876,9 @@ let g:syntastic_always_populate_loc_list=1
 let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E"
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
+
+let g:syntastic_cpp_compiler = 'clang++-3.5'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 
 
 """ -------------------------------------------
@@ -2086,6 +2097,7 @@ function! CMappings()
     " kompiujemy przez Make -C ../build/src/ -j8 mesos-master
     set path+=include
     set path+=src
+    set path+=/usr/include/c++/4.9
     " set path+=3rdparty/libprocess/include
     " set path+=3rdparty/libprocess/include
     " set path+=3rdparty/libprocess/3rdparty/stout/include
@@ -2094,9 +2106,11 @@ function! CMappings()
 		""" affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
 		" set tags+=/usr/include/tags
 		" set tags+=/usr/src/tags
+    map <buffer> <leader>tp :up<bar>:py sendtmux("clang++-3.5 -pthread -std=c++11 <c-r>% && ./a.out")<cr>
 endfunction
 au FileType c call CMappings()
 au FileType cpp call CMappings()
+au BufRead * if search('\M-*- C++ -*-', 'n', 1) | setlocal ft=cpp | endif
 let g:clang_close_preview = 1
 
 """ -------------------------------------------
@@ -2107,6 +2121,12 @@ let g:quickrun_config = {}
 let g:quickrun_config.c = {
       \ 'type': 'clang',
       \ 'cmdopt': '`python-config --cflags --ldflags`',
+      \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
+      \ }
+
+let g:quickrun_config.cpp = {
+      \ 'type': 'clang++-3.5',
+      \ 'cmdopt': '-pthread -std=c++11',
       \ 'exec': ['%c %s %o -o %s:p:r', '%s:p:r %a'],
       \ }
 
