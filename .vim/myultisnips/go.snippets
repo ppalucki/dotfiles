@@ -70,6 +70,14 @@ if err != nil {
 }
 endsnippet
 
+snippet errw "if err != nil {log.Print('warning')}"
+if err != nil {
+	log.Printf("WARN: err: %s\n", err)
+}
+endsnippet
+
+
+
 ###########################
 # ok function and ok assertion
 # (readability counts)
@@ -305,7 +313,7 @@ import (
 endsnippet
 
 # interface
-snippet int "interface"
+snippet int "interface" i
 interface
 endsnippet
 
