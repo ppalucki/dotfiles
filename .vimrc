@@ -205,7 +205,8 @@ Plug 'rhysd/vim-go-impl', { 'for':  'go' }
 Plug 'garyburd/go-explorer', { 'for':  'go' }
 
 " zamiennik powerline
-Plug 'bling/vim-airline'
+" Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
 
 " not required bundled with vim-go ??
 " Plug 'nsf/gocode', {'rtp': 'vim/'}
@@ -300,6 +301,10 @@ Plug 'tpope/vim-scriptease'
 " requires: aptinst libclang1
 " .clang_complete file in project
 Plug 'Rip-Rip/clang_complete'
+
+
+" vim-bracketed-paste enables transparent pasting into vim. (i.e. no more :set paste!)
+" Plug 'ConradIrwin/vim-bracketed-paste'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -590,14 +595,14 @@ function! GoMappings()
 	" nmap <buffer> <leader>r <f9>
 	nmap <buffer> <leader>R :GoRename<cr>
 
-
-    """ running & building
+    """ running 
 	" nmap <buffer> <F9> :up\|!go run %<cr> 
 	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
 	imap <buffer> <leader><F9> :GoRun<cr>
-    
-    """ testing 
-	nmap <buffer> <F10> :up<bar>GoBuild<cr>
+    """ building  (GoBuild won't produce binary)
+	" nmap <buffer> <F10> :up<bar>GoBuild<cr>
+	nmap <buffer> <F10> :up<bar>make<cr>
+    """ testing  (GoBuild won't produce binary)
 	nmap <buffer> <leader><F10> :up<bar>GoTest<cr>
 
     """ running in terminal
@@ -680,6 +685,16 @@ function! GoMappings()
     " hiper dubugging with go
     map <buffer> <Leader>ti :py startgdb()<cr>
     map <buffer> <Leader>tk :py gdbrun()<cr>
+
+
+	" go cOntinue (without loc)
+	nmap go :py debug('continue')<cr>
+	" go next
+	nmap gn :py debug('next')<cr>
+	" go step
+	nmap gs :py debug('step')<cr>
+	" go location
+	nmap gl :py debug('ls')<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -776,6 +791,7 @@ set hlsearch
 " highlight search reset
 map <leader>/ :nohlsearch<cr>
 "<bar>QuickFixClear<cr>:SignClearAll<cr>
+"When on, the ":substitute" flag 'g' is default on.  
 set gdefault   " Use global search by default
 "
 "
@@ -1789,9 +1805,7 @@ def loc():
         else:
             print 'nothing found'
 
-def debug_loc(cmd=None, lookup=True):
-    """ send a command to terminal and then try to locate source file """
-    
+def debug(cmd, lookup=True):
     if cmd is not None:
         if cmd=='jump':
             cmd = 'jump %s'%vim.eval("line('.')")
@@ -1799,12 +1813,14 @@ def debug_loc(cmd=None, lookup=True):
         # send command to tmux
         sendtmux(cmd, lookup=lookup)
 
+def debug_loc(cmd=None, lookup=True):
+    """ send a command to terminal and then try to locate source file """
+    debug(cmd, lookup)
     loc()
 
-
 EOF
-
 endif
+
 " go cOntinue
 nmap go :py debug_loc('continue')<cr>
 " go next
@@ -1815,14 +1831,14 @@ nmap gs :py debug_loc('step')<cr>
 nmap ge :py debug_loc('finish')<cr>
 " go run
 nmap gr :py debug_loc('run')<cr>
-" go location
-nmap gl :py loc()<cr>
 " go up stack up 
 nmap gu :py debug_loc('up', lookup=False)<cr> 
 " go bottom aka down stack - down 
 nmap gb :py debug_loc('down', lookup=False)<cr>
 " go "end function" (until) (gi was reserverd for go last insert position)
 nmap gj :py debug_loc('jump')<cr>
+" go location
+nmap gl :py loc()<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
 nmap gp yiw:py sendtmux("print <c-r>"")<cr>
 vmap gp y:py sendtmux("print <c-r>"")<cr>
