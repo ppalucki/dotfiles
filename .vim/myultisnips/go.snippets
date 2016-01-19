@@ -320,11 +320,15 @@ snippet int "interface" i
 interface
 endsnippet
 
-snippet interface "interface {}"
+snippet interface "interface {}" b
 interface{
 	$1
 }
 $0
+endsnippet
+
+snippet interface "interface {}" i
+interface{}{$1}$0
 endsnippet
 
 snippet str "struct"
@@ -364,7 +368,7 @@ endsnippet
 # slices/channels/literals
 ##########################
 
-snippet ch "channel" i
+snippet ch "channel" w
 chan ${0:struct{}}
 endsnippet
 
@@ -423,9 +427,19 @@ snippet st "string" w
 string
 endsnippet
 
+###############################
+# testing & bench
+################################
+
+# bench function
+snippet bench "func BenchmarkXYZ(t *testing.T) { ... }"
+func Benchmark${1:Function}(t *testing.B) {
+	${0:${VISUAL}}
+}
+endsnippet
 
 ##############################
-# big types
+# bootstarps
 ###############################
 
 snippet boot "bootstrap code" w
@@ -445,9 +459,20 @@ package ${1:main}
 
 import "testing"
 
-func TestFunction(t *testing.T) {
+func Test${2:Function}(t *testing.T) {
 	${0}
 }
+endsnippet
+
+snippet bootbench "bootstrap bench" b
+package ${1:main}
+
+import "testing"
+
+func Benchmark${2:Function}(t *testing.B) {
+	${0}
+}
+
 endsnippet
 
 snippet bootconv "bootstrap convey testing" w

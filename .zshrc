@@ -189,9 +189,25 @@ alias watch='watch '
 ###########################################
 ### golang
 ###########################################
-export GOPATH=~/work/go
-export PATH="/usr/local/go/bin:$HOME/work/go/bin:$PATH"
-alias cdgo='cd $(GOPATH)'
+if [ -f ~/bin/setgo ]; then
+    # according setgo
+    # 1.5
+    source setgo
+elif [ -f ~/bin/setgo14.sh ]; then
+    # according setgo14
+    # 1.4
+    source setgo14
+else
+    # default /usr/local/go
+    export GOPATH="~/work/gopath"
+    export GOROOT="/usr/local/go"
+    export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+fi
+
+alias cdgo='cd $GOPATH'
+
+## static building
+gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 
 ##########################################

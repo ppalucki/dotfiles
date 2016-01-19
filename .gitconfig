@@ -51,6 +51,7 @@
     co = checkout
     cob = checkout -b
     ciam = commit -a -m
+    ciamwip = commit -a -m WIP
     ciav = commit -a --verbose
     cim = commit -m
     civ = commit --verbose
