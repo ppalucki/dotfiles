@@ -207,7 +207,7 @@ fi
 alias cdgo='cd $GOPATH'
 
 ## static building
-gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
+alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 
 ##########################################
