@@ -35,3 +35,8 @@ set follow_new_tab=0
 " with chrome extension shortcut-manager
 " map <M-{> gT
 " map <M-}> gt
+" or 
+" https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck
+" and then
+" alt+shift+[ -> previous tab
+" alt+shitt+] -> next tab
