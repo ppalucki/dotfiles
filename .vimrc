@@ -598,12 +598,13 @@ function! GoMappings()
     """ running 
 	" nmap <buffer> <F9> :up\|!go run %<cr> 
 	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
-	imap <buffer> <leader><F9> :GoRun<cr>
+	nmap <buffer> <leader><F9> :GoRun<cr>
     """ building  (GoBuild won't produce binary)
 	nmap <buffer> <F10> :up<bar>GoBuild<cr>
-	" nmap <buffer> <F10> :up<bar>make<cr>
+	nmap <buffer> <leader><F10> :up<bar>make<cr>
     """ testing  (GoBuild won't produce binary)
-	nmap <buffer> <leader><F10> :up<bar>GoTest<cr>
+	nmap <buffer> <F11> :up<bar>GoTestFunc<cr>
+	nmap <buffer> <leader><F11> :up<bar>GoTest<cr>
 
     """ running in terminal
 	""" selected file

@@ -145,11 +145,11 @@ alias gitgrepall='git rev-list --all | xargs git grep'
 ### git (doing reviews)
 
 # find common ancestor and then do stat or dirf or lg
-alias reviewstat="git d --stat \`git merge-base master HEAD\`"
+alias gitreviewstat="git d --stat \`git merge-base master HEAD\`"
 
-alias reviewdiff="git d \`git merge-base master HEAD\` $@"
+alias gitreviewdiff="git d \`git merge-base master HEAD\` $@"
 
-alias reviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
+alias gitreviewlg="git lg \`git merge-base master HEAD\`..HEAD -- $@"
 
 ### history search
 bindkey '\ep' history-beginning-search-backward
@@ -188,14 +188,14 @@ alias watch='watch '
 ###########################################
 ### golang
 ###########################################
-if [ -f ~/bin/setgo ]; then
+if [ -f ~/bin/setgo5 ]; then
     # according setgo
     # 1.5
-    source setgo
-elif [ -f ~/bin/setgo14.sh ]; then
+    source setgo5
+elif [ -f ~/bin/setgo4.sh ]; then
     # according setgo14
     # 1.4
-    source setgo14
+    source setgo4
 else
     # MacOSX on brew
     export GOPATH=~/work/gopath
@@ -206,7 +206,7 @@ fi
 alias cdgo='cd $GOPATH'
 
 ## static building
-gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
+alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 
 ##########################################
