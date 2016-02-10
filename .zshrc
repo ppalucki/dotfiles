@@ -133,7 +133,6 @@ zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' completer _tmux_pane_wo
 zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
-export GOPATH=~/work/go
 
 ##############################################
 #
@@ -198,9 +197,9 @@ elif [ -f ~/bin/setgo14.sh ]; then
     # 1.4
     source setgo14
 else
-    # default /usr/local/go
-    export GOPATH="~/work/gopath"
-    export GOROOT="/usr/local/go"
+    # MacOSX on brew
+    export GOPATH=~/work/gopath
+    # export GOROOT="/usr/local/go"
     export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 fi
 
