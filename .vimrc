@@ -300,7 +300,7 @@ Plug 'tpope/vim-scriptease'
 """ c/c++ complete
 " requires: aptinst libclang1
 " .clang_complete file in project
-Plug 'Rip-Rip/clang_complete'
+" Plug 'Rip-Rip/clang_complete'
 
 
 " vim-bracketed-paste enables transparent pasting into vim. (i.e. no more :set paste!)
@@ -817,7 +817,7 @@ nmap <C-l> <C-W>l
 nmap <C-h> <C-W>h
 
 
-""" wciecia
+""" wciecia/tab
 set autoindent
 "set smartindent
 set smarttab
@@ -833,7 +833,7 @@ au FileType python set ts=4 sw=4 sts=4
 au FileType mkd set shiftwidth=2
 au FileType yaml set ts=2 sw=2 sts=2 noautoindent nosmarttab
 au FileType cpp set ts=2 sw=2 sts=2 noexpandtab
-au FileType c set ts=2 sw=2 sts=2 noexpandtab
+au FileType c set ts=4 sw=4 sts=4 noexpandtab
 au FileType go set ts=4 sw=4 sts=4 noexpandtab
 
 """ wyjscie z trybu insert przez wpisanie dwa razy jj
@@ -860,16 +860,20 @@ let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$']
 
 let NERDTreeMouseMode = 3
 
-""" -------- Ctags
+
+""" -------------------------------------------
+"""         ctags/gotags
+""" -------------------------------------------
+" global
 map <F8> :!ctags -f .tags --verbose=no --totals=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' . <cr>
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
-" au FileType python map <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
-au FileType python map-local <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
-" au FileType cpp map <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
-au FileType ruby map-local  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
-au FileType haskell map-local <F8> :!regenerate-haskell-tag.sh<cr>
-" au FileType go map <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
-au FileType go map-local <F8> :!gotags -R -f .tags \.<cr>
+" au FileType python map <buffer> <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
+au FileType python map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
+" au FileType cpp map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
+au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
+au FileType haskell map <buffer> <F8> :!regenerate-haskell-tag.sh<cr>
+" au FileType go map <buffer> <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
+au FileType go map <buffer> <F8> :!gotags -R -f .tags \.<cr>
 " au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
 "
 """ tags file
@@ -999,7 +1003,7 @@ set nomousehide
 
 let g:ack_use_dispatch = 0
 let g:ack_autofold_results = 0
-""" siler searcher
+""" silver searcher (ag)
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "" requires new version
 " let g:ackprg = 'ag --vimgrep'
@@ -1437,7 +1441,10 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
 " 0 not working
 let g:UltiSnipsEnableSnipMate = ""
 
-""" ----- ctrlp
+
+""" -------------------------------------------
+"""        ctrl-p
+""" -------------------------------------------
 map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
 map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>

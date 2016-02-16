@@ -490,3 +490,31 @@ func TestFunction(t *testing.T) {
 	})
 }
 endsnippet
+
+
+##############################
+# sleeping concurrency
+##############################
+snippet sleep "time.Sleep(0 * time.Second)"
+time.Sleep(${1:1} * time.Second)
+${0}
+endsnippet
+
+snippet wg "var wg sync.WaitGroup"
+var wg sync.WaitGroup
+endsnippet
+
+snippet wgadd "wg.Add(1)"
+wg.Add(${1:1})
+${0}
+endsnippet
+
+snippet wgdone "wg.Done()"
+wg.Done()
+endsnippet
+
+snippet wgwait "wg.Wait()"
+wg.Wait()
+endsnippet
+
+
