@@ -163,6 +163,7 @@ alias gitrecover='git l $( git fsck --no-reflog | awk "/dangling commit/ {print 
 ### ALIASES cd
 #############################################
 alias cdw='cd ~/work'
+alias psa='ps auxf | grep -v ]$'
 
 #############################################
 ### ubuntu apt-get
