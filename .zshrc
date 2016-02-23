@@ -209,6 +209,16 @@ alias cdgo='cd $GOPATH'
 ## static building
 alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
+## testy - create directory & file and edit
+function testy(){
+    mkdir ~/work/testy/$1
+    cd ~/work/testy/$1
+    touch $1.go
+    vim $1.go
+}
+
+
+
 
 ##########################################
 #### python
