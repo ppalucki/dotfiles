@@ -133,7 +133,6 @@ zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' completer _tmux_pane_wo
 zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 
-export GOPATH=~/work/go
 
 ##############################################
 #
@@ -209,11 +208,49 @@ source setgosrc
 #     export GOROOT="/usr/local/go"
 #     export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 # fi
+# if [ -f ~/bin/setgo5 ]; then
+#     # according setgo
+#     # 1.5
+#     source setgo5
+# elif [ -f ~/bin/setgo4.sh ]; then
+#     # according setgo14
+#     # 1.4
+#     source setgo4
+# else
+#     # default /usr/local/go
+#     export GOPATH="~/work/gopath"
+#     export GOROOT="/usr/local/go"
+#     export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+# fi
+# if [ -f ~/bin/setgo5 ]; then
+#     # according setgo
+#     # 1.5
+#     source setgo5
+# elif [ -f ~/bin/setgo4.sh ]; then
+#     # according setgo14
+#     # 1.4
+#     source setgo4
+# else
+#     # MacOSX on brew
+#     export GOPATH=~/work/gopath
+#     # export GOROOT="/usr/local/go"
+#     export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+# fi
 
 alias cdgo='cd $GOPATH'
 
 ## static building
 alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
+
+## testy - create directory & file and edit
+function testy(){
+    mkdir ~/work/testy/$1
+    cd ~/work/testy/$1
+    touch $1.go
+    vim $1.go
+}
+
+
 
 
 ##########################################
