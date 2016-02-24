@@ -381,7 +381,13 @@ set hidden
 if has("mac")
     set clipboard=unnamed
 elseif has("unix")
-    set clipboard=unnamedplus
+    " set clipboard=unnamedplus -- to much problems working offline without
+    " working X server
+    " set clipboard=unnamed
+    " according:
+    " ahttp://stackoverflow.com/questions/10718573/vim-x-flag-as-vimrc-entry
+    " works like vim -X (don't try to connect to X server)
+    set clipboard=exclude:.*
 elseif has("win32")
   " do stuff under windows "
   " ???
