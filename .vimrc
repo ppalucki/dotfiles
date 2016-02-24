@@ -1006,7 +1006,8 @@ let g:ack_autofold_results = 0
 """ silver searcher (ag)
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "" requires new version
-" let g:ackprg = 'ag --vimgrep'
+"sudo apt-get install silversearcher-ag
+let g:ackprg = 'ag --vimgrep'
 "" new version supports this 0.31 but not .ackrc
 " ag wont support things liks --python --cc and my .ackrc
 "
@@ -1029,8 +1030,10 @@ au FileType c map <buffer> <leader>h "ayiw:Ack! --cpp --cc -- "<C-r>a"
 au FileType c vmap <buffer> <leader>h "ay:Ack! --cpp --cc -- "<C-r>a"
 """ have to be more intelignejt - looking na all files or just selected on
 " ignore search in --no-testgo files - if you want all just do H
-au FileType go map <buffer> <leader>h "ayiw:Ack! --no-testgo --go -- "<C-r>a" 
-au FileType go vmap <buffer> <leader>h "ay:Ack! --no-testgo --go -- "<C-r>a" 
+" au FileType go map <buffer> <leader>h "ayiw:Ack! --no-testgo --go -- "<C-r>a" 
+" au FileType go vmap <buffer> <leader>h "ay:Ack! --no-testgo --go -- "<C-r>a" 
+au FileType go map <buffer> <leader>h "ayiw:Ack! --ignore='*_test.go' --go -- "<C-r>a" 
+au FileType go vmap <buffer> <leader>h "ay:Ack! --ignore='*_test.go'--go -- "<C-r>a" 
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""

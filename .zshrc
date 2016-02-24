@@ -187,23 +187,28 @@ unalias cp
 # this one helps to use existings aliases with watch command!
 alias watch='watch '
 
+
 ###########################################
 ### golang
 ###########################################
-if [ -f ~/bin/setgo5 ]; then
-    # according setgo
-    # 1.5
-    source setgo5
-elif [ -f ~/bin/setgo4.sh ]; then
-    # according setgo14
-    # 1.4
-    source setgo4
-else
-    # default /usr/local/go
-    export GOPATH="~/work/gopath"
-    export GOROOT="/usr/local/go"
-    export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
-fi
+##### gvm
+source ~/.gvm/scripts/gvm
+source setgosrc
+
+# if [ -f ~/bin/setgosrc ]; then
+#     # according setgo wg. src /home/ppalucki/src/go
+#     # 1.5
+#     source setgosrc
+# elif [ -f ~/bin/setgo4 ]; then
+#     # according setgo14
+#     # 1.4
+#     source setgo4
+# else
+#     # default /usr/local/go
+#     export GOPATH="~/work/gopath"
+#     export GOROOT="/usr/local/go"
+#     export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+# fi
 
 alias cdgo='cd $GOPATH'
 
@@ -222,3 +227,4 @@ PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5L
 PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
+

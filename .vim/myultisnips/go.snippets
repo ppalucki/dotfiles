@@ -86,15 +86,15 @@ endsnippet
 # (readability counts)
 ##########################
 
-snippet okfun "ok function with panic"
-func ok(err error) {
+snippet chefun "ok function with panic"
+func check(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
 endsnippet
 
-snippet okfun2 "ok function with with location"
+snippet chefun2 "ok function with with location"
 func ok(err error) {
 	if err != nil {
 		pc, file, line, ok := runtime.Caller(1)
@@ -113,8 +113,8 @@ func ok(err error) {
 }
 endsnippet
 
-snippet ok "ok function"
-ok(err)
+snippet che "check function"
+check(err)
 endsnippet
 
 ##############################
@@ -500,6 +500,19 @@ time.Sleep(${1:1} * time.Second)
 ${0}
 endsnippet
 
+snippet tick "for range Tcik{}"
+for range time.Tick(${1:1} * time.Second){
+	${0}
+}
+endsnippet
+
+snippet rand "rand.Intn" w
+rand.Intn(${1:100})
+endsnippet
+
+##############################
+# concurrency
+##############################
 snippet wg "var wg sync.WaitGroup"
 var wg sync.WaitGroup
 endsnippet
