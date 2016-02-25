@@ -192,7 +192,7 @@ alias watch='watch '
 ###########################################
 ##### gvm
 source ~/.gvm/scripts/gvm
-source setgosrc
+[ -f ~/bin/setgosrc ] && source setgosrc
 
 # if [ -f ~/bin/setgosrc ]; then
 #     # according setgo wg. src /home/ppalucki/src/go
