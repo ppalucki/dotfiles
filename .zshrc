@@ -112,6 +112,16 @@ setopt hist_ignore_all_dups
 # http://stackoverflow.com/questions/3483604/which-shortcut-in-zsh-does-the-same-as-ctrl-u-in-bash
 bindkey \^U backward-kill-line
 
+######################################################################
+###
+### tmux
+###
+######################################################################
+# detach other clients
+alias tmuxdetacha="tmux detach -a"
+# enable copying over x server if DISPLAY is set
+alias tmuxxcopy="tmux source ~/dotfiles/.tmux-linux.conf"
+
 ########## ITerm2 autocomplete feature!!! autocompletion by 
 # http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
 _tmux_pane_words() {
@@ -249,6 +259,8 @@ function testy(){
     touch $1.go
     vim $1.go
 }
+
+########################################
 
 
 
