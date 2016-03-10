@@ -192,7 +192,8 @@ alias watch='watch '
 ###########################################
 ##### gvm
 source ~/.gvm/scripts/gvm
-[ -f ~/bin/setgosrc ] && source setgosrc
+PATH=~/bin:$PATH
+[ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
 
 # if [ -f ~/bin/setgosrc ]; then
 #     # according setgo wg. src /home/ppalucki/src/go
@@ -243,9 +244,10 @@ alias cdgo='cd $GOPATH'
 alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 ## testy - create directory & file and edit
+TESTY=~/work/gopath/src/testy/
 function testy(){
-    mkdir ~/work/testy/$1
-    cd ~/work/testy/$1
+    mkdir $TESTY/$1
+    cd $TESTY/$1
     touch $1.go
     vim $1.go
 }
@@ -258,10 +260,10 @@ function testy(){
 ##########################################
 [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
-
-PATH="/home/ppalucki/perl5/bin${PATH+:}${PATH}"; export PATH;
-PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
-
+### some perl stuff
+# PATH="/home/ppalucki/perl5/bin${PATH+:}${PATH}"; export PATH;
+# PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
+#
