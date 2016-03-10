@@ -112,6 +112,16 @@ setopt hist_ignore_all_dups
 # http://stackoverflow.com/questions/3483604/which-shortcut-in-zsh-does-the-same-as-ctrl-u-in-bash
 bindkey \^U backward-kill-line
 
+######################################################################
+###
+### tmux
+###
+######################################################################
+# detach other clients
+alias tmuxdetacha="tmux detach -a"
+# enable copying over x server if DISPLAY is set
+alias tmuxxcopy="tmux source ~/dotfiles/.tmux-linux.conf"
+
 ########## ITerm2 autocomplete feature!!! autocompletion by 
 # http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
 _tmux_pane_words() {
@@ -252,18 +262,33 @@ function testy(){
     vim $1.go
 }
 
-
-
-
 ##########################################
 #### python
 ##########################################
+# virtualenv wrapper
 [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
-### some perl stuff
-# PATH="/home/ppalucki/perl5/bin${PATH+:}${PATH}"; export PATH;
-# PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
-# PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
-# PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
-# PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
-#
+# pythonz
+# https://github.com/saghul/pythonz
+# [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+
+# pythonbrew
+# https://github.com/utahta/pythonbrew
+# curl -kL http://xrl.us/pythonbrewinstall | bash
+[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+
+##########################################
+#### PERL ???? WTF is that
+##########################################
+PATH="/home/ppalucki/perl5/bin${PATH+:}${PATH}"; export PATH;
+PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
+
+
+#########################################
+# noproxy
+########################################
+alias unsetproxy="unset HTTPS_PROXY HTTP_PROXY http_proxy https_proxy" 

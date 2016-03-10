@@ -6,3 +6,4 @@ bundle_kopia_zapasowa.zip
 /.vim/bundle/
 /.vim/autoload/
 /.vim/plugged/
+/.vim/view
