@@ -305,6 +305,11 @@ Plug 'tpope/vim-scriptease'
 
 " vim-bracketed-paste enables transparent pasting into vim. (i.e. no more :set paste!)
 " Plug 'ConradIrwin/vim-bracketed-paste'
+"
+""" drawing (requires perl)
+" Plug 'vim-scripts/boxdraw'
+""" 
+Plug 'vim-scripts/DrawIt'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
