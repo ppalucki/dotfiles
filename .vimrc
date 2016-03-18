@@ -309,7 +309,7 @@ Plug 'tpope/vim-scriptease'
 """ drawing (requires perl)
 " Plug 'vim-scripts/boxdraw'
 """ 
-Plug 'vim-scripts/DrawIt'
+" Plug 'vim-scripts/DrawIt'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -684,8 +684,8 @@ function! GoMappings()
     " takes to much time during drv/test cycle
     " let g:syntastic_mode_map = { 'mode': 'active' }
 
-    nmap <buffer> <leader>f "myiwh/<c-r>m<cr>:GoInfo<cr>
-    nmap <buffer> <leader>F "myiwh/<c-r>m<cr>:GoDescribe<cr>
+    nmap <buffer> <leader>f "myiwh/\<<c-r>m\><cr>:GoInfo<cr>
+    nmap <buffer> <leader>F "myiwh/\<<c-r>m\><cr>:GoDescribe<cr>
 
 
 
@@ -1438,7 +1438,7 @@ map <leader>u :GundoToggle<CR>
 
 " find occurences - search current word but without scroll
 " follow
-nmap <leader>f "myiwh/<c-r>m<cr>
+nmap <leader>f "myiwh/\<<c-r>m\><cr>
 
 " fix na colory diffa (change bez tla - bylo szare)
 " sprawdz kolory: colortest -w -s (w bashu!)
