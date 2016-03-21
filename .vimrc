@@ -1018,7 +1018,7 @@ let g:ack_autofold_results = 0
 " let g:ackprg = 'ag --nogroup --nocolor --column'
 "" requires new version
 "sudo apt-get install silversearcher-ag
-let g:ackprg = 'ag --vimgrep'
+let g:ackprg = 'ag --vimgrep --literal'
 "" new version supports this 0.31 but not .ackrc
 " ag wont support things liks --python --cc and my .ackrc
 "
