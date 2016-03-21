@@ -1897,6 +1897,10 @@ set diffopt=filler,vertical
 nmap <leader>l :up<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 let g:syntastic_quiet_messages = {'level': 'warrnings'}
+" prevent strange behavior of locationlist accordking this reddit thread
+" https://www.reddit.com/r/vim/comments/3opdrd/dont_autoclose_location_list_when_leaving_window/
+" when <leader>z (go oracle) ]l [l - won't close location list on every jump
+let g:syntastic_auto_loc_list=0
 
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
