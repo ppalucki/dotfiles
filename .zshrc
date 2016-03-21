@@ -202,7 +202,8 @@ alias watch='watch '
 ###########################################
 ##### gvm
 source ~/.gvm/scripts/gvm
-[ -f ~/bin/setgosrc ] && source setgosrc
+PATH=~/bin:$PATH
+[ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
 
 # if [ -f ~/bin/setgosrc ]; then
 #     # according setgo wg. src /home/ppalucki/src/go
@@ -253,9 +254,10 @@ alias cdgo='cd $GOPATH'
 alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 ## testy - create directory & file and edit
+TESTY=~/work/gopath/src/testy/
 function testy(){
-    mkdir ~/work/testy/$1
-    cd ~/work/testy/$1
+    mkdir $TESTY/$1
+    cd $TESTY/$1
     touch $1.go
     vim $1.go
 }
