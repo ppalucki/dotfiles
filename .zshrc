@@ -254,8 +254,8 @@ alias cdgo='cd $GOPATH'
 alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 ## testy - create directory & file and edit
-TESTY=~/work/gopath/src/testy/
 function testy(){
+    TESTY=$GOPATH/src/testy/
     mkdir $TESTY/$1
     cd $TESTY/$1
     touch $1.go

@@ -475,27 +475,27 @@ let g:pymode_virtualenv = 1
 """         Python (mappings)
 """ -------------------------------------------
 function! PythonMappings()
-	nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
+    nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
     " uzytecznosc mala przez !brak screen!
-	" nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
-	" ipython debug 
-	nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader>iv oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
-	nmap <buffer> <leader><c-l> :PymodeLint<cr>
+    " nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
+    " ipython debug 
+    nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
+    nmap <buffer> <leader>iv oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
+    nmap <buffer> <leader><c-l> :PymodeLint<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
-	" " pudb debugger
-	" nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
-	"" fix na diff doget - z brancha johntyree python-mode
-	" ounmap <silent> <buffer> o
-	"" python run
-	nmap <buffer> <F9> :silent up\|QuickRun -split 10<cr>
+    " " pudb debugger
+    " nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
+    "" fix na diff doget - z brancha johntyree python-mode
+    " ounmap <silent> <buffer> o
+    "" python run
+    nmap <buffer> <F9> :silent up\|QuickRun -split 10<cr>
     vmap <buffer> <F9> :QuickRun -split 10<cr>
-	" map <F9> :up<bar>!/usr/bin/env python %<CR>
-	map <leader><F9> :up<bar>!/usr/bin/env python %  
-	map <buffer> <F10> :up<bar>Pytest file<cr>
-	map <buffer> <s-F10> :up<bar>Pytest function<cr>
-	map <buffer> <m-F10> :up<bar>Pytest method<cr>
-	map <buffer> <c-F10> :up<bar>Pytest class<cr>
+    " map <F9> :up<bar>!/usr/bin/env python %<CR>
+    map <leader><F9> :up<bar>!/usr/bin/env python %  
+    map <buffer> <F10> :up<bar>Pytest file<cr>
+    map <buffer> <s-F10> :up<bar>Pytest function<cr>
+    map <buffer> <m-F10> :up<bar>Pytest method<cr>
+    map <buffer> <c-F10> :up<bar>Pytest class<cr>
     "
     " map <leader>g :RopeGotoDefinition<cr>
     " works badly
@@ -559,7 +559,7 @@ EOF
 
     "" jedi rename (mapping by hand because, we want <leader>r as rerun
     nnoremap <silent> <buffer> <localleader>R :call jedi#rename()<cr>
-	nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
+    nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
 endfunction
 au FileType python call PythonMappings()
 
@@ -583,12 +583,12 @@ au FileType xml call XMLMappings()
 """         RUBY
 """ -------------------------------------------
 function! RubyMappings()
-	""" binding pry 
-	nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
-	""" ruby run
-	nmap <buffer> <F9> :up\|!ruby %<cr> 
-	imap <buffer> <F9> <Esc><f9>
-	nmap <buffer> <leader><F9> :up\|!ruby % 
+    """ binding pry 
+    nmap <buffer> <leader>ip obinding.pry<ESC>:w<cr>
+    """ ruby run
+    nmap <buffer> <F9> :up\|!ruby %<cr> 
+    imap <buffer> <F9> <Esc><f9>
+    nmap <buffer> <leader><F9> :up\|!ruby % 
     
     """ navgigation goto
     " map <leader>g <C-]>
@@ -603,26 +603,26 @@ au BufRead,BufNewFile *.thor set filetype=ruby
 """         Golang
 """ -------------------------------------------
 function! GoMappings()
-	" nmap <buffer> <leader>r <f9>
-	nmap <buffer> <leader>R :GoRename<cr>
+    " nmap <buffer> <leader>r <f9>
+    nmap <buffer> <leader>R :GoRename<cr>
 
     """ running 
-	" nmap <buffer> <F9> :up\|!go run %<cr> 
-	nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
-	nmap <buffer> <leader><F9> :GoRun<cr>
+    " nmap <buffer> <F9> :up\|!go run %<cr> 
+    nmap <buffer> <F9> :silent up\|QuickRun -split 5<cr>
+    nmap <buffer> <leader><F9> :GoRun<cr>
     """ building  (GoBuild won't produce binary)
-	nmap <buffer> <F10> :up<bar>GoBuild<cr>
-	nmap <buffer> <leader><F10> :up<bar>make<cr>
+    nmap <buffer> <F10> :up<bar>GoBuild<cr>
+    nmap <buffer> <leader><F10> :up<bar>make<cr>
     """ testing  (GoBuild won't produce binary)
-	nmap <buffer> <F11> :up<bar>GoTestFunc<cr>
-	nmap <buffer> <leader><F11> :up<bar>GoTest<cr>
+    nmap <buffer> <F11> :up<bar>GoTestFunc<cr>
+    nmap <buffer> <leader><F11> :up<bar>GoTest<cr>
 
     """ running in terminal
-	""" selected file
+    """ selected file
     map <buffer> <leader>tu :up<bar>:py sendtmux("go test -v")<cr>
-	""" all tests
+    """ all tests
     map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
-	"" run
+    "" run
     map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
@@ -636,18 +636,18 @@ function! GoMappings()
     
     " make supertab works better
     " let g:SuperTabDefaultCompletionType = "context"
-	""" just works for go
-	" let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-	""" context version (works for comments/files etc...)
-	let g:SuperTabDefaultCompletionType = "context"
-	let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-	" tstsss
+    """ just works for go
+    " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    """ context version (works for comments/files etc...)
+    let g:SuperTabDefaultCompletionType = "context"
+    let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+    " tstsss
   let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
-	let g:SuperTabDefaultCompletionType = 'context'
-	autocmd FileType *
-	  \ if &omnifunc != '' |
-	  \   call SuperTabChain(&omnifunc, "<c-p>") |
-	  \ endif
+    let g:SuperTabDefaultCompletionType = 'context'
+    autocmd FileType *
+      \ if &omnifunc != '' |
+      \   call SuperTabChain(&omnifunc, "<c-p>") |
+      \ endif
 
 
 
@@ -699,14 +699,14 @@ function! GoMappings()
     map <buffer> <Leader>tk :py gdbrun()<cr>
 
 
-	" go cOntinue (without loc)
-	nmap go :py debug('continue')<cr>
-	" go next
-	nmap gn :py debug('next')<cr>
-	" go step
-	nmap gs :py debug('step')<cr>
-	" go location
-	nmap gl :py debug('ls')<cr>
+    " go cOntinue (without loc)
+    nmap go :py debug('continue')<cr>
+    " go next
+    nmap gn :py debug('next')<cr>
+    " go step
+    nmap gs :py debug('step')<cr>
+    " go location
+    nmap gl :py debug('ls')<cr>
 
 endfunction
 au FileType go call GoMappings()
@@ -725,12 +725,12 @@ function! ShMappings()
   " let g:SuperTabDefaultCompletionType = "context"
   " let g:SuperTabContextTextOmniPrecedence = ['&omnifunc', '&completefunc']
     " make supertab works better
-	""" just works for go
-	" let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-	""" context version (works for comments/files etc...)
-	" let g:SuperTabDefaultCompletionType = "context"
-	" let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-	" " tstsss
+    """ just works for go
+    " let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    """ context version (works for comments/files etc...)
+    " let g:SuperTabDefaultCompletionType = "context"
+    " let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+    " " tstsss
 
 endfunction
 au FileType sh call ShMappings()
@@ -837,15 +837,16 @@ set tabstop=4
 set shiftwidth=4 
 set softtabstop=4
 
-au FileType sh set ts=2 sw=2 sts=2 smartindent expandtab
-au FileType ruby set ts=2 sw=2 sts=2
-au FileType html set ts=2 sw=2 sts=2 nocindent
-au FileType python set ts=4 sw=4 sts=4
-au FileType mkd set shiftwidth=2
-au FileType yaml set ts=2 sw=2 sts=2 noautoindent nosmarttab
-au FileType cpp set ts=2 sw=2 sts=2 noexpandtab
-au FileType c set ts=4 sw=4 sts=4 noexpandtab
-au FileType go set ts=4 sw=4 sts=4 noexpandtab
+au FileType sh setlocal ts=2 sw=2 sts=2 smartindent expandtab
+au FileType ruby setlocal ts=2 sw=2 sts=2
+au FileType html setlocal ts=2 sw=2 sts=2 nocindent
+au FileType python setlocal ts=4 sw=4 sts=4
+au FileType mkd setlocal shiftwidth=2
+au FileType yaml setlocal ts=2 sw=2 sts=2 noautoindent nosmarttab expandtab
+au FileType cpp setlocal ts=2 sw=2 sts=2 noexpandtab
+au FileType c setlocal ts=4 sw=4 sts=4 noexpandtab
+au FileType go setlocal ts=4 sw=4 sts=4 noexpandtab
+" au FileType vim set ts=4 sw=4 sts=4 expandtab
 
 """ wyjscie z trybu insert przez wpisanie dwa razy jj
 inoremap jj <ESC>
@@ -908,7 +909,7 @@ let g:ctrlp_buftag_types = {
 
 """ HaskMappings
 function! HaskellMappings()
-	map <F9> :!ghc %<cr>
+    map <F9> :!ghc %<cr>
 
     " termianal python 
     map <leader>tp :up<bar>call ScreenShellSend("runhaskell <c-r>%")<bar><cr>
@@ -924,10 +925,10 @@ au FileType haskell call HaskellMappings()
 
 """ rest doc riv run 
 function! RstMappings()
-	map <F9> :up<bar>!cd ..;make html<cr>
-	map <leader><F9> :up<bar>!cd ..;make clean html<cr>
-	""" fix of italic overbold!
-	highlight rstEmphasis cterm=NONE ctermfg=3
+    map <F9> :up<bar>!cd ..;make html<cr>
+    map <leader><F9> :up<bar>!cd ..;make clean html<cr>
+    """ fix of italic overbold!
+    highlight rstEmphasis cterm=NONE ctermfg=3
 endfunction
 au FileType rst call RstMappings()
 " let g:riv_link_cursor_hl=0
@@ -1473,9 +1474,9 @@ map <F7> :CtrlPBuffer<CR>
 let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
-	\ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
-	\ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
-	\ }
+    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
+    \ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
+    \ }
 
 " let g:ctrlp_switch_buffer = 'eT'
 let g:ctrlp_match_window_bottom = 1
@@ -2126,8 +2127,8 @@ nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r
 """ -------------------------------------------
 function! CMappings()
     nmap <buffer> <F9> :up<cr>:QuickRun<cr>
-		nmap <buffer> <F10> :up<bar>Make<cr>
-		imap <buffer> <F10> <ESC><F10>
+        nmap <buffer> <F10> :up<bar>Make<cr>
+        imap <buffer> <F10> <ESC><F10>
     " let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
     " got to definition remapping
     " nmap gd <c-]>
@@ -2144,10 +2145,10 @@ function! CMappings()
     " set path+=3rdparty/libprocess/include
     " set path+=3rdparty/libprocess/3rdparty/stout/include
     " set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
-		" regernate tags with (cd /usr/include/; sudo ctags -R .)
-		""" affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
-		" set tags+=/usr/include/tags
-		" set tags+=/usr/src/tags
+        " regernate tags with (cd /usr/include/; sudo ctags -R .)
+        """ affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
+        " set tags+=/usr/include/tags
+        " set tags+=/usr/src/tags
     map <buffer> <leader>tp :up<bar>:py sendtmux("clang++-3.5 -pthread -std=c++11 <c-r>% && ./a.out")<cr>
 endfunction
 au FileType c call CMappings()
@@ -2270,7 +2271,19 @@ if has("python")
 py << EOP
 import vim,os,subprocess,string,time
 
-def get_target():
+def sendlinetmux():
+    """ send current line to selected by count tmux pane
+    8 - tmux split -h 
+    9 - tmux split
+    """
+    sendtmux(vim.current.line)
+
+def sendselectiontmux():
+    """ get selection visual mode and send it line by line to tmux """
+    for line in vim.current.range:
+        sendtmux(line)
+
+def get_count():
     return int(vim.eval("v:count"))
 
 def handle_splits(target):
@@ -2289,31 +2302,22 @@ def handle_splits(target):
     
     return target
 
-def sendlinetmux():
-    """ send current line to selected by count tmux pane
-    8 - tmux split -h 
-    9 - tmux split
-    """
-    target = handle_splits(get_target())
-    sendtmux(vim.current.line, target)
-
-def sendselectiontmux():
-    """ get selection visual mode and send it line by line to tmux """
-    target = handle_splits(get_target())
-    for line in vim.current.range:
-        sendtmux(line, target)
-
 def sendtmux(text, target_pane=None, enter=True, lookup=True):
     """
     if text contains c-(something) or enter it will be split by space and each word send seperatly
     lookup - if true up,ctrl,enter are recognized and sent as key.
+
+    default target_pane (None) means that we use repeat count or Next if count is 0
     """
 
     # where to send - when None or 0 just take next pane
-    if not target_pane: 
-        # just next to me
-        target_pane = int(_current_pane_idx())+1
-
+    if target_pane is None: 
+        count = get_count()
+        if count == 0: # is self
+            # just next to me
+            target_pane = _current_pane_idx() + 1
+        else:
+            target_pane = handle_splits(count)
 
     # for line in text.split('\n'):
     #     if not line:
@@ -2351,11 +2355,11 @@ def sendtmux(text, target_pane=None, enter=True, lookup=True):
 
 def _current_pane_idx():
     currentout = subprocess.check_output("tmux display-message -p #P".split(' '))
-    return currentout.strip().strip("'")
+    return int(currentout.strip().strip("'"))
 
 def _all_panes_idxs():
     allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' '))
-    allpanes = map(lambda x: string.strip(x, "'"), filter(None, allpanesout.split("\n")))
+    allpanes = map(int, map(lambda x: string.strip(x, "'"), filter(None, allpanesout.split("\n"))))
     return allpanes
 
 def sendalltmux(text):
