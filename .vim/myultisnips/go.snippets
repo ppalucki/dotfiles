@@ -538,4 +538,13 @@ snippet wgwait "wg.Wait()"
 wg.Wait()
 endsnippet
 
+##########################
+# conversions
+##########################
+snippet itoa "strconv.Itoa()"
+strconv.Itoa(${0})
+endsnippet
 
+snippet atoi "strconv.Atoi()"
+u, err := strconv.Atoi(${0})
+endsnippet

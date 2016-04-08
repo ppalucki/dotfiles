@@ -603,6 +603,12 @@ au BufRead,BufNewFile *.thor set filetype=ruby
 """         Golang
 """ -------------------------------------------
 function! GoMappings()
+
+
+    " go lint :(
+    "set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+    "just use GoLint
+
     " nmap <buffer> <leader>r <f9>
     nmap <buffer> <leader>R :GoRename<cr>
 
