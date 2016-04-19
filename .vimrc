@@ -891,6 +891,7 @@ map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,J
 " au FileType python map <buffer> <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
 au FileType cpp map <buffer> <F8> :!ctags -f .tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
+au FileType c map <buffer> <F8> :!ctags -f .tags --languages=C --verbose=no --totals --recurse=yes --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* <cr>
 au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <buffer> <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType go map <buffer> <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
@@ -1019,7 +1020,7 @@ set nomousehide
 
 
 """ -------------------------------------------
-"""         ack-grep
+"""         ack-grep/ag/silversearcher
 """ -------------------------------------------
 
 " let g:ack_use_dispatch = 0
