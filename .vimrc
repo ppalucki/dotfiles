@@ -887,7 +887,7 @@ map <F8> :!ctags -f .tags --verbose=no --totals=yes --recurse=yes --exclude=tmp 
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <buffer> <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType python map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
-" au FileType cpp map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude=boost* --exclude=glog* ..<cr>
+au FileType cpp map <buffer> <F8> :!ctags -f .tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
 au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <buffer> <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType go map <buffer> <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
@@ -1026,6 +1026,9 @@ let g:ack_autofold_results = 0
 "" requires new version
 "sudo apt-get install silversearcher-ag
 let g:ackprg = 'ag --vimgrep --literal'
+" support for older version of ackgrep 14.04 lts
+" (https://github.com/ggreer/the_silver_searcher#vim)
+let g:ackprg = 'ag --nogroup --nocolor --column --literal'
 "" new version supports this 0.31 but not .ackrc
 " ag wont support things liks --python --cc and my .ackrc
 "

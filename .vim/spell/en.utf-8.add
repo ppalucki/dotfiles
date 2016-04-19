@@ -356,3 +356,10 @@ nspawn
 plugins
 rkt
 etcd
+vendoring
+godeps
+godep
+vendored
+GOPATH
+#epdencies
+depdencies/!
