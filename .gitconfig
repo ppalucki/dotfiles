@@ -68,6 +68,14 @@
     # http://stackoverflow.com/questions/89332/how-to-recover-a-dropped-stash-in-git
     # recover = log --graph --oneline --decorate $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )
     
+    # For Github (get a pull request
+    # gpr = '!sh -c "git fetch origin pull/${1}/head:pr/${1}" -'
+    # with a command like this 
+    # git config --global alias.gpr '!sh -c "git fetch origin pull/${1}/head:pr/${1}" -'
+    # doesn't not WORK!!!
+    # without need to fetch refspec before and it won't allow you to update this in future
+	gpr = !sh -c \"git fetch origin pull/${1}/head:pr/${1}\" -
+    
 [diff]
     tool = vimdiff 
     # can be called with -t dirdiff -d
@@ -162,7 +170,9 @@
 
 ########################## OTHER TRICKS ##############################
 # working with github branches
-# add to [remote]
+# http://blogs.atlassian.com/2014/08/how-to-fetch-pull-requests/
+# https://gist.github.com/piscisaureus/3342247
+# add refspecs to [remote]
 # fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 # this will fetch all pull/PRNUMBER/head as tracking
 # then you can just git checkout pr/110 or update with git fetch and git reset --hard origin/pr/110
