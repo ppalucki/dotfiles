@@ -386,6 +386,10 @@ set hidden
 """ -------------------------------------------
 """         clibboard (global buffer integration)
 """ -------------------------------------------
+""" allows for features like: yank in one vim (send to x buffer, then paste
+""" from tmux or another vim
+""" needs tmuxxcopy
+""" and xclip/load-buffer/save-buffer/
 if has("mac")
     set clipboard=unnamed
 elseif has("unix")
@@ -2143,8 +2147,8 @@ nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r
 """ -------------------------------------------
 function! CMappings()
     nmap <buffer> <F9> :up<cr>:QuickRun<cr>
-        nmap <buffer> <F10> :up<bar>Make<cr>
-        imap <buffer> <F10> <ESC><F10>
+    nmap <buffer> <F10> :up<bar>Make<cr>
+    imap <buffer> <F10> <ESC><F10>
     " let g:SuperTabDefaultCompletionType = "<c-x><c-u>"
     " got to definition remapping
     " nmap gd <c-]>
@@ -2161,10 +2165,10 @@ function! CMappings()
     " set path+=3rdparty/libprocess/include
     " set path+=3rdparty/libprocess/3rdparty/stout/include
     " set path+=3rdparty/libprocess/3rdparty/boost-1.53.0
-        " regernate tags with (cd /usr/include/; sudo ctags -R .)
-        """ affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
-        " set tags+=/usr/include/tags
-        " set tags+=/usr/src/tags
+    " regernate tags with (cd /usr/include/; sudo ctags -R .)
+    """ affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
+    " set tags+=/usr/include/tags
+    " set tags+=/usr/src/tags
     map <buffer> <leader>tp :up<bar>:py sendtmux("clang++-3.5 -pthread -std=c++11 <c-r>% && ./a.out")<cr>
 endfunction
 au FileType c call CMappings()
@@ -2308,13 +2312,13 @@ def handle_splits(target):
     if target == 8:
         # do split !
         subprocess.call(('tmux', 'split', '-h', '-d'))
-        return None
+        return _current_pane_idx() + 1
 
     ### on 9 repeat do split
     if target == 9:
         # do split !
         subprocess.call(('tmux', 'split', '-d'))
-        return None
+        return _current_pane_idx() + 1
     
     return target
 

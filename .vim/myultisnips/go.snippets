@@ -86,7 +86,7 @@ endsnippet
 # (readability counts)
 ##########################
 
-snippet chefun "ok function with panic"
+snippet funche "ok function with panic"
 func check(err error) {
 	if err != nil {
 		panic(err)
@@ -94,7 +94,7 @@ func check(err error) {
 }
 endsnippet
 
-snippet chefun2 "ok function with with location"
+snippet funche2 "ok function with with location"
 func ok(err error) {
 	if err != nil {
 		pc, file, line, ok := runtime.Caller(1)
@@ -501,18 +501,23 @@ endsnippet
 
 
 ##############################
-# sleeping concurrency
+# sleeping & concurrency
 ##############################
 snippet sleep "time.Sleep(0 * time.Second)"
 time.Sleep(${1:1} * time.Second)
 ${0}
 endsnippet
 
-snippet tick "for range Tcik{}"
+snippet tick "for range Tick{}"
 for range time.Tick(${1:1} * time.Second){
 	${0}
 }
 endsnippet
+
+
+##############################
+# math
+##############################
 
 snippet rand "rand.Intn" w
 rand.Intn(${1:100})
@@ -547,4 +552,47 @@ endsnippet
 
 snippet atoi "strconv.Atoi()"
 u, err := strconv.Atoi(${0})
+endsnippet
+
+snippet atof "strconv.ParseFloat(f, 64))"
+f, err := strconv.ParseFloat(${0}, 64)
+endsnippet
+
+snippet funitoa "func itoa()"
+func itoa(i int) string {
+	return strconv.Itoa(i)
+}
+endsnippet
+
+snippet funatoi "func atoi()"
+func atoi(s string) int {
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
+	return i
+}
+endsnippet
+
+snippet funatof "func atof()"
+func atof(s string) float64 {
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		panic(err)
+	}
+	return f
+}
+endsnippet
+
+##########################
+# struct/json hanlding
+#########################
+snippet fundump "func dump()"
+func dump(i interface{}) string {
+	s, err := json.MarshalIndent(i, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+	return string(s)
+}
 endsnippet
