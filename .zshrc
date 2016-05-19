@@ -102,7 +102,8 @@ export EDITOR=vim
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 #
-# 
+# local aliases (don't go to repo)
+[[ -f ~/.local_aliases ]] && . ~/.local_aliases
 
 # no share history between shells
 setopt no_share_history
