@@ -202,7 +202,7 @@ alias watch='watch '
 ### golang
 ###########################################
 ##### gvm
-source ~/.gvm/scripts/gvm
+[ -f ~/.gvm/scripts/gvm ] && source ~/.gvm/scripts/gvm
 PATH=~/bin:$PATH
 [ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
 
@@ -288,8 +288,14 @@ PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LI
 PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
 
-
 #########################################
 # noproxy
 ########################################
 alias unsetproxy="unset HTTPS_PROXY HTTP_PROXY http_proxy https_proxy" 
+
+######################################
+# autojump manually
+####################################
+# git clone git://github.com/joelthelion/autojump.git
+# https://github.com/wting/autojump#manual
+[[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
