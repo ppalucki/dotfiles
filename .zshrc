@@ -176,10 +176,13 @@ alias cdw='cd ~/work'
 alias psa='ps auxf | grep -v ]$'
 
 #############################################
-### ubuntu apt-get
+### ubuntu/centos instaltat shorutcuts
 #############################################
-alias aptinst='sudo apt-get install'
-alias aptsearch='apt-cache search'
+# alias inst='sudo apt-get install'
+# alias search='apt-cache search'
+alias inst='sudo yum install'
+alias insty='sudo yum install -y'
+alias search='yum search'
 
 
 ############################################
