@@ -9,6 +9,7 @@ ExecStartPre=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -t -c $REDSOCKS_CON
 ExecStart=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -c $REDSOCKS_CONF -p /run/redsocks.pid
 ExecStopPost=/bin/rm /run/redsocks.pid
 Restart=on-abort
+LimitNOFILE=65000
 
 [Install]
 WantedBy=multi-user.target

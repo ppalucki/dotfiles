@@ -41,12 +41,30 @@ sudo iptables -t nat -D POSTROUTING -s 172.16.28.0/24 -j CNI-default-4bb65fd7ea4
 sudo iptables-save | grep :CNI | cut -f 1 -d " " | cut -f 2 -d ':' | sudo xargs -n1 iptables -t nat -X
 
 
+sudo iptables --flush
+sudo iptables -t nat -F 
+sudo iptables -t nat -Z REDSOCKS  
+sud oiptables -t nat -Z POSTROUTING 
+sudo iptables -t nat -Z PREROUTING 
+sudo iptables -t nat -Z OUTPUT
+sudo iptables -t nat -X REDSOCKS
+watch -n0.5 -d=p sudo iptables-save -t nat
+
+sudo ./kor-proxy.sh
 
 
 
 
-
+#
+wget http://wp.pl
+wget https://wp.pl
 
 ########## BEST WATCHES
-watch -d 'sudo iptables-save -c -t nat; echo; sudo iptables-save -c -t filter'
-watch --no-title -d -n1 'echo --------------------- nat --------------------;sudo iptables -t nat -L -v -n --line-numbers; echo \\n---------------------- filter ------------------------; sudo iptables -t filter -L -v -n --line-numbers'
+watch -n0.2 -d=p 'sudo iptables-save -c -t nat; echo; sudo iptables-save -c -t filter'
+watch -n0.5 --no-title -d=p 'echo --------------------- nat --------------------;sudo iptables -t nat -L -v -n --line-numbers; echo ---------------------- filter ------------------------; sudo iptables -t filter -L -v -n --line-numbers'
+
+
+
+
+
+k

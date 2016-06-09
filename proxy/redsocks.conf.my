@@ -11,7 +11,7 @@ base {
 	 *   syslog:FACILITY  facility is any of "daemon", "local0"..."local7"
 	 */
 	log = stderr;
-	// log = "file:/path/to/file";
+	// log = "file:/home/ppalucki/dotfiles/proxy/redsocks.log";
 	// log = "syslog:local7";
 
 	// detach from console
@@ -58,7 +58,8 @@ redsocks {
 	// `ip' and `port' are IP and tcp-port of proxy-server
 	// You can also use hostname instead of IP, only one (random)
 	// address of multihomed host will be used.
-	// ip = proxy.jf.intel.com;
+	//ip = proxy.jf.intel.com;
+	//ip = proxy-mu.intel.com;
 	ip = 10.217.247.236;
 	port = 1080;
 
