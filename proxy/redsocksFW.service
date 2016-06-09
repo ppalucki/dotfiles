@@ -3,7 +3,7 @@ Description=Redsocks proxy iptables Firewall rules
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/sh -c /home/ppalucki/proxy/kor-proxy.sh
+ExecStart=/usr/bin/sh -c /home/ppalucki/dotfiles/proxy/kor-proxy.sh
 
 [Install]
 WantedBy=multi-user.target
