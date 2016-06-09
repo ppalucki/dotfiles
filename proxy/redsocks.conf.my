@@ -58,7 +58,8 @@ redsocks {
 	// `ip' and `port' are IP and tcp-port of proxy-server
 	// You can also use hostname instead of IP, only one (random)
 	// address of multihomed host will be used.
-	ip = proxy.jf.intel.com;
+	// ip = proxy.jf.intel.com;
+	ip = 10.217.247.236;
 	port = 1080;
 
 
