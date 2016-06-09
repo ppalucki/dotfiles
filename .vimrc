@@ -615,6 +615,8 @@ function! GoMappings()
     " go lint :(
     "set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
     "just use GoLint
+    map <buffer> <leader>L :up<bar>GoLint<cr>
+
 
     " nmap <buffer> <leader>r <f9>
     nmap <buffer> <leader>R :GoRename<cr>
@@ -1930,6 +1932,7 @@ let g:syntastic_mode_map = { "mode": "passive",
 " zabardzo trwa na golonagu - jak checsz miec tylko aktive to przestaw sobie w
 " GoMappings - i nie daje sie tego wylaczyc za pomoca SyntasticToggleMode
                            " \ "active_filetypes": ["go"]
+let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...
