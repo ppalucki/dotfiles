@@ -179,11 +179,12 @@ alias psa='ps auxf | grep -v ]$'
 #############################################
 ### ubuntu/centos instaltat shorutcuts
 #############################################
-# alias inst='sudo apt-get install'
-# alias search='apt-cache search'
-alias inst='sudo yum install'
-alias insty='sudo yum install -y'
-alias search='yum search'
+# alias ipkg='sudo apt-get install'
+# alias ypkg='sudo apt-get install -y'
+# alias pkg='apt-cache search'
+alias ipkg='sudo yum install'
+alias ypkg='sudo yum install -y'
+alias pkg='yum search'
 
 
 ############################################

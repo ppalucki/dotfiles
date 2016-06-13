@@ -18,6 +18,7 @@ sudo iptables -I PREROUTING -t nat -j REDSOCKS # required by eg. docker
 
 
 #Return if LAN forward to proxy for http (on proxy-mu ip)/https
+sudo iptables -A REDSOCKS -t nat -d 127.0.0.1 -j RETURN
 sudo iptables -A REDSOCKS -t nat -d 10.0.0.0/8 -j RETURN
 sudo iptables -A REDSOCKS -t nat -d 172.17.0.0/16 -j RETURN # coreos-kubernetes
 sudo iptables -A REDSOCKS -t nat -d 10.4.0.0/16 -j RETURN # tectonic

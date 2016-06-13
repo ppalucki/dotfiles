@@ -2,10 +2,11 @@
 Description=Transparent redirector of any TCP connection to proxy using your firewall
 
 [Service]
+Type=simple
 PIDFile=/run/redsocks.pid
 Environment=REDSOCKS_CONF=/home/ppalucki/dotfiles/proxy/redsocks.conf.my
-#ExecStartPre=/home/ppalucki/proxy/kor-proxy.sh
 ExecStartPre=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -t -c $REDSOCKS_CONF
+ExecStartPre=/home/ppalucki/proxy/kor-proxy.sh
 ExecStart=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -c $REDSOCKS_CONF -p /run/redsocks.pid
 ExecStopPost=/bin/rm /run/redsocks.pid
 Restart=on-abort
