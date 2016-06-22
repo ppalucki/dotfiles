@@ -363,3 +363,4 @@ vendored
 GOPATH
 #epdencies
 depdencies/!
+memcached

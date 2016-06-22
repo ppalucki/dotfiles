@@ -72,6 +72,12 @@
 " <leader>R - rename (python/go) 
 " K - documentation
 " <c-w>z - zOom window aka to tmux <c-a>z
+""" -------------------------- debuging vim -----------------------
+":set verbosefile=some.log
+":set verbose=15
+":SomeCommand php
+":quit
+""" -------------------------- debuging vim -----------------------
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -633,9 +639,11 @@ function! GoMappings()
     nmap <buffer> <leader><F11> :up<bar>GoTest<cr>
 
     """ running in terminal
-    """ selected file
-    map <buffer> <leader>tu :up<bar>:py sendtmux("go test -v")<cr>
-    """ all tests
+    """ selected package relative to cwd of vim
+    map <buffer> <leader>tu :up<bar>:py sendtmux("go test -v ./<c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>")<cr>
+    """ selected file - not usefull!
+    " map <buffer> <leader>tP :up<bar>:py sendtmux("go test -v ./<c-r>%")<cr>
+    """ current tests
     map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
     "" run
     map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
@@ -2084,13 +2092,21 @@ let g:tagbar_type_go = {
 """ -------------------------------------------
 """           ctrlp buftags for Golang
 """ -------------------------------------------
+
+" let g:ctrlp_buftag_ctags_bin = 'gotags'
+" let g:ctrlp_buftag_types = {
+" \ 'go' : {
+"   \ 'bin': 'ctags',
+"   \ 'args': '-f - --sort=no --excmd=pattern --fields=nKs --language-force=go',
+"   \ },
+" \ }
+"
 let g:ctrlp_buftag_types = {
 \ 'go' : {
-  \ 'bin': 'ctags',
-  \ 'args': '-f - --sort=no --excmd=pattern --fields=nKs --language-force=go',
+  \ 'bin': '/home/ppalucki/work/gopath/bin/gotags',
+  \ 'args': '-f - -sort -silent -tag-relative -fields=+l',
   \ },
 \ }
-
 
 """ -------------------------------------------
 """            godef

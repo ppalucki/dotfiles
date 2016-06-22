@@ -182,9 +182,11 @@ alias psa='ps auxf | grep -v ]$'
 # alias ipkg='sudo apt-get install'
 # alias ypkg='sudo apt-get install -y'
 # alias pkg='apt-cache search'
+# alias provides='dpkg -S '
 alias ipkg='sudo yum install'
 alias ypkg='sudo yum install -y'
-alias pkg='yum search'
+alias pkg='yum -C search'
+alias pkgprovides='yum -C whatprovides'
 
 
 ############################################
