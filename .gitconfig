@@ -163,6 +163,8 @@
 # 4. cache
 # https://git-scm.com/docs/git-credential-cache
 # git config credential.helper 'cache [options]'
+# eg.
+# git config credential.helper 'cache --timeout=600'
 # but it doesn't work with two factor auth
 # [credential]
 #     helper = cache

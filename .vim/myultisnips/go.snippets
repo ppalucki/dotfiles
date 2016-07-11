@@ -67,6 +67,12 @@ if err != nil {
 ${0}
 endsnippet
 
+snippet errpv "if err := {0}; err != nil {panic(err)}"
+if err := ${1:${VISUAL}}; err != nil {
+	panic(err)
+}
+endsnippet
+
 snippet errp "if err != nil {panic(err)}"
 if err != nil {
 	panic(err)

@@ -47,6 +47,7 @@
 " <leader>te - terminal exit
 " <leader>tl - terminal line (also tt)
 " <leader>tt - terminal terminal (aka send line)
+" <leader>t$ - terminal end to of line
 " <leader>ta - terminal terminal ALL (send to all terminals)
 " <leader>-X  - execut current line wo tmux
 " <c-x> - terminal line + next line
@@ -910,7 +911,6 @@ au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --la
 au FileType haskell map <buffer> <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType go map <buffer> <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
 au FileType go map <buffer> <F8> :!gotags -R -f .tags \.<cr>
-" au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
 "
 """ tags file
 " specjalnie nizej w podkatalogu aby nie psulo mi wyszukiwania w pycharmie
@@ -919,17 +919,6 @@ set tags=.tags/tags,.tags
 "set tags+=/home/ppalucki/.rvm/rubies/ruby-1.9.2-p180/tags
 "set tags+=$HOME/.vim/tags/python.ctags
 
-let g:ctrlp_buftag_types = {
-\'haskell' : {
-  \ 'bin': '/home/ppalucki/.cabal/bin/lushtags',
-  \ 'args': 'f --'
-  \ },
-\ }
-
-" \'go' : {
-"   \ 'bin': '/Users/ppalucki/work/go/bin/gotags',
-"   \ 'args': ''
-"   \ },
 
 """ HaskMappings
 function! HaskellMappings()
@@ -1629,8 +1618,8 @@ let g:pythontagimport_full  = 0
 " yank current buffer filename to register
 " http://stackoverflow.com/questions/916875/yank-file-name-path-of-current-buffer-in-vim
 " nmap cp :let @* = expand("%:p")<bar>let @+ = expand("%:p")<cr>
-nmap cp :let @+ = expand("%:p")<bar>echo @+<cr>
-" nmap cp :let @" = expand("%:p")<cr>
+" nmap cp :let @+ = expand("%:p")<bar>echo @+<cr>
+nmap cp :let @" = expand("%:p")<bar>echo @"<cr>
 
 " xml syntax fix
 hi link xmlTagName Identifier
@@ -2095,18 +2084,28 @@ let g:tagbar_type_go = {
 
 " let g:ctrlp_buftag_ctags_bin = 'gotags'
 " let g:ctrlp_buftag_types = {
+" ############# ctags based
 " \ 'go' : {
 "   \ 'bin': 'ctags',
 "   \ 'args': '-f - --sort=no --excmd=pattern --fields=nKs --language-force=go',
 "   \ },
 " \ }
-"
+" ############ gotags based
+" \ 'go' : {
+"   \ 'bin': '/home/ppalucki/work/gopath/bin/gotags',
+"   \ 'args': '-f - -sort -silent -tag-relative -fields=+l', 
+"   \ },
 let g:ctrlp_buftag_types = {
 \ 'go' : {
-  \ 'bin': '/home/ppalucki/work/gopath/bin/gotags',
-  \ 'args': '-f - -sort -silent -tag-relative -fields=+l',
+  \ 'bin': 'ctags',
+  \ 'args': '-f - --sort=no --excmd=pattern --fields=nKs --language-force=go'
   \ },
-\ }
+\'haskell' : {
+  \ 'bin': '/home/ppalucki/.cabal/bin/lushtags',
+  \ 'args': 'f --'
+  \ }
+\}
+" au FileType haskell let g:ctrlp_buftag_ctags_bin = '/home/ppalucki/.cabal/bin/hothasktags'
 
 """ -------------------------------------------
 """            godef
@@ -2448,6 +2447,8 @@ map <Leader>tz :py sendtmux('c-z')<cr>
 
 """ terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _v$<leader>ts
+nmap <leader>t$ v$<leader>ts
+
 """ terminal-terminal (just better shortcut)
 nmap <leader>tt <leader>tl
 
@@ -2578,8 +2579,8 @@ nnoremap <silent> <C-w>z :ZoomToggle<CR>
 match Todo '\v^(\<|\=|\>){7}([^=].+)?$'
 
 " Jump to next/previous merge conflict marker
-nnoremap <silent> ]c /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
-nnoremap <silent> [c ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
+nnoremap <silent> ]C /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
+nnoremap <silent> [C ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 
 """ -------------------------------------------
 """ Encryption (ccrypt)

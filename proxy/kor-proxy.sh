@@ -6,12 +6,6 @@
 # # sysctl -p
 # sysctl -n net.ipv4.conf.all.route_localnet=1
 
-######################### WARNING CLEAR ALLL
-iptables -t nat -F 
-iptables -t nat -X REDSOCKS || true
-iptables -t filter -F 
-# iptables -Z PROXY -t nat && iptables -Z && iptables -t nat -Z POSTROUTING && iptables -t nat -Z PREROUTING && iptables -t nat -Z OUTPUT
-
 ### -------------------  NAT ------------------------------------
 #Creating Chain for transparency rules and adding for flow chains (output and "routing")
 iptables -N REDSOCKS -t nat

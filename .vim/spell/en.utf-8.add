@@ -364,3 +364,9 @@ GOPATH
 #epdencies
 depdencies/!
 memcached
+taskHandle
+intelsdi
+logrus
+goconvey
+cassandra
+NUMAs
