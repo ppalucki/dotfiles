@@ -41,7 +41,7 @@ redsocks {
 	 * `local_*' are used as port to redirect to.
 	 */
 	local_ip = 127.0.0.1;
-	local_port = 1080;
+	local_port = 911;
 
 	// listen() queue length. Default value is SOMAXCONN and it should be
 	// good enough for most of us.
@@ -59,8 +59,8 @@ redsocks {
 	// You can also use hostname instead of IP, only one (random)
 	// address of multihomed host will be used.
 	//ip = proxy.jf.intel.com;
-	//ip = proxy-mu.intel.com;
-	ip = 10.217.247.236;
+	//ip = 10.217.247.236;
+	ip = proxy-mu.intel.com;
 	port = 1080;
 
 
