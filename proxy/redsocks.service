@@ -4,12 +4,11 @@ Description=Transparent redirector of any TCP connection to proxy using your fir
 [Service]
 Type=simple
 PIDFile=/run/redsocks.pid
-Environment=REDSOCKS_CONF=/home/ppalucki/dotfiles/proxy/redsocks.conf.my
-ExecStartPre=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -t -c $REDSOCKS_CONF
-ExecStartPre=/home/ppalucki/dotfiles/proxy/kor-proxy.sh
-ExecStart=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -c $REDSOCKS_CONF -p /run/redsocks.pid
+#ExecStartPre=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -t -c /home/ppalucki/dotfiles/proxy/redsocks.conf.my 
+ExecStartPre=/home/ppalucki/dotfiles/proxy/start_proxy.sh
+ExecStart=/home/ppalucki/dotfiles/proxy/redsocks/redsocks -c /home/ppalucki/dotfiles/proxy/redsocks.conf.my -p /run/redsocks.pid
 ExecStopPost=/bin/rm /run/redsocks.pid
-Restart=on-abnormal
+#Restart=on-abnormal
 LimitNOFILE=65000
 
 [Install]

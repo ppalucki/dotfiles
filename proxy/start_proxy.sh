@@ -28,14 +28,16 @@ iptables -A REDSOCKS -t nat -d 127.0.0.1 -j RETURN # some services (like rabbitm
 
 ### ESSENTIAL CODE HERE!!!
 # everything trhough redsocks !!!
-#iptables -A REDSOCKS -t nat -p tcp -m tcp -j DNAT --to-destination 127.0.0.1:911
+## SIMPLER VERSIONE
+iptables -A REDSOCKS -t nat -p tcp -m tcp -j DNAT --to-destination 127.0.0.1:1080
 
-# http without redsocks (proxy-mu.intel.com)
-iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 80 -j DNAT --to-destination 10.217.247.236:911
-# https -> redsocks
-iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 443 -j DNAT --to-destination 127.0.0.1:911
-# ssh -> redsocks
-iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 22 -j DNAT --to-destination 127.0.0.1:911
+## SECURED VERSION
+# # http without redsocks (proxy-mu.intel.com)
+# iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 80 -j DNAT --to-destination 10.217.247.236:1080
+# # https -> redsocks
+# iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 443 -j DNAT --to-destination 127.0.0.1:1080
+# # ssh -> redsocks
+# iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 22 -j DNAT --to-destination 127.0.0.1:1080
 
 ## redirect everything else
 # iptables -A REDSOCKS -t nat -p tcp -m tcp -j DNAT --to-destination 127.0.0.1:1080
@@ -44,9 +46,9 @@ iptables -A REDSOCKS -t nat -p tcp -m tcp --dport 22 -j DNAT --to-destination 12
 
 ### ------------------- FILTER --------------------------------
 #adding filter rules for transock_ev, dns, http_proxy and packets that are allready accepted for "routing"
-iptables -t filter -I INPUT -p tcp -m tcp --dport 911 -j ACCEPT
+iptables -t filter -I INPUT -p tcp -m tcp --dport 1080 -j ACCEPT
 iptables -t filter -I FORWARD -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
-iptables -t filter -I FORWARD -p tcp -m tcp --dport 911 -m conntrack --ctstate NEW -j ACCEPT
+iptables -t filter -I FORWARD -p tcp -m tcp --dport 1080 -m conntrack --ctstate NEW -j ACCEPT
 iptables -t filter -I FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
 
 #service redsocks restart

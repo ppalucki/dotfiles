@@ -41,7 +41,7 @@ redsocks {
 	 * `local_*' are used as port to redirect to.
 	 */
 	local_ip = 127.0.0.1;
-	local_port = 911;
+	local_port = 1080;
 
 	// listen() queue length. Default value is SOMAXCONN and it should be
 	// good enough for most of us.
