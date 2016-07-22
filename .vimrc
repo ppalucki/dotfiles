@@ -640,14 +640,23 @@ function! GoMappings()
     nmap <buffer> <leader><F11> :up<bar>GoTest<cr>
 
     """ running in terminal
+	""" ------------- tests
     """ selected package relative to cwd of vim
     map <buffer> <leader>tu :up<bar>:py sendtmux("go test -v ./<c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>")<cr>
     """ selected file - not usefull!
     " map <buffer> <leader>tP :up<bar>:py sendtmux("go test -v ./<c-r>%")<cr>
     """ current tests
-    map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
-    "" run
-    map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
+    " map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
+    map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>"%current_test())<cr>
+    """ ------------ run
+    " map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
+    " handles case if you have _test.go files for your main package!
+    " map <buffer> <leader>tp :up<bar>:py sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
+    " map <buffer> <leader>tp :up<bar>:py sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
+	" doesn't work on osx and testy
+    " expand - current file, with home and only path
+    " fnamemodify - reduce to be related to current directory
+    map <buffer> <leader>tp :up<bar>:py sendtmux("go run `go list -f '{{range $f := .GoFiles}} {{$.Dir}}/{{$f}}{{end}}' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>`")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
@@ -1929,7 +1938,9 @@ let g:syntastic_mode_map = { "mode": "passive",
 " zabardzo trwa na golonagu - jak checsz miec tylko aktive to przestaw sobie w
 " GoMappings - i nie daje sie tego wylaczyc za pomoca SyntasticToggleMode
                            " \ "active_filetypes": ["go"]
-let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
+" let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
+" let g:syntastic_go_checkers = ['go', 'gofmt', 'golint']
+let g:syntastic_go_checkers = ['go', 'gofmt', 'govet']
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...

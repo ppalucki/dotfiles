@@ -370,3 +370,4 @@ logrus
 goconvey
 cassandra
 NUMAs
+setrlimit
