@@ -9,5 +9,5 @@ wget --timeout=5 http://www.google.com -O /dev/null
 echo "================================ check https "
 wget --timeout=5 https://www.google.com -O /dev/null
 echo "================================ check ssh "
-ssh -o ConnectTimeout=5s -T git@github.com
+ssh -v -o ConnectTimeout=5s -T git@github.com
 echo "OK"
