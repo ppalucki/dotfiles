@@ -11,3 +11,7 @@ vboxsf
 
 vi /etc/fstab
 Documents   /home/dev/Documents vboxsf  uid=dev,gid=dev,dmode=774,fmode=664 0       1
+
+### nie dzizlaa
+* ------------------------------- docker centos without sudo centos 
+* sudo usermod -aG docker ppalucki

@@ -929,6 +929,8 @@ set tags=.tags/tags,.tags
 "set tags+=$HOME/.vim/tags/python.ctags
 
 
+au FileType sh map <buffer> <leader>tp :up<bar>py sendtmux("./<c-r>%")<cr>
+
 """ HaskMappings
 function! HaskellMappings()
     map <F9> :!ghc %<cr>
@@ -1941,6 +1943,9 @@ let g:syntastic_mode_map = { "mode": "passive",
 " let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
 " let g:syntastic_go_checkers = ['go', 'gofmt', 'golint']
 let g:syntastic_go_checkers = ['go', 'gofmt', 'govet']
+" requires https://github.com/kovetskiy/go-fast
+" let g:syntastic_go_go_exec = "/usr/bin/go-fast-compile" 
+" let g:syntastic_go_go_exec = "/usr/local/go/bin/gofmt" 
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...

@@ -75,6 +75,9 @@
     # doesn't not WORK!!!
     # without need to fetch refspec before and it won't allow you to update this in future
 	gpr = !sh -c \"git fetch origin pull/${1}/head:pr/${1}\" -
+
+    # tags + commits (-d --derefernce)
+    tags = show-ref --abbrev=7 --tag -d 
     
 [diff]
     tool = vimdiff 

@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git autojump command-not-found common-aliases docker tmux history)
+plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd)
 
 
 ### VI-mode - readline doesn't work
@@ -59,12 +59,16 @@ plugins=(git autojump command-not-found common-aliases docker tmux history)
 ZSH_TMUX_AUTOSTART=false
 
 
+### gitfast
+# GIT_PS1_DESCRIBE_STYLE=describe 
+
 # export MANPATH="/usr/local/man:$MANPATH"
 #
 ############################################
 ### PATH ~/bin
 ###########################################
 export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -73,6 +77,7 @@ source $ZSH/oh-my-zsh.sh
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
 PROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[grey]%}%m %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
+
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
