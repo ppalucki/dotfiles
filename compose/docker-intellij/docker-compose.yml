@@ -1,0 +1,15 @@
+intellij:
+  image: dlsniper/docker-intellij
+  environment:
+    DISPLAY:
+  privileged: true
+  volumes:
+    # - /tmp/.X11-unix:/tmp/.X11-unix
+    - ~/.IdeaIC15_docker:/home/developer/.IdeaIC15
+    - ~/dotfiles/.ideavimrc:/home/developer/.ideavimrc
+    - ${GOPATH}:/home/developer/go 
+    - ${GOROOT}:/usr/local/go
+    - ~/.Xauthority:/home/developer/.Xauthority
+    # go from source
+    - /home/ppalucki/src/go:/home/ppalucki/src/go
+  net: host 

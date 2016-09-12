@@ -1,0 +1,28 @@
+influxdb:
+  image: tutum/influxdb:0.12
+  ports:
+    - "8083:8083"
+    - "8086:8086"
+    # - "8096:8096"
+    # - "4444:4444/udp"
+    # - "25826:25826/udp" // collectd
+  environment:
+    PRE_CREATE_DB: cfs
+    # UDP_DB: docker
+    # COLLECTD_DB: collectd
+    # COLLECTD_BINDING: 0.0.0.0:25826
+  # expose:
+    # - 8090
+    # - 8099
+    # - 4444
+    # - 8096
+    # - 25826
+  volumes:
+    - /var/influxdb:/data
+    - $PWD/influxdb:/etc/influxdb
+grafana:
+  image: grafana/grafana:latest
+  ports:
+    - "3000:3000"
+  volumes:
+    - /var/grafana:/var/lib/grafana

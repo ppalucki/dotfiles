@@ -1503,7 +1503,7 @@ map <F7> :CtrlPBuffer<CR>
 let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)$',
+    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)|(vendor)$',
     \ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
     \ }
 

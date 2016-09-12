@@ -371,3 +371,7 @@ goconvey
 cassandra
 NUMAs
 setrlimit
+kubernetes
+Evictor
+evictor
+evictors
