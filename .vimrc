@@ -1884,7 +1884,7 @@ nmap ge :py debug_loc('finish')<cr>
 " go run
 nmap gr :py debug_loc('run')<cr>
 " go up stack up 
-nmap gu :py debug_loc('up', lookup=False)<cr> 
+" nmap gu :py debug_loc('up', lookup=False)<cr> 
 " go bottom aka down stack - down 
 nmap gb :py debug_loc('down', lookup=False)<cr>
 " go "end function" (until) (gi was reserverd for go last insert position)
