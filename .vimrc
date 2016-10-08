@@ -212,7 +212,7 @@ Plug 'tpope/vim-surround'
 " with GoImport fix (python based solution not accepted by upstream)
 Plug 'fatih/vim-go', { 'for':  'go' }
 Plug 'rhysd/vim-go-impl', { 'for':  'go' }
-Plug 'garyburd/go-explorer', { 'for':  'go' }
+" Plug 'garyburd/go-explorer', { 'for':  'go' }
 
 " zamiennik powerline
 " Plug 'bling/vim-airline'
@@ -320,6 +320,8 @@ Plug 'tpope/vim-scriptease'
 " Plug 'vim-scripts/boxdraw'
 """ 
 " Plug 'vim-scripts/DrawIt'
+"
+Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
