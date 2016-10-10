@@ -15,3 +15,8 @@ Documents   /home/dev/Documents vboxsf  uid=dev,gid=dev,dmode=774,fmode=664 0   
 ### nie dzizlaa
 * ------------------------------- docker centos without sudo centos 
 * sudo usermod -aG docker ppalucki
+chmod o+rw /var/run/docker.socket
+
+### 
+setw -g mode-keys vi
+set-option -g allow-rename off

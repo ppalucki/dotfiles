@@ -46,10 +46,11 @@ iptables -A REDSOCKS -t nat -p tcp -m tcp -j DNAT --to-destination 127.0.0.1:108
 
 ### ------------------- FILTER --------------------------------
 #adding filter rules for transock_ev, dns, http_proxy and packets that are allready accepted for "routing"
-iptables -t filter -I INPUT -p tcp -m tcp --dport 1080 -j ACCEPT
-iptables -t filter -I FORWARD -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
-iptables -t filter -I FORWARD -p tcp -m tcp --dport 1080 -m conntrack --ctstate NEW -j ACCEPT
-iptables -t filter -I FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
+### TEST:
+# iptables -t filter -I INPUT -p tcp -m tcp --dport 1080 -j ACCEPT
+# iptables -t filter -I FORWARD -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
+# iptables -t filter -I FORWARD -p tcp -m tcp --dport 1080 -m conntrack --ctstate NEW -j ACCEPT
+# iptables -t filter -I FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
 
 #service redsocks restart
 

@@ -320,10 +320,16 @@ Plug 'tpope/vim-scriptease'
 " Plug 'vim-scripts/boxdraw'
 """ 
 " Plug 'vim-scripts/DrawIt'
+"
+Plug 'tpope/vim-unimpaired'
+
+" Plug 'amiorin/vim-project'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
+"
+
 """ -------------------------------------------
 """         Core settings
 """ -------------------------------------------
@@ -883,6 +889,8 @@ au FileType go setlocal ts=4 sw=4 sts=4 noexpandtab
 
 """ wyjscie z trybu insert przez wpisanie dwa razy jj
 inoremap jj <ESC>
+" wasavi
+" map! <c-c> <ESC>
 
 """ Backspace fix
 set backspace=indent,eol,start
@@ -1252,7 +1260,8 @@ inoremap <C-f> <Right>
 inoremap <C-b> <Left>
 
 " cmdline-editing bash style
-cnoremap <C-A> <Home>
+" cnoremap <C-A> <Home>
+map <C-a> <esc>ggVG<CR>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
 cnoremap <Esc>b <S-Left>
@@ -1493,8 +1502,8 @@ map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
 map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
 map <F5> :CtrlPTag<CR>
-map <F6> :CtrlPLine<CR>
-map <leader><F6> :CtrlPBranch<CR>
+map <F6> :CtrlPBookmarkDir<CR>
+map <leader><F6> :CtrlPBookmarkDirAdd<CR>
 map <F7> :CtrlPBuffer<CR>
 " nmap <leader><F4> :CtrlPLine<cr>
 " nmap <F6> :CtrlPChangeAll<cr>
@@ -2799,3 +2808,12 @@ let g:tmuxcomplete#trigger = 'omnifunc'
 " vertical goto file
 """ ===================================
 map <leader>gf :vertical wincmd f<CR>
+
+""" -----------------------------------------
+""" vim-project
+""" ----------------------------------------
+" " before call project#rc()
+" let g:project_enable_welcome = 0
+" " " if you want the NERDTree integration.
+" let g:project_use_nerdtree = 1
+" call project#rc()

@@ -1,5 +1,5 @@
 set -e
-# set -x
+set -x
 echo "================================ check process "
 pgrep redsocks
 echo "================================ check service "

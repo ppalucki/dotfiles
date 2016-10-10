@@ -325,3 +325,16 @@ function sshadd(){
     ssh-add
     ssh-add -l
 }
+
+
+### authagent start
+# if [ -z "$SSH_AUTH_SOCK" ] ; then
+#     eval `ssh-agent -s`
+#     ssh-add
+# fi
+
+
+###############################
+# k8s 
+# #########################
+source <(kubectl completion zsh)

@@ -623,3 +623,18 @@ endsnippet
 # snippet join "strings.Join(s, )"
 # strings.Join(${0}, "")
 # endsnippet
+
+##################
+# logging logrus
+#################
+snippet li "log.Info()"
+log.Info(${1})
+${0}
+endsnippet
+
+snippet lif "log.Infof()"
+log.Info("${1}", ${2})
+${0}
+endsnippet
+
+
