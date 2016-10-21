@@ -1,2 +1,4 @@
 sudo yum -y install 
 sudo su -
+sudo mount -o size=16G -t tmpfs none /mnt/tmpfs
+rm -rf ~/.glide/cache/src/https-github.com-intelsdi-x-athena ~/.glide/cache/src/https-github.com-intelsdi-x-swan/

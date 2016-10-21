@@ -20,3 +20,10 @@ chmod o+rw /var/run/docker.socket
 ### 
 setw -g mode-keys vi
 set-option -g allow-rename off
+
+
+###
+sudo mount -o size=16G -t tmpfs none /mnt/tmpfs
+
+### dhcp to enable at boot set BOOT=yes
+vim /etc/sysconfig/network-scripts/ifcfg-eno1
