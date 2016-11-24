@@ -22,7 +22,7 @@ map X u
 set useletters=0
 
 " Disable Vrome in those sites, Multiple URLs can be separated with ','
-set disablesites=mail.google.com, reader.google.com, www.epochconverter.com, triton.ironhelmet.com, intel.com, docs.google.com, localhost, asciiflow.com, 127.0.0.1, www.websequencediagrams.com, notebooks
+set disablesites=mail.google.com, reader.google.com, www.epochconverter.com, triton.ironhelmet.com, intel.com, docs.google.com, localhost, asciiflow.com, 127.0.0.1, www.websequencediagrams.com, notebooks, json-diff.com
 
 " Disable autocomplete
 " set noautocomplete
