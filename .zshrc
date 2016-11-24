@@ -49,7 +49,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd)
+plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd)
 
 
 ### VI-mode - readline doesn't work
@@ -75,9 +75,10 @@ source $ZSH/oh-my-zsh.sh
 
 ################# fix git and hostname
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
-PROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[grey]%}%m %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} % %{$reset_color%}'
 ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
-
+FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} %{$reset_color%}'
+export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}> $reset_color'
+export PROMPT=$FPROMPT
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -295,11 +296,11 @@ function testy(){
 ##########################################
 #### PERL ???? WTF is that
 ##########################################
-PATH="/home/ppalucki/perl5/bin${PATH+:}${PATH}"; export PATH;
-PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
+# PATH="/home/ppalucki/perl5/bin${PATH+:}${PATH}"; export PATH;
+# PERL5LIB="/home/ppalucki/perl5/lib/perl5${PERL5LIB+:}${PERL5LIB}"; export PERL5LIB;
+# PERL_LOCAL_LIB_ROOT="/home/ppalucki/perl5${PERL_LOCAL_LIB_ROOT+:}${PERL_LOCAL_LIB_ROOT}"; export PERL_LOCAL_LIB_ROOT;
+# PERL_MB_OPT="--install_base \"/home/ppalucki/perl5\""; export PERL_MB_OPT;
+# PERL_MM_OPT="INSTALL_BASE=/home/ppalucki/perl5"; export PERL_MM_OPT;
 
 #########################################
 # noproxy
@@ -337,4 +338,9 @@ function sshadd(){
 ###############################
 # k8s 
 # #########################
-source <(kubectl completion zsh)
+#source <(kubectl completion zsh)
+alias kubectlcompletion="source <(kubectl completion zsh)"
+
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

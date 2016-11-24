@@ -39,7 +39,7 @@
 
 [alias]
     # dont add -n to logs l/lg because it disables possibility to asks for logs from master...
-    l = log --graph --oneline --decorate 
+    l = log --oneline --decorate 
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order 
     st = status
     ci = commit

@@ -324,6 +324,8 @@ Plug 'tpope/vim-scriptease'
 Plug 'tpope/vim-unimpaired'
 
 " Plug 'amiorin/vim-project'
+"
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -349,6 +351,8 @@ hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
 hi PmenuSel ctermfg=lightyellow ctermbg=brown guibg=#333388
 hi PmenuSbar ctermbg=6
 hi PmenuThumb ctermfg=3
+
+highlight Search ctermbg=236
 "
 " colorscheme molokai
 " let g:molokai_original = 1
@@ -620,6 +624,14 @@ au FileType ruby call RubyMappings()
 au BufRead,BufNewFile *.thor set filetype=ruby
 
 """ -------------------------------------------
+"""         Rust
+""" -------------------------------------------
+function! RustMappings()
+    nmap <buffer> <F9> :up<cr>:QuickRun<cr>
+endfunction
+au FileType rust call GoMappings()
+
+""" -------------------------------------------
 """         Golang
 """ -------------------------------------------
 function! GoMappings()
@@ -655,14 +667,14 @@ function! GoMappings()
     " map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
     map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>"%current_test())<cr>
     """ ------------ run
-    " map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
+    map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
     " handles case if you have _test.go files for your main package!
     " map <buffer> <leader>tp :up<bar>:py sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
     " map <buffer> <leader>tp :up<bar>:py sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
 	" doesn't work on osx and testy
     " expand - current file, with home and only path
     " fnamemodify - reduce to be related to current directory
-    map <buffer> <leader>tp :up<bar>:py sendtmux("go run `go list -f '{{range $f := .GoFiles}} {{$.Dir}}/{{$f}}{{end}}' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>`")<cr>
+    map <buffer> <leader>tP :up<bar>:py sendtmux("go run `go list -f '{{range $f := .GoFiles}} {{$.Dir}}/{{$f}}{{end}}' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>`")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
@@ -825,6 +837,7 @@ nnoremap <leader>P :set paste!<cr>
 " http://vim.wikia.com/wiki/See_the_tabs_in_your_file
 """ --------------------------------------------
 " set listchars=tab:▸\ ,trail:·,eol:¬,nbsp:_,extends:❯,precedes:❮
+set listchars=tab:»\ ,trail:·,extends:>,eol:¬,extends:❯,precedes:❮
 
 " Display incomplete commands below the status line
 set showcmd
@@ -881,7 +894,7 @@ au FileType ruby setlocal ts=2 sw=2 sts=2
 au FileType html setlocal ts=2 sw=2 sts=2 nocindent
 au FileType python setlocal ts=4 sw=4 sts=4
 au FileType mkd setlocal shiftwidth=2
-au FileType yaml setlocal ts=2 sw=2 sts=2 noautoindent nosmarttab expandtab
+au FileType yaml setlocal ts=2 sw=2 sts=2 autoindent smarttab expandtab noswapfile
 au FileType cpp setlocal ts=2 sw=2 sts=2 noexpandtab
 au FileType c setlocal ts=4 sw=4 sts=4 noexpandtab
 au FileType go setlocal ts=4 sw=4 sts=4 noexpandtab
@@ -1280,6 +1293,9 @@ set history=700
 set undolevels=700
 
 " set noswapfile
+" set backupdir=~/.vim/backup/
+" set directory=~/.vim/swap/
+" set undodir=~/.vim/undo/
 
 " slowness fix!!!
 au FileType ruby set nocursorline
@@ -2817,3 +2833,5 @@ map <leader>gf :vertical wincmd f<CR>
 " " " if you want the NERDTree integration.
 " let g:project_use_nerdtree = 1
 " call project#rc()
+"
+"
