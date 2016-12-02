@@ -756,8 +756,8 @@ function! GoMappings()
 
     " go cOntinue (without loc)
     nmap go :py debug('continue')<cr>
-    " go next
-    nmap gn :py debug('next')<cr>
+    " go next (gn - is now vim command!)
+    nmap <buffer> <leader>gn :py debug('next')<cr>
     " go step
     nmap gs :py debug('step')<cr>
     " go location
@@ -1913,8 +1913,8 @@ endif
 
 " go cOntinue
 nmap go :py debug_loc('continue')<cr>
-" go next
-nmap gn :py debug_loc('next')<cr>
+" go next -- gn is now vim command!!!
+" nmap gn :py debug_loc('next')<cr>
 " go step
 nmap gs :py debug_loc('step')<cr>
 " go end
