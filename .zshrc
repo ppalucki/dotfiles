@@ -341,6 +341,4 @@ function sshadd(){
 #source <(kubectl completion zsh)
 alias kubectlcompletion="source <(kubectl completion zsh)"
 
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

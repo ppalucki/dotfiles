@@ -2,3 +2,12 @@ sudo yum -y install
 sudo su -
 sudo mount -o size=16G -t tmpfs none /mnt/tmpfs
 rm -rf ~/.glide/cache/src/https-github.com-intelsdi-x-athena ~/.glide/cache/src/https-github.com-intelsdi-x-swan/
+docker rm -f `docker ps -q -a -f "name=k8s_"`
+sudo unshare --pid --fork --mount-proc
+curl -v -k -s  https://127.0.0.1:10250/containerLogs/default/swan/swan/\?follow\=true
+curl -k -s  https://127.0.0.1:10250/pods | jq
+go test -v -c -i --race -tags sequential ./integration_tests/pkg/executor
+go install ./cmd/kubectl ./cmd/hyperkube ./cmd/kube-apiserver ./cmd/kube-controller-manager ./plugin/cmd/kube-scheduler ./cmd/kubelet ./cmd/kube-proxy
+etcdctl watch --forever --recursive /registry/pods/default
+while sleep 1; do kubectl get events --watch ; done
+~/work/tricks/clean_k8s.sh; sudo sudo unshare --pid --fork --mount-proc go test -race -run TestKubernetes -p 1 -v -tags=sequential ./integration_tests/pkg/executor

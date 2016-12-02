@@ -327,6 +327,10 @@ Plug 'tpope/vim-unimpaired'
 "
 Plug 'rust-lang/rust.vim'
 
+" NO NO NO
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -758,6 +762,15 @@ function! GoMappings()
     nmap gs :py debug('step')<cr>
     " go location
     nmap gl :py debug('ls')<cr>
+
+    " let g:go_guru_tags="sequential"
+    "
+    """ https://github.com/fatih/vim-go/blob/master/CHANGELOG.md#110-november-24-2016
+    " go command status (requires vim-go)
+    " conflicts with airline!
+    " set statusline+=%#goStatuslineColor#
+    " set statusline+=%{go#statusline#Show()}
+    " set statusline+=%*
 
 endfunction
 au FileType go call GoMappings()
@@ -1968,6 +1981,9 @@ let g:syntastic_mode_map = { "mode": "passive",
 " let g:syntastic_go_checkers = ['go', 'gofmt', 'golint', 'govet']
 " let g:syntastic_go_checkers = ['go', 'gofmt', 'golint']
 let g:syntastic_go_checkers = ['go', 'gofmt', 'govet']
+let g:syntastic_go_go_build_args="-tags sequential"
+let g:syntastic_go_go_test_args="-tags sequential"
+" let g:syntastic_go_govet_args="-tags sequential"
 " requires https://github.com/kovetskiy/go-fast
 " let g:syntastic_go_go_exec = "/usr/bin/go-fast-compile" 
 " let g:syntastic_go_go_exec = "/usr/local/go/bin/gofmt" 
