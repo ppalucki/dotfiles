@@ -330,6 +330,9 @@ Plug 'rust-lang/rust.vim'
 " NO NO NO
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Plug 'junegunn/fzf.vim'
+"
+" Plug 'sotte/presenting.vim'
+Plug 'raphael/vim-present-simple'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -634,6 +637,20 @@ function! RustMappings()
     nmap <buffer> <F9> :up<cr>:QuickRun<cr>
 endfunction
 au FileType rust call GoMappings()
+
+
+""" -------------------------------------------
+""" Present
+""" -------------------------------------------
+
+function! PresentMappings()
+    setlocal noautoindent
+    setlocal nocindent
+    setlocal nosmartindent
+    setlocal indentexpr=
+    setlocal ts=150
+endfunction
+au FileType present call PresentMappings()
 
 """ -------------------------------------------
 """         Golang
