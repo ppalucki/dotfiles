@@ -4,7 +4,9 @@
 # echo "net.ipv4.conf.all.route_localnet=1" >>/etc/sysctl.conf
 # # sysctl -w net.ipv4.conf.all.route_localnet=1
 # # sysctl -p
-sysctl -n net.ipv4.conf.all.route_localnet=1
+# sc-restart docker
+sysctl -n net.ipv4.conf.all.route_localnet=0
+sysctl -n net.ipv4.conf.docker0.route_localnet=1
 
 ### -------------------  NAT ------------------------------------
 #Creating Chain for transparency rules and adding for flow chains (output and "routing")

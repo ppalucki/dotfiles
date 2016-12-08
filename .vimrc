@@ -421,9 +421,14 @@ elseif has("unix")
     " working X server
     " set clipboard=unnamed
     " according:
-    " ahttp://stackoverflow.com/questions/10718573/vim-x-flag-as-vimrc-entry
+    " http://stackoverflow.com/questions/10718573/vim-x-flag-as-vimrc-entry
     " works like vim -X (don't try to connect to X server)
     set clipboard=exclude:.*
+    " if has('unnamedplus')
+    "       set clipboard=unnamed,unnamedplus
+    " endif
+    " vmap <leader>y :w! /tmp/vitmp<CR>                                                                   
+    " nmap <leader>p :r! cat /tmp/vitmp<CR>
 elseif has("win32")
   " do stuff under windows "
   " ???
