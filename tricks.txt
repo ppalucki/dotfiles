@@ -27,3 +27,19 @@ sudo mount -o size=16G -t tmpfs none /mnt/tmpfs
 
 ### dhcp to enable at boot set BOOT=yes
 vim /etc/sysconfig/network-scripts/ifcfg-eno1
+
+-------------------------------- docker  detach keys again and again
+'ctrl-p,ctrl-q in an escape for detach '
+
+mkdir -o ~/.docker
+cat >~/.docker/config.json <<EOF
+{
+    "detachKeys": "ctrl-q,ctrl-q"
+}
+EOF
+
+or just
+docker exec -ti --detach-keys 'ctrl-q,ctrl-q' cassandra-test cqlsh
+
+
+

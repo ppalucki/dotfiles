@@ -617,6 +617,14 @@ func dump(i interface{}) string {
 }
 endsnippet
 
+snippet dump "spew.Dump"
+spew.Dump(${1})
+endsnippet
+
+snippet getch "getchr()"
+bufio.NewReader(os.Stdin).ReadBytes('\n')
+endsnippet
+
 #####################
 # helpers
 #################
@@ -647,4 +655,7 @@ log.Debugf("${1}", ${2})
 ${0}
 endsnippet
 
-
+snippet exit "os.Exit(1)"
+os.Exit(1)
+${0}
+endsnippet

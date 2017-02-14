@@ -1,2 +1,2 @@
-set ts=8 et sw=4 sts=4
+set ts=8 expandtab sw=4 sts=4
 filetype indent on

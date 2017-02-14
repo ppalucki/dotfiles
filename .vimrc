@@ -135,7 +135,7 @@ Plug 'kien/ctrlp.vim'
 " Plug 'fisadev/vim-ctrlp-cmdpalette'
 "" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
 " mappend to F6
-" Plug 'jasoncodes/ctrlp-modified.vim' 
+Plug 'jasoncodes/ctrlp-modified.vim' 
 "" GIT related: branch, diff, log
 " Plug 'kaneshin/ctrlp-git'
 "" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
@@ -1556,6 +1556,7 @@ map <F5> :CtrlPTag<CR>
 map <F6> :CtrlPBookmarkDir<CR>
 map <leader><F6> :CtrlPBookmarkDirAdd<CR>
 map <F7> :CtrlPBuffer<CR>
+map <leader><F7> :CtrlPModified<CR>
 " nmap <leader><F4> :CtrlPLine<cr>
 " nmap <F6> :CtrlPChangeAll<cr>
 " nmap <leader><F6> :CtrlPChange<cr>
@@ -2126,6 +2127,8 @@ au FileType clojure call ClojureMappings()
 """ -------------------------------------------
 """            tagbar golang
 """ -------------------------------------------
+" go get -u github.com/jstemmer/gotags
+" configuration from https://github.com/jstemmer/gotags
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
