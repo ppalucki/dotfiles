@@ -41,5 +41,3 @@ EOF
 or just
 docker exec -ti --detach-keys 'ctrl-q,ctrl-q' cassandra-test cqlsh
 
-
-

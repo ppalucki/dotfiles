@@ -334,6 +334,12 @@ Plug 'rust-lang/rust.vim'
 " Plug 'sotte/presenting.vim'
 Plug 'raphael/vim-present-simple'
 
+" cxiw or X in visual mode
+"Plug 'tommcdo/vim-exchange'
+
+" >, or <,
+Plug 'PeterRincker/vim-argumentative'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
