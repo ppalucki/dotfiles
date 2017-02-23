@@ -17,19 +17,22 @@ Documents   /home/dev/Documents vboxsf  uid=dev,gid=dev,dmode=774,fmode=664 0   
 * sudo usermod -aG docker ppalucki
 chmod o+rw /var/run/docker.socket
 
-### 
+###  --------------------------------- tmux
 setw -g mode-keys vi
 set-option -g allow-rename off
+set mode-mouse on
+set mouse-resise-pane on 
+set mouse-select-pane on 
 
 
-###
+### ------------------------------ mnt tmpfs for glide
 sudo mount -o size=16G -t tmpfs none /mnt/tmpfs
 
-### dhcp to enable at boot set BOOT=yes
+### --------------------------- dhcp to enable at boot set BOOT=yes
 vim /etc/sysconfig/network-scripts/ifcfg-eno1
 
--------------------------------- docker  detach keys again and again
-'ctrl-p,ctrl-q in an escape for detach '
+### -------------------------------- docker  detach keys again and again
+#'ctrl-p,ctrl-q in an escape for detach '
 
 mkdir -o ~/.docker
 cat >~/.docker/config.json <<EOF
@@ -40,4 +43,13 @@ EOF
 
 or just
 docker exec -ti --detach-keys 'ctrl-q,ctrl-q' cassandra-test cqlsh
+
+#---------------------------------------- vim go
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim ~/.vimrc
+call plug#begin('~/.vim/plugged')
+Plug 'fatih/vim-go'
+call plug#end()
+:PlugInstall
 
