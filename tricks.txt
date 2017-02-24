@@ -41,3 +41,6 @@ EOF
 or just
 docker exec -ti --detach-keys 'ctrl-q,ctrl-q' cassandra-test cqlsh
 
+
+------------------------------ monitoring 
+sudo docker run -d --cap-add SYS_PTRACE -v /proc:/host/proc:ro -v /sys:/host/sys:ro -v /var/run/docker.sock:/var/run/docker.sock --rm --name netdata -p 19999:19999 titpetric/netdata

@@ -114,7 +114,7 @@ Plug 'vim-scripts/DirDiff.vim'
 " autoformatowanie zewnwtrznym programem - gq - nie dziala na osx
 " Plug 'Chiel92/vim-autoformat' 
 " automatyczne zakmykanie nawiasow
-Plug 'Raimondi/delimitMate'
+"Plug 'Raimondi/delimitMate'
 " obsluge ReST
 "Plug 'Rykka/riv.vim' - colids with <c-e>
 " jakies lepsze uzupelenianien
@@ -684,7 +684,8 @@ function! GoMappings()
     nmap <buffer> <leader><F9> :GoRun<cr>
     """ building  (GoBuild won't produce binary)
     nmap <buffer> <F10> :up<bar>GoBuild<cr>
-    nmap <buffer> <leader><F10> :up<bar>make<cr>
+    "nmap <buffer> <leader><F10> :up<bar>make<cr>
+    nmap <buffer> <leader><F10> :up<bar>GoTestCompile<cr>
     """ testing  (GoBuild won't produce binary)
     nmap <buffer> <F11> :up<bar>GoTestFunc<cr>
     nmap <buffer> <leader><F11> :up<bar>GoTest<cr>
@@ -922,15 +923,25 @@ nmap <C-h> <C-W>h
 
 
 """ wciecia/tab
+" indent based on previous line
 set autoindent
-"set smartindent
-set smarttab
+" indent based on syntax
+set smartindent
+" pressing TAB puts spaces
 set expandtab 
+""" not too smart to mix shiftwidht with softtabstop 
+set smarttab
+" TAB characters means X spaces
 set tabstop=4 
-set shiftwidth=4 
+" pressing TAB puts X number of spaces 
 set softtabstop=4
+" when shifting >> << == move about X spaces
+set shiftwidth=4 
 
-au FileType sh setlocal ts=2 sw=2 sts=2 smartindent expandtab
+
+
+
+au FileType sh setlocal ts=4 sw=4 sts=4 expandtab
 au FileType ruby setlocal ts=2 sw=2 sts=2
 au FileType html setlocal ts=2 sw=2 sts=2 nocindent
 au FileType python setlocal ts=4 sw=4 sts=4
@@ -1137,6 +1148,8 @@ au FileType c vmap <buffer> <leader>h "ay:Ag! --cpp --cc -- "<C-r>a"
 " au FileType go vmap <buffer> <leader>h "ay:Ag! --no-testgo --go -- "<C-r>a" 
 au FileType go map <buffer> <leader>h "ayiw:Ag! --ignore='*_test.go' --go -- "<C-r>a" 
 au FileType go vmap <buffer> <leader>h "ay:Ag! --ignore='*_test.go'--go -- "<C-r>a" 
+au FileType go map <buffer> <leader>H "ayiw:Ag! --go -- "<C-r>a" 
+au FileType go vmap <buffer> <leader>H "ay:Ag! --go -- "<C-r>a" 
 
 " Ack z jumpa
 " map <leader>H yiw:Ack! "<C-r>""
