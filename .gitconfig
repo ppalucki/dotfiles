@@ -78,6 +78,7 @@
 
     # tags + commits (-d --derefernce)
     tags = show-ref --abbrev=7 --tag -d 
+	checkoutr = checkout
     
 [diff]
     tool = vimdiff 

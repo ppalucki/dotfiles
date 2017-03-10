@@ -60,8 +60,8 @@ redsocks {
 	// address of multihomed host will be used.
 	//ip = proxy.jf.intel.com;
 
-	//ip = 10.217.247.236;
-	ip = proxy-mu.intel.com;
+	ip = 10.217.247.236;
+	//ip = proxy-mu.intel.com;
 	port = 1080;
 
 
