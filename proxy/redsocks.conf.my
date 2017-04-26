@@ -3,7 +3,7 @@ base {
 	log_debug = off;
 
 	// info: start and end of client session
-	log_info = off;
+	log_info = on;
 
 	/* possible `log' values are:
 	 *   stderr
@@ -15,7 +15,7 @@ base {
 	// log = "syslog:local7";
 
 	// detach from console
-	daemon = on;
+	daemon = off;
 
 	/* Change uid, gid and root directory, these options require root
 	 * privilegies on startup.
@@ -58,10 +58,17 @@ redsocks {
 	// `ip' and `port' are IP and tcp-port of proxy-server
 	// You can also use hostname instead of IP, only one (random)
 	// address of multihomed host will be used.
+
 	//ip = proxy.jf.intel.com;
 
-	ip = 10.217.247.236;
-	//ip = proxy-mu.intel.com;
+    // proxy-mu.intel.com
+	ip = 10.217.247.236; 
+
+    // proxy-chain.intel.com
+    // ip = 163.33.7.139; 
+
+    // proxy-ir.intel.com
+    // ip = 10.102.248.16; 
 	port = 1080;
 
 

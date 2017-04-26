@@ -454,6 +454,7 @@ let g:pymode_doc = 0
 let g:pymode_folding = 0
 " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
 let g:pymode_indent = 0 
+
 let g:pymode_lint = 1
 let g:pymode_rope = 0
 " Show error message if cursor placed at the error line  *'g:pymode_lint_message'*
@@ -468,8 +469,8 @@ let g:pymode_lint_on_fly = 0
 
 " Default code checkers (you could set several)         *'g:pymode_lint_checkers'*
 " Values may be choosen from: `pylint`, `pep8`, `mccabe`, `pep257`, `pyflakes`.
-let g:pymode_lint_checkers = ["pyflakes"]
-" let g:pymode_lint_checker = "pylint"
+" let g:pymode_lint_checkers = ["pyflakes"]
+let g:pymode_lint_checkers = ["pylint"]
 let g:pymode_lint_signs = 0
 let g:pymode_lint_config = 'pylint.rc2'
     
@@ -2032,10 +2033,17 @@ let g:syntastic_go_go_test_args="-tags sequential"
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...
-let g:syntastic_python_checkers = ['python', 'flake8']
-" let g:syntastic_python_checkers = ['python', 'flake8', 'pylint']
+" let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_python_checkers = ['python', 'pep8']
+" let g:syntastic_python_checkers = ['python', 'pep8', 'pylint']
+" let g:syntastic_debug = 33
+" let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
+let g:syntastic_python_checkers = ['python', 'pycodestyle']
+let g:syntastic_python_pycodestyle_args="--max-line-length=120"
+
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E"
+
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
 
