@@ -1,6 +1,9 @@
 " dzialajce ctrl-f (szukaj)
 unmap <C-f>
 
+" for OSX
+unmap <M-f>
+
 " insert mode (next word, backward word, delete back word)
 imap <M-f> <M-l>
 imap <M-b> <M-h>
