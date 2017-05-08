@@ -1548,7 +1548,10 @@ map <leader>u :GundoToggle<CR>
 
 " find occurences - search current word but without scroll
 " follow
-nmap <leader>f "myiwh/\<<c-r>m\><cr>
+"nmap <leader>f "myiwh/\<<c-r>m\><cr>
+" with fix for staying the same word
+" base on http://stackoverflow.com/questions/3431184/highlight-all-occurrence-of-a-selected-word/3431203#3431203
+nnoremap <leader>f *N
 
 " fix na colory diffa (change bez tla - bylo szare)
 " sprawdz kolory: colortest -w -s (w bashu!)
