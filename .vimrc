@@ -1216,9 +1216,14 @@ nmap <leader>Y :QFDo %s/<C-r>a//gc<left><left><left>
 """ Search ^ Replace in single files
 """ -------------------------------------------
 " replace normal mode with last searched element elmenet
-nmap <leader>y :.,$s///gc<left><left><left>
+" nmap <leader>y :.,$s///gc<left><left><left>
+nmap <leader>y :%s///gc<left><left><left>
 " replace last search element ("/ register) in given selection
 vmap <leader>y :s///gc<left><left><left>
+" tips:
+" to upper lower case do something like:
+" http://vim.wikia.com/wiki/Changing_case_with_regular_expressions
+" :s//\U\0/gc
 " or manual procedure
 " ---------- manual --------------
 " Put the cursor on foo.
