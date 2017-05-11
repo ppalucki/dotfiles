@@ -150,7 +150,7 @@ Plug 'ervandew/supertab'
 Plug 'flazz/vim-colorschemes'
 
 " --------------- PYTHON-related
-Plug 'klen/python-mode', { 'for':  'python' }
+Plug 'python-mode/python-mode', { 'for':  'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for':  'python' }
 Plug 'alfredodeza/coveragepy.vim', { 'for':  'python' }
 Plug 'nvie/vim-flake8', { 'for':  'python' }
