@@ -337,6 +337,7 @@ Plug 'raphael/vim-present-simple'
 " cxiw or X in visual mode
 "Plug 'tommcdo/vim-exchange'
 
+" shift or move or rotate arguments or parameters of function
 " >, or <,
 Plug 'PeterRincker/vim-argumentative'
 
@@ -473,6 +474,8 @@ let g:pymode_lint_on_fly = 0
 let g:pymode_lint_checkers = ["pylint"]
 let g:pymode_lint_signs = 0
 let g:pymode_lint_config = 'pylint.rc2'
+let g:pymode_lint_ignore = 'C,W0603,W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0301,C0322,R0921,R0914,W0101,W801,W0404'
+let g:pymode_lint_sort = ['E', 'C', 'I']
     
 
 let g:pymode_options_max_line_length = 0
@@ -506,7 +509,6 @@ let g:pymode_syntax_string_templates = 0
 let g:pymode_utils_whitespaces = 0
 " auto jump on/off
 let g:pymode_lint_jump = 1
-let g:pymode_lint_ignore = 'W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0322,R0921,R0914,W0101,W801,W0404'
 "let g:pymode_lint_select = 'E0611'
 let g:pymode_breakpoint = 0
 let g:pymode_breakpoint_key = '<leader>ib'
@@ -899,7 +901,8 @@ set hlsearch
 map <leader>/ :nohlsearch<cr>
 "<bar>QuickFixClear<cr>:SignClearAll<cr>
 "When on, the ":substitute" flag 'g' is default on.  
-set gdefault   " Use global search by default
+"set gdefault   " Use global search by default
+"disabled because it breaks compatbility when runnin on "pure" vim
 "
 "
 " search search raw text plain
@@ -2047,6 +2050,7 @@ let g:syntastic_go_go_test_args="-tags sequential"
 " let g:syntastic_debug = 33
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
 let g:syntastic_python_checkers = ['python', 'pycodestyle']
+" let g:syntastic_python_checkers = ['python']
 let g:syntastic_python_pycodestyle_args="--max-line-length=120"
 
 let g:syntastic_always_populate_loc_list=1

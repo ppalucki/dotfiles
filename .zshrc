@@ -176,6 +176,12 @@ bindkey '\en' history-beginning-search-forward
 alias gitrecover='git l $( git fsck --no-reflog | awk "/dangling commit/ {print \$3}" )'
 
 
+# git checkout --no-guess (for zsh completions without remote tracking branches!)
+# .oh-my-zsh/plugins/gitfast/git-completion.bash:1030 for details
+# overwrites gco from git plugin
+alias gco='git checkout --no-guess'
+
+
 #############################################
 ### ALIASES cd
 #############################################
