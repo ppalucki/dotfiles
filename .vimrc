@@ -150,7 +150,7 @@ Plug 'ervandew/supertab'
 Plug 'flazz/vim-colorschemes'
 
 " --------------- PYTHON-related
-Plug 'python-mode/python-mode', { 'for':  'python' }
+"Plug 'python-mode/python-mode', { 'for':  'python' }
 Plug 'hynek/vim-python-pep8-indent', { 'for':  'python' }
 Plug 'alfredodeza/coveragepy.vim', { 'for':  'python' }
 Plug 'nvie/vim-flake8', { 'for':  'python' }
@@ -160,6 +160,7 @@ Plug 'alfredodeza/pytest.vim', { 'for':  'python' }
 " jedi-py dla vim
 Plug 'davidhalter/jedi-vim', { 'for':  'python' }
 Plug 'Rykka/doctest.vim', { 'for': 'python' }
+
 
 " SQL execute
 " Plug 'ivalkeen/vim-simpledb'
@@ -359,6 +360,7 @@ syntax on
 set t_Co=256
 let g:molokai_original = 0
 colorscheme molokai
+set noshowmode
 " colorscheme desert256
 " autocomplete ctrl-n colors
 hi Pmenu ctermfg=220 ctermbg=238 guibg=#511151
@@ -392,6 +394,7 @@ let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tagbar#enabled = 1
 
 " let g:airline_theme = 'powerlineish'
+let g:bufferline_echo = 0
 
 
 """ cos innego
@@ -449,72 +452,72 @@ endif
 """         Python
 """ -------------------------------------------
 
-"""--------- pythonmode
-let g:pymode_motion = 1
-let g:pymode_doc = 0
-let g:pymode_folding = 0
-" flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
-let g:pymode_indent = 0 
-
-let g:pymode_lint = 1
-let g:pymode_rope = 0
-" Show error message if cursor placed at the error line  *'g:pymode_lint_message'*
-let g:pymode_lint_message = 0
-" on save
-" Check code on every save (if file has been modified)  *'g:pymode_lint_on_write'*
-let g:pymode_lint_on_write = 0
-" Check code on every save (every)                    *'g:pymode_lint_unmodified'*
-let g:pymode_lint_unmodified = 0
-" Check code when editting (onfly)                        *'g:pymode_lint_on_fly'*
-let g:pymode_lint_on_fly = 0
-
-" Default code checkers (you could set several)         *'g:pymode_lint_checkers'*
-" Values may be choosen from: `pylint`, `pep8`, `mccabe`, `pep257`, `pyflakes`.
-" let g:pymode_lint_checkers = ["pyflakes"]
-let g:pymode_lint_checkers = ["pylint"]
-let g:pymode_lint_signs = 0
-let g:pymode_lint_config = 'pylint.rc2'
-let g:pymode_lint_ignore = 'C,W0603,W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0301,C0322,R0921,R0914,W0101,W801,W0404'
-let g:pymode_lint_sort = ['E', 'C', 'I']
-    
-
-let g:pymode_options_max_line_length = 0
-
-" PyMode Syntax Highlight
+" """--------- pythonmode
+" let g:pymode_motion = 1
+" let g:pymode_doc = 0
+" let g:pymode_folding = 0
+" " flakes + write dziala dosc szybko ale nie wykrywa wszystkich bledow let
+" let g:pymode_indent = 0 
 "
-let g:pymode_syntax = 1 
-let g:pymode_syntax_all = 0 
-" 
-let g:pymode_syntax_builtin_funcs = 0
-let g:pymode_syntax_builtin_objs = 1
-let g:pymode_syntax_builtin_types = 0
-let g:pymode_syntax_doctests = 0 
-let g:pymode_syntax_highlight_equal_operator = 0
-let g:pymode_syntax_highlight_exceptions = 0
-let g:pymode_syntax_highlight_self = 0
-let g:pymode_syntax_highlight_stars_operator = 0
-let g:pymode_syntax_indent_errors = 0
-let g:pymode_syntax_print_as_function = 0
-let g:pymode_syntax_space_errors = 0
-let g:pymode_syntax_string_format = 0 
-let g:pymode_syntax_string_formatting = 0 
-let g:pymode_syntax_string_templates = 0
-
-" For fast machines
-" let g:pymode_syntax_slow_sync = 0
-" overwrite
-" -----------------------------------------------------
+" let g:pymode_lint = 1
+" let g:pymode_rope = 0
+" " Show error message if cursor placed at the error line  *'g:pymode_lint_message'*
+" let g:pymode_lint_message = 0
+" " on save
+" " Check code on every save (if file has been modified)  *'g:pymode_lint_on_write'*
+" let g:pymode_lint_on_write = 0
+" " Check code on every save (every)                    *'g:pymode_lint_unmodified'*
+" let g:pymode_lint_unmodified = 0
+" " Check code when editting (onfly)                        *'g:pymode_lint_on_fly'*
+" let g:pymode_lint_on_fly = 0
 "
-" pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
-let g:pymode_utils_whitespaces = 0
-" auto jump on/off
-let g:pymode_lint_jump = 1
-"let g:pymode_lint_select = 'E0611'
-let g:pymode_breakpoint = 0
-let g:pymode_breakpoint_key = '<leader>ib'
-let g:pymode_run = 0
-let g:pymode_virtualenv = 1
-"let g:pymode_run_key = '<leader>r'
+" " Default code checkers (you could set several)         *'g:pymode_lint_checkers'*
+" " Values may be choosen from: `pylint`, `pep8`, `mccabe`, `pep257`, `pyflakes`.
+" " let g:pymode_lint_checkers = ["pyflakes"]
+" let g:pymode_lint_checkers = ["pylint"]
+" let g:pymode_lint_signs = 0
+" let g:pymode_lint_config = 'pylint.rc2'
+" let g:pymode_lint_ignore = 'C,W0603,W402,W0611,C0324,W0612,W0511,C0323,W0622,C0302,W806,C0301,C0322,R0921,R0914,W0101,W801,W0404'
+" let g:pymode_lint_sort = ['E', 'C', 'I']
+"     
+"
+" let g:pymode_options_max_line_length = 0
+"
+" " PyMode Syntax Highlight
+" "
+" let g:pymode_syntax = 1 
+" let g:pymode_syntax_all = 0 
+" " 
+" let g:pymode_syntax_builtin_funcs = 0
+" let g:pymode_syntax_builtin_objs = 1
+" let g:pymode_syntax_builtin_types = 0
+" let g:pymode_syntax_doctests = 0 
+" let g:pymode_syntax_highlight_equal_operator = 0
+" let g:pymode_syntax_highlight_exceptions = 0
+" let g:pymode_syntax_highlight_self = 0
+" let g:pymode_syntax_highlight_stars_operator = 0
+" let g:pymode_syntax_indent_errors = 0
+" let g:pymode_syntax_print_as_function = 0
+" let g:pymode_syntax_space_errors = 0
+" let g:pymode_syntax_string_format = 0 
+" let g:pymode_syntax_string_formatting = 0 
+" let g:pymode_syntax_string_templates = 0
+"
+" " For fast machines
+" " let g:pymode_syntax_slow_sync = 0
+" " overwrite
+" " -----------------------------------------------------
+" "
+" " pylint dziala lepiej ale jest zawolny na przy kazdym zapisie
+" let g:pymode_utils_whitespaces = 0
+" " auto jump on/off
+" let g:pymode_lint_jump = 1
+" "let g:pymode_lint_select = 'E0611'
+" let g:pymode_breakpoint = 0
+" let g:pymode_breakpoint_key = '<leader>ib'
+" let g:pymode_run = 0
+" let g:pymode_virtualenv = 1
+" "let g:pymode_run_key = '<leader>r'
 
 """ -------------------------------------------
 """         Python (mappings)
@@ -1574,7 +1577,7 @@ let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
 let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
 " 0 not working
-let g:UltiSnipsEnableSnipMate = ""
+let g:UltiSnipsEnableSnipMate = "1"
 
 
 """ -------------------------------------------
@@ -1711,11 +1714,11 @@ if exists("+undofile")
 endif
 
 " python import python_tag_import
-let g:pythontagimportcurrentword = "<leader>a"
-let g:pythontagimport_from = 1
-let g:pythontagimport_from_mod = 0
-let g:pythontagimport_as = 0
-let g:pythontagimport_full  = 0
+" let g:pythontagimportcurrentword = "<leader>a"
+" let g:pythontagimport_from = 1
+" let g:pythontagimport_from_mod = 0
+" let g:pythontagimport_as = 0
+" let g:pythontagimport_full  = 0
 " let g:pythontagimport_prefix = 'getmedia.'
 
 " yank current buffer filename to register
@@ -2049,7 +2052,8 @@ let g:syntastic_go_go_test_args="-tags sequential"
 " let g:syntastic_python_checkers = ['python', 'pep8', 'pylint']
 " let g:syntastic_debug = 33
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
-let g:syntastic_python_checkers = ['python', 'pycodestyle']
+" let g:syntastic_python_checkers = ['python', 'pycodestyle']
+let g:syntastic_python_checkers = ['python', 'pyflakes']
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_python_pycodestyle_args="--max-line-length=120"
 
@@ -2913,5 +2917,16 @@ map <leader>gf :vertical wincmd f<CR>
 " " " if you want the NERDTree integration.
 " let g:project_use_nerdtree = 1
 " call project#rc()
+"
+"
+"
+"
+"
+"################### python 2/3
+set pyxversion=3
+let g:jedi#force_py_version = 3
+let g:UltiSnipsUsePythonVersion = 3
+
+
 "
 "

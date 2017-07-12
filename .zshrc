@@ -348,3 +348,12 @@ function sshadd(){
 alias kubectlcompletion="source <(kubectl completion zsh)"
 
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#
+#
+#############################
+## pyenv
+##########################
+# export PATH="/home/ppalucki/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+
