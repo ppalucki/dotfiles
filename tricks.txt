@@ -104,3 +104,11 @@ https://support.microsoft.com/en-us/help/838028/how-documents-are-opened-from-a-
 solve:
 - enable autologin or anonymous access
 
+
+# X11-------------------------------------
+centos7
+yum install -y xauth xclock
+
+yum install -y epel-release
+yum install -y xsensors
+yum install -y hwloc

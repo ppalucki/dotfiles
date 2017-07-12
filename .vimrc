@@ -566,7 +566,7 @@ function! PythonMappings()
     " original version 
     " nmap <leader>ty :compiler! python<cr>:set makeprg=./run_tests.py\ <c-r>=tagbar#currenttag('%s','')<cr><cr>:Make<cr>
     if !has('python3')
-py <<EOF
+py3 <<EOF
 last_test_tag = None
 from vim import eval as e
 from vim import command as c
@@ -593,9 +593,9 @@ EOF
 
     """ Testing
     " terminal yank test
-    """" nmap <leader>ty :py make_current_test()<cr>
+    """" nmap <leader>ty :pyx make_current_test()<cr>
     " terminal global test
-    """" nmap <leader>tg :py make_last_test()<cr>
+    """" nmap <leader>tg :pyx make_last_test()<cr>
 
     " termianl yank all tests
     nmap <leader>tY :compiler! python<cr>:set makeprg=./run_tests.py<cr><cr>:Make<cr>
@@ -607,7 +607,7 @@ EOF
 
     "" jedi rename (mapping by hand because, we want <leader>r as rerun
     nnoremap <silent> <buffer> <localleader>R :call jedi#rename()<cr>
-    nmap <buffer> <leader>r :up<bar>:py sendtmux('c-p')<cr>
+    nmap <buffer> <leader>r :up<bar>:pyx sendtmux('c-p')<cr>
 endfunction
 au FileType python call PythonMappings()
 
@@ -699,21 +699,21 @@ function! GoMappings()
     """ running in terminal
 	""" ------------- tests
     """ selected package relative to cwd of vim
-    map <buffer> <leader>tu :up<bar>:py sendtmux("go test -v ./<c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>")<cr>
+    map <buffer> <leader>tu :up<bar>:pyx sendtmux("go test -v ./<c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>")<cr>
     """ selected file - not usefull!
-    " map <buffer> <leader>tP :up<bar>:py sendtmux("go test -v ./<c-r>%")<cr>
+    " map <buffer> <leader>tP :up<bar>:pyx sendtmux("go test -v ./<c-r>%")<cr>
     """ current tests
-    " map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$'"%current_test())<cr>
-    map <buffer> <leader>tU :up<bar>:py sendtmux("go test -v -run '%s$' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>"%current_test())<cr>
+    " map <buffer> <leader>tU :up<bar>:pyx sendtmux("go test -v -run '%s$'"%current_test())<cr>
+    map <buffer> <leader>tU :up<bar>:pyx sendtmux("go test -v -run '%s$' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>"%current_test())<cr>
     """ ------------ run
-    map <buffer> <leader>tp :up<bar>:py sendtmux("go run ./<c-r>%")<cr>
+    map <buffer> <leader>tp :up<bar>:pyx sendtmux("go run ./<c-r>%")<cr>
     " handles case if you have _test.go files for your main package!
-    " map <buffer> <leader>tp :up<bar>:py sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
-    " map <buffer> <leader>tp :up<bar>:py sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
+    " map <buffer> <leader>tp :up<bar>:pyx sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
+    " map <buffer> <leader>tp :up<bar>:pyx sendtmux("(cd <c-r>=fnamemodify(expand("%:h:p"), ":~:.")<cr>;go run `go list -f '{{.GoFiles}}' \| tr -d '[]'`)")<cr>
 	" doesn't work on osx and testy
     " expand - current file, with home and only path
     " fnamemodify - reduce to be related to current directory
-    map <buffer> <leader>tP :up<bar>:py sendtmux("go run `go list -f '{{range $f := .GoFiles}} {{$.Dir}}/{{$f}}{{end}}' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>`")<cr>
+    map <buffer> <leader>tP :up<bar>:pyx sendtmux("go run `go list -f '{{range $f := .GoFiles}} {{$.Dir}}/{{$f}}{{end}}' ./<c-r>=fnamemodify(expand("%:h:p"), ":.")<cr>`")<cr>
     """ navgigation goto
     " map <leader>g <C-]>
     " nmap gd <C-]> # depracted by vim-godef
@@ -785,18 +785,18 @@ function! GoMappings()
     " set path=$GOPATH/src
 
     " hiper dubugging with go
-    map <buffer> <Leader>ti :py startgdb()<cr>
-    map <buffer> <Leader>tk :py gdbrun()<cr>
+    map <buffer> <Leader>ti :pyx startgdb()<cr>
+    map <buffer> <Leader>tk :pyx gdbrun()<cr>
 
 
     " go cOntinue (without loc)
-    nmap go :py debug('continue')<cr>
+    nmap go :pyx debug('continue')<cr>
     " go next (gn - is now vim command!)
-    nmap <buffer> <leader>gn :py debug('next')<cr>
+    nmap <buffer> <leader>gn :pyx debug('next')<cr>
     " go step
-    nmap gs :py debug('step')<cr>
+    nmap gs :pyx debug('step')<cr>
     " go location
-    nmap gl :py debug('ls')<cr>
+    nmap gl :pyx debug('ls')<cr>
 
     " let g:go_guru_tags="sequential"
     "
@@ -1792,18 +1792,16 @@ au FileType vim :nmap <F9> :up<cr>:%y<bar>@"<cr>
 au FileType vim :setlocal keywordprg=:help
 
 """ example of python
-if !has('python3')
-py <<EOF
+py3 <<EOF
 def testvima():
     import vim
     # print 'oto vim'
-    # print vim.current.window
-    # print vim.current.buffer
+    # print(vim.current.window)
+    # print(vim.current.buffer)
     print(vim.eval("tagbar#currenttag('%s','')"))
 EOF
-endif
 
-nmap <leader>k :py testvima()<cr>
+nmap <leader>k :pyx testvima()<cr>
 
 " vimroom
 let g:vimroom_sidebar_height=0
@@ -1849,8 +1847,8 @@ let g:yankring_replace_n_nkey = '<c-q>'
 """ ------------------------------------------------------------
 """ -------------------- debugging ------------------------------
 """ ------------------------------------------------------------
-if !has('python3')
-py <<EOF
+
+py3 <<EOF
 
 # def send_line(line):
 #     'send line to screen'
@@ -1887,7 +1885,7 @@ def golang_startgdb_test():
 
 def set_breakpoint():
     """ DEBUG - set breakpoint """
-    # map <leader>tb :py sendtmux("b '%s'" % vim.eval('expand("%:p") . ":" . line(".")'))<cr>
+    # map <leader>tb :pyx sendtmux("b '%s'" % vim.eval('expand("%:p") . ":" . line(".")'))<cr>
     sendtmux('break %s:%s'%(current_file(), current_line()))
 
 def gdb_adanvce():
@@ -1950,8 +1948,8 @@ def loc():
         if line and filename:
             open_or_edit(filename, line)
         else:
-            print 'nothing found'
-
+            print('nothing found')
+            
 def debug(cmd, lookup=True):
     if cmd is not None:
         if cmd=='jump':
@@ -1966,34 +1964,33 @@ def debug_loc(cmd=None, lookup=True):
     loc()
 
 EOF
-endif
 
 " go cOntinue
-nmap go :py debug_loc('continue')<cr>
+nmap go :pyx debug_loc('continue')<cr>
 " go next -- gn is now vim command!!!
-" nmap gn :py debug_loc('next')<cr>
+" nmap gn :pyx debug_loc('next')<cr>
 " go step
-nmap gs :py debug_loc('step')<cr>
+nmap gs :pyx debug_loc('step')<cr>
 " go end
-nmap ge :py debug_loc('finish')<cr>
+nmap ge :pyx debug_loc('finish')<cr>
 " go run
-nmap gr :py debug_loc('run')<cr>
+nmap gr :pyx debug_loc('run')<cr>
 " go up stack up 
-" nmap gu :py debug_loc('up', lookup=False)<cr> 
+" nmap gu :pyx debug_loc('up', lookup=False)<cr> 
 " go bottom aka down stack - down 
-nmap gb :py debug_loc('down', lookup=False)<cr>
+nmap gb :pyx debug_loc('down', lookup=False)<cr>
 " go "end function" (until) (gi was reserverd for go last insert position)
-nmap gj :py debug_loc('jump')<cr>
+nmap gj :pyx debug_loc('jump')<cr>
 " go location
-nmap gl :py loc()<cr>
+nmap gl :pyx loc()<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
-nmap gp yiw:py sendtmux("print <c-r>"")<cr>
-vmap gp y:py sendtmux("print <c-r>"")<cr>
+nmap gp yiw:pyx sendtmux("print <c-r>"")<cr>
+vmap gp y:pyx sendtmux("print <c-r>"")<cr>
 
-nmap <leader>tb :py set_breakpoint()<cr>
+nmap <leader>tb :pyx set_breakpoint()<cr>
 " advance
 " conflict with vim-action-ag
-" nmap ga :py gdb_adanvce()<cr>
+" nmap ga :pyx gdb_adanvce()<cr>
 
 let g:COMMAND_MAP = {
     \ "hit" : "echo 'HIT'",
@@ -2282,7 +2279,7 @@ let g:loaded_AlignMapsPlugin = "v42"
 """ -------------------------------------------
 """ convert timestamp ct
 """ -------------------------------------------
-nmap <leader>ct yw:py import datetime;print datetime.datetime.fromtimestamp(<c-r>")<cr>
+nmap <leader>ct yw:pyx import datetime;print(datetime.datetime.fromtimestamp(<c-r>"))<cr>
 
 
 """ -------------------------------------------
@@ -2312,7 +2309,7 @@ function! CMappings()
     """ affects ctrl_ptags - can go to all kernel tags .... (slowWWWWWWWWWW!)
     " set tags+=/usr/include/tags
     " set tags+=/usr/src/tags
-    map <buffer> <leader>tp :up<bar>:py sendtmux("clang++-3.5 -pthread -std=c++11 <c-r>% && ./a.out")<cr>
+    map <buffer> <leader>tp :up<bar>:pyx sendtmux("clang++-3.5 -pthread -std=c++11 <c-r>% && ./a.out")<cr>
 endfunction
 au FileType c call CMappings()
 au FileType cpp call CMappings()
@@ -2430,8 +2427,7 @@ au BufRead,BufNewFile install set filetype=sh
 """ -------------------------------------------
 """   tmux - send to all terminals
 """ -------------------------------------------
-if has("python")
-py << EOP
+py3 << EOP
 import vim,os,subprocess,string,time
 
 def sendlinetmux():
@@ -2517,7 +2513,7 @@ def sendtmux(text, target_pane=None, enter=True, lookup=True):
 
 
 def _current_pane_idx():
-    currentout = subprocess.check_output("tmux display-message -p #P".split(' '))
+    currentout = subprocess.check_output("tmux display-message -p #P".split(' ')).decode()
     return int(currentout.strip().strip("'"))
 
 def _all_panes_idxs():
@@ -2535,10 +2531,9 @@ def sendalltmux(text):
         sendtmux(text, pane_id, enter=False)
 
 def offset():
-    print vim.eval('line2byte(line("."))+col(".")')
+    print(vim.eval('line2byte(line("."))+col(".")'))
 
 EOP
-endif
 
 command! Offset py offset()
 
@@ -2551,24 +2546,24 @@ command! Offset py offset()
 """ terminal send (with enter by default) tS without enter
 " If text is selected, save it in the v buffer and send that buffer it to tmux
 " vmap <leader>ts "vy:call VimuxSlime()<cr>
-vmap <leader>tS "vy:py sendtmux(vim.eval("@v"), enter=False)<cr>
-vmap <leader>ts "vy:py sendtmux(vim.eval("@v"))<cr>
+vmap <leader>tS "vy:pyx sendtmux(vim.eval("@v"), enter=False)<cr>
+vmap <leader>ts "vy:pyx sendtmux(vim.eval("@v"))<cr>
 
 """ terminal rerun  (tr or just r)
-map <leader>tr :up<bar>:py sendtmux('c-p')<cr>
-map <leader>r :up<bar>:py sendtmux('c-p')<cr>
+map <leader>tr :up<bar>:pyx sendtmux('c-p')<cr>
+map <leader>r :up<bar>:pyx sendtmux('c-p')<cr>
 
 """ terminal quit and rerun
-map <Leader>tq :py sendtmux('c-c c-p')<cr>
+map <Leader>tq :pyx sendtmux('c-c c-p')<cr>
 
 """ terminal "exit"
-map <leader>te :py sendtmux('exit')<cr>
+map <leader>te :pyx sendtmux('exit')<cr>
 
 """ terminal ctrl-c
-map <Leader>tc :py sendtmux('c-c')<cr>
+map <Leader>tc :pyx sendtmux('c-c')<cr>
 
 """ terminal ctrl-z
-map <Leader>tz :py sendtmux('c-z')<cr>
+map <Leader>tz :pyx sendtmux('c-z')<cr>
 
 """ terminal line - begin then send visual till end and terminal send
 nmap <leader>tl _v$<leader>ts
@@ -2581,18 +2576,18 @@ nmap <leader>tt <leader>tl
 vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
-nmap <c-x> :py sendlinetmux()<cr>j
+nmap <c-x> :pyx sendlinetmux()<cr>j
 " warning conflicts with vim multicursors - skip
-vmap <c-x> :py sendselectiontmux()<cr>
-nmap <leader>x :py sendlinetmux()<cr>
-vmap <leader>x :py sendselectiontmux()<cr>
+vmap <c-x> :pyx sendselectiontmux()<cr>
+nmap <leader>x :pyx sendlinetmux()<cr>
+vmap <leader>x :pyx sendselectiontmux()<cr>
 
 " execute current line (wo tmux)
 nmap <Leader>X :.w !bash<cr>
 vmap <Leader>X :w !bash<cr>
 
 """ terminal-all (selection)
-vmap <leader>ta "vy:py sendalltmux(vim.eval("@v"))<cr>
+vmap <leader>ta "vy:pyx sendalltmux(vim.eval("@v"))<cr>
 
 """ terminal-all (just this line)
 nmap <leader>ta _v$<leader>ta
@@ -2604,9 +2599,9 @@ nmap <leader>tw viw<leader>ts
 nmap <leader>tW viw<leader>tS
 
 """ terminal directory (change current directory to path of current file)
-map <Leader>td :py sendtmux('cd ' + vim.eval('expand("%:p:h")'))<cr>
+map <Leader>td :pyx sendtmux('cd ' + vim.eval('expand("%:p:h")'))<cr>
 """ terminal Director of cwd
-map <Leader>tD :py sendtmux('cd ' + vim.eval('getcwd()'))<cr>
+map <Leader>tD :pyx sendtmux('cd ' + vim.eval('getcwd()'))<cr>
 
 
 
@@ -2735,7 +2730,7 @@ augroup END
 """ GoLang oracle by hand
 """ -------------------------------------------
 " find offset be on function
-" py print vim.eval('line2byte(line("."))+col(".")')
+" py print(vim.eval('line2byte(line("."))+col(".")'))
 " execute oracle
 " oracle  -pos=learn.go:#632 callers github.com/intelsdilabs/nerp
 "
