@@ -2050,12 +2050,12 @@ let g:syntastic_go_go_test_args="-tags sequential"
 " let g:syntastic_debug = 33
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'pycodestyle']
-let g:syntastic_python_checkers = ['python', 'pyflakes']
+let g:syntastic_python_checkers = ['python', 'flake8']
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_python_pycodestyle_args="--max-line-length=120"
 
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_python_flake8_args="--config=tox.ini --ignore=E"
+let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E265,E302,E501,E305,E303,E201,E202,E261"
 
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
