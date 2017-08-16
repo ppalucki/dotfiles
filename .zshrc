@@ -67,8 +67,7 @@ ZSH_TMUX_AUTOSTART=false
 ############################################
 ### PATH ~/bin
 ###########################################
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -223,7 +222,6 @@ alias watch='watch '
 ###########################################
 ##### gvm
 [ -f ~/.gvm/scripts/gvm ] && source ~/.gvm/scripts/gvm
-PATH=~/bin:$PATH
 [ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
 
 # if [ -f ~/bin/setgosrc ]; then

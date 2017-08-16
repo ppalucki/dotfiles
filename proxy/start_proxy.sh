@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 ### one -time
 # echo "net.ipv4.conf.all.route_localnet=1" >>/etc/sysctl.conf
 # # sysctl -w net.ipv4.conf.all.route_localnet=1

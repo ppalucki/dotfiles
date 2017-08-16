@@ -112,3 +112,9 @@ yum install -y xauth xclock
 yum install -y epel-release
 yum install -y xsensors
 yum install -y hwloc
+
+
+centos7 tricks https://wiki.mikejung.biz/CentOS_7
+
+# intel memory latency checker
+https://software.intel.com/en-us/articles/intelr-memory-latency-checker
