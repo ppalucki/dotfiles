@@ -550,6 +550,11 @@ function! PythonMappings()
     map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
     map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
 
+
+    map <leader>gd :let g:jedi#use_splits_not_buffers='bottom'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+    map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+    "map gD :let g:jedi#use_splits_not_buffers='left'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+
     """ -----------------------------
     """ Python python functions
     """ -----------------------------
@@ -982,7 +987,7 @@ let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 1
 "let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen = 0
-let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$']
+let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__']
 
 let NERDTreeMouseMode = 3
 
@@ -1137,8 +1142,8 @@ set nomousehide
 "--py Ack bez jumpa
 map <leader>h "ayiw:Ag! -- "<C-r>a"
 vmap <leader>h "ay:Ag! -- "<C-r>a"
-map <leader>H "ayiw:Ag! --known-types -- "<C-r>a"
-vmap <leader>H "ay:Ag! --known-types -- "<C-r>a"
+map <leader>H "ayiw:Ag! --all-types -- "<C-r>a"
+vmap <leader>H "ay:Ag! --all-types -- "<C-r>a"
 
 au FileType python map <buffer> <leader>h "ayiw:Ag! --python -- "<C-r>a"
 au FileType python vmap <buffer> <leader>h "ay:Ag! --python -- "<C-r>a"
@@ -1565,12 +1570,6 @@ map <leader>u :GundoToggle<CR>
 " base on http://stackoverflow.com/questions/3431184/highlight-all-occurrence-of-a-selected-word/3431203#3431203
 nnoremap <leader>f *N
 
-" fix na colory diffa (change bez tla - bylo szare)
-" sprawdz kolory: colortest -w -s (w bashu!)
-hi DiffChange ctermbg=NONE
-hi DiffDelete ctermbg=53
-hi DiffAdd ctermbg=53
-hi DiffText ctermbg=52 
 
 
 """ ----- ultisnip
@@ -1599,7 +1598,7 @@ map <leader><F7> :CtrlPModified<CR>
 let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)|(vendor)$',
+    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)|(vendor)|(rl-data)|(tf-logs)$',
     \ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
     \ }
 
@@ -1623,9 +1622,22 @@ let repmo_revkey = "<bar>"
 " let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl ]c|[c ]]|[[ ]m|[m ]q|[q"
 let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl"
 
+""" DIFF
+" diff all open windows
+":windo diffthis
+"end with
+":diffoff!
 " diff jump with ()
 nn <expr> ( &diff ? "[c" : "("
 nn <expr> ) &diff ? "]c" : ")"
+" fix na colory diffa (change bez tla - bylo szare)
+" sprawdz kolory: colortest -w -s (w bashu!)
+hi DiffChange ctermbg=NONE
+hi DiffDelete ctermbg=53
+hi DiffAdd ctermbg=53
+hi DiffText ctermbg=52 
+
+
 
 " vsplit tag
 nmap <leader><C-]> :vsplit <CR>:exec("tag ".expand("<cword>"))<CR>zt<c-w>r<c-w><c-w>
@@ -2040,13 +2052,13 @@ let g:syntastic_go_go_test_args="-tags sequential"
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...
-" let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_checkers = ['python', 'flake8']
 " let g:syntastic_python_checkers = ['python', 'pep8']
 " let g:syntastic_python_checkers = ['python', 'pep8', 'pylint']
 " let g:syntastic_debug = 33
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'pycodestyle']
-let g:syntastic_python_checkers = ['python', 'mypy']
+" let g:syntastic_python_checkers = ['python', 'mypy']
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_python_pycodestyle_args="--max-line-length=120"
 let g:syntastic_python_mypy_args="--ignore-missing-imports --check-untyped-defs"
@@ -2430,7 +2442,8 @@ au BufRead,BufNewFile install set filetype=sh
 """   tmux - send to all terminals
 """ -------------------------------------------
 py3 << EOP
-import vim,os,subprocess,string,time
+import os,subprocess,string,time
+import vim
 
 def sendlinetmux():
     """ send current line to selected by count tmux pane
@@ -2519,8 +2532,9 @@ def _current_pane_idx():
     return int(currentout.strip().strip("'"))
 
 def _all_panes_idxs():
-    allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' '))
-    allpanes = map(int, map(lambda x: string.strip(x, "'"), filter(None, allpanesout.split("\n"))))
+    allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' ')).decode()
+    wo_nones = list(filter(None, str(allpanesout).split("\n")))
+    allpanes = list(map(int, map(lambda x: str.strip(x, "'"), wo_nones)))
     return allpanes
 
 def sendalltmux(text):
@@ -2538,6 +2552,7 @@ def offset():
 EOP
 
 command! Offset py offset()
+
 
 """ terminal bash vertical
 " map <leader>tb :call VimuxOpenRunner()<cr>

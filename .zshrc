@@ -355,3 +355,15 @@ alias kubectlcompletion="source <(kubectl completion zsh)"
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 
+
+function s3(){
+    . ~/envs/s3/bin/activate
+    wd s3
+    export PYTHONPATH=.
+}
+
+
+function ssh-copy-id-root {
+    target=$1
+    cat ~/.ssh/id_rsa.pub  | ssh $target "sudo mkdir /root/.ssh; sudo tee -a /root/.ssh/authorized_keys"
+}

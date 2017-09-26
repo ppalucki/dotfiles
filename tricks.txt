@@ -93,6 +93,8 @@ python -m SimpleHTTPServer
 sudo pip install --upgrade --force-reinstall setuptools pip
 sudo pip install --upgrade --force-reinstall ipython
 
+pprint(vars(object))
+
 # ------------------------ jupyter/ipytjon
 from IPython.core.display import display, HTML
 display(HTML("<style>.container { width:100% !important; }</style>"))
@@ -126,3 +128,10 @@ lrwxrwxrwx. 1 root root 0 Aug 16 11:01 eno1 -> ../../devices/pci0000:00/0000:00:
 lrwxrwxrwx. 1 root root 0 Aug 16 11:01 enp2s0 -> ../../devices/pci0000:00/0000:00:1c.2/0000:02:00.0/net/enp2s0
 lrwxrwxrwx. 1 root root 0 Aug 16 11:01 lo -> ../../devices/virtual/net/lo
 
+
+# -
+
+
+
+#### ssh-copy-id to root
+cat ~/.ssh/id_rsa.pub | ssh someuser@192.168.1.25 "sudo mkdir /root/.ssh; sudo tee -a /root/.ssh/authorized_keys"
