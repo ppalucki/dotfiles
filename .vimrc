@@ -557,8 +557,8 @@ function! PythonMappings()
     " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>py sendtmux("python <c-r>%")<cr>
-    map <leader>ti :up<bar>py sendtmux("ipython -i <c-r>%")<cr>
+    map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
+    map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
 
     """ -----------------------------
     """ Python python functions
@@ -1009,7 +1009,7 @@ set tags=.tags/tags,.tags
 "set tags+=$HOME/.vim/tags/python.ctags
 
 
-au FileType sh map <buffer> <leader>tp :up<bar>py sendtmux("./<c-r>%")<cr>
+au FileType sh map <buffer> <leader>tp :up<bar>pyx sendtmux("./<c-r>%")<cr>
 
 """ HaskMappings
 function! HaskellMappings()
@@ -2535,7 +2535,7 @@ def offset():
 
 EOP
 
-command! Offset py offset()
+command! Offset pyx offset()
 
 """ terminal bash vertical
 " map <leader>tb :call VimuxOpenRunner()<cr>
