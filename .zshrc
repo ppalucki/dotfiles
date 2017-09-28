@@ -67,8 +67,7 @@ ZSH_TMUX_AUTOSTART=false
 ############################################
 ### PATH ~/bin
 ###########################################
-export PATH="$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -223,7 +222,6 @@ alias watch='watch '
 ###########################################
 ##### gvm
 [ -f ~/.gvm/scripts/gvm ] && source ~/.gvm/scripts/gvm
-PATH=~/bin:$PATH
 [ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
 
 # if [ -f ~/bin/setgosrc ]; then
@@ -357,3 +355,15 @@ alias kubectlcompletion="source <(kubectl completion zsh)"
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 
+
+function s3(){
+    . ~/envs/s3/bin/activate
+    wd s3
+    export PYTHONPATH=.
+}
+
+
+function ssh-copy-id-root {
+    target=$1
+    cat ~/.ssh/id_rsa.pub  | ssh $target "sudo mkdir /root/.ssh; sudo tee -a /root/.ssh/authorized_keys"
+}

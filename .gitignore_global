@@ -14,3 +14,4 @@ Cmakelist
 .clang
 CMakeLists.txt
 *.iml
+.mypy_cache/

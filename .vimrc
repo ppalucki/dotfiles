@@ -107,76 +107,137 @@ let g:plug_url_format = 'https://github.com/%s.git'
 
 call plug#begin('~/.vim/plugged')
 
-" porowanienie kataklogow
-Plug 'vim-scripts/DirDiff.vim'
-
-""" GITHUBs
-" autoformatowanie zewnwtrznym programem - gq - nie dziala na osx
-" Plug 'Chiel92/vim-autoformat' 
-" automatyczne zakmykanie nawiasow
-"Plug 'Raimondi/delimitMate'
-" obsluge ReST
-"Plug 'Rykka/riv.vim' - colids with <c-e>
-" jakies lepsze uzupelenianien
-" Plug 'Shougo/neocomplcache.vim'
-" gdy mam lua to lepsze jest
-" Plug 'Shougo/neocomplete.vim'
-" snippets
+" ---------- Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+" autoformat
+" pip install yapf autopep8
+Plug 'Chiel92/vim-autoformat'
+
+" --------------- PYTHON
+Plug 'davidhalter/jedi-vim', { 'for':  'python' }
+Plug 'hynek/vim-python-pep8-indent', { 'for':  'python' }
+Plug 'alfredodeza/coveragepy.vim', { 'for':  'python' }
+Plug 'tlvince/vim-compiler-python', { 'for':  'python' }
+" PyTest
+Plug 'alfredodeza/pytest.vim', { 'for':  'python' }
+Plug 'Rykka/doctest.vim', { 'for': 'python' }
+Plug 'nvie/vim-flake8', { 'for':  'python' }
+"Conflict with jedi-py
+"Plug 'python-mode/python-mode', { 'for':  'python' }
+
+" ------------- Golang development
+" with GoImport fix (python based solution not accepted by upstream)
+Plug 'fatih/vim-go', { 'for':  'go' }
+Plug 'rhysd/vim-go-impl', { 'for':  'go' }
+" Plug 'garyburd/go-explorer', { 'for':  'go' }
+
+" --- TagBar
+Plug 'majutsushi/tagbar'
+" ---- NERDTree
+Plug 'scrooloose/nerdtree'
+" colorschemes 
+Plug 'flazz/vim-colorschemes'
+" Direcotry diff
+Plug 'vim-scripts/DirDiff.vim'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
 Plug 'chrisbra/Recover.vim'
+""" ----- ack-grep Find-search
+" Plug 'mileszs/ack.vim'
+Plug 'rking/ag.vim'
+Plug 'Chun-Yang/vim-action-ag'
+""" ----- syntastic - multilanguage linter
+Plug 'scrooloose/syntastic'
+""" -----  GIT
+Plug 'tpope/vim-fugitive'
+" ------------- Extra keyboard shortcuts
+" SuperTab - tab
+Plug 'ervandew/supertab'
+" A few of quick commands to swtich between source files and header files quickly.
+Plug 'vim-scripts/a.vim'
+" comment with gcc
+Plug 'tomtom/tcomment_vim'
+" uruchamianie w tle
+Plug 'tpope/vim-dispatch'
+" better repeats (.)
+Plug 'tpope/vim-repeat'
+" surround (ys/S)
+Plug 'tpope/vim-surround'
+" usefull shortucts - cos/col/coh/cod
+Plug 'tpope/vim-unimpaired'
+" shift or move or rotate arguments or parameters of function >, or <,
+Plug 'PeterRincker/vim-argumentative'
+" ------------- powerlines
+" Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
+" QuickRun
+Plug 'thinca/vim-quickrun'
+" DistractionFreeMode light version
+Plug 'bilalq/lite-dfm'
+" Patch review
+Plug 'junkblocker/patchreview-vim'
+" Set filetype based on shebang
+Plug 'vitalk/vim-shebang'
+" Better verbose
+Plug 'tpope/vim-scriptease'
+" Dockerfile
+Plug 'ekalinin/Dockerfile.vim'
+" json
+Plug 'elzr/vim-json'
+" color table
+Plug 'guns/xterm-color-table.vim'
+" mulitcurosrs
+Plug 'terryma/vim-multiple-cursors'
+" rust
+Plug 'rust-lang/rust.vim'
+" --- Presentation
+" Plug 'sotte/presenting.vim'
+Plug 'raphael/vim-present-simple'
 
-"""" ctrlp and plugins
+""" ----------------- CtrlP and plugins
 Plug 'kien/ctrlp.vim'
+"" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
+" mappend to F6
+Plug 'jasoncodes/ctrlp-modified.vim' 
+""  tjump
+" Plug 'vim-scripts/ctrlp-tjump'
+Plug 'ivalkeen/vim-ctrlp-tjump'
 "" This plugin allow you to use CtrlP finder to execute setfiletype easily - :CtrlPFiletype
 " Plug 'endel/ctrlp-filetype.vim' 
 "" This extension adds a new CtrlP command, the :CtrlPCmdPalette, which allows you to find and run vim commands (internal or custom).
 " Plug 'fisadev/vim-ctrlp-cmdpalette'
-"" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
-" mappend to F6
-Plug 'jasoncodes/ctrlp-modified.vim' 
 "" GIT related: branch, diff, log
 " Plug 'kaneshin/ctrlp-git'
 "" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
 " Plug 'tacahiroy/ctrlp-funky'
-"" tjump
-" Plug 'vim-scripts/ctrlp-tjump'
-Plug 'ivalkeen/vim-ctrlp-tjump'
+""" ----------------- Ctrpl end of plugins
 
-" wszystko pod tabem
-Plug 'ervandew/supertab'
-" colorschemes 
-Plug 'flazz/vim-colorschemes'
-
-" --------------- PYTHON-related
-"Plug 'python-mode/python-mode', { 'for':  'python' }
-Plug 'hynek/vim-python-pep8-indent', { 'for':  'python' }
-Plug 'alfredodeza/coveragepy.vim', { 'for':  'python' }
-Plug 'nvie/vim-flake8', { 'for':  'python' }
-Plug 'tlvince/vim-compiler-python', { 'for':  'python' }
-" PyTest
-Plug 'alfredodeza/pytest.vim', { 'for':  'python' }
-" jedi-py dla vim
-Plug 'davidhalter/jedi-vim', { 'for':  'python' }
-Plug 'Rykka/doctest.vim', { 'for': 'python' }
-
-
+""" ---------------- DISABLED (TRASH)
 " SQL execute
 " Plug 'ivalkeen/vim-simpledb'
-" tagbar
-Plug 'majutsushi/tagbar'
-" nerdtree
-Plug 'scrooloose/nerdtree'
+" not required bundled with vim-go ??
+" Plug 'nsf/gocode', {'rtp': 'vim/'}
+"
+" the same as gocode (bundled standalone and not required)
+" Plug 'dgryski/vim-godef'
 
-""" ----- ack-grep
-" Plug 'mileszs/ack.vim'
+" real live completion for vim-go
+" Plug 'Valloric/YouCompleteMe'
+" dependensceies ???
+"Plug 'xolox/vim-misc'
+"
+" clojure plugin
+" Plug 'tpope/vim-fireplace'
 
-Plug 'rking/ag.vim'
-Plug 'Chun-Yang/vim-action-ag'
+" screensend/screenattach - because of osx path_max limit breaks Vim
+" runtimepath
+" Plug 'ervandew/screen'
+" better paste from screen (with leader+p)
 
-""" ----- syntastic - multilanguage linter
-Plug 'scrooloose/syntastic'
+" Plug 'vim-scripts/screenpaste.vim'
+" " ruby/RAILS
+" Plug 'tpope/vim-rails'
 
 """ ----- graphical gundo
 " Plug 'sjl/gundo.vim'
@@ -187,55 +248,6 @@ Plug 'scrooloose/syntastic'
 "" In other words, you can search your selection text in |Visual-mode|.
 " Plug 'thinca/vim-visualstar'
 " !replaced with * or //
-"
-" dependensceies ???
-Plug 'xolox/vim-misc'
-" comment with gcc
-Plug 'tomtom/tcomment_vim'
-" uruchamianie w tle
-Plug 'tpope/vim-dispatch'
-" GIT
-Plug 'tpope/vim-fugitive'
-" " ruby/RAILS
-" Plug 'tpope/vim-rails'
-" better repeats
-Plug 'tpope/vim-repeat'
-" surround
-Plug 'tpope/vim-surround'
-" screensend/screenattach - because of osx path_max limit breaks Vim
-" runtimepath
-" Plug 'ervandew/screen'
-" better paste from screen (with leader+p)
-" Plug 'vim-scripts/screenpaste.vim'
-"
-" ------------- golang development
-" Plug 'fatih/vim-go'
-" with GoImport fix (python based solution not accepted by upstream)
-Plug 'fatih/vim-go', { 'for':  'go' }
-Plug 'rhysd/vim-go-impl', { 'for':  'go' }
-" Plug 'garyburd/go-explorer', { 'for':  'go' }
-
-" zamiennik powerline
-" Plug 'bling/vim-airline'
-Plug 'itchyny/lightline.vim'
-
-" not required bundled with vim-go ??
-" Plug 'nsf/gocode', {'rtp': 'vim/'}
-" the same as gocode (bundled standalone and not required)
-" Plug 'dgryski/vim-godef'
-
-" real live completion for vim-go
-" Plug 'Valloric/YouCompleteMe'
-
-" QuickRun
-Plug 'thinca/vim-quickrun'
-
-
-" clojure plugin
-" Plug 'tpope/vim-fireplace'
-
-" DistractionFreeMode light version
-Plug 'bilalq/lite-dfm'
 
 " udawane registry
 " Plug 'kana/vim-fakeclip'
@@ -268,7 +280,6 @@ Plug 'bilalq/lite-dfm'
 " fork with 'escaping $ fix'
 " Plug 'benmills/vimux'
 
-Plug 'ekalinin/Dockerfile.vim'
 " Plug 'altercation/vim-colors-solarized'
 "
 " Plug 'guyzmo/vim-etherpad'
@@ -278,34 +289,10 @@ Plug 'ekalinin/Dockerfile.vim'
 
 
 
-Plug 'elzr/vim-json'
-
-Plug 'guns/xterm-color-table.vim'
-
 " Plug 'justmao945/vim-clang'
-"
-Plug 'vim-scripts/a.vim'
-
-" GDB 
 " Plug 'skibyte/gdb-from-vim'
-
-" All of your Plugins must be added before the following line
-" call vundle#end()            " required
-"
-
-Plug 'terryma/vim-multiple-cursors'
-
 """ ----- smoth scrolling 
 " Plug 'terryma/vim-smooth-scroll'
-
-""" ----- patch review
-Plug 'junkblocker/patchreview-vim'
-
-""" ----- set filetype based on shebang
-Plug 'vitalk/vim-shebang'
-
-""" better verbose
-Plug 'tpope/vim-scriptease'
 
 
 """ c/c++ complete
@@ -322,25 +309,28 @@ Plug 'tpope/vim-scriptease'
 """ 
 " Plug 'vim-scripts/DrawIt'
 "
-Plug 'tpope/vim-unimpaired'
 
 " Plug 'amiorin/vim-project'
-"
-Plug 'rust-lang/rust.vim'
 
 " NO NO NO
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Plug 'junegunn/fzf.vim'
-"
-" Plug 'sotte/presenting.vim'
-Plug 'raphael/vim-present-simple'
 
 " cxiw or X in visual mode
 "Plug 'tommcdo/vim-exchange'
 
-" shift or move or rotate arguments or parameters of function
-" >, or <,
-Plug 'PeterRincker/vim-argumentative'
+
+""" ---------------------------- GITHUBs
+" autoformatowanie zewnwtrznym programem - gq - nie dziala na osx
+" Plug 'Chiel92/vim-autoformat' 
+" automatyczne zakmykanie nawiasow
+"Plug 'Raimondi/delimitMate'
+" obsluge ReST
+"Plug 'Rykka/riv.vim' - colids with <c-e>
+" jakies lepsze uzupelenianien
+" Plug 'Shougo/neocomplcache.vim'
+" gdy mam lua to lepsze jest
+" Plug 'Shougo/neocomplete.vim'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -557,8 +547,12 @@ function! PythonMappings()
     " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
-    map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
+    map <leader>tp :up<bar>py sendtmux("python <c-r>%")<cr>
+    map <leader>ti :up<bar>py sendtmux("ipython -i <c-r>%")<cr>
+
+    map <leader>gd :let g:jedi#use_splits_not_buffers='bottom'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+    map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+    "map gD :let g:jedi#use_splits_not_buffers='left'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
 
     """ -----------------------------
     """ Python python functions
@@ -616,8 +610,19 @@ au FileType python call PythonMappings()
 """ -------------------------------------------
 au BufRead,BufNewFile *.pyc_dis set filetype=python
 
+
+""" -------------------------------------------
+"""         Flake8
+""" -------------------------------------------
+" https://github.com/nvie/vim-flake8#max-line-lengths
+" ~/.config/flake8
+" [flake8]
+" max-line-length = 120
 """ flake8 vim - F7 or L
 let no_flake8_maps=1
+let g:flake8_show_in_gutter=1
+let g:flake8_show_quickfix=1
+
 
 """ -------------------------------------------
 """         XML mappings
@@ -981,7 +986,7 @@ let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 1
 "let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen = 0
-let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$']
+let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__']
 
 let NERDTreeMouseMode = 3
 
@@ -1136,8 +1141,8 @@ set nomousehide
 "--py Ack bez jumpa
 map <leader>h "ayiw:Ag! -- "<C-r>a"
 vmap <leader>h "ay:Ag! -- "<C-r>a"
-map <leader>H "ayiw:Ag! --known-types -- "<C-r>a"
-vmap <leader>H "ay:Ag! --known-types -- "<C-r>a"
+map <leader>H "ayiw:Ag! --all-types -- "<C-r>a"
+vmap <leader>H "ay:Ag! --all-types -- "<C-r>a"
 
 au FileType python map <buffer> <leader>h "ayiw:Ag! --python -- "<C-r>a"
 au FileType python vmap <buffer> <leader>h "ay:Ag! --python -- "<C-r>a"
@@ -1564,12 +1569,6 @@ map <leader>u :GundoToggle<CR>
 " base on http://stackoverflow.com/questions/3431184/highlight-all-occurrence-of-a-selected-word/3431203#3431203
 nnoremap <leader>f *N
 
-" fix na colory diffa (change bez tla - bylo szare)
-" sprawdz kolory: colortest -w -s (w bashu!)
-hi DiffChange ctermbg=NONE
-hi DiffDelete ctermbg=53
-hi DiffAdd ctermbg=53
-hi DiffText ctermbg=52 
 
 
 """ ----- ultisnip
@@ -1598,7 +1597,7 @@ map <leader><F7> :CtrlPModified<CR>
 let g:ctrlp_map = '<c-p>'
 " let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)|(vendor)$',
+    \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)|(vendor)|(rl-data)|(tf-logs)$',
     \ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
     \ }
 
@@ -1622,9 +1621,22 @@ let repmo_revkey = "<bar>"
 " let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl ]c|[c ]]|[[ ]m|[m ]q|[q"
 let g:repmo_mapmotions = "j|k h|l <C-E>|<C-Y> zh|zl"
 
+""" DIFF
+" diff all open windows
+":windo diffthis
+"end with
+":diffoff!
 " diff jump with ()
 nn <expr> ( &diff ? "[c" : "("
 nn <expr> ) &diff ? "]c" : ")"
+" fix na colory diffa (change bez tla - bylo szare)
+" sprawdz kolory: colortest -w -s (w bashu!)
+hi DiffChange ctermbg=NONE
+hi DiffDelete ctermbg=53
+hi DiffAdd ctermbg=53
+hi DiffText ctermbg=52 
+
+
 
 " vsplit tag
 nmap <leader><C-]> :vsplit <CR>:exec("tag ".expand("<cword>"))<CR>zt<c-w>r<c-w><c-w>
@@ -1998,11 +2010,6 @@ let g:COMMAND_MAP = {
     \ }
 
 
-""" Autoformat autopep8 options
-" aggressive added
-" -a means --aggressive 
-" -a, --aggressive      enable non-whitespace changes; multiple -a result in more aggressive changes
-let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." -a -a"'
 
 
 """ diff
@@ -2044,18 +2051,24 @@ let g:syntastic_go_go_test_args="-tags sequential"
                            
 " tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
 " do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...
-" let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_python_checkers = ['python', 'flake8']
 " let g:syntastic_python_checkers = ['python', 'pep8']
 " let g:syntastic_python_checkers = ['python', 'pep8', 'pylint']
 " let g:syntastic_debug = 33
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'pycodestyle']
-let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_python_checkers = ['python', 'mypy']
 " let g:syntastic_python_checkers = ['python']
 let g:syntastic_python_pycodestyle_args="--max-line-length=120"
+let g:syntastic_python_mypy_args="--ignore-missing-imports --check-untyped-defs"
 
 let g:syntastic_always_populate_loc_list=1
-let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E265,E302,E501,E305,E303,E201,E202,E261"
+
+" sytling errors too
+"let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E265,E302,E501,E305,E303,E201,E202,E261,E226"
+
+" FAST DEVELOPMENT only pyflakes ERRORs
+let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E"
 
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
@@ -2428,7 +2441,8 @@ au BufRead,BufNewFile install set filetype=sh
 """   tmux - send to all terminals
 """ -------------------------------------------
 py3 << EOP
-import vim,os,subprocess,string,time
+import os,subprocess,string,time
+import vim
 
 def sendlinetmux():
     """ send current line to selected by count tmux pane
@@ -2517,8 +2531,9 @@ def _current_pane_idx():
     return int(currentout.strip().strip("'"))
 
 def _all_panes_idxs():
-    allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' '))
-    allpanes = map(int, map(lambda x: string.strip(x, "'"), filter(None, allpanesout.split("\n"))))
+    allpanesout = subprocess.check_output("tmux list-panes -F '#{pane_index}'".split(' ')).decode()
+    wo_nones = list(filter(None, str(allpanesout).split("\n")))
+    allpanes = list(map(int, map(lambda x: str.strip(x, "'"), wo_nones)))
     return allpanes
 
 def sendalltmux(text):
@@ -2536,6 +2551,7 @@ def offset():
 EOP
 
 command! Offset pyx offset()
+
 
 """ terminal bash vertical
 " map <leader>tb :call VimuxOpenRunner()<cr>
@@ -2922,6 +2938,17 @@ set pyxversion=3
 let g:jedi#force_py_version = 3
 let g:UltiSnipsUsePythonVersion = 3
 
+" AutoFormat
 
+let g:formatdef_autopep8 = "'autopep8 - --aggressive -a -a -a --range '.a:firstline.' '.a:lastline"
+""" Autoformat autopep8 options
+" aggressive added
+" -a means --aggressive 
+" -a, --aggressive      enable non-whitespace changes; multiple -a result in more aggressive changes
+"let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." -a -a"'
 "
+"
+vmap <leader>gq :Autoformat<cr>
+nmap <leader>gq :Autoformat<cr>
+
 "
