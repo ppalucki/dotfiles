@@ -547,8 +547,8 @@ function! PythonMappings()
     " nmap <silent> <leader>tt :w<bar>call VimuxOpenRunner()<bar>call VimuxSendText("nosetests -v -d -s <c-r>%:<c-r>=tagbar#currenttag('%s','', 'f')<cr>")<bar>call VimuxSendKeys("enter")<cr>
 
     " termianal python 
-    map <leader>tp :up<bar>py sendtmux("python <c-r>%")<cr>
-    map <leader>ti :up<bar>py sendtmux("ipython -i <c-r>%")<cr>
+    map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
+    map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
 
     map <leader>gd :let g:jedi#use_splits_not_buffers='bottom'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
     map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
