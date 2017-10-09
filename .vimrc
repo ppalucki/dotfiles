@@ -2952,3 +2952,5 @@ vmap <leader>gq :Autoformat<cr>
 nmap <leader>gq :Autoformat<cr>
 
 "
+" ssh configs
+au BufRead,BufNewFile */ssh/*config set filetype=sshconfig
