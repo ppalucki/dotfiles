@@ -1004,6 +1004,7 @@ au FileType c map <buffer> <F8> :!ctags -f .tags --languages=C --verbose=no --to
 au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <buffer> <F8> :!regenerate-haskell-tag.sh<cr>
 " au FileType go map <buffer> <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
+" ### mv vendor .. ; mv ../vendor .
 au FileType go map <buffer> <F8> :!gotags -R -f .tags \.<cr>
 "
 """ tags file

@@ -316,8 +316,8 @@ alias unsetproxy="unset HTTPS_PROXY HTTP_PROXY http_proxy https_proxy"
 ####################################
 # git clone git://github.com/joelthelion/autojump.git
 # https://github.com/wting/autojump#manual
+# ./install.py or ./uninstall.py
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
-
 
 ###################################
 # ssh agent

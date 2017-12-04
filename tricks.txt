@@ -135,3 +135,13 @@ lrwxrwxrwx. 1 root root 0 Aug 16 11:01 lo -> ../../devices/virtual/net/lo
 
 #### ssh-copy-id to root
 cat ~/.ssh/id_rsa.pub | ssh someuser@192.168.1.25 "sudo mkdir /root/.ssh; sudo tee -a /root/.ssh/authorized_keys"
+
+#### mesos deps
+sudo yum groupinstall -y "Development Tools"
+sudo yum -y install apr-devel
+sudo yum -y install curl-devel
+sudo yum -y install cyrus-sasl-devel
+sudo yum -y install cyrus-sasl-md5
+sudo yum -y install subversion-devel
+sudo yum -y install libffi-devel
+
