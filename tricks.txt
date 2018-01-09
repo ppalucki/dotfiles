@@ -145,3 +145,5 @@ sudo yum -y install cyrus-sasl-md5
 sudo yum -y install subversion-devel
 sudo yum -y install libffi-devel
 
+#### wxpython deps
+yum install gstreamer-plugins-base-devel
