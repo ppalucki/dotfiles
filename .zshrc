@@ -49,7 +49,8 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
+#plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
+plugins=(gitfast common-aliases docker tmux history wd systemd golang extract ssh-agent urltools)
 
 
 ### VI-mode - readline doesn't work
@@ -67,7 +68,7 @@ ZSH_TMUX_AUTOSTART=false
 ############################################
 ### PATH ~/bin
 ###########################################
-export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -220,9 +221,14 @@ alias watch='watch '
 ###########################################
 ### golang
 ###########################################
+#
+export GOROOT=/usr/local/go
+export GOPATH=/home/ppalucki/work/gopath19
+export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
+hash -r
 ##### gvm
-[ -f ~/.gvm/scripts/gvm ] && source ~/.gvm/scripts/gvm
-[ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
+# [ -f ~/.gvm/scripts/gvm ] && source ~/.gvm/scripts/gvm
+# [ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
 
 # if [ -f ~/bin/setgosrc ]; then
 #     # according setgo wg. src /home/ppalucki/src/go
@@ -285,7 +291,7 @@ function testy(){
 #### python
 ##########################################
 # virtualenv wrapper
-[ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
+# [ -f /usr/share/virtualenvwrapper/virtualenvwrapper.sh ] && source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 # pythonz
 # https://github.com/saghul/pythonz
@@ -322,14 +328,14 @@ alias unsetproxy="unset HTTPS_PROXY HTTP_PROXY http_proxy https_proxy"
 ###################################
 # ssh agent
 #####################################
-function sshagent(){
-    exec /usr/bin/ssh-agent $SHELL
-}
-
 function sshadd(){
     ssh-add
     ssh-add -l
 }
+function sshagent(){
+    exec /usr/bin/ssh-agent $SHELL
+}
+
 
 
 ### authagent start
@@ -344,6 +350,8 @@ function sshadd(){
 # #########################
 #source <(kubectl completion zsh)
 alias kubectlcompletion="source <(kubectl completion zsh)"
+alias occompletion="source <(oc completion zsh)"
+alias oadmcompletion="source <(oadm completion zsh)"
 
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #
@@ -360,6 +368,11 @@ function s3(){
     . ~/envs/s3/bin/activate
     wd s3
     export PYTHONPATH=.
+}
+
+function coach(){
+    wd coach-test
+    . /home/ppalucki/.local/share/virtualenvs/coach-test-hkooU163/bin/activate
 }
 
 

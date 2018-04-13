@@ -331,6 +331,8 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'Shougo/neocomplcache.vim'
 " gdy mam lua to lepsze jest
 " Plug 'Shougo/neocomplete.vim'
+"
+Plug 'pearofducks/ansible-vim'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -513,7 +515,7 @@ endif
 """         Python (mappings)
 """ -------------------------------------------
 function! PythonMappings()
-    nmap <buffer> <leader>ip ofrom IPython import embed;embed()<ESC>:w<cr>
+    nmap <buffer> <leader>ip o__import__('IPython').embed()<ESC>:w<cr>
     " uzytecznosc mala przez !brak screen!
     " nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
     " ipython debug 
@@ -550,8 +552,11 @@ function! PythonMappings()
     map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
     map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
 
-    map <leader>gd :let g:jedi#use_splits_not_buffers='bottom'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
-    map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+
+    map gd :jedi#goto()<cr>
+
+    " map <leader>gd :let g:jedi#use_splits_not_buffers="bottom"<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=""<cr>
+    " map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=''<cr>
     "map gD :let g:jedi#use_splits_not_buffers='left'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
 
     """ -----------------------------
@@ -1003,6 +1008,8 @@ au FileType cpp map <buffer> <F8> :!ctags -f .tags --languages=C++ --verbose=no 
 au FileType c map <buffer> <F8> :!ctags -f .tags --languages=C --verbose=no --totals --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
 au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
 au FileType haskell map <buffer> <F8> :!regenerate-haskell-tag.sh<cr>
+au FileType ansible map <buffer> <F8> :!ctags -f .tags --verbose=no --totals --recurse=yes --fields=+Kl <cr>  
+" requires https://github.com/universal-ctags/ctags
 " au FileType go map <buffer> <F8> :!ctags -f .tags --languages=Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --exclude=Godeps . <cr>
 " ### mv vendor .. ; mv ../vendor .
 au FileType go map <buffer> <F8> :!gotags -R -f .tags \.<cr>

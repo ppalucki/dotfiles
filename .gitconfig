@@ -50,6 +50,7 @@
     b = branch -vv
     branches = branch -vv
     branchesall = branch -a -vv
+    branchesdate = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'
     co = checkout
     cob = checkout -b
     ciam = commit -a -m

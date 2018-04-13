@@ -115,6 +115,7 @@ yum install -y epel-release
 yum install -y xsensors
 yum install -y hwloc
 
+yum install liberation-* chromium
 
 centos7 tricks https://wiki.mikejung.biz/CentOS_7
 
@@ -147,3 +148,25 @@ sudo yum -y install libffi-devel
 
 #### wxpython deps
 yum install gstreamer-plugins-base-devel
+
+#### sshrc
+https://github.com/taylorskalyo/sshrc
+wget https://raw.githubusercontent.com/taylorskalyo/sshrc/master/sshrc
+chmod +x sshrc
+sudo mv sshrc /usr/local/bin #or anywhere else on your PATH
+
+### virsh 
+eval `/usr/bin/resize`
+
+### authorize qemu for vagrant
+# https://bugzilla.redhat.com/show_bug.cgi?id=1437933
+sudo usermod --append --groups libvirt `whoami`
+
+### openshift
+# restart job
+oc  --namespace=logging get job openshift-ansible-logging-job -ojson | jq 'del(.spec.selector)' | jq 'del(.spec.template.metadata.labels)' | oc  --namespace=logging replace --force -f -
+
+
+
+########## vim python 3.6 on centos
+./configure --enable-fail-if-missing --enable-python3interp vi_cv_path_python3=/usr/bin/python3.6 --with-python-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu
