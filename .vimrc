@@ -195,6 +195,9 @@ Plug 'rust-lang/rust.vim'
 " Plug 'sotte/presenting.vim'
 Plug 'raphael/vim-present-simple'
 
+" Thrift
+Plug 'solarnz/thrift.vim'
+
 """ ----------------- CtrlP and plugins
 Plug 'kien/ctrlp.vim'
 "" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
@@ -515,6 +518,7 @@ endif
 """         Python (mappings)
 """ -------------------------------------------
 function! PythonMappings()
+    " remember iem!!!
     nmap <buffer> <leader>ip o__import__('IPython').embed()<ESC>:w<cr>
     " uzytecznosc mala przez !brak screen!
     " nmap <buffer> <leader>iP ofrom vipdb import embed;embed()<ESC>:w<cr> "
@@ -551,9 +555,13 @@ function! PythonMappings()
     " termianal python 
     map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
     map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
+    map <leader>tI :up<bar>pyx sendtmux("ipython --pdb -i <c-r>%")<cr>
 
 
-    map gd :jedi#goto()<cr>
+    map gd :call jedi#goto()<cr>
+
+    map gu :call jedi#usages()<cr>
+
 
     " map <leader>gd :let g:jedi#use_splits_not_buffers="bottom"<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=""<cr>
     " map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=''<cr>
@@ -1003,6 +1011,7 @@ let NERDTreeMouseMode = 3
 map <F8> :!ctags -f .tags --verbose=no --totals=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' . <cr>
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <buffer> <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
+au FileType java map <buffer> <F8> :!ctags -f .tags --languages=Java --verbose=no --totals --recurse=yes <cr>  
 au FileType python map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
 au FileType cpp map <buffer> <F8> :!ctags -f .tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
 au FileType c map <buffer> <F8> :!ctags -f .tags --languages=C --verbose=no --totals --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
@@ -1608,6 +1617,11 @@ let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v(\.(git|hg|svn|bzr))|(htmlcov)|(tmp)|(vendor)|(rl-data)|(tf-logs)$',
     \ 'file': '\v(\.(exe|so|dll|pyc|orig|class|tex|png|gif|o))|(index|MERGE_MSG|COMMIT_EDITMSG)|(\.LOCAL\..*)$',
     \ }
+
+
+" find 'root' basing on pwd, not current opened files (greate for multirepo)
+" base folders, ActorCritic
+let g:ctrlp_working_path_mode = 'rw'
 
 " let g:ctrlp_switch_buffer = 'eT'
 let g:ctrlp_match_window_bottom = 1

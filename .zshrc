@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
-plugins=(gitfast common-aliases docker tmux history wd systemd golang extract ssh-agent urltools)
+plugins=(gitfast common-aliases docker tmux history wd systemd golang extract ssh-agent urltools vagrant)
 
 
 ### VI-mode - readline doesn't work
@@ -371,9 +371,17 @@ function s3(){
 }
 
 function coach(){
-    wd coach-test
     . /home/ppalucki/.local/share/virtualenvs/coach-test-hkooU163/bin/activate
+    wd coach-test
+    export PYTHONPATH=/home/ppalucki/work/rl/coach-test/coach
+    export PYTHONSTARTUP=/home/ppalucki/work/rl/coach-test/pythonstartup.py
 }
+
+function gym(){
+    coach
+    wd gym_work
+}
+
 
 
 function ssh-copy-id-root {

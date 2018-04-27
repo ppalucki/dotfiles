@@ -11,4 +11,5 @@ ln -sv ~/dotfiles/.ideavimrc ~/.ideavimrc
 ln -sv ~/dotfiles/.gdb.py ~/.gdb.py
 ln -sv ~/dotfiles/.gdbinit ~/.gdbinit
 ln -sv ~/dotfiles/.zshrc ~/.zshrc
+ln -sv ~/dotfiles/.pdbrc.py ~/.pdbrc.py
 echo done
