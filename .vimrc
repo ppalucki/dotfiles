@@ -536,10 +536,12 @@ function! PythonMappings()
     vmap <buffer> <F9> :QuickRun -split 10<cr>
     " map <F9> :up<bar>!/usr/bin/env python %<CR>
     map <leader><F9> :up<bar>!/usr/bin/env python %  
+
     map <buffer> <F10> :up<bar>Pytest file<cr>
-    map <buffer> <s-F10> :up<bar>Pytest function<cr>
-    map <buffer> <m-F10> :up<bar>Pytest method<cr>
-    map <buffer> <c-F10> :up<bar>Pytest class<cr>
+    map <buffer> <F11> :up<bar>Pytest function --pdb<cr>
+    map <buffer> <F12> :up<bar>Pytest method<cr>
+    " map <buffer> <m-F10> :up<bar>Pytest method<cr>
+    " map <buffer> <s-F10> :up<bar>Pytest class<cr>
     "
     " map <leader>g :RopeGotoDefinition<cr>
     " works badly
@@ -556,9 +558,11 @@ function! PythonMappings()
     map <leader>tp :up<bar>pyx sendtmux("python <c-r>%")<cr>
     map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
     map <leader>tI :up<bar>pyx sendtmux("ipython --pdb -i <c-r>%")<cr>
+    map <leader>tu :up<bar>pyx sendtmux("pytest -v -s <c-r>%")<cr>
+    map <leader>tU :up<bar>pyx sendtmux("pytest -v --pdb <c-r>%")<cr>
 
 
-    map gd :call jedi#goto()<cr>
+    "map gd :call jedi#goto()<cr>
 
     map gu :call jedi#usages()<cr>
 
@@ -613,7 +617,7 @@ EOF
 
 
     "" jedi rename (mapping by hand because, we want <leader>r as rerun
-    nnoremap <silent> <buffer> <localleader>R :call jedi#rename()<cr>
+    nmap <leader>R :call jedi#rename()<cr>
     nmap <buffer> <leader>r :up<bar>:pyx sendtmux('c-p')<cr>
 endfunction
 au FileType python call PythonMappings()
@@ -778,7 +782,7 @@ function! GoMappings()
     nmap <buffer> <c-w>d <Plug>(go-def-vertical)
     nmap <buffer> gD <Plug>(go-def-vertical)
     " go def horizontal
-    nmap <buffer> <leader>gd <Plug>(go-def-split)
+    #nmap <buffer> <leader>gd <Plug>(go-def-split)
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
     " nmap <silent> gD :GoDefVsplit<cr>
@@ -1715,9 +1719,9 @@ set completeopt+=menu
 " git clone git://github.com/davidhalter/jedi-vim.git
 " TAB is reserved for omnifunc
 " let g:jedi#autocompletion_command = "<tab>"
-let g:jedi#auto_vim_configuration = 1
-let g:jedi#goto_assignments_command = "<leader>d"
-let g:jedi#goto_definitions_command = "gd"
+" let g:jedi#auto_initialization = 0
+" let g:jedi#auto_vim_configuration = 1
+" let g:jedi#goto_command = ""
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#usages_command = "<leader>z"
@@ -2940,7 +2944,8 @@ let g:tmuxcomplete#trigger = 'omnifunc'
 """ ====================================
 " vertical goto file
 """ ===================================
-map <leader>gf :vertical wincmd f<CR>
+" break <leader>g from jedi-vim!!!!
+"map <leader>gf :vertical wincmd f<CR>
 
 """ -----------------------------------------
 """ vim-project
@@ -2970,8 +2975,9 @@ let g:formatdef_autopep8 = "'autopep8 - --aggressive -a -a -a --range '.a:firstl
 "let g:formatprg_args_expr_python='"/dev/stdin ".(&textwidth ? "--max-line-length=".&textwidth : "")." -a -a"'
 "
 "
-vmap <leader>gq :Autoformat<cr>
-nmap <leader>gq :Autoformat<cr>
+" breaks jedivim
+vmap <buffer> <leader>q :Autoformat<cr>
+nmap <buffer> <leader>q :Autoformat<cr>
 
 "
 " ssh configs
