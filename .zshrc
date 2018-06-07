@@ -370,16 +370,11 @@ function s3(){
     export PYTHONPATH=.
 }
 
-function coach(){
-    . /home/ppalucki/.local/share/virtualenvs/coach-test-hkooU163/bin/activate
-    wd coach-test
-    export PYTHONPATH=/home/ppalucki/work/rl/coach-test/coach
-    export PYTHONSTARTUP=/home/ppalucki/work/rl/coach-test/pythonstartup.py
-}
-
 function gym(){
-    coach
     wd gym_work
+    . /home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso/bin/activate
+    export COACH=~/work/rl/coach-test/gym_workloads/.coach
+    export PYTHONPATH=.coach
 }
 
 

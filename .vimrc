@@ -518,6 +518,11 @@ endif
 """         Python (mappings)
 """ -------------------------------------------
 function! PythonMappings()
+
+    " indent based on syntax
+    set nosmartindent
+
+    set colorcolumn=100
     " remember iem!!!
     nmap <buffer> <leader>ip o__import__('IPython').embed()<ESC>:w<cr>
     " uzytecznosc mala przez !brak screen!
@@ -525,7 +530,7 @@ function! PythonMappings()
     " ipython debug 
     nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
     nmap <buffer> <leader>iv oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
-    nmap <buffer> <leader><c-l> :PymodeLint<cr>
+    nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>SyntasticCheck<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
     " " pudb debugger
     " nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
@@ -559,17 +564,19 @@ function! PythonMappings()
     map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
     map <leader>tI :up<bar>pyx sendtmux("ipython --pdb -i <c-r>%")<cr>
     map <leader>tu :up<bar>pyx sendtmux("pytest -v -s <c-r>%")<cr>
-    map <leader>tU :up<bar>pyx sendtmux("pytest -v --pdb <c-r>%")<cr>
+    map <buffer> <leader>tU :up<bar>:pyx sendtmux("pytest -s -v -k '%s' <c-r>%"%current_test())<cr>
 
 
-    "map gd :call jedi#goto()<cr>
+    nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto_assignments()<bar>call jedi#goto_assignments()<cr>
+    " Version below doesn't work with types as assignments!
+    " nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto()<cr> 
 
     map gu :call jedi#usages()<cr>
 
 
-    " map <leader>gd :let g:jedi#use_splits_not_buffers="bottom"<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=""<cr>
-    " map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=''<cr>
-    "map gD :let g:jedi#use_splits_not_buffers='left'<bar> call jedi#goto_definitions()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+    map <leader>gd :let g:jedi#use_splits_not_buffers="bottom"<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=""<cr>
+    map <c-w>d :let g:jedi#use_splits_not_buffers='right'<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=''<cr>
+    map gD :let g:jedi#use_splits_not_buffers='left'<bar> call jedi#goto()<bar>let g:jedi#use_splits_not_buffers=''<cr>
 
     """ -----------------------------
     """ Python python functions
@@ -1721,7 +1728,7 @@ set completeopt+=menu
 " let g:jedi#autocompletion_command = "<tab>"
 " let g:jedi#auto_initialization = 0
 " let g:jedi#auto_vim_configuration = 1
-" let g:jedi#goto_command = ""
+" let g:jedi#goto_assignments_command = "gd"
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#usages_command = "<leader>z"
@@ -1906,7 +1913,7 @@ import time, vim
 import subprocess
 
 def current_test():
-    return vim.eval("tagbar#currenttag('%s','')")[:-2] # without ()
+    return vim.eval("tagbar#currenttag('%s','')").replace('(','').replace(')','') # without ()
 
 def current_file():
     return vim.eval("expand('%:t')")
@@ -2052,7 +2059,7 @@ set diffopt=filler,vertical
 " nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
 nmap <leader>l :up<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
-let g:syntastic_quiet_messages = {'level': 'warrnings'}
+"let g:syntastic_quiet_messages = {'level': 'warrnings'}
 " prevent strange behavior of locationlist accordking this reddit thread
 " https://www.reddit.com/r/vim/comments/3opdrd/dont_autoclose_location_list_when_leaving_window/
 " when <leader>z (go oracle) ]l [l - won't close location list on every jump
@@ -2062,6 +2069,9 @@ let g:syntastic_auto_loc_list=0
 " let g:syntastic_mode_map = { 'mode': 'active' }
 let g:syntastic_mode_map = { "mode": "passive",
                             \}
+let g:syntastic_always_populate_loc_list=1
+
+" --- GOLANG PART
 " zabardzo trwa na golonagu - jak checsz miec tylko aktive to przestaw sobie w
 " GoMappings - i nie daje sie tego wylaczyc za pomoca SyntasticToggleMode
                            " \ "active_filetypes": ["go"]
@@ -2075,12 +2085,16 @@ let g:syntastic_go_go_test_args="-tags sequential"
 " let g:syntastic_go_go_exec = "/usr/bin/go-fast-compile" 
 " let g:syntastic_go_go_exec = "/usr/local/go/bin/gofmt" 
                            
-" tylko flake8 bo jest duzo duzo szybszy (dzieki pyflakes niz pylint)
-" do tego mozna wlaczyc sobie mode:active ale nie pokazuje undefined etc...
-let g:syntastic_python_checkers = ['python', 'flake8']
-" let g:syntastic_python_checkers = ['python', 'pep8']
-" let g:syntastic_python_checkers = ['python', 'pep8', 'pylint']
-" let g:syntastic_debug = 33
+
+" PYTHON PART
+" USE ALL for all checks
+" let g:syntastic_python_checkers = ['python', 'flake8', 'pep257', 'pycodestyle', 'pydocstyle', 'pyflakes'] 
+" USE PYFLAKES FOR quick development (undefined variables and so on!)
+let g:syntastic_python_checkers = ['python', 'pyflakes']
+" USE FLAKE8 FOR PEP8 and before final review
+" let g:syntastic_python_checkers = ['python', 'flake8']
+
+" OTHER
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'mypy']
@@ -2088,13 +2102,12 @@ let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_python_pycodestyle_args="--max-line-length=120"
 let g:syntastic_python_mypy_args="--ignore-missing-imports --check-untyped-defs"
 
-let g:syntastic_always_populate_loc_list=1
 
 " sytling errors too
 "let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E265,E302,E501,E305,E303,E201,E202,E261,E226"
 
 " FAST DEVELOPMENT only pyflakes ERRORs
-let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E"
+"let g:syntastic_python_flake8_args="--config=tox.ini --ignore=F401,E"
 
 " python h ???
 let g:syntastic_c_compiler_options = '-std=gnu99 `python-config --cflags --ldflags`'
@@ -2114,6 +2127,12 @@ function! TrimWhiteSpace() "{{{
 endfunction "}}}
 " nnoremap <silent> <Leader>rtw :call TrimWhiteSpace()<CR>
 " nnoremap <Leader>Xw :call TrimWhiteSpace()<CR><bar>:up<cr>
+"
+function! TrimEndLines()
+    let save_cursor = getpos(".")
+    :silent! %s#\($\n\s*\)\+\%$##
+    call setpos('.', save_cursor)
+endfunction
 
 """ -------------------------------------------
 """         screen focus change
@@ -2976,8 +2995,8 @@ let g:formatdef_autopep8 = "'autopep8 - --aggressive -a -a -a --range '.a:firstl
 "
 "
 " breaks jedivim
-vmap <buffer> <leader>q :Autoformat<cr>
-nmap <buffer> <leader>q :Autoformat<cr>
+vmap <buffer> <leader>Q :Autoformat<cr>
+nmap <buffer> <leader>Q :Autoformat<cr>
 
 "
 " ssh configs
