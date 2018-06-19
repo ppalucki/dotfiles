@@ -530,7 +530,7 @@ function! PythonMappings()
     " ipython debug 
     nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
     nmap <buffer> <leader>iv oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
-    nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>SyntasticCheck<cr>
+    nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>SyntasticCheck flake8<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
     " " pudb debugger
     " nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>

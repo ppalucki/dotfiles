@@ -403,3 +403,4 @@ PYTHONPATH
 entrypoint
 yaml
 influxdb
+deinitialize
