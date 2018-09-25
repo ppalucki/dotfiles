@@ -170,3 +170,19 @@ oc  --namespace=logging get job openshift-ansible-logging-job -ojson | jq 'del(.
 
 ########## vim python 3.6 on centos
 ./configure --enable-fail-if-missing --enable-python3interp vi_cv_path_python3=/usr/bin/python3.6 --with-python-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu
+
+
+############# apropos losf, fuser, netstat, ss 
+
+
+###  Prometheus
+
+
+# Query about all metrics.
+
+{__name__=~".+"}
+
+
+################ mesos & aurora
+pip install black pygments
+aurora job inspect --raw --bind user=root local/root/devel/redis re.aurora | black -q - | pygmentize -l python

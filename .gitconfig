@@ -50,7 +50,10 @@
     b = branch -vv
     branches = branch -vv
     branchesall = branch -a -vv
-    branchesdate = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) %(refname:short)'
+    # OR: for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ci %cr" $branch | head -n 1` \\t$branch; done | sort -r
+    branchesdate = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
+    branchesdateall = for-each-ref --sort=-committerdate refs/remotes/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
+
     co = checkout
     cob = checkout -b
     ciam = commit -a -m
@@ -77,6 +80,9 @@
     # doesn't not WORK!!!
     # without need to fetch refspec before and it won't allow you to update this in future
 	gpr = !sh -c \"git fetch origin pull/${1}/head:pr/${1}\" -
+
+
+    pushinit = !sh -c \"git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`\"
 
     # tags + commits (-d --derefernce)
     tags = show-ref --abbrev=7 --tag -d 

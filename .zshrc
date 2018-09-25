@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
-plugins=(gitfast common-aliases docker tmux history wd systemd golang extract ssh-agent urltools vagrant)
+plugins=(gitfast common-aliases command-not-found docker history wd systemd golang extract ssh-agent urltools vagrant tmux)
 
 
 ### VI-mode - readline doesn't work
@@ -58,7 +58,6 @@ plugins=(gitfast common-aliases docker tmux history wd systemd golang extract ss
 
 # User configuration
 ZSH_TMUX_AUTOSTART=false
-
 
 ### gitfast
 # GIT_PS1_DESCRIBE_STYLE=describe 
@@ -363,18 +362,23 @@ alias oadmcompletion="source <(oadm completion zsh)"
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 
-
-function s3(){
-    . ~/envs/s3/bin/activate
-    wd s3
+function cdp(){
+    project_name=$1
+    tmux rename-window "$project_name"
+    wd $project_name
     export PYTHONPATH=.
+    if [ -e "Pipfile" ]; then
+        . `pipenv --venv`/bin/activate
+    fi
 }
 
-function gym(){
-    wd gym_work
-    . /home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso/bin/activate
-    export COACH=~/work/rl/coach-test/gym_workloads/.coach
-    export PYTHONPATH=.coach
+alias cdowca="cdp owca"
+alias cdkafka="cdp owca-kafka-consumer"
+alias cdinst="cdp installer"
+alias cdigkwc="cdp igk-wc-env"
+
+function yaml2json(){
+    python2 -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4);print "\n"'
 }
 
 

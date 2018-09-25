@@ -126,6 +126,10 @@ Plug 'Rykka/doctest.vim', { 'for': 'python' }
 Plug 'nvie/vim-flake8', { 'for':  'python' }
 "Conflict with jedi-py
 "Plug 'python-mode/python-mode', { 'for':  'python' }
+" REMEMBER about g:black_virtualenv
+" /home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso
+let g:black_virtualenv = "/home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso"
+Plug 'ambv/black'
 
 " ------------- Golang development
 " with GoImport fix (python based solution not accepted by upstream)
@@ -336,6 +340,8 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'Shougo/neocomplete.vim'
 "
 Plug 'pearofducks/ansible-vim'
+", { 'do': 'cd ./UltiSnips; python3.6 ./generate.py --style dictionary' }
+" Plug 'chase/vim-ansible-yaml'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -513,6 +519,14 @@ endif
 " let g:pymode_run = 0
 " let g:pymode_virtualenv = 1
 " "let g:pymode_run_key = '<leader>r'
+"
+function! AnsibleMappings()
+
+nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>SyntasticCheck<cr>
+
+endfunction
+
+au FileType yaml.ansible call AnsibleMappings()
 
 """ -------------------------------------------
 """         Python (mappings)
@@ -530,7 +544,7 @@ function! PythonMappings()
     " ipython debug 
     nmap <buffer> <leader>id oimport ipdb;ipdb.set_trace()<ESC>:w<cr>
     nmap <buffer> <leader>iv oimport vipdb;vipdb.set_trace()<ESC>:w<cr>
-    nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>SyntasticCheck flake8<cr>
+    nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>call Flake8()<cr>
     nmap <buffer> <leader>L :call Flake8()<cr>
     " " pudb debugger
     " nmap <buffer> <leader>iu o<esc>Simport pudb;pudb.set_trace()<ESC>:w<cr>
@@ -564,7 +578,7 @@ function! PythonMappings()
     map <leader>ti :up<bar>pyx sendtmux("ipython -i <c-r>%")<cr>
     map <leader>tI :up<bar>pyx sendtmux("ipython --pdb -i <c-r>%")<cr>
     map <leader>tu :up<bar>pyx sendtmux("pytest -v -s <c-r>%")<cr>
-    map <buffer> <leader>tU :up<bar>:pyx sendtmux("pytest -s -v -k '%s' <c-r>%"%current_test())<cr>
+    map <buffer> <leader>tU :up<bar>:pyx sendtmux("pytest -s -vv -k '%s' <c-r>%"%current_test())<cr>
 
 
     nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto_assignments()<bar>call jedi#goto_assignments()<cr>
@@ -645,7 +659,7 @@ au BufRead,BufNewFile *.pyc_dis set filetype=python
 """ flake8 vim - F7 or L
 let no_flake8_maps=1
 let g:flake8_show_in_gutter=1
-let g:flake8_show_quickfix=1
+let g:flake8_show_quickfix=0
 
 
 """ -------------------------------------------
@@ -789,7 +803,7 @@ function! GoMappings()
     nmap <buffer> <c-w>d <Plug>(go-def-vertical)
     nmap <buffer> gD <Plug>(go-def-vertical)
     " go def horizontal
-    #nmap <buffer> <leader>gd <Plug>(go-def-split)
+    nmap <buffer> <leader>gd <Plug>(go-def-split)
 
     " command! -nargs=* -range GoDefVsplit :call go#def#JumpMode("vsplit")
     " nmap <silent> gD :GoDefVsplit<cr>
@@ -1321,6 +1335,9 @@ map <leader>bo :BufOnly<cr>
 " buffer next/previous
 map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
+
+""" python aurora
+au BufRead,BufNewFile *.aurora set filetype=python
 
 """ yaml
 au BufRead,BufNewFile user_data set filetype=yaml
@@ -2063,7 +2080,7 @@ let g:syntastic_check_on_wq=0
 " prevent strange behavior of locationlist accordking this reddit thread
 " https://www.reddit.com/r/vim/comments/3opdrd/dont_autoclose_location_list_when_leaving_window/
 " when <leader>z (go oracle) ]l [l - won't close location list on every jump
-let g:syntastic_auto_loc_list=0
+let g:syntastic_auto_loc_list=1
 
 " Syntastic wlaczony wylaczony
 " let g:syntastic_mode_map = { 'mode': 'active' }
@@ -2087,19 +2104,20 @@ let g:syntastic_go_go_test_args="-tags sequential"
                            
 
 " PYTHON PART
-" USE ALL for all checks
-" let g:syntastic_python_checkers = ['python', 'flake8', 'pep257', 'pycodestyle', 'pydocstyle', 'pyflakes'] 
-" USE PYFLAKES FOR quick development (undefined variables and so on!)
-let g:syntastic_python_checkers = ['python', 'pyflakes']
-" USE FLAKE8 FOR PEP8 and before final review
-" let g:syntastic_python_checkers = ['python', 'flake8']
+" --- USE full FLAKE8 FOR PEP8 and before final review
+let g:syntastic_python_checkers = ['python', 'flake8']
+" --- USE simple FLAKE8 with just failers FOR quick development (undefined variables and so on!) 
+" --- you can use <leader>L for external Flake8 meantime
+let g:syntastic_python_flake8_args="--select=F --ignore=F401"
+
+
 
 " OTHER
 " let g:syntastic_python_checkers = ['python', 'pylint', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'pycodestyle']
 " let g:syntastic_python_checkers = ['python', 'mypy']
 " let g:syntastic_python_checkers = ['python']
-let g:syntastic_python_pycodestyle_args="--max-line-length=120"
+" let g:syntastic_python_pycodestyle_args="--max-line-length=120"
 let g:syntastic_python_mypy_args="--ignore-missing-imports --check-untyped-defs"
 
 
@@ -2254,6 +2272,21 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits',
+        \'i:impls,trait implementations',
+    \]
+    \}
 
 " let g:ctrlp_buftag_ctags_bin='/home/ppalucki/workspace/goprojects/bin/gotags'
 "
@@ -3001,3 +3034,4 @@ nmap <buffer> <leader>Q :Autoformat<cr>
 "
 " ssh configs
 au BufRead,BufNewFile */ssh/*config set filetype=sshconfig
+
