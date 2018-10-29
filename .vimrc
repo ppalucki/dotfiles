@@ -14,7 +14,33 @@
 " F8 - generate tags
 " F9/F10 - build/run/test or compile - lang dependent
 
-" PYTHON keybindings
+"
+" ---------------- main hortcuts -----------
+" # change view mode
+" <leader>n  OR  con        - toggle line numbers
+" cos                       - toggle spelling
+" 
+" ### pasting
+" <leader>p                 - put (paste next line)
+" <leader>P  OR  yon        - toggle paste mode and enter insert mode and disable automatically
+"
+" ### search
+" <leader>f                 - search next current word (*)
+" (visual)//                - search higlighted text
+" <leader>/                 - reset highlight search
+"
+" ### serch mulitple files
+" <leader>h                 - search current word in multiple files (matching type of file)
+" <leader>H                 - search current word in multiple files (in all types)
+"
+" ### replace (last searched element)
+" <leader>y                 - replace in current buffer
+" (visual) <leader>y        - replace highlighted in current buffer
+" <leader>Y                 - replace in many buffers after 'search result of mutlple files'
+"
+" ----------------- vim tricks -------------------
+
+" ----------------- PYTHON  ----------------------
 " <leader>id intrupt debugger
 " <leader>iv intrupt vipdb debugger
 " <leader>ip intrupt ipython embeded
@@ -342,6 +368,9 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 Plug 'pearofducks/ansible-vim'
 ", { 'do': 'cd ./UltiSnips; python3.6 ./generate.py --style dictionary' }
 " Plug 'chase/vim-ansible-yaml'
+"
+"
+Plug 'pedrohdz/vim-yaml-folds'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -903,8 +932,8 @@ vnoremap <leader>s "_dP
 
 " numberlines toggle
 nnoremap <leader>n :set invnumber<cr>
-" wrap toggle
-nnoremap <leader>N :set invwrap<cr>
+" wrap toggle - replaced with yow
+" nnoremap <leader>N :set invwrap<cr>
 
 """ -------------------------------------------
 " put line after Ctrl-Shift-P
@@ -951,11 +980,11 @@ map <leader>/ :nohlsearch<cr>
 "disabled because it breaks compatbility when runnin on "pure" vim
 "
 "
-" search search raw text plain
+" search search raw text plain [find]
 " http://vim.wikia.com/wiki/Searching_for_expressions_which_include_slashes
 command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 
-" visual search selected text
+" visual search selected text [find]
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " vnoremap // y/<C-R>"<CR>"
 vnoremap // y:SS <C-R>"<CR>
@@ -2648,7 +2677,7 @@ map <leader>tr :up<bar>:pyx sendtmux('c-p')<cr>
 map <leader>r :up<bar>:pyx sendtmux('c-p')<cr>
 
 """ terminal quit and rerun
-map <Leader>tq :pyx sendtmux('c-c c-p')<cr>
+map <Leader>tq :up<bar>:pyx sendtmux('c-c c-p')<cr>
 
 """ terminal "exit"
 map <leader>te :pyx sendtmux('exit')<cr>

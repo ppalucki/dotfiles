@@ -17,6 +17,10 @@ Documents   /home/dev/Documents vboxsf  uid=dev,gid=dev,dmode=774,fmode=664 0   
 * sudo usermod -aG docker ppalucki
 chmod o+rw /var/run/docker.socket
 
+
+# sort images by size
+docker images --format '{{.Size}}\t{{.Repository}}\t{{.Tag}}\t{{.ID}}' | sed 's/ //' | sort -h -r | column -t
+
 ###  --------------------------------- tmux
 setw -g mode-keys vi
 set-option -g allow-rename off
@@ -186,3 +190,53 @@ oc  --namespace=logging get job openshift-ansible-logging-job -ojson | jq 'del(.
 ################ mesos & aurora
 pip install black pygments
 aurora job inspect --raw --bind user=root local/root/devel/redis re.aurora | black -q - | pygmentize -l python
+
+### NTP 
+sudo ntpdate -v corp.intel.com
+
+
+############ ansible
+
+# merge dicsts
+ANSIBLE_HASH_BEHAVIOUR=merge ansible-playbook
+
+# adhoc + console + facts
+export ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible-caches ANSIBLE_CACHE_PLUGIN=jsonfile 
+ansible localhost -msetup
+ansible localhost -mdebug -avar=ansible_default_ipv4.address
+ansible localhost -msetup -afilter='ansible_processor_*' -o
+ansible all -i inventory.ini -msetup -afilter='ansible_processor_*' -o
+ansible all -i inventory.ini -mdebug -avar=ansible_processor_count
+ansible all -i inventory.ini -mdebug -avar=ansible_processor_vcpus
+
+ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ans_cache.json ANSIBLE_CACHE_PLUGIN=jsonfile ansible-console host -i inventory.ini
+
+# faster ansible
+ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible-caches ANSIBLE_CACHE_PLUGIN=jsonfile ANSIBLE_CALLBACK_WHITELIST=profile_tasks 
+
+DEFAULT_LOAD_CALLBACK_PLUGINS=True ansible ...
+
+anisble-config list
+anisble-config dump
+
+# BETTER output always formated output + timers
+ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_CALLBACK_WHITELIST=profile_tasks,profile_roles,timer,debug ansible-playbook
+
+```
+
+```
+
+
+################################################ print everything and cat it
+find . -type f -print -exec cat {} \;
+
+############################################# pipenv
+pipenv --three install ipython influxdb --skip-lock
+pipenv run ipython
+
+#################################### steam
+DISPLAY=127.0.0.1:0 docker run --privileged --net host -d -v ~/.Xauthority:/root/.Xauthority -v  ~/.Xauthority:/home/steam/.Xauthority --name steam3 --env="DISPLAY" --net=host ubuntu sleep inf
+DISPLAY=127.0.0.1:0 xfwm4
+sudo /usr/bin/X
+
+

@@ -24,6 +24,7 @@ iptables -I PREROUTING -t nat -j REDSOCKS # required by eg. docker
 # Return if LAN forward to proxy for http (on proxy-mu ip)/https
 iptables -A REDSOCKS -t nat -d 127.0.0.1/32 -j RETURN
 iptables -A REDSOCKS -t nat -d 10.0.0.0/8 -j RETURN
+iptables -A REDSOCKS -t nat -d 10.91.126.91/32 -j RETURN
 iptables -A REDSOCKS -t nat -d 172.17.0.0/16 -j RETURN # coreos-kubernetes
 iptables -A REDSOCKS -t nat -d 10.4.0.0/16 -j RETURN # tectonic
 iptables -A REDSOCKS -t nat -d 10.217.247.236/32 -j RETURN # proxy-mu
@@ -38,6 +39,13 @@ iptables -A REDSOCKS -t nat -d 100.127.251.0/24 -j RETURN # lab
 # everything trhough redsocks !!!
 ## SIMPLER VERSIONE
 iptables -A REDSOCKS -t nat -p tcp -m tcp -j DNAT --to-destination 127.0.0.1:1080
+# iptables -A REDSOCKS -t nat -p udp -m udp -j DNAT --to-destination 127.0.0.1:1080
+
+
+# iptables -t filter -I INPUT -p tcp -m tcp --dport 1080 -j ACCEPT
+# iptables -t filter -I FORWARD -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
+# iptables -t filter -I FORWARD -p tcp -m tcp --dport 1080 -m conntrack --ctstate NEW -j ACCEPT
+# iptables -t filter -I FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
 
 ## SECURED VERSION
 # # http without redsocks (proxy-mu.intel.com)
@@ -55,10 +63,6 @@ iptables -A REDSOCKS -t nat -p tcp -m tcp -j DNAT --to-destination 127.0.0.1:108
 ### ------------------- FILTER --------------------------------
 #adding filter rules for transock_ev, dns, http_proxy and packets that are allready accepted for "routing"
 ### TEST:
-# iptables -t filter -I INPUT -p tcp -m tcp --dport 1080 -j ACCEPT
-# iptables -t filter -I FORWARD -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
-# iptables -t filter -I FORWARD -p tcp -m tcp --dport 1080 -m conntrack --ctstate NEW -j ACCEPT
-# iptables -t filter -I FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 
 
 #service redsocks restart
 

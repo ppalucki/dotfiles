@@ -67,4 +67,7 @@ watch -n0.5 --no-title -d=p 'echo --------------------- nat --------------------
 
 
 
-k
+#-------------------------------- ANSIBLE --------------------------------------------
+export ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible-caches ANSIBLE_CACHE_PLUGIN=jsonfile
+ANSBILE_KEEP_REMOTE_FILES=1
+
