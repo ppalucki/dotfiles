@@ -386,3 +386,9 @@ function ssh-copy-id-root {
     target=$1
     cat ~/.ssh/id_rsa.pub  | ssh $target "sudo mkdir /root/.ssh; sudo tee -a /root/.ssh/authorized_keys"
 }
+
+
+# go-jira from netflix
+if [ -x "`command -v jira`" ]; then
+    eval "$(jira --completion-script-zsh)"
+fi

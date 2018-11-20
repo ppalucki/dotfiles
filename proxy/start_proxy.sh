@@ -30,8 +30,8 @@ iptables -A REDSOCKS -t nat -d 10.4.0.0/16 -j RETURN # tectonic
 iptables -A REDSOCKS -t nat -d 10.217.247.236/32 -j RETURN # proxy-mu
 iptables -A REDSOCKS -t nat -d 163.33.0.0/16 -j RETURN # proxy-chain and teamforge
 iptables -A REDSOCKS -t nat -d 127.0.0.1 -j RETURN # some services (like rabbitmq) need this:
-iptables -A REDSOCKS -t nat -d 192.168.99.0/24 -j RETURN # minikube on top of virtulbox 
 iptables -A REDSOCKS -t nat -d 192.168.0.0/16 -j RETURN # libvirt
+# iptables -A REDSOCKS -t nat -d 192.168.99.0/24 -j RETURN # minikube on top of virtulbox 
 iptables -A REDSOCKS -t nat -d 100.64.0.0/10 -j RETURN # lab
 iptables -A REDSOCKS -t nat -d 100.127.251.0/24 -j RETURN # lab
 

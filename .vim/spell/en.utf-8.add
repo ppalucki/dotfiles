@@ -437,3 +437,7 @@ NUMA
 SDD
 SSG
 Ansible
+RDTAllocation
+rdt
+PRM
+twemcache

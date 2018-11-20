@@ -172,7 +172,9 @@ Plug 'flazz/vim-colorschemes'
 " Direcotry diff
 Plug 'vim-scripts/DirDiff.vim'
 " lepsze okno dialogowe przy otwieraniu zepsutych plikow
-Plug 'chrisbra/Recover.vim'
+"### is not working properly anymore!
+" Plug 'chrisbra/Recover.vim'   
+"
 """ ----- ack-grep Find-search
 " Plug 'mileszs/ack.vim'
 Plug 'rking/ag.vim'
@@ -244,6 +246,10 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'kaneshin/ctrlp-git'
 "" It simply navigates and jumps to function definitions from the current file without ctags.  :CtrlPFunky - po co skoro mam CtrlBufTag
 " Plug 'tacahiroy/ctrlp-funky'
+"
+" Table Mode for instant table creation.
+" Plug 'dhruvasagar/vim-table-mode'
+
 """ ----------------- Ctrpl end of plugins
 
 """ ---------------- DISABLED (TRASH)
