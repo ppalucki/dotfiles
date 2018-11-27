@@ -441,3 +441,10 @@ RDTAllocation
 rdt
 PRM
 twemcache
+rst
+SCL
+SIG
+LIBPROCESS
+virutalenv
+owca
+flake8
