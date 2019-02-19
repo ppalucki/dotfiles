@@ -217,8 +217,6 @@ ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ans_cache.json ANSIBLE_CACHE_PLUGIN=jsonfil
 # faster ansible
 ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible-caches ANSIBLE_CACHE_PLUGIN=jsonfile ANSIBLE_CALLBACK_WHITELIST=profile_tasks 
 
-DEFAULT_LOAD_CALLBACK_PLUGINS=True ansible ...
-
 anisble-config list
 anisble-config dump
 
