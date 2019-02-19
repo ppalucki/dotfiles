@@ -50,7 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux)
+plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl)
 
 
 ### VI-mode - readline doesn't work
@@ -375,6 +375,7 @@ function cdp(){
 alias cdowca="cdp owca"
 alias cdinst="cdp installer"
 alias cdigkwc="cdp igk-wc-env"
+alias cdprm="cdp prm"
 
 function yaml2json(){
     python2 -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4);print "\n"'

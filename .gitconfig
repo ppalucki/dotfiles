@@ -184,6 +184,9 @@
 [credential]
 	helper = cache --timeout=7200
 
+[rerere]
+	enabled = true
+
 ########################## OTHER TRICKS ##############################
 # working with github branches
 # http://blogs.atlassian.com/2014/08/how-to-fetch-pull-requests/

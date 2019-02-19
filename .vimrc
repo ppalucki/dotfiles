@@ -616,9 +616,11 @@ function! PythonMappings()
     map <buffer> <leader>tU :up<bar>:pyx sendtmux("pytest -s -vv -k '%s' <c-r>%"%current_test())<cr>
 
 
-    nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto_assignments()<bar>call jedi#goto_assignments()<cr>
+    " ##### fixes for older jedi versions
+    " nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto_assignments()<bar>call jedi#goto_assignments()<cr>
     " Version below doesn't work with types as assignments!
     " nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto()<cr> 
+    nnoremap gd :call jedi#goto()<cr>
 
     map gu :call jedi#usages()<cr>
 

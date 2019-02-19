@@ -201,13 +201,16 @@ sudo ntpdate -v corp.intel.com
 ANSIBLE_HASH_BEHAVIOUR=merge ansible-playbook
 
 # adhoc + console + facts
-export ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible-caches ANSIBLE_CACHE_PLUGIN=jsonfile 
+export ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible_fact_caching ANSIBLE_CACHE_PLUGIN=jsonfile
 ansible localhost -msetup
 ansible localhost -mdebug -avar=ansible_default_ipv4.address
 ansible localhost -msetup -afilter='ansible_processor_*' -o
 ansible all -i inventory.ini -msetup -afilter='ansible_processor_*' -o
 ansible all -i inventory.ini -mdebug -avar=ansible_processor_count
 ansible all -i inventory.ini -mdebug -avar=ansible_processor_vcpus
+
+# output as json
+ANSIBLE_LOAD_CALLBACK_PLUGINS=1 ANSIBLE_STDOUT_CALLBACK=json ansible all -i inventory.ini -mdebug -avar=ansible_processor_vcpus
 
 ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ans_cache.json ANSIBLE_CACHE_PLUGIN=jsonfile ansible-console host -i inventory.ini
 
@@ -221,6 +224,7 @@ anisble-config dump
 
 # BETTER output always formated output + timers
 ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_CALLBACK_WHITELIST=profile_tasks,profile_roles,timer,debug ansible-playbook
+
 
 ```
 
@@ -240,3 +244,24 @@ DISPLAY=127.0.0.1:0 xfwm4
 sudo /usr/bin/X
 
 
+
+################# centos ntfs
+yum install -y ntfs-3g
+
+
+################################# pycharm java render html/rest prism java extenssion
+### PAWEL PALUCKI sacre was here: use my fixed JDK that has PRISM/GLX and can render
+# use            /usr/java/jdk1.8.0_121/jre/bin/java
+# from alternatives --config java
+JDK=""
+
+
+######################### ansible set_trace
+https://stackoverflow.com/questions/42417079/how-to-debug-ansible-issues
+import sys;sys.stdin = open('/dev/tty'); import pdb; pdb.set_trace()
+
+
+############ kube dashboard from kubespray
+at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cronjob?namespace=default
+kubectl get secrets --namespace=kube-system kubernetes-dashboard-token-qx6pw -o json | jq '.data.token' -r | base64 -d
+kubectl create clusterrolebinding moj-dashbord-moze-wszystko --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
