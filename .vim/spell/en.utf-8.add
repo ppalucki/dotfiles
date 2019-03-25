@@ -456,3 +456,10 @@ registed/!
 AllocationValue
 #iht
 wiht/!
+ProcessLookupError
+ResGroup
+FileNotFoundError
+closid
+OutOfClosidsException
+ContainerManager
+ValidationError

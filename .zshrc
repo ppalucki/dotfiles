@@ -143,8 +143,8 @@ _tmux_pane_words() {
 
 zle -C tmux-pane-words-prefix   complete-word _generic
 zle -C tmux-pane-words-anywhere complete-word _generic
-bindkey '^Xt' tmux-pane-words-prefix
-bindkey '^X^X' tmux-pane-words-anywhere
+bindkey '^X^X' tmux-pane-words-prefix
+bindkey '^X^T' tmux-pane-words-anywhere
 zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' completer _tmux_pane_words
 zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
 zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'

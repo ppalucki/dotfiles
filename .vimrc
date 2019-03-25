@@ -167,6 +167,8 @@ Plug 'rhysd/vim-go-impl', { 'for':  'go' }
 Plug 'majutsushi/tagbar'
 " ---- NERDTree
 Plug 'scrooloose/nerdtree'
+" -------- Combine with netrw to create a delicious salad dressi
+Plug 'tpope/vim-vinegar'
 " colorschemes 
 Plug 'flazz/vim-colorschemes'
 " Direcotry diff

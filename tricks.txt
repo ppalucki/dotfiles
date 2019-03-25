@@ -263,3 +263,8 @@ import sys;sys.stdin = open('/dev/tty'); import pdb; pdb.set_trace()
 at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cronjob?namespace=default
 kubectl get secrets --namespace=kube-system kubernetes-dashboard-token-qx6pw -o json | jq '.data.token' -r | base64 -d
 kubectl create clusterrolebinding moj-dashbord-moze-wszystko --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+
+
+######### Pipfile + jq
+# aka pip freeze
+cat Pipfile.lock | jq '((.default | to_entries)[], (.develop | to_entries)[]) | "\(.key)\(.value.version)"' -r
