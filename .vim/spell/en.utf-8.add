@@ -463,3 +463,7 @@ closid
 OutOfClosidsException
 ContainerManager
 ValidationError
+cfs
+kubectl
+WCA
+DaemonSet

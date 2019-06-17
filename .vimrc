@@ -1377,6 +1377,8 @@ map <leader>bp :bp<cr>
 
 """ python aurora
 au BufRead,BufNewFile *.aurora set filetype=python
+""" Jenkins
+au BufRead,BufNewFile Jenkinsfile set filetype=groovy
 
 """ yaml
 au BufRead,BufNewFile user_data set filetype=yaml
@@ -1575,7 +1577,8 @@ let g:EclimShowErrors = 1
 set spellcapcheck=0
 
 """""""""""" modeline
-set modeline
+" https://nvd.nist.gov/vuln/detail/CVE-2019-12735#vulnCurrentDescriptionTitle
+set nomodeline
 
 """""""""""" mkd - markdown & textile
 
@@ -2709,7 +2712,7 @@ nmap <leader>tt <leader>tl
 vmap <leader>tt <leader>ts
 
 """ terminal-terminal and down
-nmap <c-x> :pyx sendlinetmux()<cr>j
+nmap <silent> <c-x> : pyx sendlinetmux()<cr>j
 " warning conflicts with vim multicursors - skip
 vmap <c-x> :pyx sendselectiontmux()<cr>
 nmap <leader>x :pyx sendlinetmux()<cr>
@@ -3073,4 +3076,8 @@ nmap <buffer> <leader>Q :Autoformat<cr>
 "
 " ssh configs
 au BufRead,BufNewFile */ssh/*config set filetype=sshconfig
+
+
+"#### DEMO
+"set laststatus=0
 

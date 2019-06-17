@@ -80,6 +80,7 @@
     # doesn't not WORK!!!
     # without need to fetch refspec before and it won't allow you to update this in future
 	gpr = !sh -c \"git fetch origin pull/${1}/head:pr/${1}\" -
+	gprintel = !sh -c \"git fetch intel pull/${1}/head:pr/${1}\" -
 
 
     pushinit = !sh -c \"git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`\"
