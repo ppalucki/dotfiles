@@ -273,3 +273,12 @@ kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | gre
 ######### Pipfile + jq
 # aka pip freeze
 cat Pipfile.lock | jq '((.default | to_entries)[], (.develop | to_entries)[]) | "\(.key)\(.value.version)"' -r
+
+
+### yum dependecies
+yum deplist openssl
+repoquery --requires --resolve zlib
+rpm -q --whatrequires openssl
+repoquery -l zlib
+repoquery -l librdkafka-devel
+repoquery -l librdkafka1
