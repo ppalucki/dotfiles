@@ -232,6 +232,10 @@ Plug 'raphael/vim-present-simple'
 " Thrift
 Plug 'solarnz/thrift.vim'
 
+" Fluentd
+Plug 'itkq/fluentd-vim'
+" Plug 'projectfluent/fluent.vim'
+
 """ ----------------- CtrlP and plugins
 Plug 'kien/ctrlp.vim'
 "" Easily open locally modified files in your git-versioned projects. :CtrlPModified and :CtrlPBranch
@@ -2509,7 +2513,7 @@ let g:DirDiffExcludes = ".tags,CVS,*.class,*.exe,.*.swp,.git"
 """ -------------------------------------------
 """ configuration file types
 """ -------------------------------------------
-au BufRead,BufNewFile *.conf set filetype=cfg
+au BufRead,BufNewFile *.conf set filetype=fluentd
 au BufRead,BufNewFile *.ini set filetype=cfg
 au BufRead,BufNewFile .tmux.conf set filetype=conf
 

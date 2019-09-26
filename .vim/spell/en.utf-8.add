@@ -467,3 +467,4 @@ cfs
 kubectl
 WCA
 DaemonSet
+mesos

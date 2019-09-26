@@ -261,12 +261,18 @@ import sys;sys.stdin = open('/dev/tty'); import pdb; pdb.set_trace()
 
 ############ kube dashboard from kubespray
 at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cronjob?namespace=default
+at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cronjob?namespace=default
+or use kubectl proxy and then: 127.0.0.1:8001
+http://127.0.0.1:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 #kubectl get secrets --namespace=kube-system kubernetes-dashboard-token-qx6pw -o json | jq '.data.token' -r | base64 -d
 #kubectl create clusterrolebinding moj-dashbord-moze-wszystko --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 # from https://github.com/kubernetes/dashboard/wiki/Creating-sample-user
 kubectl create serviceaccount sample-admin-user -n kube-system
 kubectl create clusterrolebinding sample-admin-user-can-do-anything --clusterrole=cluster-admin --serviceaccount=kube-system:sample-admin-user -n kube-system
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep sample-admin-user | awk '{print $1}')
+echo -n 'admin' | base64
+kubectl -n kube-system edit secret $(kubectl -n kube-system get secret | grep sample-admin-user | awk '{print $1}')
+
 
 
 
@@ -282,3 +288,18 @@ rpm -q --whatrequires openssl
 repoquery -l zlib
 repoquery -l librdkafka-devel
 repoquery -l librdkafka1
+
+
+## SERVER with zhs
+ansible -b --become-user=ppalucki -mlineinfile -a'path=~/.zshrc line="setopt hist_ignore_all_dups"'
+ansible -b --become-user=ppalucki -mlineinfile -a'path=~/.zshrc line="setopt no_share_history"'
+
+
+###### Getting kubectl tls/ca/key
+
+kubectl config view --raw -ojsonpath="{@.clusters[0].cluster.certificate-authority-data}" | base64 -d
+kubectl config view --raw -ojsonpath="{@.users[0].user.client-certificate-data}" | base64 -d
+kubectl config view --raw -ojsonpath="{@.clusters[0].cluster.certificate-authority-data}" | base64 -d
+
+########## zsh completion issues
+rm ~/.zcompdump
