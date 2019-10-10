@@ -55,6 +55,7 @@
     branchesdateall = for-each-ref --sort=committerdate refs/remotes/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
 
     co = checkout --no-guess
+    # co = checkout
     cob = checkout -b
     ciam = commit -a -m
     ciamwip = commit -a -m WIP

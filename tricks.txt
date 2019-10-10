@@ -290,9 +290,11 @@ repoquery -l librdkafka-devel
 repoquery -l librdkafka1
 
 
-## SERVER with zhs
+## SERVER with zsh and oh-my-zsh
+ansible -b --become-user=ppalucki -myum -a'package=zsh'
 ansible -b --become-user=ppalucki -mlineinfile -a'path=~/.zshrc line="setopt hist_ignore_all_dups"'
 ansible -b --become-user=ppalucki -mlineinfile -a'path=~/.zshrc line="setopt no_share_history"'
+ansible -b --become-user=ppalucki -mlineinfile -a'path=~/.zshrc line="bindkey \^U backward-kill-line"'
 
 
 ###### Getting kubectl tls/ca/key

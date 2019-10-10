@@ -378,6 +378,7 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 " Plug 'Shougo/neocomplete.vim'
 "
 Plug 'pearofducks/ansible-vim'
+
 ", { 'do': 'cd ./UltiSnips; python3.6 ./generate.py --style dictionary' }
 " Plug 'chase/vim-ansible-yaml'
 "
@@ -564,6 +565,7 @@ endif
 function! AnsibleMappings()
 
 nmap <buffer> <leader><c-l> :up<bar>call TrimWhiteSpace()<bar>w<bar>call TrimEndLines()<bar>w<bar>SyntasticCheck<cr>
+nmap K :!ansible-doc <C-R><C-W> *<CR>
 
 endfunction
 
@@ -1792,6 +1794,7 @@ set completeopt+=menu
 " let g:jedi#auto_initialization = 0
 " let g:jedi#auto_vim_configuration = 1
 " let g:jedi#goto_assignments_command = "gd"
+let g:jedi#goto_stubs_command = ""
 let g:jedi#popup_on_dot = 0
 let g:jedi#popup_select_first = 0
 let g:jedi#usages_command = "<leader>z"
@@ -3084,4 +3087,6 @@ au BufRead,BufNewFile */ssh/*config set filetype=sshconfig
 
 "#### DEMO
 "set laststatus=0
+
+
 

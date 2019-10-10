@@ -50,6 +50,7 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
+# plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
 plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
 
 
@@ -108,7 +109,7 @@ export EDITOR=vim
 #
 #
 # local aliases (don't go to repo)
-[[ -f ~/.local_aliases ]] && . ~/.local_aliases
+# [[ -f ~/.local_aliases ]] && . ~/.local_aliases
 
 # no share history between shells
 setopt no_share_history
@@ -126,7 +127,7 @@ bindkey \^U backward-kill-line
 # detach other clients
 alias tmuxdetacha="tmux detach -a"
 # enable copying over x server if DISPLAY is set
-alias tmuxxcopy="tmux source ~/dotfiles/.tmux-linux.conf"
+# alias tmuxxcopy="tmux source ~/dotfiles/.tmux-linux.conf"
 
 ########## ITerm2 autocomplete feature!!! autocompletion by 
 # http://blog.plenz.com/2012-01/zsh-complete-words-from-tmux-pane.html
@@ -295,12 +296,12 @@ function testy(){
 # pythonz
 # https://github.com/saghul/pythonz
 # [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
-[[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
+# [[ -s $HOME/.pythonz/etc/bashrc ]] && source $HOME/.pythonz/etc/bashrc
 
 # pythonbrew
 # https://github.com/utahta/pythonbrew
 # curl -kL http://xrl.us/pythonbrewinstall | bash
-[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
+# [[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
 
 ##########################################
 #### PERL ???? WTF is that
@@ -348,9 +349,9 @@ function sshagent(){
 # k8s 
 # #########################
 #source <(kubectl completion zsh)
-alias kubectlcompletion="source <(kubectl completion zsh)"
-alias occompletion="source <(oc completion zsh)"
-alias oadmcompletion="source <(oadm completion zsh)"
+# alias kubectlcompletion="source <(kubectl completion zsh)"
+# alias occompletion="source <(oc completion zsh)"
+# alias oadmcompletion="source <(oadm completion zsh)"
 
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #
@@ -374,9 +375,9 @@ function cdp(){
 
 alias cdowca="cdp owca"
 alias cdinst="cdp installer"
-alias cdigkwc="cdp igk-wc-env"
+# alias cdigkwc="cdp igk-wc-env"
 alias cdprm="cdp prm"
-
+#
 function yaml2json(){
     python2 -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4);print "\n"'
 }
@@ -390,6 +391,13 @@ function ssh-copy-id-root {
 
 
 # go-jira from netflix
-if [ -x "`command -v jira`" ]; then
-    eval "$(jira --completion-script-zsh)"
-fi
+# if [ -x "`command -v jira`" ]; then
+#     eval "$(jira --completion-script-zsh)"
+# fi
+#
+#
+
+
+# HMM - some workaround about not working git co completion !!!!!!!!!!!!!!!!!
+export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
+. ~/git-completion.zsh 2>/dev/null >/dev/null
