@@ -16,26 +16,37 @@
     - stat: path=.oh-my-zsh
       register: stat_results
     # - debug: var=stat_results
-    - shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended'
+    - name: install oh-my-zsh
+      shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended'
       when: not stat_results.stat.exists
-    - blockinfile:
+    - name: zsh basic options
+      blockinfile:
         path: .zshrc
         block: |
           setopt hist_ignore_all_dups
           setopt no_share_history
           bindkey \^U backward-kill-line
-    - lineinfile:
+    - name: zsh theme
+      replace:
         path: .zshrc
         regexp: 'ZSH_THEME="robbyrussell"'
-        line: 'ZSH_THEME="arrow"'
-    - lineinfile:
-        path: .zshrc
-        regexp: 'ZSH_THEME="robbyrussell"'
-        line: 'ZSH_THEME="arrow"'
-    - lineinfile:
+        replace: 'ZSH_THEME="arrow"'
+    - name: zsh plugins
+      replace:
         path: .zshrc
         regexp: 'plugins=.*'
-        line: 'plugins=(git wd common-aliases history systemd extract tmux yum)'
-    - lineinfile:
+        replace: 'plugins=(git wd common-aliases history systemd extract tmux yum kubectl kube-ps1)'
+    - name: 'zsh editor'
+      lineinfile:
         path: .zshrc
         line: 'export EDITOR=vim'
+    - name: 'zsh prompt'
+      lineinfile:
+        path: .zshrc
+        regexp: '^PROMPT=.*'
+        line: 'PROMPT="%m:$PROMPT\$(kube_ps1) "'
+    - name: 'zsh disable kube-ps1'
+      lineinfile:
+        path: .zshrc
+        line: 'kubeoff'
+
