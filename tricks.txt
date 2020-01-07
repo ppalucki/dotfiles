@@ -191,6 +191,8 @@ oc  --namespace=logging get job openshift-ansible-logging-job -ojson | jq 'del(.
 pip install black pygments
 aurora job inspect --raw --bind user=root local/root/devel/redis re.aurora | black -q - | pygmentize -l python
 
+aurora job status example/root/staging13 --write-json 2>/dev/null | jq '.[]["active"][] | .assignedTask.taskId + ": " + .status'
+
 ### NTP 
 sudo ntpdate -v corp.intel.com
 
@@ -228,6 +230,13 @@ ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_CALLBACK_WHITELIST=profile_tasks,profile_r
 
 ```
 
+ANSIBLE_KEEP_REMOTE_FILES=1 ansible-playbook -vvv ... 
+grep ' PUT '....
+ssh target-machine or local
+/usr/bin/python2 /home/ppalucki/.ansible/tmp/ansible-tmp-1571049051.51-107016242751709/AnsiballZ_get_url.py explode
+cd DEBUG_DIR
+cat args | python __main__.py
+
 
 ################################################ print everything and cat it
 find . -type f -print -exec cat {} \;
@@ -260,6 +269,9 @@ import sys;sys.stdin = open('/dev/tty'); import pdb; pdb.set_trace()
 
 
 ############ kube dashboard from kubespray
+
+or https://100.64.176.18:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+
 at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cronjob?namespace=default
 at https://127.0.0.1:6443/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/cronjob?namespace=default
 or use kubectl proxy and then: 127.0.0.1:8001
@@ -270,6 +282,9 @@ http://127.0.0.1:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 kubectl create serviceaccount sample-admin-user -n kube-system
 kubectl create clusterrolebinding sample-admin-user-can-do-anything --clusterrole=cluster-admin --serviceaccount=kube-system:sample-admin-user -n kube-system
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep sample-admin-user | awk '{print $1}')
+
+
+# proba zmiana hasla - alen iedzial
 echo -n 'admin' | base64
 kubectl -n kube-system edit secret $(kubectl -n kube-system get secret | grep sample-admin-user | awk '{print $1}')
 
@@ -305,3 +320,33 @@ kubectl config view --raw -ojsonpath="{@.clusters[0].cluster.certificate-authori
 
 ########## zsh completion issues
 rm ~/.zcompdump
+
+
+########### grub centos7
+https://wiki.centos.org/HowTos/Grub2
+
+# Traditional
+awk -F\' '$1=="menuentry " {print i++ " : " $2}' /etc/grub2.cfg
+grub2-mkconfig -o /boot/grub2/grub.cfg
+
+# UEFI
+awk -F\' '$1=="menuentry " {print i++ " : " $2}' /boot/efi/EFI/centos/grub.cfg
+grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+
+# Default
+grub2-editenv list
+cat /etc/default/grub
+
+
+
+
+##################### ansible get_url netrc problem
+400 response for delegate_to localhost when using netrc
+just disable machine login/token
+
+
+
+# kubectl run (nodeSelector + tolerations"
+kubectl run nginx --image=nginx --overrides='{"apiVersion": "v1", "spec": { "nodeSelector":{"kubernetes.io/hostname":"node36"}, "tolerations":[{"key":"master", "effect":"NoSchedule", "operator":"Exists"}]}}' --restart=Never -ojson --dry-run 
+kubectl get pods -ndefault -ocustom-columns='NAME:.metadata.name,UID:.metadata.uid,RQST:.spec.containers[*].resources.requests.cpu,STATAUS:.status.hostIP'
+

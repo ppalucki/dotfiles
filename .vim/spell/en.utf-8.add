@@ -468,3 +468,5 @@ kubectl
 WCA
 DaemonSet
 mesos
+MeasurementRunner
+Fluentd

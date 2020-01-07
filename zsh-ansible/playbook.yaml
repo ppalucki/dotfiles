@@ -12,6 +12,12 @@
           - cpuid
           - htop
           - git
+          - libcgroup-tools
+          - strace
+          - numactl
+          - lshw
+          - procps
+          - msr-tools
       become: true
     - stat: path=.oh-my-zsh
       register: stat_results
