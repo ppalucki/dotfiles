@@ -83,6 +83,9 @@
 	gpr = !sh -c \"git fetch origin pull/${1}/head:pr/${1}\" -
 	gprintel = !sh -c \"git fetch intel pull/${1}/head:pr/${1}\" -
 
+    # unieversal pull request from github
+    # git gpr intel 356
+	gpremote = !sh -c \"git fetch ${1} pull/${2}/head:pr/${2}\" -
 
     pushinit = !sh -c \"git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`\"
 

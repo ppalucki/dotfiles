@@ -346,7 +346,13 @@ just disable machine login/token
 
 
 
+###################### kubectl oneliners
 # kubectl run (nodeSelector + tolerations"
 kubectl run nginx --image=nginx --overrides='{"apiVersion": "v1", "spec": { "nodeSelector":{"kubernetes.io/hostname":"node36"}, "tolerations":[{"key":"master", "effect":"NoSchedule", "operator":"Exists"}]}}' --restart=Never -ojson --dry-run 
-kubectl get pods -ndefault -ocustom-columns='NAME:.metadata.name,UID:.metadata.uid,RQST:.spec.containers[*].resources.requests.cpu,STATAUS:.status.hostIP'
+# custom columns with uuid and node
+kubectl get pods -ndefault -ocustom-columns='NAME:.metadata.name,UID:.metadata.uid,RQST:.spec.containers[*].resources.requests.cpu,STATAUS:.status.hostIP
+# logs: accepts any resources returns from first pod
+kubectl logs deploy/foo-deployment
+# describe prefix is enough
+kubectl describe pod/wca  
 

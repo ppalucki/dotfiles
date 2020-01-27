@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
+plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible kube-ps1)
 
 
 ### VI-mode - readline doesn't work
@@ -76,9 +76,10 @@ source $ZSH/oh-my-zsh.sh
 ################# fix git and hostname
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
 ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
-FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%} %{$reset_color%}'
-export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}> $reset_color'
+export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
+# export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
+export PROMPT="$PROMPT\$(kube_ps1)"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -401,3 +402,4 @@ function ssh-copy-id-root {
 # HMM - some workaround about not working git co completion !!!!!!!!!!!!!!!!!
 export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 . ~/git-completion.zsh 2>/dev/null >/dev/null
+kubeoff

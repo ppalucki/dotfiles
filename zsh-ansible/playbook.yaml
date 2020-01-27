@@ -55,4 +55,8 @@
       lineinfile:
         path: .zshrc
         line: 'kubeoff'
+    - name: 'zsh kak alias'
+      lineinfile:
+        path: .zshrc
+        line: "alias kak='kubectl apply -k .'"
 
