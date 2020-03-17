@@ -68,7 +68,7 @@ ZSH_TMUX_AUTOSTART=false
 ############################################
 ### PATH ~/bin
 ###########################################
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -223,8 +223,11 @@ alias watch='watch '
 ### golang
 ###########################################
 #
-export GOROOT=/usr/local/go
-export GOPATH=/home/ppalucki/work/gopath19
+# export GOROOT=/usr/local/go
+# export GOPATH=/home/ppalucki/work/gopath19
+# export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
+export GOROOT=/home/ppalucki/bin/go1.14
+export GOPATH=/home/ppalucki/go
 export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
 hash -r
 ##### gvm
@@ -403,3 +406,4 @@ function ssh-copy-id-root {
 export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 . ~/git-completion.zsh 2>/dev/null >/dev/null
 kubeoff
+alias kak='kubectl apply -k .'

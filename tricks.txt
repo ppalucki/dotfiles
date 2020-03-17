@@ -355,4 +355,31 @@ kubectl get pods -ndefault -ocustom-columns='NAME:.metadata.name,UID:.metadata.u
 kubectl logs deploy/foo-deployment
 # describe prefix is enough
 kubectl describe pod/wca  
+# taint always require a value
+kubectl taint node node37 node38 owner=ppalucki:NoSchedule
+kubectl taint node node37 node38 owner=ppalucki:NoSchedule-
+# can label mutilple object at once
+kubectl label node/node37 node/node38 owner=ppalucki
+kubectl label node/node37 node/node38 owner-
+kgno --show-labels
 
+kubectl taint node node37 node40 kind=aep:NoSchedule
+kubectl taint node node37 node40 kind=aep:NoSchedule-
+
+kgss
+
+./workloads2.sh
+
+
+
+##################### ndctl impctl daxctl
+sudo yum install -y autoconf keyutils-libs-devel rubygem-asciidoctor kmod-devel.i686 kmodtool kmod kmod-devel libudev-devel uuid-devel uuid libuuid libuuid-devel json-c-devel json-c gcc-c++ autoconf automake libtool
+git clone https://github.com/pmem/ndctl
+
+#### fix kmem cadvisor issues with kmem based numanodes 3,4
+after new numanodes are provisioed and kubectl restarted:
+sudo sh -c 'echo 0-3 >/sys/fs/cgroup/cpuset/kubepods/cpuset.mems'
+sudo sh -c 'echo 0-3 >/sys/fs/cgroup/cpuset/kubepods/burstable/cpuset.mems'
+sudo sh -c 'echo 0-3 >/sys/fs/cgroup/cpuset/kubepods/besteffort/cpuset.mems'
+cat /sys/fs/cgroup/cpuset/kubepods/{,burstable/,besteffort/}cpuset.mems
+(migrate_pages both binary and syscall requires that /proc/self/status allows to be run on given numanode)

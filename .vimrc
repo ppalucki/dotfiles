@@ -177,6 +177,9 @@ Plug 'vim-scripts/DirDiff.vim'
 "### is not working properly anymore!
 " Plug 'chrisbra/Recover.vim'   
 "
+Plug 'mhinz/vim-grepper'
+
+"
 """ ----- ack-grep Find-search
 " Plug 'mileszs/ack.vim'
 Plug 'rking/ag.vim'
