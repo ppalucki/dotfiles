@@ -373,8 +373,13 @@ kgss
 
 
 ##################### ndctl impctl daxctl
-sudo yum install -y autoconf keyutils-libs-devel rubygem-asciidoctor kmod-devel.i686 kmodtool kmod kmod-devel libudev-devel uuid-devel uuid libuuid libuuid-devel json-c-devel json-c gcc-c++ autoconf automake libtool
+sudo yum install -y autoconf keyutils-libs-devel rubygem-asciidoctor kmod-devel.i686 kmodtool kmod kmod-devel libudev-devel uuid-devel uuid libuuid libuuid-devel json-c-devel json-c gcc-c++ autoconf automake libtool bash-completion
 git clone https://github.com/pmem/ndctl
+./autogen.sh
+./configure CFLAGS='-g -O2' --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib64
+make
+make check
+sudo make install
 
 #### fix kmem cadvisor issues with kmem based numanodes 3,4
 after new numanodes are provisioed and kubectl restarted:
@@ -383,3 +388,7 @@ sudo sh -c 'echo 0-3 >/sys/fs/cgroup/cpuset/kubepods/burstable/cpuset.mems'
 sudo sh -c 'echo 0-3 >/sys/fs/cgroup/cpuset/kubepods/besteffort/cpuset.mems'
 cat /sys/fs/cgroup/cpuset/kubepods/{,burstable/,besteffort/}cpuset.mems
 (migrate_pages both binary and syscall requires that /proc/self/status allows to be run on given numanode)
+
+
+#### poorman pcm-memory exporter
+while true; do sudo ./pcm-memory.x -pmm 2>/dev/null -- sleep 1; done  | egrep System | egrep Read\|Write | egrep DRAM\|PMM | awk '{print("pcm_memory_bytes{kind=\"" $3 """\",mode=\"" $4 "\"}",$6*10000000)}'

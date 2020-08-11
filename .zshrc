@@ -374,6 +374,8 @@ function cdp(){
     export PYTHONPATH=.
     if [ -e "Pipfile" ]; then
         . `pipenv --venv`/bin/activate
+    elif [ -d 'env' ]; then 
+        . ./env/bin/activate
     fi
 }
 

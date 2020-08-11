@@ -470,3 +470,6 @@ DaemonSet
 mesos
 MeasurementRunner
 Fluentd
+stdout
+qps
+Str

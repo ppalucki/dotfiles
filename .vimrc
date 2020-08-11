@@ -235,6 +235,9 @@ Plug 'raphael/vim-present-simple'
 " Thrift
 Plug 'solarnz/thrift.vim'
 
+" Join lines
+Plug 'sk1418/Join'
+
 " Fluentd
 Plug 'itkq/fluentd-vim'
 " Plug 'projectfluent/fluent.vim'
@@ -387,6 +390,8 @@ Plug 'pearofducks/ansible-vim'
 "
 "
 Plug 'pedrohdz/vim-yaml-folds'
+
+Plug 'chrisbra/vim-diff-enhanced'
 
 call plug#end()
 " To ignore plugin indent changes, instead use:
@@ -631,7 +636,7 @@ function! PythonMappings()
     " nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto_assignments()<bar>call jedi#goto_assignments()<cr>
     " Version below doesn't work with types as assignments!
     " nnoremap gd :call jedi#clear_cache(0)<bar>call jedi#goto()<cr> 
-    nnoremap gd :call jedi#goto()<cr>
+    map gd :call jedi#goto()<cr>
 
     map gu :call jedi#usages()<cr>
 
@@ -3093,3 +3098,11 @@ au BufRead,BufNewFile */ssh/*config set filetype=sshconfig
 
 
 
+"##################  PatchReview source on the right
+let g:patchreview_split_right = 1
+
+
+" https://vim.fandom.com/wiki/Avoiding_the_%22Hit_ENTER_to_continue%22_prompts
+" use siilent
+set shortmess=at
+set cmdheight=2
