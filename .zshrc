@@ -408,4 +408,12 @@ function ssh-copy-id-root {
 export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 . ~/git-completion.zsh 2>/dev/null >/dev/null
 kubeoff
-alias kak='kubectl apply -k .'
+
+# KUSTOMIZE
+#alias kak='kubectl apply -k .'
+alias kak='kustomize build | kubectl apply -f -'
+alias kdelk='kustomize build | kubectl delete -f -'
+alias kgk='kustomize build | kubectl get -f -'
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/kustomize kustomize

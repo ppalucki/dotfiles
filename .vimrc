@@ -1086,11 +1086,11 @@ let NERDTreeMouseMode = 3
 """         ctags/gotags
 """ -------------------------------------------
 " global
-map <F8> :!ctags -f .tags --verbose=no --totals=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' . <cr>
+map <F8> :!ctags -f .tags --verbose=no --totals=yes --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' --exclude='env*' . <cr>
 map <leader><F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=HTML,Java,JavaScript,Python,Ruby,Go --totals --verbose=no --recurse=yes --exclude=tmp --exclude=build --exclude=dbmigrate --fields=zK .. <cr>
 " au FileType python map <buffer> <F8> :!ctags -f .tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp . <cr>
 au FileType java map <buffer> <F8> :!ctags -f .tags --languages=Java --verbose=no --totals --recurse=yes <cr>  
-au FileType python map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
+au FileType python map <buffer> <F8> :!mkdir -p .tags;cd .tags;ctags -f ._tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --exclude=env --fields=zK ..;fgrep -v kind:variable ._tags >tags;rm ._tags<cr>
 au FileType cpp map <buffer> <F8> :!ctags -f .tags --languages=C++ --verbose=no --totals --recurse=yes --exclude=tmp --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
 au FileType c map <buffer> <F8> :!ctags -f .tags --languages=C --verbose=no --totals --recurse=yes --exclude=tmp --exclude=build --exclude='boost*' --exclude='glog*' <cr>
 au FileType ruby map <buffer>  <F8> :!mkdir -p .tags;cd .tags;ctags -f tags --languages=Ruby --langmap=Ruby:.rb.thor --verbose=no --totals --recurse=yes --exclude=tmp --fields=zK .. <cr>
