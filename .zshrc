@@ -373,9 +373,9 @@ function cdp(){
     wd $project_name
     export PYTHONPATH=.
     if [ -e "Pipfile" ]; then
-        . `pipenv --venv`/bin/activate
+# . `pipenv --venv`/bin/activate  # commented out by conda initialize
     elif [ -d 'env' ]; then 
-        . ./env/bin/activate
+# . ./env/bin/activate  # commented out by conda initialize
     fi
 }
 
@@ -415,5 +415,23 @@ alias kak='kustomize build | kubectl apply -f -'
 alias kdelk='kustomize build | kubectl delete -f -'
 alias kgk='kustomize build | kubectl get -f -'
 
+alias ssht='ssh -t'
+
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/kustomize kustomize
+
+# # >>> conda initialize >>>
+# # !! Contents within this block are managed by 'conda init' !!
+# __conda_setup="$('/usr/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/usr/etc/profile.d/conda.sh" ]; then
+#         . "/usr/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/usr/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+#

@@ -13,6 +13,11 @@
 " F7 - buffers
 " F8 - generate tags
 " F9/F10 - build/run/test or compile - lang dependent
+"
+" SUPER TIP TO FIND MAPPING
+" :verbose map <F1>
+" :verbose map <c-]>
+"
 
 "
 " ---------------- main hortcuts -----------
@@ -261,6 +266,9 @@ Plug 'ivalkeen/vim-ctrlp-tjump'
 "
 " Table Mode for instant table creation.
 " Plug 'dhruvasagar/vim-table-mode'
+"
+""" ---------------- cscope tags 
+Plug 'joe-skb7/cscope-maps'
 
 """ ----------------- Ctrpl end of plugins
 
@@ -1713,9 +1721,17 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_exclude = '\v(\.git)'
 let g:ctrlp_use_caching = 0
 
-" ctrl tjump
-nnoremap <c-]> :CtrlPtjump<cr>
-vnoremap <c-]> :CtrlPtjumpVisual<cr>
+""""" cscope vs ctrlp c-]
+" ctrl tjump  cscope tag
+" conflicts with cscope cstag when csto
+" cscopetag
+" cs add cscope.out
+" set cst
+" or use plugin cscope
+
+"nnoremap <c-]> :CtrlPtjump<cr>
+"vnoremap <c-]> :CtrlPtjumpVisual<cr>
+
 let g:ctrlp_tjump_only_silent = 1
 
 " repeat last movement

@@ -473,3 +473,5 @@ Fluentd
 stdout
 qps
 Str
+prometheusrules
+cadvisor
