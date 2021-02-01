@@ -1722,12 +1722,16 @@ let g:ctrlp_mruf_exclude = '\v(\.git)'
 let g:ctrlp_use_caching = 0
 
 """"" cscope vs ctrlp c-]
+" no needed anymore done by cscope-maps
 " ctrl tjump  cscope tag
 " conflicts with cscope cstag when csto
 " cscopetag
 " cs add cscope.out
 " set cst
 " or use plugin cscope
+" REQUIRED because plugin bug - that stop mapping because of verbose
+" "duplicate" message
+set nocscopeverbose
 
 "nnoremap <c-]> :CtrlPtjump<cr>
 "vnoremap <c-]> :CtrlPtjumpVisual<cr>
@@ -1762,7 +1766,8 @@ hi DiffText ctermbg=52
 
 " vsplit tag
 nmap <leader><C-]> :vsplit <CR>:exec("tag ".expand("<cword>"))<CR>zt<c-w>r<c-w><c-w>
-nmap <C-\> :split<CR>:exec("tag ".expand("<cword>"))<CR>
+" conflicts with cscope-maps (for any symbol find)
+"nmap <C-\> :split<CR>:exec("tag ".expand("<cword>"))<CR>
 
 " swap ' with `
 nnoremap ' `
