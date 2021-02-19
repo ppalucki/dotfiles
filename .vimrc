@@ -2080,7 +2080,7 @@ def loc():
         # if you are getting 'failed to connect to server' check if you are not running your exec with sudo!
         loc = subprocess.check_output(['tmux','show-buffer'])
         try:
-            line, filename = loc.split(':')
+            line, filename = loc.decode().split(':')
         except ValueError:
             raise Exception('cannot split loc with : %r'%loc)
 
@@ -2098,6 +2098,11 @@ def debug(cmd, lookup=True):
         # send command to tmux
         sendtmux(cmd, lookup=lookup)
 
+        # LOOUD and dirty way, because gdb cannot find proper line in
+        # hookpost-next as it should (PLEASE DISABLE COMMENT .gdb.py or .gdbinit
+        sendtmux("py gdb.execute('shell tmux set-buffer '+f'{gdb.decode_line()[1][0].line}:{gdb.decode_line()[1][0].symtab.filename}')")
+
+
 def debug_loc(cmd=None, lookup=True):
     """ send a command to terminal and then try to locate source file """
     debug(cmd, lookup)
@@ -2107,8 +2112,8 @@ EOF
 
 " go cOntinue
 nmap go :pyx debug_loc('continue')<cr>
-" go next -- gn is now vim command!!!
-" nmap gn :pyx debug_loc('next')<cr>
+" go go GO GO GO as next  because "gn" is now vim command!!!
+nmap gg :pyx debug_loc('next')<cr>
 " go step
 nmap gs :pyx debug_loc('step')<cr>
 " go end
