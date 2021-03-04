@@ -2042,6 +2042,8 @@ def open_or_edit(filename, line):
     # print repr(filename), repr(line)
     # and not filename.endswith('.pyc') and filename.endswith('.py')
     if filename is not None:
+        if not line.isdigit():
+            return
         line = int(line)
         buf = find_buffer(filename)
         if buf is not None:
@@ -2082,7 +2084,9 @@ def loc():
         try:
             line, filename = loc.decode().split(':')
         except ValueError:
-            raise Exception('cannot split loc with : %r'%loc)
+            # when we have something differnt in buffer
+            print('Err: cannot split loc with : %r'%loc)
+            return
 
         
         if line and filename:
@@ -2098,28 +2102,31 @@ def debug(cmd, lookup=True):
         # send command to tmux
         sendtmux(cmd, lookup=lookup)
 
-        # LOOUD and dirty way, because gdb cannot find proper line in
-        # hookpost-next as it should (PLEASE DISABLE COMMENT .gdb.py or .gdbinit
-        sendtmux("py gdb.execute('shell tmux set-buffer '+f'{gdb.decode_line()[1][0].line}:{gdb.decode_line()[1][0].symtab.filename}')")
+
+def store_loc():
+    # LOOUD and dirty way, because gdb cannot find proper line in
+    # hookpost-next as it should (PLEASE DISABLE COMMENT .gdb.py or .gdbinit
+    sendtmux("py gdb.execute('shell tmux set-buffer '+f'{gdb.decode_line()[1][0].line}:{gdb.decode_line()[1][0].symtab.filename}')")
 
 
 def debug_loc(cmd=None, lookup=True):
     """ send a command to terminal and then try to locate source file """
     debug(cmd, lookup)
-    loc()
+    #loc()
 
 EOF
 
 " go cOntinue
 nmap go :pyx debug_loc('continue')<cr>
 " go go GO GO GO as next  because "gn" is now vim command!!!
-nmap gg :pyx debug_loc('next')<cr>
+nmap <leader>gg :pyx debug_loc('next')<cr>
 " go step
 nmap gs :pyx debug_loc('step')<cr>
 " go end
 nmap ge :pyx debug_loc('finish')<cr>
 " go run
 nmap gr :pyx debug_loc('run')<cr>
+nmap gR :pyx debug_loc('start')<cr>
 " go up stack up 
 " nmap gu :pyx debug_loc('up', lookup=False)<cr> 
 " go bottom aka down stack - down 
@@ -2127,15 +2134,15 @@ nmap gb :pyx debug_loc('down', lookup=False)<cr>
 " go "end function" (until) (gi was reserverd for go last insert position)
 nmap gj :pyx debug_loc('jump')<cr>
 " go location
-nmap gl :pyx loc()<cr>
+nmap gl :pyx store_loc();loc()<cr>
 " nmap gc :call ScreenShellSend('continue')<cr>
-nmap gp yiw:pyx sendtmux("print <c-r>"")<cr>
-vmap gp y:pyx sendtmux("print <c-r>"")<cr>
+nmap gp yiw:pyx sendtmux("print <c-r>"", lookup=False)<cr>
+vmap gp y:pyx sendtmux("print <c-r>"", lookup=False)<cr>
 
 nmap <leader>tb :pyx set_breakpoint()<cr>
 " advance
 " conflict with vim-action-ag
-" nmap ga :pyx gdb_adanvce()<cr>
+nmap gA :pyx gdb_adanvce()<cr>
 
 let g:COMMAND_MAP = {
     \ "hit" : "echo 'HIT'",
@@ -2256,7 +2263,9 @@ function! Mouseon()
     map <C-LeftMouse> gd 
     nmap <RightMouse> <c-o>
 
-    nmap <2-LeftMouse> gd
+    " gd doesnt work with cscope
+    " nmap <2-LeftMouse> gd 
+    nmap <2-LeftMouse> <c-]>
     " nmap <expr> <2-LeftMouse> (&buftype is# "quickfix" ? "" : "gd")
 endfunction
 

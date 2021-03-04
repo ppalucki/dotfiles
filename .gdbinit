@@ -1,5 +1,8 @@
 set history save
 
+set print pretty
+set height 0
+
 # golang support
 #source /usr/local/go/src/runtime/runtime-gdb.py
 # NOT USED ANYMORE
