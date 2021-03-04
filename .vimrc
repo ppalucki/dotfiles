@@ -401,6 +401,10 @@ Plug 'pedrohdz/vim-yaml-folds'
 
 Plug 'chrisbra/vim-diff-enhanced'
 
+
+" TypeScript
+Plug 'leafgarland/typescript-vim'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on

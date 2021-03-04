@@ -435,3 +435,8 @@ complete -o nospace -C /usr/bin/kustomize kustomize
 # unset __conda_setup
 # # <<< conda initialize <<<
 #
+# ####################### VIM MODE
+#bindkey -v
+# https://superuser.com/questions/351499/how-to-switch-comfortably-to-vi-command-mode-on-the-zsh-command-line
+# jj- for exit z insert mode
+#bindkey -M viins 'jj' vi-cmd-mode
