@@ -401,6 +401,10 @@ Plug 'pedrohdz/vim-yaml-folds'
 
 Plug 'chrisbra/vim-diff-enhanced'
 
+
+" TypeScript
+Plug 'leafgarland/typescript-vim'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -2113,7 +2117,7 @@ EOF
 " go cOntinue
 nmap go :pyx debug_loc('continue')<cr>
 " go go GO GO GO as next  because "gn" is now vim command!!!
-nmap gg :pyx debug_loc('next')<cr>
+nmap <leader>gg :pyx debug_loc('next')<cr>
 " go step
 nmap gs :pyx debug_loc('step')<cr>
 " go end
