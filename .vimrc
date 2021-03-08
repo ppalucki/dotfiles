@@ -405,6 +405,9 @@ Plug 'chrisbra/vim-diff-enhanced'
 " TypeScript
 Plug 'leafgarland/typescript-vim'
 
+" Open file with line filename:12
+Plug 'bogado/file-line'
+
 call plug#end()
 " To ignore plugin indent changes, instead use:
 "filetype plugin on

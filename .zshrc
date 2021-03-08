@@ -440,3 +440,8 @@ complete -o nospace -C /usr/bin/kustomize kustomize
 # https://superuser.com/questions/351499/how-to-switch-comfortably-to-vi-command-mode-on-the-zsh-command-line
 # jj- for exit z insert mode
 #bindkey -M viins 'jj' vi-cmd-mode
+#
+#
+function aws-ec2-fingerprint {
+    ssh-keygen -f ~/.ssh/id_rsa.pub -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
+}
