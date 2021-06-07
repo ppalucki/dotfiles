@@ -233,6 +233,8 @@ Plug 'guns/xterm-color-table.vim'
 Plug 'terryma/vim-multiple-cursors'
 " rust
 Plug 'rust-lang/rust.vim'
+" toml + cargo
+Plug 'cespare/vim-toml'
 " --- Presentation
 " Plug 'sotte/presenting.vim'
 Plug 'raphael/vim-present-simple'
