@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible kube-ps1)
+plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python)
 
 
 ### VI-mode - readline doesn't work
@@ -68,7 +68,8 @@ ZSH_TMUX_AUTOSTART=false
 ############################################
 ### PATH ~/bin
 ###########################################
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
+#export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
+#export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -187,7 +188,7 @@ alias gco='git checkout --no-guess'
 ### ALIASES cd
 #############################################
 alias cdw='cd ~/work'
-alias psa='ps auxf | grep -v ]$'
+#alias psa='ps auxf | grep -v ]$'
 
 #############################################
 ### ubuntu/centos instaltat shorutcuts
@@ -197,11 +198,11 @@ alias psa='ps auxf | grep -v ]$'
 # alias pkg='apt-cache search'
 # alias pkgprovides='dpkg -S '
 # alias pkglist='dpkg -L'
-alias ipkg='sudo yum install'
-alias ypkg='sudo yum install -y'
-alias pkg='yum search'
-alias pkgprovides='yum whatprovides'
-alias pkglist='rpm -ql '
+#alias ipkg='sudo yum install'
+#alias ypkg='sudo yum install -y'
+#alias pkg='yum search'
+#alias pkgprovides='yum whatprovides'
+#alias pkglist='rpm -ql '
 
 
 ############################################
@@ -226,10 +227,10 @@ alias watch='watch '
 # export GOROOT=/usr/local/go
 # export GOPATH=/home/ppalucki/work/gopath19
 # export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
-export GOROOT=/home/ppalucki/bin/go1.14
-export GOPATH=/home/ppalucki/go
-export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
-hash -r
+#export GOROOT=/home/ppalucki/bin/go1.14
+#export GOPATH=/home/ppalucki/go
+#export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
+#hash -r
 ##### gvm
 # [ -f ~/.gvm/scripts/gvm ] && source ~/.gvm/scripts/gvm
 # [ -f ~/bin/setgosrc ] && source ~/bin/setgosrc
@@ -277,19 +278,19 @@ hash -r
 #     export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 # fi
 
-alias cdgo='cd $GOPATH'
+#alias cdgo='cd $GOPATH'
 
 ## static building
-alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
+#alias gobuildstatic="CGO_ENABLED=0 go build -a -installsuffix cgo"
 
 ## testy - create directory & file and edit
-function testy(){
-    TESTY=$GOPATH/src/testy/
-    mkdir -p $TESTY/$1
-    cd $TESTY/$1
-    touch $1.go
-    vim $1.go
-}
+#function testy(){
+#    TESTY=$GOPATH/src/testy/
+#    mkdir -p $TESTY/$1
+#    cd $TESTY/$1
+#    touch $1.go
+#    vim $1.go
+#}
 
 ##########################################
 #### python
@@ -405,9 +406,9 @@ function ssh-copy-id-root {
 
 
 # HMM - some workaround about not working git co completion !!!!!!!!!!!!!!!!!
-export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
-. ~/git-completion.zsh 2>/dev/null >/dev/null
-kubeoff
+#export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
+#. ~/git-completion.zsh 2>/dev/null >/dev/null
+#kubeoff
 
 # KUSTOMIZE
 #alias kak='kubectl apply -k .'
@@ -417,8 +418,8 @@ alias kgk='kustomize build | kubectl get -f -'
 
 alias ssht='ssh -t'
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/kustomize kustomize
+#autoload -U +X bashcompinit && bashcompinit
+#complete -o nospace -C /usr/bin/kustomize kustomize
 
 # # >>> conda initialize >>>
 # # !! Contents within this block are managed by 'conda init' !!
