@@ -1,0 +1,12 @@
+{
+    "suggest.floatEnable": false,
+    "diagnostic.messageTarget": "float",
+    "diagnostic.enableMessage": "jump",
+    "signature.target": "preview",
+    "OFFhover.target": "float",
+    "rust-analyzer.procMacro.enable": true,
+    "rust-analyzer.diagnostics.disabled": ["unresolved-macro-call"],
+    "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+    "OFFrust-analyzer.cargo.features": ["bar"],
+    "rust-analyzer.debug.runtime": "vimspector"
+}
