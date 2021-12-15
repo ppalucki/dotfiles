@@ -80,7 +80,7 @@ ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
-export PROMPT="$PROMPT\$(kube_ps1)"
+#export PROMPT="$PROMPT\$(kube_ps1)"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -446,3 +446,13 @@ alias ssht='ssh -t'
 function aws-ec2-fingerprint {
     ssh-keygen -f ~/.ssh/id_rsa.pub -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
 }
+# https://unix.stackexchange.com/questions/25327/watch-command-alias-expansion
+alias watch='watch '
+
+
+
+export PATH="${PATH}:${HOME}/.krew/bin"
+
+alias n36='ssh root@node36 -t zsh'
+alias n37='ssh root@node37'
+alias n38='ssh root@node38 -t zsh'
