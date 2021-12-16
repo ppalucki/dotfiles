@@ -201,6 +201,6 @@
 # this will fetch all pr/PRNUMBER/head as tracking
 # then you can just git checkout pr/110 or update with git fetch and git reset --hard origin/pr/110
 
-[oh-my-zsh]
-	hide-status = 1
-	hide-dirty = 1
+#[oh-my-zsh]
+#	hide-status = 1
+#	hide-dirty = 1
