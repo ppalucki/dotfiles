@@ -138,10 +138,11 @@ let g:plug_url_format = 'https://github.com/%s.git'
 
 call plug#begin('~/.vim/plugged')
 
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ervandew/supertab'
 
 " ---------- Snippets
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
 " autoformat
@@ -196,8 +197,6 @@ Plug 'scrooloose/syntastic'
 """ -----  GIT
 Plug 'tpope/vim-fugitive'
 " ------------- Extra keyboard shortcuts
-" SuperTab - tab
-"Plug 'ervandew/supertab'
 " A few of quick commands to swtich between source files and header files quickly.
 Plug 'vim-scripts/a.vim'
 " comment with gcc
@@ -1701,6 +1700,8 @@ nnoremap <leader>f *N
 
 
 """ ----- ultisnip
+" conflicts with supertab
+let g:UltiSnipsExpandTrigger = '<c-tab>'               
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
 let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
@@ -3187,7 +3188,6 @@ function s:my_coc_config()
       set signcolumn=yes
     endif
 
-
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
     " other plugin before putting this into your config.
@@ -3196,6 +3196,7 @@ function s:my_coc_config()
           \ <SID>check_back_space() ? "\<TAB>" :
           \ coc#refresh()
     inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 
     function! s:check_back_space() abort
       let col = col('.') - 1
@@ -3337,3 +3338,5 @@ function s:my_coc_config()
     "
     "
 endfunction
+
+call s:my_coc_config()

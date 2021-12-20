@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx)
+plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx kube-ps1)
 
 
 ### VI-mode - readline doesn't work
@@ -74,6 +74,8 @@ export PATH=$PATH:/usr/local/go/bin
 
 source $ZSH/oh-my-zsh.sh
 
+export KUBE_PS1_SYMBOL_USE_IMG=true
+export KUBE_PS1_SYMBOL_ENABLE=false
 
 ################# fix git and hostname
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
@@ -81,7 +83,7 @@ ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
-#export PROMPT="$PROMPT\$(kube_ps1)"
+export PROMPT="$PROMPT\$(kube_ps1) "
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
