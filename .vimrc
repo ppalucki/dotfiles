@@ -144,6 +144,10 @@ Plug 'ervandew/supertab'
 " ---------- Snippets
 " Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'makerj/vim-pdf'
+
+" sLL
+"Plug 'justinmk/vim-sneak'
 
 " autoformat
 " pip install yapf autopep8
@@ -415,6 +419,9 @@ Plug 'bogado/file-line'
 Plug 'puremourning/vimspector'
 
 Plug 'fidian/hexmode'
+
+" helm chart
+Plug 'towolf/vim-helm'
 
 call plug#end()
 
@@ -1104,7 +1111,7 @@ let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 1
 "let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen = 0
-let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__']
+let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__', '_test\.go$']
 
 let NERDTreeMouseMode = 3
 
@@ -1228,6 +1235,11 @@ let g:tagbar_width = 80
 set mouse=
 set ttymouse=xterm2
 set nomousehide
+
+
+map <MiddleMouse> <C-O>
+" map <X2Mouse> <C-O>
+" map <X1Mouse> <C-O>
 
 """ ----- grep (plugin) 
 " let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
@@ -1395,8 +1407,8 @@ nnoremap <silent> <Leader>vl :Gllog -n 50<cr>
 nnoremap <Leader>vL :Gllog -n 50 --<cr>
 " use lopen to list
 " gblame
-nnoremap <Leader>vb :Gblame<cr>
-vnoremap <Leader>vb :Gblame<cr>
+nnoremap <Leader>vb :Git blame<cr>
+vnoremap <Leader>vb :Git blame<cr>
 
 " aka vim fetch&merge
 nnoremap <Leader>vm :Git pull<cr> 
@@ -3191,11 +3203,11 @@ function s:my_coc_config()
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
     " other plugin before putting this into your config.
-    inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    " inoremap <silent><expr> <TAB>
+    "       \ pumvisible() ? "\<C-n>" :
+    "       \ <SID>check_back_space() ? "\<TAB>" :
+    "       \ coc#refresh()
+    " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 
     function! s:check_back_space() abort
@@ -3266,7 +3278,8 @@ function s:my_coc_config()
     " Remap keys for applying codeAction to the current buffer.
     nmap <leader>ac  <Plug>(coc-codeaction)
     " Apply AutoFix to problem on the current line.
-    nmap <leader>qf  <Plug>(coc-fix-current)
+    " my note: conflicts with the <leader>q - close window
+    "nmap <leader>qf  <Plug>(coc-fix-current)
 
     " Map function and class text objects
     " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -3308,6 +3321,20 @@ function s:my_coc_config()
     " provide custom statusline: lightline.vim, vim-airline.
     set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+      "\ 'colorscheme': 'wombat',
+    let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+
+    " Use autocmd to force lightline update.
+    autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
     " Mappings for CoCList
     " Show all diagnostics.
     "nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -3340,3 +3367,7 @@ function s:my_coc_config()
 endfunction
 
 call s:my_coc_config()
+
+" For golang:
+" https://github.com/josa42/coc-go
+" :CocInstall coc-go

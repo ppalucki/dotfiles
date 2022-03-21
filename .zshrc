@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx kube-ps1)
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1)
 
 
 ### VI-mode - readline doesn't work
@@ -70,7 +70,7 @@ ZSH_TMUX_AUTOSTART=false
 ###########################################
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:/root/go/bin
 
 source $ZSH/oh-my-zsh.sh
 
@@ -443,4 +443,10 @@ alias n38='ssh root@node38 -t zsh'
 
 # Kubernetes
 alias kg='kubectl get'
+alias kgw='kubectl get -owide'
+alias kgy='kubectl get -oyaml'
+alias kgan='kubectl get --all-namespaces'
 alias kd='kubectl describe'
+
+alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
+

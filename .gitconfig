@@ -204,3 +204,8 @@
 #[oh-my-zsh]
 #	hide-status = 1
 #	hide-dirty = 1
+
+# Access by git by tunnel
+# ssh -R 1337:proxy-mu.example.com:1080 root@node36
+# [http]
+# 	proxy = socks5://127.0.0.1:1337
