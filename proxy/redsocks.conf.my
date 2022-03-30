@@ -62,7 +62,8 @@ redsocks {
 	//ip = proxy.jf.intel.com;
 
     // proxy-mu.intel.com
-   	ip = 10.217.247.236; 
+   	// ip = 10.217.247.236; 
+    ip = 10.1.192.48;
 
     // proxy-chain.intel.com
     //ip = 163.33.7.139; 
