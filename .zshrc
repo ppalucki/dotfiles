@@ -51,7 +51,8 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx)
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 aws)
+# plugins=(aws)
 
 
 ### VI-mode - readline doesn't work
@@ -70,10 +71,12 @@ ZSH_TMUX_AUTOSTART=false
 ###########################################
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:/root/go/bin
 
 source $ZSH/oh-my-zsh.sh
 
+export KUBE_PS1_SYMBOL_USE_IMG=true
+export KUBE_PS1_SYMBOL_ENABLE=false
 
 ################# fix git and hostname
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
@@ -81,7 +84,7 @@ ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
-#export PROMPT="$PROMPT\$(kube_ps1)"
+export PROMPT="$PROMPT\$(kube_ps1) "
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -362,29 +365,7 @@ function sshagent(){
 #[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #
 #
-#############################
-## pyenv
-##########################
-# export PATH="/home/ppalucki/.pyenv/bin:$PATH"
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
 
-function cdp(){
-    project_name=$1
-    tmux rename-window "$project_name"
-    wd $project_name
-    export PYTHONPATH=.
-    if [ -e "Pipfile" ]; then
-# . `pipenv --venv`/bin/activate  # commented out by conda initialize
-    elif [ -d 'env' ]; then 
-# . ./env/bin/activate  # commented out by conda initialize
-    fi
-}
-
-alias cdowca="cdp owca"
-alias cdinst="cdp installer"
-# alias cdigkwc="cdp igk-wc-env"
-alias cdprm="cdp prm"
 #
 function yaml2json(){
     python2 -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4);print "\n"'
@@ -451,6 +432,7 @@ function aws-ec2-fingerprint {
 alias watch='watch '
 
 export EDITOR=vim
+alias vi=vim
 
 export PATH="${PATH}:${HOME}/.krew/bin"
 
@@ -459,4 +441,13 @@ export PATH="${PATH}:${HOME}/.krew/bin"
 alias n36='ssh root@node36 -t zsh'
 alias n37='ssh root@node37'
 alias n38='ssh root@node38 -t zsh'
+
+# Kubernetes
+alias kg='kubectl get'
+alias kgw='kubectl get -owide'
+alias kgy='kubectl get -oyaml'
+alias kgan='kubectl get --all-namespaces'
+alias kd='kubectl describe'
+
+alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 
