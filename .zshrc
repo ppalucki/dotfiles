@@ -455,4 +455,5 @@ alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 alias awp='aws --cli-auto-prompt'
 
 alias -g LS=' | less -S'
+alias dirs='dirs -v'
 
