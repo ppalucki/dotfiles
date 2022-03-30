@@ -423,6 +423,10 @@ Plug 'fidian/hexmode'
 " helm chart
 Plug 'towolf/vim-helm'
 
+" AWS CFN
+Plug 'NLKNguyen/cloudformation-syntax.vim'
+
+
 call plug#end()
 
 let g:hexmode_patterns = '*.blb'
