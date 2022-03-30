@@ -62,11 +62,15 @@ list-buckets = s3api list-buckets
 
 
 ############################### AMIS - images  #################################
+############# volumes
+describe-volume = !f() { aws ec2 describe-volumes --volume-ids $1; } ; f
 
-# volumes
 ebs-volumes= ec2 describe-volumes \
     --query 'Volumes[].{VolumeId: VolumeId,State: State,Size: Size,Name: Tags[0].Value,AZ: AvailabilityZone}' \
     --output table
+
+############# images
+describe-image = !f() { aws ec2 describe-images --image-ids $1; } ; f
 
 amazon-amis = ec2 describe-images --owners amazon \
     --filter \
