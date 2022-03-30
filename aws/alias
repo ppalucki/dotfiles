@@ -1,40 +1,15 @@
 [toplevel]
 
-# MINE
-rit = !f() { aws ec2 run-instances --launch-template LaunchTemplateName=$1 ; }; f
-ti = !f() { aws ec2 terminate-instances --instance-ids "${1}"; }; f
-# wtf = !f() { echo wtf }; f
-
-
-ri = running-instances
-############################### cloudformation  #################################
-cf = cloudformation
-
-list-stacks = cf list-stacks --query 'StackSummaries[?DeletionTime==None].{Name: StackName, Status:StackStatus}'
-
-############################### EC2  #################################
-
-#
-#create-assume-role =
-#  !f() {
-#    aws iam create-role --role-name "${1}" \
-#      --assume-role-policy-document \
-#        "{\"Statement\":[{\
-#            \"Action\":\"sts:AssumeRole\",\
-#            \"Effect\":\"Allow\",\
-#            \"Principal\":{\"Service\":\""${2}".amazonaws.com\"},\
-#            \"Sid\":\"\"\
-#          }],\
-#          \"Version\":\"2012-10-17\"\
-#        }";
-#  }; f
+############################### ec2 #############################################
 #
 #
-#
+############# instances
 running-instances = ec2 describe-instances \
     --filter Name=instance-state-name,Values=running \
     --output table \
     --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform}'
+
+ri = running-instances
 
 # describe instance
 di = 
@@ -52,35 +27,91 @@ div =
         --instance-ids "${1}" | cat;
     }; f
 
-# volumes
-ebs-volumes= ec2 describe-volumes \
-    --query 'Volumes[].{VolumeId: VolumeId,State: State,Size: Size,Name: Tags[0].Value,AZ: AvailabilityZone}' \
-    --output table
+############# launch templates
 
-amazon-linux-amis = ec2 describe-images \
-    --filter \
-      Name=owner-alias,Values=amazon \
-      Name=name,Values="amzn-ami-hvm-*" \
-      Name=architecture,Values=x86_64 \
-      Name=virtualization-type,Values=hvm \
-      Name=root-device-type,Values=ebs \
-      Name=block-device-mapping.volume-type,Values=gp2 \
-    --query "reverse(sort_by(Images, &CreationDate))[*].[ImageId,Name,Description]" \
-    --output text
+run-instance-template = !f() { aws ec2 run-instances --launch-template LaunchTemplateName=$1 ; }; f
+terminate-instance = !f() { aws ec2 terminate-instances --instance-ids "${1}"; }; f
+#
+list-templates = ec2 describe-launch-templates --query 'LaunchTemplates[].[LaunchTemplateName, CreatedBy]'
+describe-template = !f() { aws ec2 describe-launch-template-versions --launch-template-name $1 ; } ; f
 
-############################### SecurityGroups #################################
+############################### SecurityGroups & KeyPairs #################################
+# aws-ec2-fingerprint (to find your local key)
+key-pairs = ec2 describe-key-pairs --query "KeyPairs[].{KeyName: KeyName, Fingerprint:KeyFingerprint}"
 
 sgs = ec2 describe-security-groups --query "SecurityGroups[].{ID: GroupId, GroupName: GroupName, Name: Tags[?Key==`Name`].Value | [0]}" --output table
 
 sg-rules = !f() { aws ec2 describe-security-groups \
     --query "SecurityGroups[].IpPermissions[].[FromPort,ToPort,IpProtocol,join(',',IpRanges[].CidrIp)]" \
     --group-id "$1" --output text; }; f
+
+############################### cloudformation  #################################
+cf = cloudformation
+
+list-stacks = cf list-stacks --query 'StackSummaries[?DeletionTime==None].{Name: StackName, Status:StackStatus}'
+list-stacks-all = cf list-stacks --query 'StackSummaries[].{Name: StackName, Status:StackStatus}'
+
+delete-stack = !f() { aws cf delete-stack --stack-name $1; } ; f
+deploy-stack = !f() { aws cf deploy --stack-name $1 --template-file $2 ;} ; f
+stack-events = !f() { aws cf describe-stack-events --stack-name $1 --query 'StackEvents[].[LogicalResourceId,ResourceStatus,ResourceStatusReason,Timestamp]'; } ; f
+stack-events-full = !f() { aws cf describe-stack-events --stack-name $1 --query 'StackEvents[].[EventId,LogicalResourceId,ResourceProperties,ResourceStatus,ResourceStatusReason,Timestamp]' | less -S; } ; f
+
+
+############################### s3api #####################################
+list-buckets = s3api list-buckets
+
+
+############################### AMIS - images  #################################
+
+# volumes
+ebs-volumes= ec2 describe-volumes \
+    --query 'Volumes[].{VolumeId: VolumeId,State: State,Size: Size,Name: Tags[0].Value,AZ: AvailabilityZone}' \
+    --output table
+
+amazon-amis = ec2 describe-images --owners amazon \
+    --filter \
+      Name=name,Values="amzn-ami-hvm-*" \
+      Name=architecture,Values=x86_64 \
+      Name=virtualization-type,Values=hvm \
+      Name=root-device-type,Values=ebs \
+      Name=block-device-mapping.volume-type,Values=gp2 \
+    --query "reverse(sort_by(Images, &CreationDate))[?CreationDate>='2022'].[CreationDate,ImageId,Name,Description]" \
+    --output table
+
+amazon-amis2 = ec2 describe-images --owners amazon \
+    --filter \
+      Name=name,Values="amzn-ami-hvm-*" \
+      Name=architecture,Values=x86_64 \
+      Name=virtualization-type,Values=hvm \
+    --query "reverse(sort_by(Images, &CreationDate))[?CreationDate>='2022'].[CreationDate,ImageId,Name,Description,BlockDeviceMappings[0].Ebs.VolumeType, BlockDeviceMappings[0].Ebs.Encrypted]" \
+    --output table
+
+redhat-amis = ec2 describe-images --owners 309956199498 --query "reverse(sort_by(Images, &CreationDate))[?CreationDate>='2022'].[CreationDate,ImageId,Name,Description]" --filters "Name=name,Values=RHEL-8*" --output table
     
+ubuntu-amis = ec2 describe-images --owners 099720109477 --query "reverse(sort_by(Images, &CreationDate))[?CreationDate>='2022'].[CreationDate,ImageId,Name,Description]" --filters "Name=name,Values=ubuntu-minimal/images/*21.10*" --output table
 
 
 
 
 ############################### OTHER #################################
+#
+#create-assume-role =
+#  !f() {
+#    aws iam create-role --role-name "${1}" \
+#      --assume-role-policy-document \
+#        "{\"Statement\":[{\
+#            \"Action\":\"sts:AssumeRole\",\
+#            \"Effect\":\"Allow\",\
+#            \"Principal\":{\"Service\":\""${2}".amazonaws.com\"},\
+#            \"Sid\":\"\"\
+#          }],\
+#          \"Version\":\"2012-10-17\"\
+#        }";
+#  }; f
+#
+#
+#
+
 whoami = sts get-caller-identity
 
 # List or set your region

@@ -71,7 +71,7 @@ ZSH_TMUX_AUTOSTART=false
 ###########################################
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
-export PATH=$PATH:/usr/local/go/bin:/root/go/bin
+export PATH=$PATH:/usr/local/go/bin:/root/go/bin:/home/ppalucki/.local/bin/
 
 source $ZSH/oh-my-zsh.sh
 
@@ -450,4 +450,9 @@ alias kgan='kubectl get --all-namespaces'
 alias kd='kubectl describe'
 
 alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
+
+# AWS
+alias awp='aws --cli-auto-prompt'
+
+alias -g LS=' | less -S'
 
