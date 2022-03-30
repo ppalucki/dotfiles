@@ -11,7 +11,7 @@ running-instances = ec2 describe-instances \
 
 running-instances-all = ec2 describe-instances \
     --output table \
-    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName}'
+    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, State: State.Name}'
 
 ri = running-instances
 ria = running-instances-all
