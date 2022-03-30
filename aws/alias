@@ -7,9 +7,14 @@
 running-instances = ec2 describe-instances \
     --filter Name=instance-state-name,Values=running \
     --output table \
-    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform}'
+    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName}'
+
+running-instances-all = ec2 describe-instances \
+    --output table \
+    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName}'
 
 ri = running-instances
+ria = running-instances-all
 
 # describe instance
 di = 
@@ -44,6 +49,19 @@ sgs = ec2 describe-security-groups --query "SecurityGroups[].{ID: GroupId, Group
 sg-rules = !f() { aws ec2 describe-security-groups \
     --query "SecurityGroups[].IpPermissions[].[FromPort,ToPort,IpProtocol,join(',',IpRanges[].CidrIp)]" \
     --group-id "$1" --output text; }; f
+
+#### IP managment
+myip =
+  !f() {
+    #dig +short myip.opendns.com @resolver1.opendns.com
+    curl -q ifconfig.me/ip
+  }; f
+
+allow-my-ip-ssh =
+  !f() {
+    my_ip=$(aws myip)
+    aws ec2 authorize-security-group-ingress --group-name ${1} --protocol tcp --port 22 --cidr $my_ip/32
+  }; f
 
 ############################### cloudformation  #################################
 cf = cloudformation
@@ -147,11 +165,6 @@ docker-ecr-login =
     docker login -u AWS -p $passwd $endpoint
   }; f
 
-# IP managment
-myip =
-  !f() {
-    dig +short myip.opendns.com @resolver1.opendns.com
-  }; f
 
 allow-my-ip =
   !f() {
