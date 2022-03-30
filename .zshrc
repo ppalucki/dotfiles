@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 aws)
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 aws dirhistory dirpersist)
 # plugins=(aws)
 
 

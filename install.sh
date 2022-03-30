@@ -12,6 +12,6 @@ ln -sv ~/dotfiles/.ctags ~/.ctags
 # ln -sv ~/dotfiles/.gdbinit ~/.gdbinit
 ln -sv ~/dotfiles/.zshrc ~/.zshrc
 # ln -sv ~/dotfiles/.pdbrc.py ~/.pdbrc.py
-mkdir -p -a ~/.aws/cli
+mkdir -p ~/.aws/cli
 ln -sv ~/dotfiles/aws/alias ~/.aws/cli/alias
 echo done

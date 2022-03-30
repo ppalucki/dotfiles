@@ -166,8 +166,8 @@ Plug 'nvie/vim-flake8', { 'for':  'python' }
 "Plug 'python-mode/python-mode', { 'for':  'python' }
 " REMEMBER about g:black_virtualenv
 " /home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso
-let g:black_virtualenv = "/home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso"
-Plug 'ambv/black'
+" let g:black_virtualenv = "/home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso"
+" Plug 'ambv/black'
 
 " ------------- Golang development
 " with GoImport fix (python based solution not accepted by upstream)
@@ -3370,7 +3370,7 @@ function s:my_coc_config()
     "
 endfunction
 
-call s:my_coc_config()
+"call s:my_coc_config()
 
 " For golang:
 " https://github.com/josa42/coc-go
