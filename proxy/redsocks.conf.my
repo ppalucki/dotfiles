@@ -63,9 +63,19 @@ redsocks {
 
     // proxy-mu.intel.com
    	// ip = 10.217.247.236; 
-    ip = 10.1.192.48;
+
+    // nie wiem co to :)
+    //ip = 10.1.192.48;
+
+    // actually recommended
+    // proxy-dmz.intel.com
+    // ip = 10.217.247.241;
+
+    // proxy-socks.isw.intel.com
+    ip = 10.102.248.16;
 
     // proxy-chain.intel.com
+    // not recommended enoyrmo
     //ip = 163.33.7.139; 
 
     // proxy-ir.intel.com
