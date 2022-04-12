@@ -138,12 +138,14 @@ let g:plug_url_format = 'https://github.com/%s.git'
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'ervandew/supertab'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'ervandew/supertab'
 
 " ---------- Snippets
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+" ??
 Plug 'makerj/vim-pdf'
 
 " sLL
@@ -404,7 +406,7 @@ Plug 'pearofducks/ansible-vim'
 " Plug 'chase/vim-ansible-yaml'
 "
 "
-Plug 'pedrohdz/vim-yaml-folds'
+" Plug 'pedrohdz/vim-yaml-folds'
 
 Plug 'chrisbra/vim-diff-enhanced'
 
@@ -424,8 +426,17 @@ Plug 'fidian/hexmode'
 Plug 'towolf/vim-helm'
 
 " AWS CFN
-Plug 'NLKNguyen/cloudformation-syntax.vim'
+" Plug 'NLKNguyen/cloudformation-syntax.vim'
+" cfn linter
+Plug 'speshak/vim-cfn'
 
+" snipptes
+Plug 'lunarxlark/aws-cfn-snippet.vim'
+""" require two manual fixes 
+" 1. change master to main
+"  
+"
+Plug 'hashivim/vim-terraform'
 
 call plug#end()
 
@@ -434,7 +445,8 @@ let g:hexmode_xxd_options = '-g 1 -p'
 
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
+" 44 line master to main
+" ./make-cfn-snippet.sh -u
 
 """ -------------------------------------------
 """         Core settings
@@ -1065,7 +1077,7 @@ nmap <C-h> <C-W>h
 
 """ wciecia/tab
 " indent based on previous line
-set autoindent
+" set autoindent
 " indent based on syntax
 set smartindent
 " pressing TAB puts spaces
@@ -1087,7 +1099,7 @@ au FileType ruby setlocal ts=2 sw=2 sts=2
 au FileType html setlocal ts=2 sw=2 sts=2 nocindent
 au FileType python setlocal ts=4 sw=4 sts=4
 au FileType mkd setlocal shiftwidth=2
-au FileType yaml setlocal ts=2 sw=2 sts=2 autoindent smarttab expandtab noswapfile
+au FileType yaml setlocal ts=2 sw=2 sts=2 noautoindent nocindent nosmartindent expandtab noswapfile
 au FileType cpp setlocal ts=2 sw=2 sts=2 noexpandtab
 au FileType c setlocal ts=4 sw=4 sts=4 noexpandtab
 au FileType go setlocal ts=4 sw=4 sts=4 noexpandtab
@@ -2194,6 +2206,9 @@ set diffopt=filler,vertical
 " c-l dla [pymode]
 " l dla SyntasticCheck
 " nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
+"
+
+
 nmap <leader>l :up<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 "let g:syntastic_quiet_messages = {'level': 'warrnings'}
@@ -2254,6 +2269,8 @@ let g:syntastic_cpp_compiler = 'clang++-3.5'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 
 
+" AWS
+let g:syntastic_cloudformation_checkers = ['cfn_lint']
 """ -------------------------------------------
 """         trim white spaces
 """ -------------------------------------------
@@ -3375,3 +3392,9 @@ endfunction
 " For golang:
 " https://github.com/josa42/coc-go
 " :CocInstall coc-go
+"
+"
+let g:coc_disable_startup_warning = 1
+
+
+let maxmempattern=2000000

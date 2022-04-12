@@ -42,7 +42,7 @@ rilt = run-instance-launch-template
 terminate-instance = !f() { aws ec2 terminate-instances --instance-ids "${1}"; }; f
 ti = terminate-instance
 
-l-templates = ec2 describe-launch-templates --query 'LaunchTemplates[].[LaunchTemplateName, CreatedBy]'
+l-templates = ec2 describe-launch-templates --query 'LaunchTemplates[].[LaunchTemplateId, LaunchTemplateName, CreatedBy]'
 desc-l-template = !f() { aws ec2 describe-launch-template-versions --launch-template-name $1 ; } ; f
 
 _______________security = dummy
