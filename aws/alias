@@ -10,7 +10,7 @@ ___ = dummy
 running-instances = ec2 describe-instances \
     --filter Name=instance-state-name,Values=running \
     --output table \
-    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName}'
+        --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PrivateIp: PrivateIpAddress}'
 
 instances-all = ec2 describe-instances \
     --output table \
@@ -24,7 +24,7 @@ di =
     !f() {
         aws ec2 describe-instances \
         --output table \
-        --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, SecurityGroups: SecurityGroups[0].GroupName}' --instance-ids "${1}";
+        --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, SecurityGroups: SecurityGroups[0].GroupName, PrivateIp:PrivateIpAddress}' --instance-ids "${1}";
     }; f
 
 # describe instance verbose
@@ -87,6 +87,11 @@ authorize-my-ip-by-name =
     group_id=$(aws get-group-id "${1}")
     aws authorize-my-ip "$group_id"
   }; f
+
+############################### networks ######################################
+
+vpcs = ec2 describe-vpcs --output table --query 'sort_by(sort_by(Vpcs, &CidrBlock ), &VpcId)[*].{cidr:CidrBlock, vpc:VpcId, default:IsDefault, Name: Tags[?Key==`Name`].Value | [0] }'
+subnets = ec2 describe-subnets --output table --query 'sort_by(sort_by(Subnets, &AvailabilityZone ), &VpcId)[*].{SubnetId:SubnetId, cidr:CidrBlock, vpc:VpcId, AvailabilityZone:AvailabilityZone, Name: Tags[?Key==`Name`].Value | [0] }'
 
 ############################### cloudformation  #################################
 _______________cloudformation = dummy
