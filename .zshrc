@@ -85,6 +85,7 @@ export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[bl
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
 export PROMPT="$PROMPT\$(kube_ps1) "
+export PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
