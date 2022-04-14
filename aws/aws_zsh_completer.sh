@@ -13,6 +13,7 @@
 #
 # zsh relases prior to that version do not export the required env variables!
 
+### WORKS WITHOUT this ?!??!
 autoload -Uz bashcompinit
 bashcompinit -i
 

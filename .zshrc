@@ -45,6 +45,11 @@ COMPLETION_WAITING_DOTS="true"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
+#
+ZSH_DISABLE_COMPFIX=true
+autoload -U compinit && compinit  #
+autoload -U bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -52,8 +57,9 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist zsh-navigation-tools)
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist)
 # plugins=(aws)
+# plugins=()
 
 
 ### VI-mode - readline doesn't work
@@ -460,11 +466,16 @@ alias awp='aws --cli-auto-prompt'
 alias -g LS=' | less -S'
 alias dirs='dirs -v'
 
+#### COMPLETERS
 
 # zsh builtin plugin doesn't work - I need this file from v2 branch from github/aws/aws-cli
 . ~/dotfiles/aws/aws_zsh_completer.sh
 
+# https://eksctl.io/introduction/#zsh
+eksctl completion zsh > "${fpath[1]}/_eksctl"
 
+# kubectl completion help
+kubectl completion zsh > "${fpath[1]}/_kubectl"
 
 function docker-dockerfile {
     # https://stackoverflow.com/questions/19104847/how-to-generate-a-dockerfile-from-an-image/53841690#53841690
@@ -474,3 +485,4 @@ function docker-dockerfile {
 
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 
+# End of lines added by compinstall

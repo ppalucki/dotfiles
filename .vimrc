@@ -441,6 +441,9 @@ Plug 'speshak/vim-cfn'
 " cd ~/dotfiles
 " git add ~/.vim/myultisnips/yaml_cloudformation.snippets
 " git commit
+" or use fork:
+Plug 'ppalucki/aws-cfn-snippet.vim'
+
 
 " AWS Other - conflicts with vim-cfn linter above
 " Plug 'NLKNguyen/cloudformation-syntax.vim'
@@ -448,6 +451,9 @@ Plug 'speshak/vim-cfn'
 "
 "
 Plug 'hashivim/vim-terraform'
+
+
+Plug 'stephpy/vim-yaml'
 
 call plug#end()
 
@@ -1110,7 +1116,8 @@ au FileType ruby setlocal ts=2 sw=2 sts=2
 au FileType html setlocal ts=2 sw=2 sts=2 nocindent
 au FileType python setlocal ts=4 sw=4 sts=4
 au FileType mkd setlocal shiftwidth=2
-au FileType yaml setlocal ts=2 sw=2 sts=2 noautoindent nocindent nosmartindent expandtab noswapfile
+" replace by plugin vim-yaml
+" au FileType yaml setlocal ts=2 sw=2 sts=2 noautoindent nocindent nosmartindent expandtab noswapfile
 au FileType cpp setlocal ts=2 sw=2 sts=2 noexpandtab
 au FileType c setlocal ts=4 sw=4 sts=4 noexpandtab
 au FileType go setlocal ts=4 sw=4 sts=4 noexpandtab
@@ -1869,7 +1876,7 @@ let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 " ----- previe/scratch when omnicomplete is used
 " automaticly hide
-let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabClosePreviewOnPopupClose = 1
 " disable complettly
 set completeopt-=preview
 set completeopt+=menu
@@ -3408,4 +3415,5 @@ endfunction
 let g:coc_disable_startup_warning = 1
 
 
-let maxmempattern=2000000
+" Fix auto-indentation for YAML files
+autocmd FileType yaml.cloudformation setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
