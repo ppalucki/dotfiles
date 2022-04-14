@@ -139,7 +139,7 @@ let g:plug_url_format = 'https://github.com/%s.git'
 call plug#begin('~/.vim/plugged')
 
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'ervandew/supertab'
+Plug 'ervandew/supertab'
 
 " ---------- Snippets
 Plug 'SirVer/ultisnips'
@@ -425,16 +425,27 @@ Plug 'fidian/hexmode'
 " helm chart
 Plug 'towolf/vim-helm'
 
-" AWS CFN
-" Plug 'NLKNguyen/cloudformation-syntax.vim'
-" cfn linter
+"
+" WORKS: cfn linter + ftdetect as yaml.cloudformation
 Plug 'speshak/vim-cfn'
 
-" snipptes
-Plug 'lunarxlark/aws-cfn-snippet.vim'
-""" require two manual fixes 
-" 1. change master to main
-"  
+" AWS Snipptes
+" Plug 'lunarxlark/aws-cfn-snippet.vim' - no compatbilie with ultisnips
+" instead:
+" git clone https://github.com/lunarxlark/aws-cfn-snippet.vim
+" cd aws-cfn-snippet.vim
+" sed -i 's/master/main/' make-cfn-snippet.sh
+" get submodules update
+" ./make-cfn-snippet.sh --ultisnip
+" cp snippets/yaml.snip ~/.vim/myultisnips/yaml_cloudformation.snippets
+" cd ~/dotfiles
+" git add ~/.vim/myultisnips/yaml_cloudformation.snippets
+" git commit
+
+" AWS Other - conflicts with vim-cfn linter above
+" Plug 'NLKNguyen/cloudformation-syntax.vim'
+"
+"
 "
 Plug 'hashivim/vim-terraform'
 
@@ -1729,7 +1740,7 @@ nnoremap <leader>f *N
 
 """ ----- ultisnip
 " conflicts with supertab
-let g:UltiSnipsExpandTrigger = '<c-tab>'               
+let g:UltiSnipsExpandTrigger = '<tab>'               
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
 let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
