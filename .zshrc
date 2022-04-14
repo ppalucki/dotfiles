@@ -194,6 +194,7 @@ alias gco='git checkout --no-guess'
 ### ALIASES cd
 #############################################
 alias cdw='cd ~/work'
+alias cddotfiles='cd ~/dotfiles'
 #alias psa='ps auxf | grep -v ]$'
 
 #############################################
@@ -462,3 +463,14 @@ alias dirs='dirs -v'
 
 # zsh builtin plugin doesn't work - I need this file from v2 branch from github/aws/aws-cli
 . ~/dotfiles/aws/aws_zsh_completer.sh
+
+
+
+function docker-dockerfile {
+    # https://stackoverflow.com/questions/19104847/how-to-generate-a-dockerfile-from-an-image/53841690#53841690
+    docker history --no-trunc $1  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1
+}
+
+
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+
