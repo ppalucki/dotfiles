@@ -149,8 +149,22 @@ redhat-amis = ec2 describe-images --owners 309956199498 --query "reverse(sort_by
     
 ubuntu-amis = ec2 describe-images --owners 099720109477 --query "reverse(sort_by(Images, &CreationDate))[?CreationDate>='2022'].[CreationDate,ImageId,Name,Description]" --filters "Name=name,Values=ubuntu-minimal/images/*21.10*" --output table
 
+############################### DNS ############################3
+zones = route53 list-hosted-zones --query 'HostedZones[].[Id, Name]'
 
+records = !f() {
+    zoneid=$(aws route53 list-hosted-zones-by-name --dns-name ${1} --query 'HostedZones[].Id' --output json | jq '.[0]' -r)
+    echo $zoneid
+    aws route53 list-resource-record-sets --hosted-zone-id ${zoneid} --query "ResourceRecordSets[].[Name, Type, AliasTarget.DNSName || join(',', ResourceRecords[].Value)]" 
+    #aws route53 list-resource-record-sets --hosted-zone-id ${zoneid} --query "ResourceRecordSets[].[Name, Type, ResourceRecords[].Value ]" --output table
+    }; f
 
+#
+#records-all = !f() { 
+#    aws route53 list-resource-record-sets --query "ResourceRecordSets[].[Name, Type, join(',', ResourceRecords[].Value)]" 
+#    }; f
+#
+#
 _______________other = dummy
 
 ############################### OTHER #################################

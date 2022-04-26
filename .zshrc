@@ -57,7 +57,7 @@ autoload -Uz compinit && compinit
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist)
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist aws)
 # plugins=(aws)
 # plugins=()
 
@@ -80,6 +80,8 @@ ZSH_TMUX_AUTOSTART=false
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 export PATH=$PATH:/usr/local/go/bin:/root/go/bin:/home/ppalucki/.local/bin/
 
+SHOW_AWS_PROMPT=false
+
 source $ZSH/oh-my-zsh.sh
 
 export KUBE_PS1_SYMBOL_USE_IMG=true
@@ -88,11 +90,12 @@ export KUBE_PS1_SYMBOL_ENABLE=false
 ################# fix git and hostname
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
 ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
-export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
+export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c $(aws_prompt_info) %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
 export PROMPT="$PROMPT\$(kube_ps1) "
 export PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
+
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -458,6 +461,10 @@ alias kgy='kubectl get -oyaml'
 alias kgan='kubectl get --all-namespaces'
 alias kd='kubectl describe'
 
+# view-utilization and resource-capacity for kubectl krew plugins'
+alias kvu='kubectl view-utilization -h -l kubernetes.io/role=node'
+alias krc='kubectl resource-capacity --node-labels kubernetes.io/role=node'
+
 alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 
 # AWS
@@ -486,3 +493,8 @@ function docker-dockerfile {
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 
 # End of lines added by compinstall
+#
+
+alias tf="terraform "
+
+source ~/.zshrc_local

@@ -455,6 +455,8 @@ Plug 'hashivim/vim-terraform'
 
 Plug 'stephpy/vim-yaml'
 
+Plug 'pedrohdz/vim-yaml-folds'
+
 call plug#end()
 
 let g:hexmode_patterns = '*.blb'
@@ -789,6 +791,14 @@ function! XMLMappings()
     vmap <buffer> gq :!xmllint --format -<cr>
 endfunction
 au FileType xml call XMLMappings()
+
+""" -------------------------------------------
+"""         JSON mappings
+""" -------------------------------------------
+function! JSONMappings()
+    map <buffer> gq :%!jq '.'<cr>
+endfunction
+au FileType json call JSONMappings()
 
 """ -------------------------------------------
 """         RUBY
