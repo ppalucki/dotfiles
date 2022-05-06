@@ -57,15 +57,7 @@ autoload -Uz compinit && compinit
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-<<<<<<< HEAD
-plugins=(gitfast common-aliases docker history wd systemd golang extract urltools tmux kubectl)
-||||||| 1bbbdca
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx kube-ps1)
-=======
 plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist aws)
-# plugins=(aws)
-# plugins=()
->>>>>>> refs/remotes/origin/master
 
 
 ### VI-mode - readline doesn't work
@@ -99,15 +91,8 @@ ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c $(aws_prompt_info) %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
-<<<<<<< HEAD
-#export PROMPT="$PROMPT\$(kube_ps1) "
-||||||| 1bbbdca
-export PROMPT="$PROMPT\$(kube_ps1) "
-=======
 export PROMPT="$PROMPT\$(kube_ps1) "
 export PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
-
->>>>>>> refs/remotes/origin/master
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -493,13 +478,19 @@ alias dirs='dirs -v'
 #### COMPLETERS
 
 # zsh builtin plugin doesn't work - I need this file from v2 branch from github/aws/aws-cli
-. ~/dotfiles/aws/aws_zsh_completer.sh
+if command -v aws &>/dev/null; then 
+    . ~/dotfiles/aws/aws_zsh_completer.sh
+fi
 
 # https://eksctl.io/introduction/#zsh
-eksctl completion zsh > "${fpath[1]}/_eksctl"
+if command -v eksctl &>/dev/null; then 
+    eksctl completion zsh > "${fpath[1]}/_eksctl"
+fi
 
 # kubectl completion help
-kubectl completion zsh > "${fpath[1]}/_kubectl"
+if command -v kubectl &>/dev/null ; then 
+    kubectl completion zsh > "${fpath[1]}/_kubectl"
+fi
 
 function docker-dockerfile {
     # https://stackoverflow.com/questions/19104847/how-to-generate-a-dockerfile-from-an-image/53841690#53841690
