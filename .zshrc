@@ -51,7 +51,7 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
-plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx kube-ps1)
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools tmux kubectl)
 
 
 ### VI-mode - readline doesn't work
@@ -83,7 +83,7 @@ ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
 export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
-export PROMPT="$PROMPT\$(kube_ps1) "
+#export PROMPT="$PROMPT\$(kube_ps1) "
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -444,3 +444,8 @@ alias n38='ssh root@node38 -t zsh'
 # Kubernetes
 alias kg='kubectl get'
 alias kd='kubectl describe'
+
+alias vim='vim -u ~/dotfiles/.vimrc'
+alias vi='vim -u ~/dotfiles/.vimrc'
+
+alias tmux='tmux -f ~/dotfiles/.tmux.conf'
