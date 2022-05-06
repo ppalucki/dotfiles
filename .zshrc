@@ -6,6 +6,7 @@ export ZSH=~/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
+# ZSH_THEME="afowler"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -30,7 +31,7 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -44,6 +45,11 @@ ZSH_THEME="robbyrussell"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
+#
+ZSH_DISABLE_COMPFIX=true
+autoload -U compinit && compinit  #
+autoload -U bashcompinit && bashcompinit
+autoload -Uz compinit && compinit
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -51,7 +57,15 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
+<<<<<<< HEAD
 plugins=(gitfast common-aliases docker history wd systemd golang extract urltools tmux kubectl)
+||||||| 1bbbdca
+plugins=(gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux httpie python cargo kubectl kubectx kube-ps1)
+=======
+plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist aws)
+# plugins=(aws)
+# plugins=()
+>>>>>>> refs/remotes/origin/master
 
 
 ### VI-mode - readline doesn't work
@@ -70,7 +84,9 @@ ZSH_TMUX_AUTOSTART=false
 ###########################################
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
 #export PATH="$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.krew/bin:${KREW_ROOT:-$HOME/.krew}/bin"
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:/root/go/bin:/home/ppalucki/.local/bin/
+
+SHOW_AWS_PROMPT=false
 
 source $ZSH/oh-my-zsh.sh
 
@@ -80,10 +96,18 @@ export KUBE_PS1_SYMBOL_ENABLE=false
 ################# fix git and hostname
 # based on in ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
 ZSH_THEME_GIT_PROMPT_PREFIX="(%{$fg[red]%}"
-export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
+export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c $(aws_prompt_info) %{$fg_bold[blue]%}$(git_prompt_info)%{$fg_bold[blue]%}%{$reset_color%}'
 # export SPROMPT='%{$fg[cyan]%}%3c %{$fg_bold[blue]%}>$reset_color'
 export PROMPT=$FPROMPT
+<<<<<<< HEAD
 #export PROMPT="$PROMPT\$(kube_ps1) "
+||||||| 1bbbdca
+export PROMPT="$PROMPT\$(kube_ps1) "
+=======
+export PROMPT="$PROMPT\$(kube_ps1) "
+export PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
+
+>>>>>>> refs/remotes/origin/master
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -191,6 +215,7 @@ alias gco='git checkout --no-guess'
 ### ALIASES cd
 #############################################
 alias cdw='cd ~/work'
+alias cddotfiles='cd ~/dotfiles'
 #alias psa='ps auxf | grep -v ]$'
 
 #############################################
@@ -443,9 +468,50 @@ alias n38='ssh root@node38 -t zsh'
 
 # Kubernetes
 alias kg='kubectl get'
+alias kgw='kubectl get -owide'
+alias kgy='kubectl get -oyaml'
+alias kgan='kubectl get --all-namespaces'
 alias kd='kubectl describe'
 
 alias vim='vim -u ~/dotfiles/.vimrc'
 alias vi='vim -u ~/dotfiles/.vimrc'
 
 alias tmux='tmux -f ~/dotfiles/.tmux.conf'
+
+# view-utilization and resource-capacity for kubectl krew plugins'
+alias kvu='kubectl view-utilization -h -l kubernetes.io/role=node'
+alias krc='kubectl resource-capacity --node-labels kubernetes.io/role=node'
+
+alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
+
+# AWS
+alias awp='aws --cli-auto-prompt'
+
+alias -g LS=' | less -S'
+alias dirs='dirs -v'
+
+#### COMPLETERS
+
+# zsh builtin plugin doesn't work - I need this file from v2 branch from github/aws/aws-cli
+. ~/dotfiles/aws/aws_zsh_completer.sh
+
+# https://eksctl.io/introduction/#zsh
+eksctl completion zsh > "${fpath[1]}/_eksctl"
+
+# kubectl completion help
+kubectl completion zsh > "${fpath[1]}/_kubectl"
+
+function docker-dockerfile {
+    # https://stackoverflow.com/questions/19104847/how-to-generate-a-dockerfile-from-an-image/53841690#53841690
+    docker history --no-trunc $1  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1
+}
+
+
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+
+# End of lines added by compinstall
+#
+
+alias tf="terraform "
+
+source ~/.zshrc_local

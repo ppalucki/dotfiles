@@ -8,5 +8,8 @@
     "rust-analyzer.diagnostics.disabled": ["unresolved-macro-call"],
     "rust-analyzer.cargo.loadOutDirsFromCheck": true,
     "OFFrust-analyzer.cargo.features": ["bar"],
-    "rust-analyzer.debug.runtime": "vimspector"
+    "rust-analyzer.debug.runtime": "vimspector",
+    "go.goplsOptions": {
+        "experimentalWorkspaceModule": true
+    }
 }

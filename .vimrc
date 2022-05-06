@@ -142,8 +142,14 @@ call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'
 
 " ---------- Snippets
-" Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
+" ??
+Plug 'makerj/vim-pdf'
+
+" sLL
+"Plug 'justinmk/vim-sneak'
 
 " autoformat
 " pip install yapf autopep8
@@ -162,8 +168,8 @@ Plug 'nvie/vim-flake8', { 'for':  'python' }
 "Plug 'python-mode/python-mode', { 'for':  'python' }
 " REMEMBER about g:black_virtualenv
 " /home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso
-let g:black_virtualenv = "/home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso"
-Plug 'ambv/black'
+" let g:black_virtualenv = "/home/ppalucki/.local/share/virtualenvs/gym_workloads-nhtcnMso"
+" Plug 'ambv/black'
 
 " ------------- Golang development
 " with GoImport fix (python based solution not accepted by upstream)
@@ -400,7 +406,7 @@ Plug 'pearofducks/ansible-vim'
 " Plug 'chase/vim-ansible-yaml'
 "
 "
-Plug 'pedrohdz/vim-yaml-folds'
+" Plug 'pedrohdz/vim-yaml-folds'
 
 Plug 'chrisbra/vim-diff-enhanced'
 
@@ -416,6 +422,41 @@ Plug 'puremourning/vimspector'
 
 Plug 'fidian/hexmode'
 
+" helm chart
+Plug 'towolf/vim-helm'
+
+"
+" WORKS: cfn linter + ftdetect as yaml.cloudformation
+Plug 'speshak/vim-cfn'
+
+" AWS Snipptes
+" Plug 'lunarxlark/aws-cfn-snippet.vim' - no compatbilie with ultisnips
+" instead:
+" git clone https://github.com/lunarxlark/aws-cfn-snippet.vim
+" cd aws-cfn-snippet.vim
+" sed -i 's/master/main/' make-cfn-snippet.sh
+" get submodules update
+" ./make-cfn-snippet.sh --ultisnip
+" cp snippets/yaml.snip ~/.vim/myultisnips/yaml_cloudformation.snippets
+" cd ~/dotfiles
+" git add ~/.vim/myultisnips/yaml_cloudformation.snippets
+" git commit
+" or use fork:
+Plug 'ppalucki/aws-cfn-snippet.vim'
+
+
+" AWS Other - conflicts with vim-cfn linter above
+" Plug 'NLKNguyen/cloudformation-syntax.vim'
+"
+"
+"
+Plug 'hashivim/vim-terraform'
+
+
+Plug 'stephpy/vim-yaml'
+
+Plug 'pedrohdz/vim-yaml-folds'
+
 call plug#end()
 
 let g:hexmode_patterns = '*.blb'
@@ -423,7 +464,8 @@ let g:hexmode_xxd_options = '-g 1 -p'
 
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
-"
+" 44 line master to main
+" ./make-cfn-snippet.sh -u
 
 """ -------------------------------------------
 """         Core settings
@@ -751,6 +793,14 @@ endfunction
 au FileType xml call XMLMappings()
 
 """ -------------------------------------------
+"""         JSON mappings
+""" -------------------------------------------
+function! JSONMappings()
+    map <buffer> gq :%!jq '.'<cr>
+endfunction
+au FileType json call JSONMappings()
+
+""" -------------------------------------------
 """         RUBY
 """ -------------------------------------------
 function! RubyMappings()
@@ -1054,7 +1104,7 @@ nmap <C-h> <C-W>h
 
 """ wciecia/tab
 " indent based on previous line
-set autoindent
+" set autoindent
 " indent based on syntax
 set smartindent
 " pressing TAB puts spaces
@@ -1076,7 +1126,8 @@ au FileType ruby setlocal ts=2 sw=2 sts=2
 au FileType html setlocal ts=2 sw=2 sts=2 nocindent
 au FileType python setlocal ts=4 sw=4 sts=4
 au FileType mkd setlocal shiftwidth=2
-au FileType yaml setlocal ts=2 sw=2 sts=2 autoindent smarttab expandtab noswapfile
+" replace by plugin vim-yaml
+" au FileType yaml setlocal ts=2 sw=2 sts=2 noautoindent nocindent nosmartindent expandtab noswapfile
 au FileType cpp setlocal ts=2 sw=2 sts=2 noexpandtab
 au FileType c setlocal ts=4 sw=4 sts=4 noexpandtab
 au FileType go setlocal ts=4 sw=4 sts=4 noexpandtab
@@ -1104,7 +1155,7 @@ let NERDTreeChDirMode = 2
 let NERDTreeMinimalUI = 1
 "let NERDTreeDirArrows=1
 let NERDTreeQuitOnOpen = 0
-let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__']
+let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__', '_test\.go$']
 
 let NERDTreeMouseMode = 3
 
@@ -1228,6 +1279,11 @@ let g:tagbar_width = 80
 set mouse=
 set ttymouse=xterm2
 set nomousehide
+
+
+map <MiddleMouse> <C-O>
+" map <X2Mouse> <C-O>
+" map <X1Mouse> <C-O>
 
 """ ----- grep (plugin) 
 " let Grep_Default_Filelist = '*.rb *.py *.html *.erb *.js *.sh *.thor *.rake *.yaml'
@@ -1395,8 +1451,8 @@ nnoremap <silent> <Leader>vl :Gllog -n 50<cr>
 nnoremap <Leader>vL :Gllog -n 50 --<cr>
 " use lopen to list
 " gblame
-nnoremap <Leader>vb :Gblame<cr>
-vnoremap <Leader>vb :Gblame<cr>
+nnoremap <Leader>vb :Git blame<cr>
+vnoremap <Leader>vb :Git blame<cr>
 
 " aka vim fetch&merge
 nnoremap <Leader>vm :Git pull<cr> 
@@ -1701,7 +1757,7 @@ nnoremap <leader>f *N
 
 """ ----- ultisnip
 " conflicts with supertab
-let g:UltiSnipsExpandTrigger = '<c-tab>'               
+let g:UltiSnipsExpandTrigger = '<tab>'               
 let g:UltiSnipsListSnippets = '<c-l>'
 let g:UltiSnipsSnippetDirectories = ["UltiSnips", "myultisnips"]
 let g:UltiSnipsJumpBackwardTrigger = '<c-u>'
@@ -1830,7 +1886,7 @@ let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 " ----- previe/scratch when omnicomplete is used
 " automaticly hide
-let g:SuperTabClosePreviewOnPopupClose = 1
+" let g:SuperTabClosePreviewOnPopupClose = 1
 " disable complettly
 set completeopt-=preview
 set completeopt+=menu
@@ -2178,6 +2234,9 @@ set diffopt=filler,vertical
 " c-l dla [pymode]
 " l dla SyntasticCheck
 " nmap <leader>l :up<cr>:let b:syntastic_skip_checks=0<cr>:SyntasticCheck<Cr>
+"
+
+
 nmap <leader>l :up<cr>:SyntasticCheck<Cr>
 let g:syntastic_check_on_wq=0
 "let g:syntastic_quiet_messages = {'level': 'warrnings'}
@@ -2238,6 +2297,8 @@ let g:syntastic_cpp_compiler = 'clang++-3.5'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 
 
+" AWS
+let g:syntastic_cloudformation_checkers = ['cfn_lint']
 """ -------------------------------------------
 """         trim white spaces
 """ -------------------------------------------
@@ -3191,11 +3252,11 @@ function s:my_coc_config()
     " Use tab for trigger completion with characters ahead and navigate.
     " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
     " other plugin before putting this into your config.
-    inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ coc#refresh()
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    " inoremap <silent><expr> <TAB>
+    "       \ pumvisible() ? "\<C-n>" :
+    "       \ <SID>check_back_space() ? "\<TAB>" :
+    "       \ coc#refresh()
+    " inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 
     function! s:check_back_space() abort
@@ -3266,7 +3327,8 @@ function s:my_coc_config()
     " Remap keys for applying codeAction to the current buffer.
     nmap <leader>ac  <Plug>(coc-codeaction)
     " Apply AutoFix to problem on the current line.
-    nmap <leader>qf  <Plug>(coc-fix-current)
+    " my note: conflicts with the <leader>q - close window
+    "nmap <leader>qf  <Plug>(coc-fix-current)
 
     " Map function and class text objects
     " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -3308,6 +3370,20 @@ function s:my_coc_config()
     " provide custom statusline: lightline.vim, vim-airline.
     set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+      "\ 'colorscheme': 'wombat',
+    let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ }
+
+    " Use autocmd to force lightline update.
+    autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
+
     " Mappings for CoCList
     " Show all diagnostics.
     "nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
@@ -3340,3 +3416,14 @@ function s:my_coc_config()
 endfunction
 
 "call s:my_coc_config()
+
+" For golang:
+" https://github.com/josa42/coc-go
+" :CocInstall coc-go
+"
+"
+let g:coc_disable_startup_warning = 1
+
+
+" Fix auto-indentation for YAML files
+autocmd FileType yaml.cloudformation setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
