@@ -10,7 +10,8 @@ ___ = dummy
 running-instances = ec2 describe-instances \
     --filter Name=instance-state-name,Values=running \
     --output table \
-        --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PrivateIp: PrivateIpAddress}'
+        --query 'Reservations[].Instances[].{ID: InstanceId,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PublicIp:PublicIpAddress, PrivateIp: PrivateIpAddress}'
+        #--query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PublicIp:PublicIpAddress, PrivateIp: PrivateIpAddress}'
 
 instances-all = ec2 describe-instances \
     --output table \
@@ -51,22 +52,26 @@ _______________security = dummy
 # aws-ec2-fingerprint (to find your local key)
 keys = ec2 describe-key-pairs --query "KeyPairs[].{KeyName: KeyName, Fingerprint:KeyFingerprint}"
 
-sgs = ec2 describe-security-groups --query "SecurityGroups[].{ID: GroupId, GroupName: GroupName}" --output table
-
+sgs = ec2 describe-security-groups --query "sort_by(sort_by(SecurityGroups, &GroupName), &VpcId)[].{ID: GroupId, GroupName: GroupName, Vpc:VpcId}" --output table
 sg-rules = !f() { 
-        echo by name
+        echo by group-name=$1
         aws ec2 describe-security-groups --query "SecurityGroups[].IpPermissions[].[FromPort, ToPort, IpProtocol, join(',',IpRanges[].CidrIp)]" --group-name $1 --output table; 
+     }; f
+sg-rules-vpc = !f() { 
+        echo by vpc=$1 and group-name=$2
+        aws ec2 describe-security-groups --query "SecurityGroups[].IpPermissions[].[FromPort, ToPort, IpProtocol, join(',',IpRanges[].CidrIp)]" --filter=Name=vpc-id,Values=$1 --filters=Name=group-name,Values=$2 --output table; 
      }; f
  
 desc-sg = !f() {
-        echo "by name"
+        echo by group-name=$1
         aws ec2 describe-security-groups --query "SecurityGroups[]" --group-names $1 --output table;
     }; f
 
 desc-sg-rules = !f() {
-    echo by-name
+    echo by name=$1
     group_id=$(aws get-group-id "${1}")
-    aws ec2 describe-security-group-rules --filter Name=group-id,Values=$group_id --query 'SecurityGroupRules[*].{id: GroupId, desc: Description, from: FromPort, proto: IpProtocol, egress:IsEgress, to:ToPort}'
+    echo by group-id=$group_id
+    aws ec2 describe-security-group-rules --filter Name=group-id,Values=$group_id --query 'sort_by(SecurityGroupRules, &FromPort)[*].{id: GroupId, desc: Description, from: FromPort, proto: IpProtocol, egress:IsEgress, to:ToPort, ReferencedGroup:ReferencedGroupInfo.GroupId, CIDR:CidrIpv4}'
     }; f
 
 #### IP managment
@@ -88,23 +93,41 @@ authorize-my-ip-by-name =
     aws authorize-my-ip "$group_id"
   }; f
 
+
+###################################### certs ##########################################
+
+certs = acm list-certificates --output table --query CertificateSummaryList
+
 ############################### networks ######################################
 
 vpcs = ec2 describe-vpcs --output table --query 'sort_by(sort_by(Vpcs, &CidrBlock ), &VpcId)[*].{cidr:CidrBlock, vpc:VpcId, default:IsDefault, Name: Tags[?Key==`Name`].Value | [0] }'
 subnets = ec2 describe-subnets --output table --query 'sort_by(sort_by(Subnets, &AvailabilityZone ), &VpcId)[*].{SubnetId:SubnetId, cidr:CidrBlock, vpc:VpcId, AvailabilityZone:AvailabilityZone, Name: Tags[?Key==`Name`].Value | [0] }'
+
+enis = ec2 describe-network-interfaces --query 'sort_by(sort_by(sort_by(NetworkInterfaces, &VpcId), &SubnetId), &PrivateIpAddress) [].[PrivateIpAddress,Status,SubnetId,VpcId,Description]'
+
+eips = ec2 describe-addresses --query 'Addresses[].[AllocationId,PublicIp,InstanceId,NetworkInterfaceId,Tags[?Key==`Name`].Value | [0]]'
+
+elbs1 = elb describe-load-balancers --output table --query 'LoadBalancerDescriptions[].{created:CreatedTime,name:LoadBalancerName,subnet:Subnets[0],vpc:VPCId,port:ListenerDescriptions[0].Listener.LoadBalancerPort}'
+elbs2 = elbv2 describe-load-balancers --output table --query 'LoadBalancers[].[CreatedTime,DNSName,LoadBalancerName,Type,VpcId]'
+
+igws = ec2 describe-internet-gateways --query 'InternetGateways[].{id: InternetGatewayId, vpcid: Attachments[0].VpcId, name: Tags[?Key==`Name`].Value | [0]}'
+
+natgws = ec2 describe-nat-gateways --query 'NatGateways[].{id:NatGatewayId, subnet: SubnetId, create: CreateTime, eni: NatGatewayAddresses[0].NetworkInterfaceId, publicIp: NatGatewayAddresses[0].PublicIp, name: Tags[?Key==`Name`].Value | [0], state:State}'
+
+aws = ec2 
 
 ############################### cloudformation  #################################
 _______________cloudformation = dummy
 
 cf = cloudformation
 
-stacks = cf list-stacks --query 'StackSummaries[?DeletionTime==None].{Name: StackName, Status:StackStatus}'
-stacks-all = cf list-stacks --query 'StackSummaries[].{Name: StackName, Status:StackStatus}'
+stacks = cf list-stacks --query 'sort_by(StackSummaries, &CreationTime)[?DeletionTime==None].{Name: StackName, Status:StackStatus, CreationTime:CreationTime}'
+stacks-all = cf list-stacks --query 'sort_by(StackSummaries, &CreationTime)[].{Name: StackName, Status:StackStatus, CreationTime:CreationTime}'
 
 delete-stack = !f() { aws cf delete-stack --stack-name $1; } ; f
 deploy-stack = !f() { aws cf deploy --stack-name $1 --template-file $2 ;} ; f
-stack-events = !f() { aws cf describe-stack-events --stack-name $1 --query 'StackEvents[].[LogicalResourceId,ResourceStatus,ResourceStatusReason,Timestamp]'; } ; f
-stack-events-full = !f() { aws cf describe-stack-events --stack-name $1 --query 'StackEvents[].[EventId,LogicalResourceId,ResourceProperties,ResourceStatus,ResourceStatusReason,Timestamp]' | less -S; } ; f
+stack-events = !f() { aws cf describe-stack-events --stack-name $1 --query 'sort_by(sort_by(StackEvents, &Timestamp), &LogicalResourceId)[].[LogicalResourceId,ResourceStatus,ResourceStatusReason,Timestamp]'; } ; f
+stack-events-full = !f() { aws cf describe-stack-events --stack-name $1 --query 'sort_by(StackEvents, &LogicalResourceId)[].[EventId,LogicalResourceId,ResourceProperties,ResourceStatus,ResourceStatusReason,Timestamp]' | less -S; } ; f
 
 
 ############################### s3api #####################################
@@ -155,7 +178,7 @@ zones = route53 list-hosted-zones --query 'HostedZones[].[Id, Name]'
 records = !f() {
     zoneid=$(aws route53 list-hosted-zones-by-name --dns-name ${1} --query 'HostedZones[].Id' --output json | jq '.[0]' -r)
     echo $zoneid
-    aws route53 list-resource-record-sets --hosted-zone-id ${zoneid} --query "ResourceRecordSets[].[Name, Type, AliasTarget.DNSName || join(',', ResourceRecords[].Value)]" 
+    aws route53 list-resource-record-sets --hosted-zone-id ${zoneid} --query "sort_by(ResourceRecordSets, &Type)[].[Name, Type, AliasTarget.DNSName || join(',', ResourceRecords[].Value)]" 
     #aws route53 list-resource-record-sets --hosted-zone-id ${zoneid} --query "ResourceRecordSets[].[Name, Type, ResourceRecords[].Value ]" --output table
     }; f
 
@@ -165,7 +188,10 @@ records = !f() {
 #    }; f
 #
 #
-_______________other = dummy
+
+balancers = elb describe-load-balancers --output table --query "LoadBalancerDescriptions[].{name:LoadBalancerName, dns:DNSName, instances: join(', ', Instances[*].InstanceId), instancePorts: join(' ', ListenerDescriptions[*].Listener.to_string(InstancePort) ), balancerPorts: join(' ', ListenerDescriptions[*].Listener.to_string(LoadBalancerPort) ) }"
+
+roles = iam list-roles --query 'Roles[*].{roleName: RoleName}' --output table
 
 ############################### OTHER #################################
 #
