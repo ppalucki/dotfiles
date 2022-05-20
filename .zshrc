@@ -58,8 +58,6 @@ autoload -Uz compinit && compinit
 #plugins=(gitfast autojump command-not-found common-aliases docker tmux history wd systemd golang)
 # plugins=(git gitfast common-aliases docker history wd systemd golang extract ssh-agent urltools vagrant tmux kubectl httpie python ansible)
 plugins=(gitfast common-aliases docker history wd systemd golang extract urltools vagrant tmux httpie python kubectl kubectx kube-ps1 dirhistory dirpersist aws)
-# plugins=(aws)
-# plugins=()
 
 
 ### VI-mode - readline doesn't work
@@ -95,7 +93,6 @@ export FPROMPT='${ret_status}%{$fg_bold[green]%}%p %{$fg[cyan]%}%c $(aws_prompt_
 export PROMPT=$FPROMPT
 export PROMPT="$PROMPT\$(kube_ps1) "
 export PROMPT="%{$fg[white]%}%n@%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
-
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -461,6 +458,11 @@ alias kgy='kubectl get -oyaml'
 alias kgan='kubectl get --all-namespaces'
 alias kd='kubectl describe'
 
+alias vim='vim -u ~/dotfiles/.vimrc'
+alias vi='vim -u ~/dotfiles/.vimrc'
+
+alias tmux='tmux -f ~/dotfiles/.tmux.conf'
+
 # view-utilization and resource-capacity for kubectl krew plugins'
 alias kvu='kubectl view-utilization -h -l kubernetes.io/role=node'
 alias krc='kubectl resource-capacity --node-labels kubernetes.io/role=node'
@@ -476,13 +478,19 @@ alias dirs='dirs -v'
 #### COMPLETERS
 
 # zsh builtin plugin doesn't work - I need this file from v2 branch from github/aws/aws-cli
-. ~/dotfiles/aws/aws_zsh_completer.sh
+if command -v aws &>/dev/null; then 
+    . ~/dotfiles/aws/aws_zsh_completer.sh
+fi
 
 # https://eksctl.io/introduction/#zsh
-eksctl completion zsh > "${fpath[1]}/_eksctl"
+if command -v eksctl &>/dev/null; then 
+    eksctl completion zsh > "${fpath[1]}/_eksctl"
+fi
 
 # kubectl completion help
-kubectl completion zsh > "${fpath[1]}/_kubectl"
+if command -v kubectl &>/dev/null ; then 
+    kubectl completion zsh > "${fpath[1]}/_kubectl"
+fi
 
 function docker-dockerfile {
     # https://stackoverflow.com/questions/19104847/how-to-generate-a-dockerfile-from-an-image/53841690#53841690

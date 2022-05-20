@@ -138,7 +138,7 @@ let g:plug_url_format = 'https://github.com/%s.git'
 
 call plug#begin('~/.vim/plugged')
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ervandew/supertab'
 
 " ---------- Snippets
