@@ -102,6 +102,7 @@ certs = acm list-certificates --output table --query CertificateSummaryList
 
 vpcs = ec2 describe-vpcs --output table --query 'sort_by(sort_by(Vpcs, &CidrBlock ), &VpcId)[*].{cidr:CidrBlock, vpc:VpcId, default:IsDefault, Name: Tags[?Key==`Name`].Value | [0] }'
 subnets = ec2 describe-subnets --output table --query 'sort_by(sort_by(Subnets, &AvailabilityZone ), &VpcId)[*].{SubnetId:SubnetId, cidr:CidrBlock, vpc:VpcId, AvailabilityZone:AvailabilityZone, Name: Tags[?Key==`Name`].Value | [0] }'
+rtbs = ec2 describe-route-tables --query 'RouteTables[].[VpcId, RouteTableId, Routes[0].DestinationCidrBlock]'
 
 enis = ec2 describe-network-interfaces --query 'sort_by(sort_by(sort_by(NetworkInterfaces, &VpcId), &SubnetId), &PrivateIpAddress) [].[PrivateIpAddress,Status,SubnetId,VpcId,Description]'
 
@@ -141,9 +142,7 @@ ___________storage = dummy
 ############################### AMIS - images  #################################
 ############# volumes
 
-vols = ec2 describe-volumes \
-    --query 'Volumes[].{VolumeId: VolumeId,State: State,Size: Size,Name: Tags[0].Value,AZ: AvailabilityZone}' \
-    --output table
+vols = ec2 describe-volumes --query 'reverse(sort_by(Volumes, &CreateTime)[])[].{CreateTime: CreateTime, VolumeId: VolumeId,State: State,Size: Size,Name: Tags[0].Value,AZ: AvailabilityZone}' --output table
 
 desc-vol = !f() { aws ec2 describe-volumes --volume-ids $1; } ; f
 
@@ -192,6 +191,10 @@ records = !f() {
 balancers = elb describe-load-balancers --output table --query "LoadBalancerDescriptions[].{name:LoadBalancerName, dns:DNSName, instances: join(', ', Instances[*].InstanceId), instancePorts: join(' ', ListenerDescriptions[*].Listener.to_string(InstancePort) ), balancerPorts: join(' ', ListenerDescriptions[*].Listener.to_string(LoadBalancerPort) ) }"
 
 roles = iam list-roles --query 'Roles[*].{roleName: RoleName}' --output table
+
+profiles = iam list-instance-profiles --output table --query 'InstanceProfiles[].[Arn, InstanceProfileName, InstanceProfileId, CreateDate]'
+
+vpnendpoints = ec2 describe-client-vpn-endpoints --output table --query 'ClientVpnEndpoints[].[ClientVpnEndpointId, VpcId, VpnPort, ClientCidrBlock, SecurityGroupIds[0], Status.Code]'
 
 ############################### OTHER #################################
 #

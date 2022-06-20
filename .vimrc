@@ -138,7 +138,7 @@ let g:plug_url_format = 'https://github.com/%s.git'
 
 call plug#begin('~/.vim/plugged')
 
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ervandew/supertab'
 
 " ---------- Snippets
@@ -3415,7 +3415,7 @@ function s:my_coc_config()
     "
 endfunction
 
-"call s:my_coc_config()
+call s:my_coc_config()
 
 " For golang:
 " https://github.com/josa42/coc-go

@@ -10,6 +10,6 @@
     "OFFrust-analyzer.cargo.features": ["bar"],
     "rust-analyzer.debug.runtime": "vimspector",
     "go.goplsOptions": {
-        "experimentalWorkspaceModule": true
+        "experimentalWorkspaceModule": false
     }
 }
