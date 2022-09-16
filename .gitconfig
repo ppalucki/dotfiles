@@ -42,6 +42,8 @@
     # dont add -n to logs l/lg because it disables possibility to asks for logs from master...
     l = log --oneline --decorate 
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order 
+    # lg with full date
+    lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order
     st = status
     ci = commit
     d = difftool
@@ -90,7 +92,8 @@
     pushinit = !sh -c \"git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`\"
 
     # tags + commits (-d --derefernce)
-    tags = show-ref --abbrev=7 --tag -d 
+    #tags = show-ref --abbrev=7 --tag -d 
+    tags = for-each-ref --sort=creatordate --format '%(refname) %(creatordate)' refs/tags
 	checkoutr = checkout
     
 [diff]
@@ -207,5 +210,6 @@
 
 # Access by git by tunnel
 # ssh -R 1337:proxy-mu.example.com:1080 root@node36
-# [http]
-# 	proxy = socks5://127.0.0.1:1337
+# # IF IT HANGS TRY TO KILL OTHER SSHD in background
+#[http]
+    #proxy = socks5://127.0.0.1:1337

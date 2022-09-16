@@ -1015,8 +1015,13 @@ au FileType sh call ShMappings()
 
 """ delaing with .vimrc
 " config edit/run
-noremap <leader>ce :e $MYVIMRC<CR>
-noremap <leader>cr :so $MYVIMRC<CR>
+" noremap <leader>ce :e $MYVIMRC<CR>
+" noremap <leader>cr :so $MYVIMRC<CR>
+"alias vim
+"vim='vim -u ~/dotfiles/.vimrc'
+noremap <leader>ce :e ~/dotfiles/.vimrc<CR>
+noremap <leader>cr :so ~/dotfiles/.vimrc<CR>
+
 
 """ quickfix window navigation
 nnoremap ]q :execute "try \n cnext \n catch \n try \n cfirst \n catch \n cc \n endtry \n endtry"<cr>
@@ -3273,8 +3278,9 @@ function s:my_coc_config()
 
     " Make <CR> auto-select the first completion item and notify coc.nvim to
     " format on enter, <cr> could be remapped by other vim plugin
-    inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                                  \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+    " inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+    inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 
     " Use `[g` and `]g` to navigate diagnostics
     " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

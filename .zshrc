@@ -499,6 +499,7 @@ function docker-dockerfile {
 
 
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+alias docker_images_sort='docker images --format "{{.ID}}\t{{.Size}}\t{{.Repository}}" | sort -k 2 -h'
 
 # End of lines added by compinstall
 #

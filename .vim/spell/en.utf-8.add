@@ -491,3 +491,7 @@ configmaps
 Dockerfile
 ctrldeploy
 ctrlreg
+resmgr
+dir
+v2
+isvimgreg
