@@ -1915,6 +1915,8 @@ let g:jedi#show_call_signatures = 0
 " Open last/alternate buffer
 noremap <Leader><Leader> <C-^>
 noremap <Leader><space> <C-^>
+" 'edit alternate file' convenience mapping
+nnoremap <BS> <C-^>
 
 " Map Q to repeat the last recorded macro
 " exmode sie czasem jednak przydaje - a jednak nie dziala jak chce (lepiej

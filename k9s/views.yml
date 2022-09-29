@@ -1,0 +1,29 @@
+# $XDG_CONFIG_HOME/k9s/views.yml
+k9s:
+  views:
+    # Alters the pod view column layout. Uses GVR as key
+    v1/pods:
+      columns:
+        - NAMESPACE
+        - NAME
+        - READY
+        - RESTARTS
+        - STATUS
+        - AGE
+      # disables sorting with other columes
+      # sortColumn: AGE
+
+    # core.gardener.cloud/v1beta1/shoots:
+    #   columns:
+    #     - NAMESPACE
+    #     - NAME
+
+    # Alters the service view column layout
+    # v1/services:
+    #   columns:
+    #     - AGE
+    #     - NAMESPACE
+    #     - NAME
+    #     - TYPE
+    #     - CLUSTER-IP
+

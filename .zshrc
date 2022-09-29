@@ -438,7 +438,7 @@ function aws-ec2-fingerprint {
     ssh-keygen -f ~/.ssh/id_rsa.pub -e -m PKCS8 | openssl pkey -pubin -outform DER | openssl md5 -c
 }
 # https://unix.stackexchange.com/questions/25327/watch-command-alias-expansion
-alias watch='watch '
+# alias watch='watch '
 
 export EDITOR=vim
 alias vi=vim
@@ -473,6 +473,7 @@ alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 alias awp='aws --cli-auto-prompt'
 
 alias -g LS=' | less -S'
+alias -g GG=' 2>&1 | grep'
 alias dirs='dirs -v'
 
 #### COMPLETERS

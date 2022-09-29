@@ -1,0 +1,5 @@
+alias:
+  po: v1/pods
+  de: apps/v1/deployments
+  sh: core.gardener.cloud/v1beta1/shoots
+  # ds: v1/daemonsets

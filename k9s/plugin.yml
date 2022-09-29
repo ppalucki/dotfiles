@@ -1,0 +1,49 @@
+plugin:
+
+  # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
+  mylog-pods:
+    # Define a mnemonic to invoke the plugin
+    shortCut: Ctrl-L
+    # What will be shown on the K9s menu
+    description: Pod logs
+    # Collections of views that support this shortcut. (You can use `all`)
+    scopes:
+    - po
+    # The command to run upon invocation. Can use Krew plugins here too!
+    command: kubectl
+    # Whether or not to run the command in background mode
+    background: false
+    # Defines the command arguments
+    args:
+    - logs
+    - -f
+    - $NAME
+    - -n
+    - $NAMESPACE
+    - --context
+    - $CONTEXT
+
+  # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
+  mylog-deploy:
+    # Define a mnemonic to invoke the plugin
+    shortCut: Ctrl-L
+    # What will be shown on the K9s menu
+    description: Pod tail logs
+    # Collections of views that support this shortcut. (You can use `all`)
+    scopes:
+    - deploy
+    # The command to run upon invocation. Can use Krew plugins here too!
+    command: kubectl
+    # Whether or not to run the command in background mode
+    background: false
+    # Defines the command arguments
+    args:
+    - tail
+    - -d
+    - $NAME
+    - -n
+    - $NAMESPACE
+    - --context
+    - $CONTEXT
+    - --since
+    - 5m
