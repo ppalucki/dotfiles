@@ -1,82 +1,85 @@
 hotKey:
 
-  # 4 as A
-  shift-4:
-    shortCut:    Shift-4
-    description: Aliases
-    command:     aliases
-
-  # generic 
+  # Overview
   shift-1:
     shortCut:    Shift-1
     description: "Contexts"
     command:     ctx
 
-  # custom for gardener
   shift-2:
     shortCut:    Shift-2
-    description: "Gardener: Shoots"
-    command:     shoots
+    description: "Nodes"
+    command:     "no"
 
   shift-3:
     shortCut:    Shift-3
-    description: "Gardener: Managed resources"
-    command:     mr
+    description: "Services"
+    command:     svc
 
-  shift-4:
-    shortCut:    Shift-4
-    description: "Gardener: Extensions"
-    command:     extensions
-
-  # most helpful
-  #
-  # NODEs
+  # Data
   F1:
     shortCut:    F1
-    description: Nodes
-    command:     node
-  # PODS
+    description: Aliases
+    command:     aliases
+  F2:
+    shortCut:    F2
+    description: ConfigMaps
+    command:     cm
+  F3:
+    shortCut:    F3
+    description: Secrets
+    command:     sec
+
+  # ------------- Gardner project specific
+
+  F4:
+    shortCut:    F4
+    description: "Gardener: Shoots"
+    command:     shoots
+
+  F5:
+    shortCut:    F5
+    description: "Gardener: CtrlReg"
+    command:     ctrlreg
+
+  F6:
+    shortCut:    F6
+    description: "Gardener: CtrlDeployments"
+    command:     ctrldeploy
+
+  F7:
+    shortCut:    F7
+    description: "Gardener: CtrlInst"
+    command:     ctrlinst
+
+  F8:
+    shortCut:    F8
+    description: "Gardener: Extensions"
+    command:     extensions
+  F9:
+    shortCut:    F9
+    description: "Gardener: ManagedResources"
+    command:     mr
+
+
+  # ----------------------------------------
   shift-0:
     shortCut:    Shift-0
     description: Pods
-    command:     pods
-  F2:
-    shortCut:    F2
-    description: Pods
-    command:     pods
-
+    command:     po
   shift-9:
     shortCut:    Shift-9
     description: Deployments
-    command:     deployments
-  F2:
-    shortCut:    F2
-    description: Deployments
-    command:     deployments
-
+    command:     deploy
   shift-8:
     shortCut:    Shift-8
     description: DaemonSets
     command:     ds
-  F3:
-    shortCut:    F3
-    description: DaemonSets
-    command:     ds
-
-
   shift-7:
     shortCut:    Shift-7
-    description: ConfigMaps
-    command:     cm
-  F4:
-    shortCut:    F4
-    description: ConfigMaps
-    command:     cm
-  shift-6:
-    shortCut:    Shift-6
-    description: Secrets
-    command:     sec
-  F5:
-    shortCut:    F5
-    description: Secrets
-    command:     sec
+    description: StatefulSets
+    command:     sts
+
+
+
+

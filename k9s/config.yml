@@ -2,14 +2,14 @@ k9s:
   refreshRate: 2
   maxConnRetry: 5
   enableMouse: true
-  headless: false
-  logoless: false
-  crumbsless: false
+  headless: true
+  logoless: true
+  crumbsless: true
   readOnly: false
   noExitOnCtrlC: false
   noIcons: false
   logger:
-    tail: 100
+    tail: 5000
     buffer: 5000
     sinceSeconds: -1
     fullScreenLogs: false
@@ -23,9 +23,10 @@ k9s:
         active: all
         lockFavorites: false
         favorites:
+        - all
         - default
       view:
-        active: ctrldeploy
+        active: aliases
       featureGates:
         nodeShell: false
       shellPod:

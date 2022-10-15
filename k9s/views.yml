@@ -1,15 +1,15 @@
 # $XDG_CONFIG_HOME/k9s/views.yml
-k9s:
-  views:
+# k9s:
+#   views:
     # Alters the pod view column layout. Uses GVR as key
-    v1/pods:
-      columns:
-        - NAMESPACE
-        - NAME
-        - READY
-        - RESTARTS
-        - STATUS
-        - AGE
+    # v1/pods:
+    #   columns:
+    #     - NAMESPACE
+    #     - NAME
+    #     - READY
+    #     - RESTARTS
+    #     - STATUS
+    #     - AGE
       # disables sorting with other columes
       # sortColumn: AGE
 

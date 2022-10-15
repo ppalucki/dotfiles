@@ -1,4 +1,41 @@
 plugin:
+  nginx:
+    shortCut: F12
+    confirm: false
+    description: "run nginx pod"
+    scopes:
+      - po
+    command: kubectl
+    background: false
+    args:
+      - -n
+      - default
+      - --context 
+      - $CONTEXT
+      - run
+      - nginx
+      - --image
+      - nginx
+
+  nginx-deploy:
+    shortCut: F12
+    confirm: false
+    description: "run nginx deploy"
+    scopes:
+      - deploy
+    command: kubectl
+    background: false
+    args:
+      - -n
+      - default
+      - --context 
+      - $CONTEXT
+      - create 
+      - deploy 
+      - nginx
+      - --image
+      - nginx
+
 
   # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
   mylog-pods:
@@ -22,6 +59,21 @@ plugin:
     - $NAMESPACE
     - --context
     - $CONTEXT
+
+  # Sends logs over to jq for processing. This leverages kubectl plugin kubectl-jq.
+  jqlogs:
+    shortCut: Ctrl-J
+    confirm: false
+    description: "Logs (jq)"
+    scopes:
+      - po
+    command: kubectl
+    background: false
+    args:
+      - jq
+      - $NAME
+      - $NAMESPACE
+      - $CONTEXT
 
   # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
   mylog-deploy:
