@@ -15,18 +15,17 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kind-gardener-local
-  currentCluster: kind-gardener-local
+  currentContext: shoot--local--local
+  currentCluster: shoot--local--local
   clusters:
-    kind-gardener-local:
+    shoot--local--local:
       namespace:
         active: all
         lockFavorites: false
         favorites:
-        - all
         - default
       view:
-        active: aliases
+        active: po
       featureGates:
         nodeShell: false
       shellPod:

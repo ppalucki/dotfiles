@@ -1,10 +1,12 @@
 plugin:
+
   nginx:
     shortCut: F12
     confirm: false
     description: "run nginx pod"
     scopes:
       - po
+      - deploy
     command: kubectl
     background: false
     args:
@@ -18,10 +20,11 @@ plugin:
       - nginx
 
   nginx-deploy:
-    shortCut: F12
-    confirm: false
-    description: "run nginx deploy"
+    shortCut: F11
+    confirm: true
+    description: "create nginx deploy"
     scopes:
+      - po
       - deploy
     command: kubectl
     background: false
@@ -36,6 +39,23 @@ plugin:
       - --image
       - nginx
 
+  nginx-sts:
+    shortCut: F10
+    confirm: true
+    description: "create nginx sts"
+    scopes:
+    - pods
+    - sts
+    command: kubectl
+    background: false
+    args:
+      - -n
+      - default
+      - --context 
+      - $CONTEXT
+      - create 
+      - -f 
+      - "/root/.config/k9s/nsts.yml"
 
   # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
   mylog-pods:

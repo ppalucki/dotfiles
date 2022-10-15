@@ -13,6 +13,11 @@ hotKey:
 
   shift-3:
     shortCut:    Shift-3
+    description: "Namespaces"
+    command:     ns
+
+  shift-4:
+    shortCut:    Shift-4
     description: "Services"
     command:     svc
 
