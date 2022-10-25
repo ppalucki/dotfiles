@@ -32,3 +32,23 @@ sudo systemctl disable firewalld
 wget --no-check-certificate https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_VI -O vi
 chmod +x vi
 ```
+
+##### micro .vimrc config 
+
+1. <c-x> executes current line in pane target 1
+
+```
+map <c-x> :python import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', vim.current.line, 'enter'])<cr>
+```
+
+##### micro .tmux.conf
+
+1. vi mode-keys
+2. ctrl-a prefix    
+ 
+```
+setw -g mode-keys vi
+unbind C-b
+set-option -g prefix C-a
+bind a send-prefix
+```
