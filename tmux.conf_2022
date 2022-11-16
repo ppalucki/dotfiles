@@ -1,0 +1,50 @@
+# visual vi mode
+setw -g mode-keys vi
+
+# break
+# break-pane 
+bind b break-pane
+
+# copy z ctrl
+unbind c-[
+bind c-[ copy-mode
+
+# paste even with ctrl
+unbind c-]
+bind-key c-] paste-buffer
+
+# next/prev
+# easier and faster switching between next/prev window
+bind C-p previous-window
+bind C-n next-window
+
+# esccape lag
+set -s escape-time 0
+
+# move pane (aka. join-pane)
+bind m command-prompt -p "send pane to:"  "join-pane -t '%%'"
+bind M choose-window "join-pane -t '%%'"
+
+# prefix & last window
+unbind C-b
+set-option -g prefix C-a
+bind a send-prefix
+unbind ^A
+bind ^A last-window
+
+# split
+bind s split-window -v
+bind v split-window -h
+
+# slect pane
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind C-h select-pane -L
+bind C-j select-pane -D
+bind C-k select-pane -U
+bind C-l select-pane -R
+
+# mouse
+set mouse on

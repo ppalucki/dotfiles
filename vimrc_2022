@@ -1,0 +1,109 @@
+inoremap jj <ESC>
+map <c-x> :silent! python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', vim.current.line, 'enter'])<cr>j
+set bg=dark
+call plug#begin()
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'fatih/vim-go'
+Plug 'majutsushi/tagbar'
+Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-unimpaired'
+call plug#end()
+nnoremap <F2> :NERDTreeToggle<CR>
+let g:go_version_warning = 0
+map <F3> :CtrlPBufTag<CR>
+map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
+map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
+set nocompatible
+set backspace=indent,eol,start
+
+map <leader>h "ayiw:Ag! -- "<C-r>a"
+vmap <leader>h "ay:Ag! -- "<C-r>a"
+map <leader>H "ayiw:Ag! --all-types -- "<C-r>a"
+vmap <leader>H "ay:Ag! --all-types -- "<C-r>a"
+""" ------ sudo write
+command! W w !sudo tee % > /dev/null
+
+function! Mouseon()
+    set mouse=a
+    " for better scrolling when using the mouse
+    set scrolloff=2
+    " Toolbar
+    " set guioptions+=T 
+    " for better golang navigation
+    " TO PSUJE scrollowanie
+    map <C-LeftMouse> gd 
+    nmap <RightMouse> <c-o>
+
+    nmap <2-LeftMouse> gd
+    " nmap <expr> <2-LeftMouse> (&buftype is# "quickfix" ? "" : "gd")
+endfunction
+call Mouseon()
+
+map <silent> <F2> :NERDTreeToggle<CR>
+map <silent> <leader><F2> :NERDTreeFind<CR>
+let NERDTreeShowBookmarks = 0
+let NERDChristmasTree = 0
+" set Enter/Return to activate a node
+let NERDTreeMapActivateNode='<CR>'
+" always change CWD
+let NERDTreeChDirMode = 2
+" more colors 
+let NERDTreeMinimalUI = 1
+"let NERDTreeDirArrows=1
+let NERDTreeQuitOnOpen = 0
+let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__', '_test\.go$']
+
+let NERDTreeMouseMode = 3
+
+nnoremap <leader>f *N
+set hlsearch
+map <leader>/ :nohlsearch<cr>
+
+""" tagbar
+map <leader><F3> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_autoclose = 0
+let g:tagbar_width = 80
+
+""" move between windows
+nmap <C-J> <C-W>j
+nmap <C-K> <C-W>k
+nmap <C-l> <C-W>l
+nmap <C-h> <C-W>h
+
+let mapleader = "\\"
+map <space> \
+filetype plugin indent on
+syntax on
+set hidden
+""" ---- saveall shortcut
+map ZA :wall<CR>
+map ZW :qa<CR>
+""" write/quit
+" aka ZZ
+map <leader>w :up<CR>
+map <leader>W :w!<CR>
+map <leader>q :q<CR>
+" " aka ZQ
+map <leader>Q :q!<CR>
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call setpos(".", getpos("'\""))
+augroup END
+
+" Open last/alternate buffer
+noremap <Leader><Leader> <C-^>
+noremap <Leader><space> <C-^>
+" " 'edit alternate file' convenience mapping
+"nnoremap <BS> <C-^>
+"
+" search search raw text plain [find]
+" http://vim.wikia.com/wiki/Searching_for_expressions_which_include_slashes
+command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
+
+" visual search selected text [find]
+" http://vim.wikia.com/wiki/Search_for_visually_selected_text
+" vnoremap // y/<C-R>"<CR>"
+vnoremap // y:SS <C-R>"<CR>
