@@ -29,8 +29,11 @@ sudo systemctl disable firewalld
 ##### get vim
 
 ```
-wget --no-check-certificate https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_VI -O vi
-chmod +x vi
+# wget version
+wget --no-check-certificate https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_VI -O /bin/vi; chmod +x /bin/vi
+
+# curl version
+curl -k https://busybox.net/downloads/binaries/1.35.0-x86_64-linux-musl/busybox_VI -o /bin/vi; chmod +x /bin/vi
 ```
 
 ##### micro .vimrc config 

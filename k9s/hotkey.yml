@@ -1,5 +1,6 @@
 hotKey:
 
+  # ---------------------------------------- META
   # Overview
   shift-1:
     shortCut:    Shift-1
@@ -21,27 +22,26 @@ hotKey:
     description: "Services"
     command:     svc
 
-  # Data
+
+  # ---------------------------------------- Types and Data
   F1:
     shortCut:    F1
     description: Aliases
     command:     aliases
   F2:
     shortCut:    F2
-    description: ConfigMaps
-    command:     cm
+    description: "CRD"
+    command:     customresourcedefinition
   F3:
     shortCut:    F3
+    description: ConfigMaps
+    command:     cm
+  F4:
+    shortCut:    F4
     description: Secrets
     command:     sec
 
-  # ------------- Gardner project specific
-
-  F4:
-    shortCut:    F4
-    description: "Gardener: Shoots"
-    command:     shoots
-
+  # ---------------------------------------- GARDENER
   F5:
     shortCut:    F5
     description: "Gardener: CtrlReg"
@@ -67,7 +67,7 @@ hotKey:
     command:     mr
 
 
-  # ----------------------------------------
+  # ---------------------------------------- PODS and its managers
   shift-0:
     shortCut:    Shift-0
     description: Pods
@@ -84,6 +84,10 @@ hotKey:
     shortCut:    Shift-7
     description: StatefulSets
     command:     sts
+  shift-6:
+    shortCut:    Shift-6
+    description: Jobs
+    command:     jobs
 
 
 

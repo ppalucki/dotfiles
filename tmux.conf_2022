@@ -36,6 +36,9 @@ bind ^A last-window
 bind s split-window -v
 bind v split-window -h
 
+# longer history
+set -g history-limit 10000
+
 # slect pane
 bind h select-pane -L
 bind j select-pane -D

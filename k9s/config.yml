@@ -15,12 +15,12 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: shoot--local--local
-  currentCluster: shoot--local--local
+  currentContext: kind-kind
+  currentCluster: kind-kind
   clusters:
-    shoot--local--local:
+    kind-kind:
       namespace:
-        active: all
+        active: default
         lockFavorites: false
         favorites:
         - default

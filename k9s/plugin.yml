@@ -1,4 +1,22 @@
 plugin:
+  debug:
+    shortCut: Shift-D
+    confirm: false
+    description: Debug
+    scopes:
+    - containers
+    command: kubectl
+    background: false
+    args:
+    - debug
+    - -it
+    - -n
+    - $NAMESPACE
+    - $POD
+    - --target
+    - $NAME
+    - --image
+    - ubuntu
 
   nginx:
     shortCut: F12

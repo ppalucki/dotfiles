@@ -1,0 +1,57 @@
+[user]
+name = Pawel Palucki
+email = pawel.palucki@sap.com
+
+[alias]
+# dont add -n to logs l/lg because it disables possibility to asks for logs from master...
+l = log --oneline --decorate 
+lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order 
+lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order
+st = status
+ci = commit
+d = difftool
+dd = difftool -t dirdiff -d
+ds = diff --stat
+b = branch -vv
+branches = branch -vv
+branchesall = branch -a -vv
+branchesdate = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
+branchesdateall = for-each-ref --sort=committerdate refs/remotes/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
+
+co = checkout --no-guess
+cob = checkout -b
+ciam = commit -a -m
+ciamwip = commit -a -m WIP
+ciav = commit -a --verbose
+cim = commit -m
+civ = commit --verbose
+ca = commit --amend
+caa = commit -a --amend
+unstash = stash pop
+mt = mergetool
+
+# moved to aliases
+# grepall = git rev-list --all | xargs git grep 
+#
+upstream = rev-parse --abbrev-ref --symbolic-full-name @{u}
+# or for scripting git for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)
+# http://stackoverflow.com/questions/89332/how-to-recover-a-dropped-stash-in-git
+# recover = log --graph --oneline --decorate $( git fsck --no-reflog | awk '/dangling commit/ {print $3}' )
+
+# For Github (get a pull request
+# gpr = '!sh -c "git fetch origin pull/${1}/head:pr/${1}" -'
+# with a command like this 
+# git config --global alias.gpr '!sh -c "git fetch origin pull/${1}/head:pr/${1}" -'
+# doesn't not WORK!!!
+# without need to fetch refspec before and it won't allow you to update this in future
+gpr = !sh -c \"git fetch origin pull/${1}/head:pr/${1}\" -
+
+# unieversal pull request from github
+# git gpr intel 356
+gpremote = !sh -c \"git fetch ${1} pull/${2}/head:pr/${2}\" -
+
+
+# tags + commits (-d --derefernce)
+#tags = show-ref --abbrev=7 --tag -d 
+tags = for-each-ref --sort=creatordate --format '%(refname) %(creatordate)' refs/tags
+	

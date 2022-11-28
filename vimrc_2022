@@ -14,6 +14,7 @@ let g:go_version_warning = 0
 map <F3> :CtrlPBufTag<CR>
 map <F4> :let g:ctrlp_mruf_relative=1<bar>CtrlPMRUFiles<CR>
 map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
+map <F5> :CtrlPTag<CR>
 set nocompatible
 set backspace=indent,eol,start
 
