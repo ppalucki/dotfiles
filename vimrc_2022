@@ -1,6 +1,8 @@
 inoremap jj <ESC>
 map <c-x> :silent! python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', vim.current.line, 'enter'])<cr>j
-set bg=dark
+"set bg=dark
+set t_Co=256
+colorscheme slate
 call plug#begin()
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
@@ -8,6 +10,8 @@ Plug 'fatih/vim-go'
 Plug 'majutsushi/tagbar'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-unimpaired'
+Plug 'stephpy/vim-yaml'
+Plug 'pedrohdz/vim-yaml-folds'
 call plug#end()
 nnoremap <F2> :NERDTreeToggle<CR>
 let g:go_version_warning = 0
@@ -17,6 +21,28 @@ map <leader><F4> :let g:ctrlp_mruf_relative=0<bar>CtrlPMRUFiles<CR>
 map <F5> :CtrlPTag<CR>
 set nocompatible
 set backspace=indent,eol,start
+set nowrap
+set noswapfile
+
+" S for subsitute inner word from yanked text
+" change inner word and in insert mode yank from " and exit inster mode :)
+nnoremap <leader>s "_ciw<c-r>"<esc>
+vnoremap <leader>s "_dP
+
+" Run last commend in 1 tmux window
+nmap <buffer> <leader>r :up<bar>python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', 'c-p', 'enter'])<cr>
+
+" Ipython
+nmap <leader>ip o__import__('IPython').embed()<ESC>:w<cr>
+
+" FOR asyncio code
+" https://stackoverflow.com/questions/56415470/calling-ipython-embed-in-asynchronous-code-specifying-the-event-loop
+" import os;
+" os.system('pip install IPython nest-asyncio')
+" import nest_asyncio
+" nest_asyncio.apply()
+" __import__('IPython').embed(using='asyncio')
+
 
 map <leader>h "ayiw:Ag! -- "<C-r>a"
 vmap <leader>h "ay:Ag! -- "<C-r>a"
@@ -108,3 +134,6 @@ command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " vnoremap // y/<C-R>"<CR>"
 vnoremap // y:SS <C-R>"<CR>
+
+" default size to see full folder names
+:let g:NERDTreeWinSize=60

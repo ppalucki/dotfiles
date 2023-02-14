@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git wd kubectl tmux)
+plugins=(gitfast wd kubectl tmux common-aliases)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -106,6 +106,9 @@ setopt hist_ignore_all_dups
 alias kaf=" kubectl apply -f"
 alias kg=" kubectl get"
 alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
+alias -g LS=' | less -S'
+alias -g GG=' 2>&1 | grep'
+
 
 ### history search
 bindkey '\ep' history-beginning-search-backward
@@ -117,3 +120,20 @@ bindkey \^U backward-kill-line
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+
+## unalias (common aliases I dont like)
+unalias cp
+unalias mv
+export EDITOR=vim
+alias k9s='k9s --readonly'
+
+
+function docker-dockerfile {
+    # https://stackoverflow.com/questions/19104847/how-to-generate-a-dockerfile-from-an-image/53841690#53841690
+    docker history --no-trunc $1  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/                                                                             bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1
+}
+
+
+alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
+
