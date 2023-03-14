@@ -3435,3 +3435,5 @@ let g:coc_disable_startup_warning = 1
 
 " Fix auto-indentation for YAML files
 autocmd FileType yaml.cloudformation setlocal ts=2 sts=2 sw=2 expandtab indentkeys-=0# indentkeys-=<:>
+
+let g:NERDTreeWinSize = 40

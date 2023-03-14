@@ -1,4 +1,6 @@
 [user]
+#name = Pawel Palucki
+#email = pawel.palucki@sap.com
 name = Pawel Palucki
 email = pawel.palucki@sap.com
 
@@ -14,6 +16,7 @@ dd = difftool -t dirdiff -d
 ds = diff --stat
 b = branch -vv
 branches = branch -vv
+branchall = branch -a -vv
 branchesall = branch -a -vv
 branchesdate = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
 branchesdateall = for-each-ref --sort=committerdate refs/remotes/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
@@ -55,3 +58,20 @@ gpremote = !sh -c \"git fetch ${1} pull/${2}/head:pr/${2}\" -
 #tags = show-ref --abbrev=7 --tag -d 
 tags = for-each-ref --sort=creatordate --format '%(refname) %(creatordate)' refs/tags
 	
+[safe]
+	directory = /root/ppalucki/bcc
+	directory = /root/ppalucki/bcc/libbpf-tools/blazesym
+	directory = /root/ppalucki/bcc/src/cc/libbpf
+	directory = /root/ppalucki/bcc/libbpf-tools/bpftool
+	directory = /root/ppalucki/bcc
+	directory = /root/ppalucki/bcc/libbpf-tools/blazesym
+	directory = /root/ppalucki/bcc/src/cc/libbpf
+	directory = /root/ppalucki/bcc/libbpf-tools/bpftool
+	directory = /root/ppalucki/bcc
+	directory = /root/ppalucki/bcc/libbpf-tools/blazesym
+	directory = /root/ppalucki/bcc/src/cc/libbpf
+	directory = /root/ppalucki/bcc/libbpf-tools/bpftool
+
+[difftool "dirdiff"]
+    cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
+    options = --symlinks

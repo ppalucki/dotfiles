@@ -9,9 +9,18 @@ Plug 'scrooloose/nerdtree'
 Plug 'fatih/vim-go'
 Plug 'majutsushi/tagbar'
 Plug 'kien/ctrlp.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
 Plug 'stephpy/vim-yaml'
 Plug 'pedrohdz/vim-yaml-folds'
+Plug 'will133/vim-dirdiff'
+" comment with gcc
+Plug 'tomtom/tcomment_vim'
+
+set foldlevel=99
+
 call plug#end()
 nnoremap <F2> :NERDTreeToggle<CR>
 let g:go_version_warning = 0
@@ -30,7 +39,9 @@ nnoremap <leader>s "_ciw<c-r>"<esc>
 vnoremap <leader>s "_dP
 
 " Run last commend in 1 tmux window
-nmap <buffer> <leader>r :up<bar>python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', 'c-p', 'enter'])<cr>
+nmap <leader>r :up<bar>python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', 'c-p', 'enter'])<cr>
+
+"nmap <leader>R :up<bar>python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', ', 'c-p', 'enter'])<cr>
 
 " Ipython
 nmap <leader>ip o__import__('IPython').embed()<ESC>:w<cr>

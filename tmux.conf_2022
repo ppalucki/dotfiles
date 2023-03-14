@@ -24,6 +24,8 @@ set -s escape-time 0
 # move pane (aka. join-pane)
 bind m command-prompt -p "send pane to:"  "join-pane -t '%%'"
 bind M choose-window "join-pane -t '%%'"
+# swap window
+bind c-m command-prompt -p "swap window with :"  "swap-window -t '%%'"
 
 # prefix & last window
 unbind C-b
