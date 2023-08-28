@@ -134,6 +134,17 @@ function docker-dockerfile {
     docker history --no-trunc $1  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/                                                                             bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1
 }
 
+function docker-images-size {
+	docker image ls --format "{{.Size}} {{.ID}} {{.Repository}}:{{.Tag}}" | LANG=en_US sort -h | column -t
+}
 
 alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wagoodman/dive"
 
+alias setenv=". ~/ppalucki/tests/set_env.sh"
+
+
+# happy make (installed on 2023-03-21 01:53:35.745989)
+source /root/.HappyMake/etc/hminit.sh
+
+alias gnr1='ssh root@gnr-ap201'
+alias gnr2='ssh root@gnr-ap202'

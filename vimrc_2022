@@ -16,8 +16,13 @@ Plug 'tpope/vim-repeat'
 Plug 'stephpy/vim-yaml'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'will133/vim-dirdiff'
+Plug 'joe-skb7/cscope-maps'
 " comment with gcc
 Plug 'tomtom/tcomment_vim'
+
+
+" dir diff
+"set splitbelow
 
 set foldlevel=99
 
@@ -45,6 +50,9 @@ nmap <leader>r :up<bar>python3 import vim,subprocess;subprocess.call(['tmux', 's
 
 " Ipython
 nmap <leader>ip o__import__('IPython').embed()<ESC>:w<cr>
+nmap <leader>ib o__import__('ipdb').set_trace()<ESC>:w<cr>
+
+"au FileType json set foldmethod=syntax
 
 " FOR asyncio code
 " https://stackoverflow.com/questions/56415470/calling-ipython-embed-in-asynchronous-code-specifying-the-event-loop
@@ -114,7 +122,7 @@ let mapleader = "\\"
 map <space> \
 filetype plugin indent on
 syntax on
-set hidden
+"set hidden
 """ ---- saveall shortcut
 map ZA :wall<CR>
 map ZW :qa<CR>
@@ -148,3 +156,5 @@ vnoremap // y:SS <C-R>"<CR>
 
 " default size to see full folder names
 :let g:NERDTreeWinSize=60
+
+nmap cp :let @" = expand("%:p")<bar>echo @"<cr>

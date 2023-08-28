@@ -52,4 +52,4 @@ bind C-k select-pane -U
 bind C-l select-pane -R
 
 # mouse
-set mouse on
+#set mouse on

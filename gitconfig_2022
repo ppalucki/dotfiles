@@ -12,7 +12,7 @@ lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgree
 st = status
 ci = commit
 d = difftool
-dd = difftool -t dirdiff -d
+dd = difftool -t dirdiff -d --no-prompt
 ds = diff --stat
 b = branch -vv
 branches = branch -vv
