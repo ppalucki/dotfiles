@@ -21,6 +21,8 @@ branchesall = branch -a -vv
 branchesdate = for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
 branchesdateall = for-each-ref --sort=committerdate refs/remotes/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
 
+remotes = remote -v
+
 co = checkout --no-guess
 cob = checkout -b
 ciam = commit -a -m
@@ -75,3 +77,10 @@ tags = for-each-ref --sort=creatordate --format '%(refname) %(creatordate)' refs
 [difftool "dirdiff"]
     cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE
     options = --symlinks
+
+[oh-my-zsh]
+# optimize globally git_prompt in ZSH prompt
+# https://github.com/ohmyzsh/ohmyzsh/discussions/9849
+hide-info = 0   # git_prompt_info
+hide-status = 0 # git_prompt_status
+hide-dirty = 0  # parse_git_dirty

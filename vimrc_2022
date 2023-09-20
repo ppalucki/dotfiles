@@ -1,5 +1,5 @@
 inoremap jj <ESC>
-map <c-x> :silent! python3 import vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', vim.current.line, 'enter'])<cr>j
+map <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', vim.current.line), 'enter'])<cr>j
 "set bg=dark
 set t_Co=256
 colorscheme slate
@@ -122,7 +122,7 @@ let mapleader = "\\"
 map <space> \
 filetype plugin indent on
 syntax on
-"set hidden
+set hidden
 """ ---- saveall shortcut
 map ZA :wall<CR>
 map ZW :qa<CR>
