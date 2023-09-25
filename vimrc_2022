@@ -1,8 +1,13 @@
+" plug autoinstalltion
+if empty(glob("~/.vim/autoload/plug.vim"))
+   execute '!mkdir -p ~/.vim/autoload'
+   execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+endif
+
 inoremap jj <ESC>
 map <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', vim.current.line), 'enter'])<cr>j
 "set bg=dark
-set t_Co=256
-colorscheme slate
+
 call plug#begin()
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
@@ -17,16 +22,21 @@ Plug 'stephpy/vim-yaml'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'will133/vim-dirdiff'
 Plug 'joe-skb7/cscope-maps'
+Plug 'daylerees/colour-schemes', {'rtp':'vim'}
 " comment with gcc
 Plug 'tomtom/tcomment_vim'
+
+call plug#end()
+
+set termguicolors
+set t_Co=256
+set term=xterm-256color
 
 
 " dir diff
 "set splitbelow
-
 set foldlevel=99
 
-call plug#end()
 nnoremap <F2> :NERDTreeToggle<CR>
 let g:go_version_warning = 0
 map <F3> :CtrlPBufTag<CR>
@@ -158,3 +168,5 @@ vnoremap // y:SS <C-R>"<CR>
 :let g:NERDTreeWinSize=60
 
 nmap cp :let @" = expand("%:p")<bar>echo @"<cr>
+
+silent colorscheme slate
