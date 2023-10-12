@@ -65,9 +65,17 @@ hotKey:
     shortCut:    F9
     description: "Gardener: ManagedResources"
     command:     mr
+  F10:
+    shortCut:    F10
+    description: "Gardener: Shoots"
+    command:     shoot
 
 
   # ---------------------------------------- PODS and its managers
+  shift--:
+    shortCut:    Shift--
+    description: Pods
+    command:     po
   shift-0:
     shortCut:    Shift-0
     description: Pods

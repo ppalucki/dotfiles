@@ -70,7 +70,8 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(gitfast wd kubectl tmux common-aliases)
+plugins=(wd kubectl tmux common-aliases systemd aliases history docker)
+#plugins=(wd kubectl tmux common-aliases systemd aliases kube-ps1 history docker)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -118,8 +119,10 @@ bindkey '\en' history-beginning-search-forward
 bindkey \^U backward-kill-line
 
 export PYENV_ROOT="$HOME/.pyenv"
+if [ -d $PYENV_ROOT ]; then
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+done
 
 
 ## unalias (common aliases I dont like)
@@ -143,8 +146,10 @@ alias dive="docker run -ti --rm  -v /var/run/docker.sock:/var/run/docker.sock wa
 alias setenv=". ~/ppalucki/tests/set_env.sh"
 
 
-# happy make (installed on 2023-03-21 01:53:35.745989)
-source /root/.HappyMake/etc/hminit.sh
+[ -f ~/.aliases.local ] && source ~/.aliases.local
 
-alias gnr1='ssh root@gnr-ap201'
-alias gnr2='ssh root@gnr-ap202'
+
+# hostname
+PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
+# kube-ps1 (context/namespace)
+#PROMPT='$(kube_ps1)'$PROMPT

@@ -1,5 +1,6 @@
 # zsh as default shell
 set-option -g default-shell /bin/zsh
+#set-option -g default-shell /bin/bash
 
 # visual vi mode
 setw -g mode-keys vi
