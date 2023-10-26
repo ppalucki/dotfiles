@@ -119,10 +119,10 @@ bindkey '\en' history-beginning-search-forward
 bindkey \^U backward-kill-line
 
 export PYENV_ROOT="$HOME/.pyenv"
-if [ -d $PYENV_ROOT ]; then
+if  [ -d $PYENV_ROOT ]; then
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-done
+fi
 
 
 ## unalias (common aliases I dont like)
@@ -148,6 +148,8 @@ alias setenv=". ~/ppalucki/tests/set_env.sh"
 
 [ -f ~/.aliases.local ] && source ~/.aliases.local
 
+
+alias sep='cd /opt/intel/sep; . ./sep_vars.sh; cd - ; emon -v | head -1 ; . /opt/intel/sep/config/edp/pyedp/.venv/bin/activate ; python -m pyedp.edp --version | head -1'
 
 # hostname
 PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"
