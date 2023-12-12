@@ -23,7 +23,7 @@ Plug 'stephpy/vim-yaml'
 Plug 'pedrohdz/vim-yaml-folds'
 Plug 'will133/vim-dirdiff'
 Plug 'joe-skb7/cscope-maps'
-Plug 'daylerees/colour-schemes', {'rtp':'vim'}
+"Plug 'daylerees/colour-schemes', {'rtp':'vim'}
 " comment with gcc
 Plug 'tomtom/tcomment_vim'
 
