@@ -4,6 +4,12 @@
 name = Pawel Palucki
 email = pawel.palucki@sap.com
 
+[checkout]
+defaultRemote=origin
+
+[core]
+pager = cat
+
 [alias]
 # dont add -n to logs l/lg because it disables possibility to asks for logs from master...
 l = log --oneline --decorate 

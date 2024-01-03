@@ -14,9 +14,9 @@ echo "================================ check https "
 wget --timeout=5 https://www.google.com -O /dev/null
 
 echo "================================ check ssh "
-ssh -v -o ConnectTimeout=5s -T git@github.com || true
+ssh -o ConnectTimeout=5s -T git@github.com || true
 
 echo "================================ docker centos"
-docker run -ti --name check_proxy --rm centos curl https://www.google.com
+docker run -ti --name check_proxy --rm busybox wget -S -O- http://ifconfig.me
 
 echo "OK"
