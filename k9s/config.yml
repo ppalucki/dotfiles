@@ -8,6 +8,7 @@ k9s:
   readOnly: false
   noExitOnCtrlC: false
   noIcons: false
+  skipLatestRevCheck: false
   logger:
     tail: 5000
     buffer: 5000
@@ -15,17 +16,17 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kind-kind
-  currentCluster: kind-kind
+  currentContext: shoot--hc-dev--c5348773-haas
+  currentCluster: shoot--hc-dev--c5348773-haas
   clusters:
-    kind-kind:
+    shoot--hc-dev--c5348773-haas:
       namespace:
-        active: default
+        active: all
         lockFavorites: false
         favorites:
         - default
       view:
-        active: po
+        active: hanaservice
       featureGates:
         nodeShell: false
       shellPod:
@@ -36,6 +37,7 @@ k9s:
         limits:
           cpu: 100m
           memory: 100Mi
+        labels: {}
       portForwardAddress: localhost
   thresholds:
     cpu:
