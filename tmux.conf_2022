@@ -56,6 +56,5 @@ bind C-k select-pane -U
 bind C-l select-pane -R
 
 # mouse
-#set mouse on
 bind e setw synchronize-panes
-
+set -g mouse
