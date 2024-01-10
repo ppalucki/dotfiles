@@ -166,3 +166,6 @@ for x in {0..8}; do
 done
 echo ""
 }
+
+# replacement of reg
+alias regctl="docker container run -i --rm --net host -v regctl-conf:/home/appuser/.regctl/ ghcr.io/regclient/regctl:latest"

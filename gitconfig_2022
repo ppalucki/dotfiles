@@ -7,8 +7,8 @@ email = pawel.palucki@sap.com
 [checkout]
 defaultRemote=origin
 
-[core]
-pager = cat
+#[core]
+#pager = cat
 
 [alias]
 # dont add -n to logs l/lg because it disables possibility to asks for logs from master...

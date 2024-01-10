@@ -16,17 +16,17 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: shoot--hc-dev--c5348773-haas
-  currentCluster: shoot--hc-dev--c5348773-haas
+  currentContext: kind-gardener-local
+  currentCluster: kind-gardener-local
   clusters:
-    shoot--hc-dev--c5348773-haas:
+    kind-gardener-local:
       namespace:
         active: all
         lockFavorites: false
         favorites:
         - default
       view:
-        active: hanaservice
+        active: po
       featureGates:
         nodeShell: false
       shellPod:
