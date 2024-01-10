@@ -21,12 +21,13 @@ k9s:
   clusters:
     kind-gardener-local:
       namespace:
-        active: all
+        active: default
         lockFavorites: false
         favorites:
+        - all
         - default
       view:
-        active: po
+        active: ctrlinst
       featureGates:
         nodeShell: false
       shellPod:

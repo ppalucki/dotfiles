@@ -72,28 +72,24 @@ hotKey:
 
 
   # ---------------------------------------- PODS and its managers
-  shift--:
-    shortCut:    Shift--
-    description: Pods
-    command:     po
-  shift-0:
-    shortCut:    Shift-0
-    description: Pods
-    command:     po
   shift-9:
     shortCut:    Shift-9
-    description: Deployments
-    command:     deploy
+    description: Pods
+    command:     po
   shift-8:
     shortCut:    Shift-8
-    description: DaemonSets
-    command:     ds
+    description: Deployments
+    command:     deploy
   shift-7:
     shortCut:    Shift-7
-    description: StatefulSets
-    command:     sts
+    description: DaemonSets
+    command:     ds
   shift-6:
     shortCut:    Shift-6
+    description: StatefulSets
+    command:     sts
+  shift-5:
+    shortCut:    Shift-5
     description: Jobs
     command:     jobs
 
