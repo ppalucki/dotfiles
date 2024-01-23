@@ -165,6 +165,15 @@ command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 " vnoremap // y/<C-R>"<CR>"
 vnoremap // y:SS <C-R>"<CR>
 
+""" -------------------------------------------
+""" Search ^ Replace in single files
+""" -------------------------------------------
+" replace normal mode with last searched element elmenet
+" nmap <leader>y :.,$s///gc<left><left><left>
+nmap <leader>y :%s///gc<left><left><left>
+" replace last search element ("/ register) in given selection
+vmap <leader>y :s///gc<left><left><left>
+
 " default size to see full folder names
 :let g:NERDTreeWinSize=60
 
