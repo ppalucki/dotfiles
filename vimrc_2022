@@ -125,7 +125,7 @@ let g:tagbar_autoclose = 0
 let g:tagbar_width = 80
 
 """ ctags
-map <buffer> <F8> :!ctags --verbose=no --totals --recurse=yes
+map <buffer> <F8> :!ctags --verbose=no --totals --recurse=yes<cr>
 
 """ move between windows
 nmap <C-J> <C-W>j
