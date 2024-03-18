@@ -30,6 +30,7 @@ branchesdateall = for-each-ref --sort=committerdate refs/remotes/ --format='%(co
 remotes = remote -v
 
 co = checkout --no-guess
+cot = checkout -t
 cob = checkout -b
 ciam = commit -a -m
 ciamwip = commit -a -m WIP
@@ -91,3 +92,6 @@ tagslog = log --no-walk --tags --pretty='%h %d %s' --decorate=full
 hide-info = 0   # git_prompt_info
 hide-status = 0 # git_prompt_status
 hide-dirty = 0  # parse_git_dirty
+
+[push]
+default=current

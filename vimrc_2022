@@ -114,6 +114,7 @@ let NERDTreeIgnore = ['\.pyc$', '\~$', '\.o$', '__pycache__', '_test\.go$']
 let NERDTreeMouseMode = 3
 
 nnoremap <leader>f *N
+" for visual use //
 set hlsearch
 map <leader>/ :nohlsearch<cr>
 
@@ -122,6 +123,9 @@ map <leader><F3> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_autoclose = 0
 let g:tagbar_width = 80
+
+""" ctags
+map <buffer> <F8> :!ctags --verbose=no --totals --recurse=yes
 
 """ move between windows
 nmap <C-J> <C-W>j
@@ -180,3 +184,4 @@ vmap <leader>y :s///gc<left><left><left>
 nmap cp :let @" = expand("%:p")<bar>echo @"<cr>
 
 silent colorscheme slate
+hi Comment guifg=#888888

@@ -16,18 +16,18 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: kind-gardener-local
-  currentCluster: kind-gardener-local
+  currentContext: garden-hc-dev--c5348773-haas-external
+  currentCluster: garden-hc-dev--c5348773-haas-external
   clusters:
-    kind-gardener-local:
+    garden-hc-dev--c5348773-haas-external:
       namespace:
-        active: default
+        active: all
         lockFavorites: false
         favorites:
-        - all
+        - monitoring
         - default
       view:
-        active: ctrlinst
+        active: "no"
       featureGates:
         nodeShell: false
       shellPod:
