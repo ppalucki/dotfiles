@@ -1,0 +1,98 @@
+hotKeys:
+
+  # ---------------------------------------- META
+  # Overview
+  shift-1:
+    shortCut:    Shift-1
+    description: "Contexts"
+    command:     ctx
+
+  shift-2:
+    shortCut:    Shift-2
+    description: "Nodes"
+    command:     "no"
+
+  shift-3:
+    shortCut:    Shift-3
+    description: "Namespaces"
+    command:     ns
+
+  shift-4:
+    shortCut:    Shift-4
+    description: "Services"
+    command:     svc
+
+
+  # ---------------------------------------- Types and Data
+  F1:
+    shortCut:    F1
+    description: Aliases
+    command:     aliases
+  F2:
+    shortCut:    F2
+    description: "CRD"
+    command:     customresourcedefinition
+  F3:
+    shortCut:    F3
+    description: ConfigMaps
+    command:     cm
+  F4:
+    shortCut:    F4
+    description: Secrets
+    command:     sec
+
+  # ---------------------------------------- GARDENER
+  F5:
+    shortCut:    F5
+    description: "Gardener: CtrlReg"
+    command:     ctrlreg
+
+  F6:
+    shortCut:    F6
+    description: "Gardener: CtrlDeployments"
+    command:     ctrldeploy
+
+  F7:
+    shortCut:    F7
+    description: "Gardener: CtrlInst"
+    command:     ctrlinst
+
+  F8:
+    shortCut:    F8
+    description: "Gardener: Extensions"
+    command:     extensions
+  F9:
+    shortCut:    F9
+    description: "Gardener: ManagedResources"
+    command:     mr
+  F10:
+    shortCut:    F10
+    description: "Gardener: Shoots"
+    command:     shoot
+
+
+  # ---------------------------------------- PODS and its managers
+  shift-9:
+    shortCut:    Shift-9
+    description: Pods
+    command:     po
+  shift-8:
+    shortCut:    Shift-8
+    description: Deployments
+    command:     deploy
+  shift-7:
+    shortCut:    Shift-7
+    description: DaemonSets
+    command:     ds
+  shift-6:
+    shortCut:    Shift-6
+    description: StatefulSets
+    command:     sts
+  shift-5:
+    shortCut:    Shift-5
+    description: Jobs
+    command:     jobs
+
+
+
+
