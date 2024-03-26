@@ -95,3 +95,5 @@ hide-dirty = 0  # parse_git_dirty
 
 [push]
 default=current
+[pull]
+	rebase = false
