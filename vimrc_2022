@@ -126,6 +126,8 @@ let g:tagbar_width = 80
 
 """ ctags
 map <F8> :!ctags --verbose=no --totals --recurse=yes<cr>
+" use copen instead of query dialog
+set cscopequickfix=s-,g-,d-,c-
 
 """ move between windows
 nmap <C-J> <C-W>j
@@ -148,6 +150,10 @@ map <leader>W :w!<CR>
 map <leader>q :q<CR>
 " " aka ZQ
 map <leader>Q :q!<CR>
+
+" Jump to next/previous merge conflict marker [C conflicts with vim-unimparied
+nnoremap <silent> ]d /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
+nnoremap <silent> [d ?\v^(\<\|\=\|\>){7}([^=].+)\?$<CR>
 
 augroup resCur
   autocmd!
@@ -185,3 +191,7 @@ nmap cp :let @" = expand("%:p")<bar>echo @"<cr>
 
 silent colorscheme slate
 hi Comment guifg=#888888
+
+""" Fugitive 
+map <leader>c :Git<cr>
+map <leader>d :Gdiffsplit!<cr>
