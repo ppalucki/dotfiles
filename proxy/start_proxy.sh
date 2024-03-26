@@ -30,6 +30,7 @@ iptables -A REDSOCKS -t nat -d 172.18.0.0/16 -j RETURN # coreos-kubernetes
 iptables -A REDSOCKS -t nat -d 172.18.0.0/16 -j RETURN # coreos-kubernetes
 iptables -A REDSOCKS -t nat -d 172.19.0.0/16 -j RETURN # coreos-kubernetes
 iptables -A REDSOCKS -t nat -d 172.20.0.0/16 -j RETURN # coreos-kubernetes
+iptables -A REDSOCKS -t nat -d 172.23.0.0/16 -j RETURN # coreos-kubernetes
 iptables -A REDSOCKS -t nat -d 10.4.0.0/16 -j RETURN # tectonic
 iptables -A REDSOCKS -t nat -d 10.217.247.236/32 -j RETURN # proxy-mu
 iptables -A REDSOCKS -t nat -d 163.33.0.0/16 -j RETURN # proxy-chain and teamforge

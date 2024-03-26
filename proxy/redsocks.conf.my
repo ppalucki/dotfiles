@@ -62,14 +62,14 @@ redsocks {
         //ip = proxy.jf.intel.com;
 
     // proxy-mu.intel.com
-    ip = 10.217.247.236; 
+    //ip = 10.217.247.236; 
 
     // nie wiem co to :)
     //ip = 10.1.192.48;
 
     // actually recommended
     // proxy-dmz.intel.com
-    ip = 10.241.208.166;
+    //ip = 10.241.208.166;
     //ip = 10.217.247.241; // BROKEN
 
     // proxy-socks.isw.intel.com
@@ -83,6 +83,7 @@ redsocks {
 
     // proxy-ir.intel.com
     ip = 10.102.248.16; 
+
         port = 1080;
 
 
