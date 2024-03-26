@@ -1,4 +1,5 @@
 k9s:
+  skin: gruvbox
   liveViewAutoRefresh: false
   screenDumpDir: /home/ppalucki/.local/state/k9s/screen-dumps
   refreshRate: 2
