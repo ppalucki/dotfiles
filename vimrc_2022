@@ -26,6 +26,12 @@ Plug 'joe-skb7/cscope-maps'
 "Plug 'daylerees/colour-schemes', {'rtp':'vim'}
 " comment with gcc
 Plug 'tomtom/tcomment_vim'
+Plug 'towolf/vim-helm'  " breaks expandtab,ts,tw for yaml
+
+" LSP 
+Plug 'prabirshrestha/vim-lsp'
+"vim-lsp-settings breaks c-d scrolling !!!!
+Plug 'mattn/vim-lsp-settings'
 
 call plug#end()
 
@@ -126,8 +132,27 @@ let g:tagbar_width = 80
 
 """ ctags
 map <F8> :!ctags --verbose=no --totals --recurse=yes<cr>
+
+""" cscope
+" http://cscope.sourceforge.net/cscope_maps.vim
+" http://cscope.sourceforge.net/cscope_vim_tutorial.html
+" generate tags ~/ppalucki/dotfiles/cscope_gen.sh
 " use copen instead of query dialog
+" The following maps all invoke one of the following cscope search types:
+" ctrl-\ (current window) then:
+" ctrl-spacebar (vertical split) then:
+" ctrl-space-space (horizonatl split) then:
+"   's'   symbol: find all references to the token under cursor
+"   'g'   global: find global definition(s) of the token under cursor
+"   'c'   calls:  find all calls to the function name under cursor
+"   't'   text:   find all instances of the text under cursor
+"   'e'   egrep:  egrep search for the word under cursor
+"   'f'   file:   open the filename under cursor
+"   'i'   includes: find files that include the filename under cursor
+"   'd'   called: find functions that function under cursor calls
+"use [q ]q or copen for navigation
 set cscopequickfix=s-,g-,d-,c-
+
 
 """ move between windows
 nmap <C-J> <C-W>j
@@ -185,7 +210,7 @@ nmap <leader>y :%s///gc<left><left><left>
 vmap <leader>y :s///gc<left><left><left>
 
 " default size to see full folder names
-:let g:NERDTreeWinSize=60
+let g:NERDTreeWinSize=60
 
 nmap cp :let @" = expand("%:p")<bar>echo @"<cr>
 
@@ -195,3 +220,46 @@ hi Comment guifg=#888888
 """ Fugitive 
 map <leader>c :Git<cr>
 map <leader>d :Gdiffsplit!<cr>
+
+
+""" LSP
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+
+    "nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    "nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    let g:lsp_format_sync_timeout = 1000
+    " autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+    
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+" enable lsp on startup (1) or disable (0)
+let g:lsp_auto_enable = 0
+
+
+""" vim-helm
+au FileType helm set ts=2 sw=2 et
+call tcomment#type#Define('helm','# %s')
+
+
