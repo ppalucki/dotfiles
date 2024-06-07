@@ -69,7 +69,7 @@ nmap <leader>r :up<bar>python3 import vim,subprocess;subprocess.call(['tmux', 's
 nmap <leader>ip o__import__('IPython').embed()<ESC>:w<cr>
 nmap <leader>ib o__import__('ipdb').set_trace()<ESC>:w<cr>
 
-"au FileType json set foldmethod=syntax
+au FileType json set foldmethod=syntax
 
 " FOR asyncio code
 " https://stackoverflow.com/questions/56415470/calling-ipython-embed-in-asynchronous-code-specifying-the-event-loop
@@ -132,6 +132,7 @@ let g:tagbar_width = 80
 
 """ ctags
 map <F8> :!ctags --verbose=no --totals --recurse=yes<cr>
+map <leader><F8> :!/root/ppalucki/dotfiles/cscope_gen.sh<cr>:cscope kill -1<cr>:cscope add cscope.out<cr>:cscope show<cr>
 
 """ cscope
 " http://cscope.sourceforge.net/cscope_maps.vim
@@ -223,6 +224,10 @@ map <leader>d :Gdiffsplit!<cr>
 
 
 """ LSP
+
+""" CPP
+au FileType cpp set ts=4 sw=4 et
+au FileType cmake set ts=4 sw=4 et
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete

@@ -10,4 +10,7 @@ find . -name '*.py' \
 
 # -b: just build
 # -q: create inverted index
-cscope -b -q
+cscope -u -b -q -v
+
+date
+ls -lrt cscope*
