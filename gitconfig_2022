@@ -20,7 +20,7 @@ ci = commit
 d = difftool
 dd = difftool -t dirdiff -d --no-prompt
 ds = diff --stat
-b = branch -vv
+b = !git --no-pager branch -vv
 branches = branch -vv
 branchall = branch -a -vv
 branchesall = branch -a -vv
@@ -81,6 +81,7 @@ tagslog = log --no-walk --tags --pretty='%h %d %s' --decorate=full
 	directory = /root/ppalucki/bcc/libbpf-tools/blazesym
 	directory = /root/ppalucki/bcc/src/cc/libbpf
 	directory = /root/ppalucki/bcc/libbpf-tools/bpftool
+	directory = /home/ppalucki/actions-runner/_work/dotfiles/dotfiles
 
 [difftool "dirdiff"]
     cmd = vim -f '+next' '+execute \"DirDiff\" argv(0) argv(1)' $LOCAL $REMOTE

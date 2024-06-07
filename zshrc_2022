@@ -67,12 +67,21 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+### ppalucki
+# Fix issue with ctrl-b invoking wd_browser that requires "fzf"
+FZF_WD_BINDKEY='^'
+
+# TMUX session auto name
+#ZSH_TMUX_DEFAULT_SESSION_NAME=$([ "${#$(hostname)}" -gt 8 ] && echo "WSL" || hostname)
+ZSH_TMUX_DEFAULT_SESSION_NAME=`hostname`
+#ZSH_TMUX_AUTONAME_SESSION="true"
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(wd kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm)
+plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -171,3 +180,4 @@ echo ""
 
 # replacement of reg
 alias regctl="docker container run -i --rm --net host -v regctl-conf:/home/appuser/.regctl/ ghcr.io/regclient/regctl:latest"
+
