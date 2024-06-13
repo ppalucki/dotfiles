@@ -207,8 +207,10 @@ vnoremap // y:SS <C-R>"<CR>
 " replace normal mode with last searched element elmenet
 " nmap <leader>y :.,$s///gc<left><left><left>
 nmap <leader>y :%s///gc<left><left><left>
-" replace last search element ("/ register) in given selection
+" replace last searched element ("/ register) in given selection
 vmap <leader>y :s///gc<left><left><left>
+" replaced visually selected element in whole document
+vmap <leader>Y y<bar>:%s/<c-r>"/<c-r>"/gc<left><left><left>
 
 " default size to see full folder names
 let g:NERDTreeWinSize=60
