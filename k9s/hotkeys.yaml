@@ -69,6 +69,10 @@ hotKeys:
     shortCut:    F10
     description: "Gardener: Shoots"
     command:     shoot
+  F11:
+    shortCut:    F11
+    description: "Helm: Charts"
+    command:     charts
 
 
   # ---------------------------------------- PODS and its managers

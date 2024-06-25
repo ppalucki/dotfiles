@@ -33,6 +33,10 @@ Plug 'prabirshrestha/vim-lsp'
 "vim-lsp-settings breaks c-d scrolling !!!!
 Plug 'mattn/vim-lsp-settings'
 
+" macro fodling/highlighing
+"Plug 'mphe/grayout.vim'
+"Plug 'krzbe/vim-lsp-inactive-regions'
+
 call plug#end()
 
 set termguicolors
@@ -42,7 +46,7 @@ set term=xterm-256color
 
 " dir diff
 "set splitbelow
-set foldlevel=99
+"set foldlevel=99
 
 nnoremap <F2> :NERDTreeToggle<CR>
 let g:go_version_warning = 0
@@ -222,10 +226,25 @@ hi Comment guifg=#888888
 
 """ Fugitive 
 map <leader>c :Git<cr>
+map <leader>e :e ~/.vimrc<cr>
 map <leader>d :Gdiffsplit!<cr>
 
+" folding for CPP
+function! FoldtextForC()
+   " Show the whole #if line
+   "return getline(v:foldstart)
+   return printf("+%s %s", v:folddashes, getline(v:foldstart))
+endfun
+function! FoldPreprocessor()
+   "set foldmarker=#if,#endif,#else
+   "set foldmethod=marker
+   
+   set foldtext=FoldtextForC()
+   set foldmarker=#if,#endif
+   set foldmethod=marker
+endfunction
 
-""" LSP
+autocmd FileType cpp call FoldPreprocessor()
 
 """ CPP
 au FileType cpp set ts=4 sw=4 et
@@ -253,6 +272,11 @@ function! s:on_lsp_buffer_enabled() abort
     " autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
     
     " refer to doc to add more commands
+    " https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#folding
+    
+    " DOESNOt WORK with c++/clangd
+    " set foldmethod=expr foldexpr=lsp#ui#vim#folding#foldexpr() foldtext=lsp#ui#vim#folding#foldtext()
+
 endfunction
 
 augroup lsp_install
