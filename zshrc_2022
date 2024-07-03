@@ -69,7 +69,7 @@ ZSH_THEME="robbyrussell"
 
 ### ppalucki
 # Fix issue with ctrl-b invoking wd_browser that requires "fzf"
-FZF_WD_BINDKEY=''
+FZF_WD_BINDKEY='F12'
 
 # TMUX session auto name
 #ZSH_TMUX_DEFAULT_SESSION_NAME=$([ "${#$(hostname)}" -gt 8 ] && echo "WSL" || hostname)
