@@ -85,10 +85,6 @@ au FileType json set foldmethod=syntax
 " __import__('IPython').embed(using='asyncio')
 
 
-map <leader>h "ayiw:Ag! -- "<C-r>a"
-vmap <leader>h "ay:Ag! -- "<C-r>a"
-map <leader>H "ayiw:Ag! --all-types -- "<C-r>a"
-vmap <leader>H "ay:Ag! --all-types -- "<C-r>a"
 """ ------ sudo write
 command! W w !sudo tee % > /dev/null
 
@@ -139,9 +135,11 @@ let g:tagbar_width = 80
 map <F8> :!ctags --verbose=no --totals --recurse=yes<cr>
 map <leader><F8> :!/root/ppalucki/dotfiles/cscope_gen.sh<cr>:cscope kill -1<cr>:cscope add cscope.out<cr>:cscope show<cr>
 au FileType go map <buffer> <F8> :!gotags -R -f tags \.<cr>
-" for large projects like Kubernetes used following trick manually: only " pkg/cmd so no vendor/third_party 
+" 1) for large projects like Kubernetes used following trick manually: only " pkg/cmd so no vendor/third_party 
 " and exclude tests and generated files  (reduces numbers of tags from 500k to 40-60k)
 " find -path './cmd*' -or -path './pkg*' ! -name '*_test.go' ! -name '*generated*' | gotags -L - >tags
+" 2) for single file
+" :!ctags %
 
 """ cscope
 " http://cscope.sourceforge.net/cscope_maps.vim
@@ -180,8 +178,8 @@ map ZA :wall<CR>
 map ZW :qa<CR>
 """ write/quit
 " aka ZZ
-map <leader>w :up<CR>
-map <leader>W :w!<CR>
+map <leader>w :silent up<CR>
+map <leader>W :silent w!<CR>
 map <leader>q :q<CR>
 " " aka ZQ
 map <leader>Q :q!<CR>
@@ -210,16 +208,34 @@ command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 " vnoremap // y/<C-R>"<CR>"
 vnoremap // y:SS <C-R>"<CR>
 
-""" -------------------------------------------
-""" Search ^ Replace in single files
-""" -------------------------------------------
+""" ------------ replace ---------------------
+""" 1) Search (h)  in multiple files
+""" 2) Search and Replace (y) in single file
+""" 3) Search and Replace (u) in multiple files
+""" ---------------------------------------------------------
 " replace normal mode with last searched element elmenet
 " nmap <leader>y :.,$s///gc<left><left><left>
+""" 1) Search (h) 
+map <leader>h "ayiw:Ag! -- "<C-r>a"
+vmap <leader>h "ay:Ag! -- "<C-r>a"
+map <leader>H "ayiw:Ag! --all-types -- "<C-r>a"
+vmap <leader>H "ay:Ag! --all-types -- "<C-r>a"
+
+""" 2) Search and Replace (y) in single file
 nmap <leader>y :%s///gc<left><left><left>
 " replace last searched element ("/ register) in given selection
 vmap <leader>y :s///gc<left><left><left>
 " replaced visually selected element in whole document
 vmap <leader>Y y<bar>:%s/<c-r>"/<c-r>"/gc<left><left><left>
+" replaced visually selected element in all files from quick files list -
+" first use <leader>h to findall files 
+vmap <leader>u y<bar>:cfdo %s/<c-r>"/<c-r>"/gc<left><left><left>
+
+""" 3) Search and Replace (u) in multiple files
+map <leader>u "ayiw:Ag! -- "<C-r>a"<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
+vmap <leader>u "ay:Ag! -- "<C-r>a"<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
+map <leader>U "ayiw:Ag! --all-types -- "<C-r>a<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
+vmap <leader>U "ay:Ag! --all-types -- "<C-r>a"<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
 
 " default size to see full folder names
 let g:NERDTreeWinSize=60
