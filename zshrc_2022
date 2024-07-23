@@ -159,7 +159,7 @@ alias setenv=". ~/ppalucki/tests/set_env.sh"
 [ -f ~/.aliases.local ] && source ~/.aliases.local
 
 
-alias sep='cd /opt/intel/sep; . ./sep_vars.sh; cd - ; emon -v | head -1 ; . /opt/intel/sep/config/edp/pyedp/.venv/bin/activate ; python -m pyedp.edp --version | head -1'
+alias sep='cd /opt/intel/sep; . ./sep_vars.sh; cd - ; emon -v | head -1 ; . /opt/intel/sep/config/edp/pyedp/.venv/bin/activate ; python -m pyedp.edp --version | head -1; python --version'
 
 # hostname
 PROMPT="%{$fg[green]%}%m%{$reset_color%} ${PROMPT}"

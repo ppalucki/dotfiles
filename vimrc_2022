@@ -133,6 +133,7 @@ let g:tagbar_width = 80
 
 """ ctags
 map <F8> :!ctags --verbose=no --totals --recurse=yes<cr>
+map <F9> :!ctags --verbose=no --totals %<cr>
 map <leader><F8> :!/root/ppalucki/dotfiles/cscope_gen.sh<cr>:cscope kill -1<cr>:cscope add cscope.out<cr>:cscope show<cr>
 au FileType go map <buffer> <F8> :!gotags -R -f tags \.<cr>
 " 1) for large projects like Kubernetes used following trick manually: only " pkg/cmd so no vendor/third_party 
