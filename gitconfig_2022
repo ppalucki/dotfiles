@@ -67,6 +67,7 @@ gpremote = !sh -c \"git fetch ${1} pull/${2}/head:pr/${2}\" -
 #tags = show-ref --abbrev=7 --tag -d 
 tags = for-each-ref --sort=creatordate --format '%(refname)  -   %(creatordate)' refs/tags
 tagslog = log --no-walk --tags --pretty='%h %d %s' --decorate=full
+tagsort = !git for-each-ref --sort=creatordate --format '%(refname)  -   %(creatordate)' refs/tags | sort -V
 	
 [safe]
 	directory = /root/ppalucki/bcc

@@ -1,0 +1,139 @@
+plugins:
+  mydebug:
+    shortCut: Shift-D
+    #confirm: false
+    description: Debug
+    scopes:
+    - containers
+    command: kubectl
+    background: false
+    args:
+    - debug
+    - -it
+    - -n
+    - $NAMESPACE
+    - $POD
+    - --target
+    - $NAME
+    - --image
+    - ubuntu
+
+  # nginx:
+  #   shortCut: F12
+  #   confirm: false
+  #   description: "run nginx pod"
+  #   scopes:
+  #     - po
+  #     - deploy
+  #   command: kubectl
+  #   background: false
+  #   args:
+  #     - -n
+  #     - default
+  #     - --context 
+  #     - $CONTEXT
+  #     - run
+  #     - nginx
+  #     - --image
+  #     - nginx
+  #
+  # nginx-deploy:
+  #   shortCut: F11
+  #   confirm: true
+  #   description: "create nginx deploy"
+  #   scopes:
+  #     - po
+  #     - deploy
+  #   command: kubectl
+  #   background: false
+  #   args:
+  #     - -n
+  #     - default
+  #     - --context 
+  #     - $CONTEXT
+  #     - create 
+  #     - deploy 
+  #     - nginx
+  #     - --image
+  #     - nginx
+  #
+  # nginx-sts:
+  #   shortCut: F10
+  #   confirm: true
+  #   description: "create nginx sts"
+  #   scopes:
+  #   - pods
+  #   - sts
+  #   command: kubectl
+  #   background: false
+  #   args:
+  #     - -n
+  #     - default
+  #     - --context 
+  #     - $CONTEXT
+  #     - create 
+  #     - -f 
+  #     - "/root/.config/k9s/nsts.yml"
+
+  # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
+  mylog-pods:
+    # Define a mnemonic to invoke the plugin
+    shortCut: Ctrl-L
+    # What will be shown on the K9s menu
+    description: Pod logs
+    # Collections of views that support this shortcut. (You can use `all`)
+    scopes:
+    - po
+    # The command to run upon invocation. Can use Krew plugins here too!
+    command: kubectl
+    # Whether or not to run the command in background mode
+    background: false
+    # Defines the command arguments
+    args:
+    - logs
+    - -f
+    - $NAME
+    - -n
+    - $NAMESPACE
+    - --context
+    - $CONTEXT
+
+  # Sends logs over to jq for processing. This leverages kubectl plugin kubectl-jq.
+  jqlogs:
+    shortCut: Ctrl-J
+    confirm: false
+    description: "Logs (jq)"
+    scopes:
+      - po
+    command: kubectl
+    background: false
+    args:
+      - jq
+      - $NAME
+      - $NAMESPACE
+      - $CONTEXT
+
+  # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
+  mylog-deploy:
+    # Define a mnemonic to invoke the plugin
+    shortCut: Ctrl-L
+    # What will be shown on the K9s menu
+    description: Pod tail logs
+    # Collections of views that support this shortcut. (You can use `all`)
+    scopes:
+    - deploy
+    # The command to run upon invocation. Can use Krew plugins here too!
+    command: kubectl
+    # Whether or not to run the command in background mode
+    background: false
+    # Defines the command arguments
+    args:
+    - tail
+    - -d
+    - $NAME
+    - -n
+    - $NAMESPACE
+    - --context
+    - $CONTEXT
+    - --since
+    - 5m
