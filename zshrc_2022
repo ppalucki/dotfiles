@@ -81,7 +81,7 @@ ZSH_TMUX_DEFAULT_SESSION_NAME=`hostname`
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd)
+plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found)
 
 source $ZSH/oh-my-zsh.sh
 

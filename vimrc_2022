@@ -181,9 +181,9 @@ map ZW :qa<CR>
 " aka ZZ
 map <leader>w :silent up<CR>
 map <leader>W :silent w!<CR>
-map <leader>q :q<CR>
+map <leader>q :qa<CR>
 " " aka ZQ
-map <leader>Q :q!<CR>
+map <leader>Q :qa!<CR>
 
 " Jump to next/previous merge conflict marker [C conflicts with vim-unimparied
 nnoremap <silent> ]d /\v^(\<\|\=\|\>){7}([^=].+)?$<CR>
