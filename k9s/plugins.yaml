@@ -16,7 +16,12 @@ plugins:
     - --target
     - $NAME
     - --image
-    - ubuntu
+    # ubuntu  # no vi
+    - busybox
+    - --profile
+    - general  
+    # profiles:  https://github.com/kubernetes/enhancements/blob/master/keps/sig-cli/1441-kubectl-debug/README.md#debugging-profiles
+    # general: allowed to access /proc/1/root/
 
   # nginx:
   #   shortCut: F12
