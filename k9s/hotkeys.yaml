@@ -22,7 +22,6 @@ hotKeys:
     description: "Services"
     command:     svc
 
-
   # ---------------------------------------- Types and Data
   F1:
     shortCut:    F1
@@ -40,35 +39,51 @@ hotKeys:
     shortCut:    F4
     description: Secrets
     command:     sec
-
-  # ---------------------------------------- GARDENER
+  # ---------------------------------------- Prometheus
   F5:
     shortCut:    F5
-    description: "Gardener: CtrlReg"
-    command:     ctrlreg
-
+    description: "Prometheus: ServiceMonitor"
+    command:     servicemonitor
   F6:
     shortCut:    F6
-    description: "Gardener: CtrlDeployments"
-    command:     ctrldeploy
-
-  F7:
-    shortCut:    F7
-    description: "Gardener: CtrlInst"
-    command:     ctrlinst
-
-  F8:
-    shortCut:    F8
-    description: "Gardener: Extensions"
-    command:     extensions
-  F9:
-    shortCut:    F9
-    description: "Gardener: ManagedResources"
-    command:     mr
+    description: "Prometheus: PodMonitor"
+    command:     podmonitor
+  # ---------------------------------------- Prometheus
   F10:
     shortCut:    F10
-    description: "Gardener: Shoots"
-    command:     shoot
+    description: "OPEA: GMConnector"
+    command:     gmconnector
+
+  # ---------------------------------------- GARDENER
+  #F5:
+  #  shortCut:    F5
+  #  description: "Gardener: CtrlReg"
+  #  command:     ctrlreg
+
+  #F6:
+  #  shortCut:    F6
+  #  description: "Gardener: CtrlDeployments"
+  #  command:     ctrldeploy
+
+  #F7:
+  #  shortCut:    F7
+  #  description: "Gardener: CtrlInst"
+  #  command:     ctrlinst
+
+  #F8:
+  #  shortCut:    F8
+  #  description: "Gardener: Extensions"
+  #  command:     extensions
+  #F9:
+  #  shortCut:    F9
+  #  description: "Gardener: ManagedResources"
+  #  command:     mr
+  #F10:
+  #  shortCut:    F10
+  #  description: "Gardener: Shoots"
+  #  command:     shoot
+
+  # ---------------------------------------- Helm
   F11:
     shortCut:    F11
     description: "Helm: Charts"
