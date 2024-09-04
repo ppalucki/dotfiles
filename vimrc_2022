@@ -30,9 +30,11 @@ Plug 'tomtom/tcomment_vim'
 Plug 'towolf/vim-helm'  " breaks expandtab,ts,tw for yaml
 
 " LSP 
-Plug 'prabirshrestha/vim-lsp'
+" let g:lsp_auto_enable = 1 # modify this to work below !!! 0 
 "vim-lsp-settings breaks c-d scrolling !!!!
+Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+Plug 'rhysd/vim-healthcheck' " :CheckHealth
 
 " macro fodling/highlighing
 "Plug 'mphe/grayout.vim'
@@ -137,6 +139,12 @@ map <F9> :!ctags --verbose=no --totals %<cr>
 map <leader><F8> :!/root/ppalucki/dotfiles/cscope_gen.sh<cr>:cscope kill -1<cr>:cscope add cscope.out<cr>:cscope show<cr>
 au FileType go map <buffer> <F8> :!gotags -R -f tags \.<cr>
 au FileType python map <buffer> <F8> :!ctags -f _tags --languages=Python --verbose=no --totals --recurse=yes --exclude=tmp --exclude=env --exclude=.venv --fields=zK ;fgrep -v kind:variable _tags <bar> fgrep -v kind:i <bar> fgrep -v kind:namespace >tags;rm _tags; ls -l tags; wc -l tags<cr>
+
+
+
+""" python folding
+" check commented line about folding using LSPFOLDING
+au FileType python set foldmethod=indent
 
 " 1) for large projects like Kubernetes used following trick manually: only " pkg/cmd so no vendor/third_party 
 " and exclude tests and generated files  (reduces numbers of tags from 500k to 40-60k)
@@ -274,6 +282,30 @@ autocmd FileType cpp call FoldPreprocessor()
 au FileType cpp set ts=4 sw=4 et
 au FileType cmake set ts=4 sw=4 et
 
+"""" LSP Configuration
+" enable lsp on startup (1) or disable (0)
+" works well for go/python
+let g:lsp_auto_enable = 1
+let g:lsp_settings = {
+\  'yaml-language-server': { 'disabled': 1, },
+\  'gopls': { 'disabled': 0, },
+\  'pylsp-all': { 'disabled': 1, },
+\}
+"au FileType yaml call lsp#activate()
+
+"au FileType python let g:lsp_auto_enable = 1
+"au FileType go let g:lsp_auto_enable = 1
+
+" disable everything - I usually need just gd and K
+let g:lsp_diagnostics_enabled = 0 " disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
+let g:lsp_document_highlight_enabled = 0 " disable highlight refrences https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#highlight-references
+let g:lsp_diagnostics_signs_enabled = 0
+let g:lsp_completion_documentation_enabled = 0
+let g:lsp_signature_help_enabled = 0 
+let g:lsp_format_sync_timeout = 1000
+let g:lsp_fold_enabled = 0  " disable if it doesnt work!
+
+"""  LSP bindings
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
@@ -292,14 +324,22 @@ function! s:on_lsp_buffer_enabled() abort
     "nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
     "nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
-    let g:lsp_format_sync_timeout = 1000
     " autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
     
     " refer to doc to add more commands
     " https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#folding
     
-    " DOESNOt WORK with c++/clangd
-    " set foldmethod=expr foldexpr=lsp#ui#vim#folding#foldexpr() foldtext=lsp#ui#vim#folding#foldtext()
+    " LSPFOLDING DOESNOt WORK with c++/clangd
+    set foldmethod=expr foldexpr=lsp#ui#vim#folding#foldexpr() foldtext=lsp#ui#vim#folding#foldtext()
+
+    " LSPTAGS
+    "autocmd FileType typescript setlocal tagfunc=lsp#tagfunc
+
+    " LSPCOMPLETE (use C-x C-o)
+    " h omnifunc
+    " h ins-completion
+    "autocmd FileType python setlocal omnifunc=lsp#complete
+    setlocal omnifunc=lsp#complete
 
 endfunction
 
@@ -309,8 +349,6 @@ augroup lsp_install
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
-" enable lsp on startup (1) or disable (0)
-let g:lsp_auto_enable = 0
 
 
 """ vim-helm
