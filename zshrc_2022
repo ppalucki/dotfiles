@@ -117,9 +117,12 @@ setopt hist_ignore_all_dups
 alias kaf="kubectl apply -f"
 alias kg="kubectl get"
 alias kbusybox="kubectl run --rm -i -t busybox --image=busybox --restart=Never"
+alias knethost="kubectl run --rm -i -t busybox --image=nicolaka/netshoot --restart=Never"
 alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 alias -g LS=' | less -S'
 alias -g GG=' 2>&1 | grep'
+alias hla='helm list -A'
+alias hupi='helm upgrade --install'
 
 
 ### history search
