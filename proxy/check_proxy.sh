@@ -16,6 +16,9 @@ wget --timeout=5 https://www.google.com -O /dev/null
 echo "================================ check ssh "
 ssh -o ConnectTimeout=5s -T git@github.com || true
 
+echo "================================ docker apt update"
+docker run -ti --name check_proxy --rm ubuntu apt update
+
 echo "================================ docker http"
 docker run -ti --name check_proxy --rm busybox wget -S -O- http://ifconfig.me
 
