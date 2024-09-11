@@ -44,7 +44,7 @@ sudo iptables-save | grep :CNI | cut -f 1 -d " " | cut -f 2 -d ':' | sudo xargs 
 sudo iptables --flush
 sudo iptables -t nat -F 
 sudo iptables -t nat -Z REDSOCKS  
-sud oiptables -t nat -Z POSTROUTING 
+sudo iptables -t nat -Z POSTROUTING 
 sudo iptables -t nat -Z PREROUTING 
 sudo iptables -t nat -Z OUTPUT
 sudo iptables -t nat -X REDSOCKS
@@ -71,3 +71,5 @@ watch -n0.5 --no-title -d=p 'echo --------------------- nat --------------------
 export ANSIBLE_CACHE_PLUGIN_CONNECTION=/tmp/ansible-caches ANSIBLE_CACHE_PLUGIN=jsonfile
 ANSBILE_KEEP_REMOTE_FILES=1
 
+
+watch -n1 -d sudo bash -c 'iptables-save -c 2>/dev/null | grep -v "#"'

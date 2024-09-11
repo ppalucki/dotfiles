@@ -7,8 +7,12 @@ set -x
 # # sysctl -w net.ipv4.conf.all.route_localnet=1
 # # sysctl -p
 # sc-restart docker
-sysctl -n net.ipv4.conf.all.route_localnet=0
-sysctl -n net.ipv4.conf.docker0.route_localnet=1
+## config before 2024
+#sysctl -n net.ipv4.conf.all.route_localnet=0 
+#sysctl -n net.ipv4.conf.docker0.route_localnet=1
+
+## config after 2024
+sysctl -n net.ipv4.conf.all.route_localnet=1  # required to route all even new docker networks created by kind
 
 ### -------------------  NAT ------------------------------------
 #Creating Chain for transparency rules and adding for flow chains (output and "routing")
