@@ -21,6 +21,10 @@ d = difftool
 dd = difftool -t dirdiff -d --no-prompt
 ds = diff --stat
 b = !git --no-pager branch -vv
+ba = !git --no-pager branch -a -vv
+bd = !git --no-pager for-each-ref --sort=committerdate refs/heads/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
+bda = !git --no-pager for-each-ref --sort=committerdate refs/remotes/ --format='%(committerdate:short) (%(committerdate:relative)) %(refname:short)'
+# below similar to above with pager
 branches = branch -vv
 branchall = branch -a -vv
 branchesall = branch -a -vv

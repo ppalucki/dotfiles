@@ -42,9 +42,11 @@ Plug 'rhysd/vim-healthcheck' " :CheckHealth
 
 call plug#end()
 
-set termguicolors
-set t_Co=256
-set term=xterm-256color
+
+" https://vim.fandom.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
+nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 
 " dir diff
@@ -253,8 +255,6 @@ let g:NERDTreeWinSize=60
 
 nmap cp :let @" = expand("%:p")<bar>echo @"<cr>
 
-silent colorscheme slate
-hi Comment guifg=#888888
 
 """ Fugitive 
 map <leader>c :Git<cr>
@@ -294,24 +294,31 @@ let g:lsp_settings = {
 \  'yaml-language-server': { 'disabled': 1, },
 \  'gopls': { 'disabled': 0, },
 \  'pylsp-all': { 'disabled': 0, },
+\  'helm-ls': { 'disabled': 0, },
 \}
 "au FileType yaml call lsp#activate()
 
 "au FileType python let g:lsp_auto_enable = 1
 "au FileType go let g:lsp_auto_enable = 1
 
+
 " disable everything - I usually need just gd and K
-let g:lsp_diagnostics_enabled = 0 " disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
+let g:lsp_diagnostics_enabled = 1 " diagnostics: disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_signs_enabled = 0 " diagnostics signs warnings/errors
+let g:lsp_diagnostics_virtual_text_enabled = 0 " diagnostics virtual text - use the one below from status bar
+
 let g:lsp_document_highlight_enabled = 0 " disable highlight refrences https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#highlight-references
-let g:lsp_diagnostics_signs_enabled = 0
 let g:lsp_completion_documentation_enabled = 0
 let g:lsp_signature_help_enabled = 0 
 let g:lsp_format_sync_timeout = 1000
+let g:lsp_fold_enabled = 0  " disable if it doesnt work!
+" debugging
+let g:lsp_log_verbose = 1
+let g:lsp_log_file = expand('~/vim-lsp.log')
 
 """  LSP bindings
 function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
     nmap <buffer> gd <plug>(lsp-definition)
     nmap <buffer> gs <plug>(lsp-document-symbol-search)
@@ -346,6 +353,9 @@ function! s:on_lsp_buffer_enabled() abort
     "autocmd FileType python setlocal omnifunc=lsp#complete
     setlocal omnifunc=lsp#complete
 
+    " LSPSIGNs
+    setlocal signcolumn=no
+
 endfunction
 
 augroup lsp_install
@@ -374,3 +384,15 @@ au FileType sh set expandtab ts=2 sw=2
 "Remove all trailing whitespace by pressing F12
 nnoremap <F12> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
+
+""" COLORS (must be at the end!!!!)
+" configure with calling :hi
+set termguicolors
+set t_Co=256
+set term=xterm-256color
+silent colorscheme slate
+hi Comment guifg=#888888
+"hi PreProc term=underline ctermfg=9 guifg=red guibg=white
+"hi PreProc guibg=DarkGrey
+"hi PreProc guibg=bg
+hi clear PreProc
