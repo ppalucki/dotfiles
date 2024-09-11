@@ -122,6 +122,7 @@ alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 alias -g LS=' | less -S'
 alias -g GG=' 2>&1 | grep'
 alias hla='helm list -A'
+alias hl='helm list'
 alias hupi='helm upgrade --install'
 
 

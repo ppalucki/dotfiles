@@ -284,12 +284,16 @@ au FileType cmake set ts=4 sw=4 et
 
 """" LSP Configuration
 " enable lsp on startup (1) or disable (0)
-" works well for go/python
+" works well for 
+" go - gopls
+" yaml - yaml-language-server
+" python - pylsp-all
 let g:lsp_auto_enable = 1
+
 let g:lsp_settings = {
 \  'yaml-language-server': { 'disabled': 1, },
 \  'gopls': { 'disabled': 0, },
-\  'pylsp-all': { 'disabled': 1, },
+\  'pylsp-all': { 'disabled': 0, },
 \}
 "au FileType yaml call lsp#activate()
 
@@ -303,7 +307,6 @@ let g:lsp_diagnostics_signs_enabled = 0
 let g:lsp_completion_documentation_enabled = 0
 let g:lsp_signature_help_enabled = 0 
 let g:lsp_format_sync_timeout = 1000
-let g:lsp_fold_enabled = 0  " disable if it doesnt work!
 
 """  LSP bindings
 function! s:on_lsp_buffer_enabled() abort
@@ -330,10 +333,12 @@ function! s:on_lsp_buffer_enabled() abort
     " https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#folding
     
     " LSPFOLDING DOESNOt WORK with c++/clangd
-    set foldmethod=expr foldexpr=lsp#ui#vim#folding#foldexpr() foldtext=lsp#ui#vim#folding#foldtext()
+    "let g:lsp_fold_enabled = 1  " disable if it doesnt work!
+    "set foldmethod=expr foldexpr=lsp#ui#vim#folding#foldexpr() foldtext=lsp#ui#vim#folding#foldtext()
 
     " LSPTAGS
-    "autocmd FileType typescript setlocal tagfunc=lsp#tagfunc
+    "autocmd FileType python setlocal tagfunc=lsp#tagfunc
+    setlocal tagfunc=lsp#tagfunc
 
     " LSPCOMPLETE (use C-x C-o)
     " h omnifunc
