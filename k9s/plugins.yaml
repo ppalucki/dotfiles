@@ -126,6 +126,24 @@ plugins:
     - --context
     - $CONTEXT
 
+  # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
+  mylog-pod-less:
+    # Define a mnemonic to invoke the plugin
+    shortCut: Shift-L
+    # What will be shown on the K9s menu
+    description: Pod logs less
+    # Collections of views that support this shortcut. (You can use `all`)
+    scopes:
+    - po
+    # The command to run upon invocation. Can use Krew plugins here too!
+    command: bash
+    # Whether or not to run the command in background mode
+    background: false
+    # Defines the command arguments
+    args:
+    - -c
+    - "kubectl logs --timestamps $NAME -n $NAMESPACE --context $CONTEXT | less -S -R"
+
   # Sends logs over to jq for processing. This leverages kubectl plugin kubectl-jq.
   jqlogs:
     shortCut: Ctrl-J
@@ -140,6 +158,31 @@ plugins:
       - $NAME
       - $NAMESPACE
       - $CONTEXT
+
+  # Sends logs over to jq for processing. This leverages kubectl plugin kubectl-jq.
+  #
+  # $NAMESPACE – the selected resource namespace
+  # $NAME – the selected resource name
+  # $CONTAINER – the current container if applicable
+  # $FILTER – the current filter if any
+  # $KUBECONFIG – the KubeConfig location.
+  # $CLUSTER the active cluster name
+  # $CONTEXT the active context name
+  # $USER the active user
+  # $GROUPS the active groups
+  # $POD while in a container view
+  jqlogs-container:
+    shortCut: Ctrl-J
+    confirm: false
+    description: "Logs (jq)"
+    scopes:
+      - containers
+    command: bash
+    background: false
+    args:
+      - -c
+      # - "echo kubectl logs $POD -c $NAME -n $NAMESPACE --context $CONTEXT ; sleep 5"
+      - "kubectl logs $POD -c $NAME -n $NAMESPACE --context $CONTEXT | jq -C '.' | less -S -R"
 
   # Defines a plugin to provide a `ctrl-l` shortcut to tail the logs while in pod view.
   mylog-deploy:
@@ -165,3 +208,4 @@ plugins:
     - $CONTEXT
     - --since
     - 5m
+
