@@ -282,6 +282,13 @@ autocmd FileType cpp call FoldPreprocessor()
 au FileType cpp set ts=4 sw=4 et
 au FileType cmake set ts=4 sw=4 et
 
+
+""" markdown (similar to yaml configuration)
+au FileType markdown set ts=2 sw=2 et
+
+""" yaml manuall
+"au FileType yaml set ts=2 sw=2 et foldmethod=indent
+
 """" LSP Configuration
 " enable lsp on startup (1) or disable (0)
 " works well for 
@@ -303,8 +310,8 @@ let g:lsp_settings = {
 
 
 " disable everything - I usually need just gd and K
-let g:lsp_diagnostics_enabled = 1 " diagnostics: disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
-let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_enabled = 0 " diagnostics: disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
+let g:lsp_diagnostics_echo_cursor = 0
 let g:lsp_diagnostics_signs_enabled = 0 " diagnostics signs warnings/errors
 let g:lsp_diagnostics_virtual_text_enabled = 0 " diagnostics virtual text - use the one below from status bar
 
