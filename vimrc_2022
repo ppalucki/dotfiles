@@ -321,7 +321,7 @@ let g:lsp_signature_help_enabled = 0
 let g:lsp_format_sync_timeout = 1000
 let g:lsp_fold_enabled = 0  " disable if it doesnt work!
 " debugging
-let g:lsp_log_verbose = 1
+let g:lsp_log_verbose = 0
 let g:lsp_log_file = expand('~/vim-lsp.log')
 
 """  LSP bindings
