@@ -44,7 +44,7 @@ civ = commit --verbose
 ca = commit --amend
 caa = commit -a --amend
 unstash = stash pop
-mt = mergetool
+mt = mergetool -t vimdiff
 
 # moved to aliases
 # grepall = git rev-list --all | xargs git grep 
