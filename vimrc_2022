@@ -42,6 +42,9 @@ Plug 'rhysd/vim-healthcheck' " :CheckHealth
 
 call plug#end()
 
+" Ex mode disable
+" https://vi.stackexchange.com/questions/457/does-ex-mode-have-any-practical-use
+nnoremap Q <nop>
 
 " https://vim.fandom.com/wiki/Identify_the_syntax_highlighting_group_used_at_the_cursor
 nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -187,10 +190,11 @@ filetype plugin indent on
 syntax on
 set hidden
 """ ---- saveall shortcut
-map ZA :wall<CR>
-map ZW :qa<CR>
+map ZW :wall<CR>
+map ZA :qa<CR>
 """ write/quit
 " aka ZZ
+map <leader>x :close<CR>
 map <leader>w :silent up<CR>
 map <leader>W :silent w!<CR>
 map <leader>q :qa<CR>
@@ -310,8 +314,9 @@ let g:lsp_settings = {
 
 
 " disable everything - I usually need just gd and K
-let g:lsp_diagnostics_enabled = 0 " diagnostics: disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
-let g:lsp_diagnostics_echo_cursor = 0
+let g:lsp_diagnostics_enabled = 1 " diagnostics: disable diagnosctics warn/error https://github.com/prabirshrestha/vim-lsp?tab=readme-ov-file#diagnostics
+let g:lsp_diagnostics_echo_cursor = 1
+
 let g:lsp_diagnostics_signs_enabled = 0 " diagnostics signs warnings/errors
 let g:lsp_diagnostics_virtual_text_enabled = 0 " diagnostics virtual text - use the one below from status bar
 
