@@ -119,7 +119,7 @@ alias kg="kubectl get"
 alias kbusybox="kubectl run --rm -i -t busybox --image=busybox --restart=Never"
 alias knethost="kubectl run --rm -i -t nethost --image=nicolaka/netshoot --restart=Never"
 alias busybox="docker run -ti --rm busybox"
-alias nethost="docker run -ti --rm nethost --image=nicolaka/netshoot --restart=Never"
+alias nethost="docker run -ti --rm nicolaka/netshoot"
 alias tmuxz='tmux new-session /bin/zsh \; set default-shell /bin/zsh'
 alias -g LS=' | less -S'
 alias -g GG=' 2>&1 | grep'

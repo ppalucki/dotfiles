@@ -17,7 +17,7 @@ lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen
 lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order
 st = status
 ci = commit
-d = difftool
+d = difftool -t vimdiff
 dd = difftool -t dirdiff -d --no-prompt
 ds = diff --stat
 b = !git --no-pager branch -vv
@@ -44,7 +44,7 @@ civ = commit --verbose
 ca = commit --amend
 caa = commit -a --amend
 unstash = stash pop
-mt = mergetool
+mt = mergetool -t vimdiff
 
 # moved to aliases
 # grepall = git rev-list --all | xargs git grep 
