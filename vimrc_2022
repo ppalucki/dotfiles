@@ -13,11 +13,13 @@ call plug#begin()
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'fatih/vim-go'
+" apt install universal-ctags # NOT excuberent tags for yaml support
 Plug 'majutsushi/tagbar'
 "Plug 'kien/ctrlp.vim' " depreacted
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'junkblocker/git-time-lapse'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 Plug 'stephpy/vim-yaml'
@@ -408,3 +410,23 @@ hi Comment guifg=#888888
 "hi PreProc guibg=DarkGrey
 "hi PreProc guibg=bg
 hi clear PreProc
+
+" https://github.com/preservim/tagbar/wiki#yaml
+let g:tagbar_type_yaml = {
+    \ 'ctagstype' : 'yaml',
+    \ 'kinds' : [
+        \ 'a:anchors',
+        \ 's:section',
+        \ 'e:entry'
+    \ ],
+  \ 'sro' : '.',
+    \ 'scope2kind': {
+      \ 'section': 's',
+      \ 'entry': 'e'
+    \ },
+    \ 'kind2scope': {
+      \ 's': 'section',
+      \ 'e': 'entry'
+    \ },
+    \ 'sort' : 0
+    \ }

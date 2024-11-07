@@ -81,7 +81,7 @@ ZSH_TMUX_DEFAULT_SESSION_NAME=`hostname`
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract)
+plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -127,6 +127,10 @@ alias hla='helm list -A'
 alias hl='helm list'
 alias hupi='helm upgrade --install'
 
+###
+alias gignoreall="git status --short --porcelain | awk '{print \$2}' | xargs git update-index --assume-unchanged"
+alias gignoreall="git status --short --porcelain | awk '{print \$2}' | xargs git update-index --assume-unchanged"
+alias gunignoreall="git ls-files -v | grep \"^[[:lower:]]\" | awk '{print \$2}' | xargs git update-index --no-assume-unchanged"
 
 ### history search
 bindkey '\ep' history-beginning-search-backward
