@@ -58,3 +58,6 @@ bind C-l select-pane -R
 # mouse
 bind e setw synchronize-panes
 set -g mouse
+# The default is ‘[#S] ’
+set -g status-left '[#h]  '
+set -g status-left-length 20

@@ -226,6 +226,7 @@ command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " vnoremap // y/<C-R>"<CR>"
 vnoremap // y:SS <C-R>"<CR>
+vnoremap <leader>f y:SS <C-R>"<cr>N
 
 """ ------------ replace ---------------------
 """ 1) Search (h)  in multiple files
@@ -237,8 +238,8 @@ vnoremap // y:SS <C-R>"<CR>
 """ 1) Search (h) 
 map <leader>h "ayiw:Ag! -- "<C-r>a"
 vmap <leader>h "ay:Ag! -- "<C-r>a"
-map <leader>H "ayiw:Ag! --all-types -- "<C-r>a"
-vmap <leader>H "ay:Ag! --all-types -- "<C-r>a"
+map <leader>H "ayiw:Ag! --all-types --skip-vcs-ignores -- "<C-r>a"
+vmap <leader>H "ay:Ag! --all-types --skip-vcs-ignores -- "<C-r>a"
 
 """ 2) Search and Replace (y) in single file
 nmap <leader>y :%s///gc<left><left><left>
