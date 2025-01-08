@@ -45,6 +45,31 @@ plugins:
     - general  
     # profiles:  https://github.com/kubernetes/enhancements/blob/master/keps/sig-cli/1441-kubectl-debug/README.md#debugging-profiles
     # general: allowed to access /proc/1/root/
+    
+  mydebug-node:
+    # https://github.com/derailed/k9s/blob/master/plugins/trace-dns.yaml#L61
+    shortCut: Shift-E
+    #confirm: false
+    description: Debug-netshoot
+    scopes:
+    - nodes
+    command: kubectl
+    background: false
+    args:
+    - debug
+    - -it
+    - --profile=netadmin
+    - --image=nicolaka/netshoot
+    - node/$NAME
+    #### TIP: netadmin has not /host volume, use following trick:
+    ## ls /proc/1/root
+    ## chroot /proc/1/root bash
+    # Debugging profile. Options are "legacy", "general", "baseline", "netadmin", or "restricted".
+    # sysadmin: does not work!
+    # general: not-privileged: "A reasonable set of generic properties for each debugging journey"
+    # netadmin: CAP_NETADMIN+privileged=true ### BEST ###
+    # baseline: "The Baseline policy is aimed at ease of adoption for common containerized workloads while preventing known privilege escalations."
+    # restricted: does not work (very limited) - "The Restricted policy is aimed at enforcing current Pod hardening best practices, at the expense of some compatibility"
 
   # nginx:
   #   shortCut: F12

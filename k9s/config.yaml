@@ -16,7 +16,12 @@ k9s:
     defaultsToFullScreen: false
   skipLatestRevCheck: false
   disablePodCounting: false
+  # https://k9scli.io/topics/shell/
+  # EDIT also: $XDG_DATA_HOME/k9s/clusters/clusterX/blee/config.yaml
+  #  featureGates:
+  #    nodeShell: true # => enable nodeShell for this context. Defaults to false
   shellPod:
+    # image: nicolaka/netshoot
     image: busybox:1.35.0
     namespace: default
     limits:

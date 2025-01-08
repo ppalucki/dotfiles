@@ -431,3 +431,6 @@ let g:tagbar_type_yaml = {
     \ },
     \ 'sort' : 0
     \ }
+
+" DirDiff excludes
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pb"
