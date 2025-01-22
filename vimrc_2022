@@ -434,3 +434,7 @@ let g:tagbar_type_yaml = {
 
 " DirDiff excludes
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pb"
+
+" handle big jsons as trade off for bigger latency when opening json
+" default 2s
+"set redrawtime=5000 " it causes a lot of lag often
