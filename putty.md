@@ -21,8 +21,7 @@ Window/Behavior/ title
 Window/Selection/xterm
 
 
-### 5) blue color fix (only WSL)
-
+### 5) blue color fix (docker builder output...)
 
 ANSI Blue: 74 74 255
 ANSI Blue Bold: 140 140 255
