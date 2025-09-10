@@ -69,7 +69,10 @@ ZSH_THEME="robbyrussell"
 
 ### ppalucki
 # Fix issue with ctrl-b invoking wd_browser that requires "fzf"
+# curl -fSL https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-linux_amd64.tar.gz | tar -C /usr/local/bin/ -xzvf - fzf
 FZF_WD_BINDKEY='F12'
+# FZF_BASE='/usr/bin/'
+# FZF_BASE=/root/.oh-my-zsh/lib/
 
 # TMUX session auto name
 #ZSH_TMUX_DEFAULT_SESSION_NAME=$([ "${#$(hostname)}" -gt 8 ] && echo "WSL" || hostname)
@@ -81,7 +84,7 @@ ZSH_TMUX_DEFAULT_SESSION_NAME=`hostname`
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl)
+plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl z fzf)
 
 source $ZSH/oh-my-zsh.sh
 

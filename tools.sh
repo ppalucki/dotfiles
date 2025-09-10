@@ -105,3 +105,7 @@ apt update
 apt install -y zsh git tmux vim silversearcher-ag htop make
 apt install -y docker.io docker-buildx docker-compose-v2
 apt install -y universal-ctags
+
+
+##### zsh/omz
+curl -fSL https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-linux_amd64.tar.gz | tar -C /usr/local/bin/ -xzvf - fzf

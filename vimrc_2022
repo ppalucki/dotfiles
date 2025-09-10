@@ -5,13 +5,18 @@ if empty(glob("~/.vim/autoload/plug.vim"))
 endif
 
 inoremap jj <ESC>
-nmap <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
-vmap <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
+nnoremap <silent> <c-x> :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
+vnoremap <silent> <c-x> :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
+nnoremap <silent> <leader><C-x> :python3 import re,vim,subprocess;[subprocess.call(['tmux', 'send-keys', '-t', str(pane), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter']) for pane in range(int(subprocess.check_output(['tmux', 'display-message', '-p', '#{window_panes}']).strip().decode())) if pane>0]<cr>j
+"nmap <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
+"vmap <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
+
 "set bg=dark
 
 call plug#begin()
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
+" Plug 'tpope/vim-vinegar'
 Plug 'fatih/vim-go'
 " apt install universal-ctags # NOT excuberent tags for yaml support
 Plug 'majutsushi/tagbar'
@@ -41,6 +46,10 @@ Plug 'rhysd/vim-healthcheck' " :CheckHealth
 " macro fodling/highlighing
 "Plug 'mphe/grayout.vim'
 "Plug 'krzbe/vim-lsp-inactive-regions'
+"
+" jupyter notebooks
+"Plug 'goerz/jupytext.nvim'
+Plug 'goerz/jupytext.vim'
 
 call plug#end()
 
@@ -438,3 +447,7 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pb"
 " handle big jsons as trade off for bigger latency when opening json
 " default 2s
 "set redrawtime=5000 " it causes a lot of lag often
+"
+" https://github.com/goerz/jupytext.vim?tab=readme-ov-file#configuration
+" jupyter notebooks jupytext
+let g:jupytext_fmt = 'py' " default to md

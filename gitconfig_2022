@@ -13,6 +13,8 @@ defaultRemote=origin
 [alias]
 # dont add -n to logs l/lg because it disables possibility to asks for logs from master...
 l = log --oneline --decorate 
+log2 = log --pretty=reference --no-merges --remove-empty # for vim +'Git log2'
+
 lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order 
 lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci)%Creset %C(blue)%an%Creset' --abbrev-commit --date-order
 st = status
