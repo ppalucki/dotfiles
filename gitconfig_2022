@@ -48,6 +48,8 @@ caa = commit -a --amend
 unstash = stash pop
 mt = mergetool -t vimdiff
 
+ciamwippush = !sh -c \"git commit -a -m WIP && git push\"
+
 # moved to aliases
 # grepall = git rev-list --all | xargs git grep 
 #
