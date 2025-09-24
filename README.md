@@ -103,3 +103,10 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/p
 vim ~/.zshrc
 plugins=(zsh-syntax-highlighting)
 
+
+### Fixed ctags
+```
+zypper remove ctags # cannot handle py3+ well
+zypper install universal-ctags
+ln -sv /usr/bin/universal-ctags /usr/bin/ctags
+```
