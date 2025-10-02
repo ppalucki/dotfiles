@@ -15,7 +15,12 @@ kubectl krew install access-matrix rbac-lookup rbac-tool rbac-view who-can resou
 
 # k9s
 curl -sL -o - https://github.com/derailed/k9s/releases/download/v0.32.7/k9s_Linux_amd64.tar.gz | tar -C /usr/local/bin -xzvf - k9s
+curl -sL -o - https://github.com/derailed/k9s/releases/download/v0.50.13/k9s_Linux_amd64.tar.gz | tar -C /usr/local/bin -xzvf - k9s
+
+
 \k9s version
+export TERM=xterm-256color
+  
 
 # reg
 curl -fSL "https://github.com/genuinetools/reg/releases/download/v0.16.1/reg-linux-amd64" -o "/usr/local/bin/reg" && chmod a+x "/usr/local/bin/reg"

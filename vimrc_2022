@@ -50,24 +50,27 @@ call plug#end()
 
 
 " normal mode (target pane = range)
-nmap <silent> <c-x> <Plug>sendconsole
-nmap <silent> <Plug>sendconsole        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
-" visual send whole line(s) (target pane = range)
+" nmap <silent> <c-x>        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
+nmap <silent> <c-x> <Plug>(sendconsole)
+nmap <silent> <Plug>(sendconsole)        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
+""" visual send whole line(s) (target pane = range) (a)
 vmap <silent> <c-x> :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
-" visual send (sends only selection, but cannot handle range for target " pane!))
+""" visual send (sends only selection, but cannot handle range for target " pane!)) (b)
 " vmap <silent>         <c-x> y:python3 import re,vim,subprocess; pane=str(int(vim.eval("v:count")) or '1'); vim.command('y'); subprocess.call(['tmux', 'send-keys', '-t', pane, re.sub(r';\s*$', '\\;', vim.eval('@"')), 'enter'])<cr>
 
 """ --- to all ---
-" normal mode send to target pane
-nmap <silent> <leader><C-x> <Plug>sendconsoleall
-nmap <silent> <c-q> <Plug>sendconsoleall
-nmap <silent> <Plug>sendconsoleall :python3 import re,vim,subprocess;[subprocess.call(['tmux', 'send-keys', '-t', str(pane), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter']) for pane in range(int(subprocess.check_output(['tmux', 'display-message', '-p', '#{window_panes}']).strip().decode())) if pane>0]<cr>j
+""" normal mode send to target pane
+nmap <silent> <leader><C-x> <Plug>(sendconsoleall)
+nmap <silent> <c-q> <Plug>(sendconsoleall)
+nmap <silent> <Plug>(sendconsoleall) :python3 import re,vim,subprocess;[subprocess.call(['tmux', 'send-keys', '-t', str(pane), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter']) for pane in range(int(subprocess.check_output(['tmux', 'display-message', '-p', '#{window_panes}']).strip().decode())) if pane>0]<cr>j
 """ visual send to all
 vmap <silent> <leader><C-x> y:python3 import re,vim,subprocess; [subprocess.call(['tmux', 'send-keys', '-t', str(pane), re.sub(r';\s*$', '\\;', vim.eval('@"')), 'enter']) for pane in range(int(subprocess.check_output(['tmux', 'display-message', '-p', '#{window_panes}']).strip().decode())) if pane>0]<cr>j
+"
+"
 "nmap <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
 "vmap <c-x> :silent! python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', '1', re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
 "
-call repeat#set("\<Plug>sendconsole", v:count)
+" call repeat#set("\<Plug>sendconsole", v:count)
 
 " Ex mode disable
 " https://vi.stackexchange.com/questions/457/does-ex-mode-have-any-practical-use
