@@ -114,3 +114,11 @@ apt install -y universal-ctags
 
 ##### zsh/omz
 curl -fSL https://github.com/junegunn/fzf/releases/download/v0.62.0/fzf-0.62.0-linux_amd64.tar.gz | tar -C /usr/local/bin/ -xzvf - fzf
+
+##### aws
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+
