@@ -78,13 +78,15 @@ FZF_WD_BINDKEY='F12'
 #ZSH_TMUX_DEFAULT_SESSION_NAME=$([ "${#$(hostname)}" -gt 8 ] && echo "WSL" || hostname)
 ZSH_TMUX_DEFAULT_SESSION_NAME=`hostname`
 #ZSH_TMUX_AUTONAME_SESSION="true"
+#
+export SHOW_AWS_PROMPT=false
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl z fzf)
+plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl z fzf aws)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -201,3 +203,5 @@ alias killbg='kill -KILL ${${(v)jobstates##*:*:}%=*}'
 
 # https://github.com/derailed/k9s/issues/1001#issuecomment-2900205212
 export K9S_FEATURE_GATE_NODE_SHELL=true
+
+export AWS_PAGER="cat"
