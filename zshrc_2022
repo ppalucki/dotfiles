@@ -197,3 +197,7 @@ alias regctl="docker container run -i --rm --net host -v regctl-conf:/home/appus
 
 # https://stackoverflow.com/questions/13166544/how-to-kill-all-background-processes-in-zsh
 alias killbg='kill -KILL ${${(v)jobstates##*:*:}%=*}'
+
+
+# https://github.com/derailed/k9s/issues/1001#issuecomment-2900205212
+export K9S_FEATURE_GATE_NODE_SHELL=true
