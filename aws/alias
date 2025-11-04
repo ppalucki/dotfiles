@@ -13,12 +13,23 @@ running-instances = ec2 describe-instances \
         --query 'Reservations[].Instances[].{ID: InstanceId,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PublicIp:PublicIpAddress, PrivateIp: PrivateIpAddress}'
         #--query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PublicIp:PublicIpAddress, PrivateIp: PrivateIpAddress}'
 
+running-instances-text = ec2 describe-instances \
+    --filter Name=instance-state-name,Values=running \
+    --output text \
+        --query 'Reservations[].Instances[].{ID: InstanceId,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PublicIp:PublicIpAddress, PrivateIp: PrivateIpAddress}'
+        #--query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, KeyName: KeyName, PublicIp:PublicIpAddress, PrivateIp: PrivateIpAddress}'
+
 instances-all = ec2 describe-instances \
     --output table \
     --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, State: State.Name}'
+instances-all-text = ec2 describe-instances \
+    --output text \
+    --query 'Reservations[].Instances[].{ID: InstanceId,Hostname: PublicDnsName,Name: Tags[?Key==`Name`].Value | [0],Type: InstanceType, Platform: Platform, SecurityGroups: SecurityGroups[0].GroupName, State: State.Name}'
 
 ri = running-instances
+rit = running-instances-text
 ia = instances-all
+iat = instances-all-text
 
 # describe instance
 di = 

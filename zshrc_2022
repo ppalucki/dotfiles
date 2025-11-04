@@ -78,6 +78,8 @@ FZF_WD_BINDKEY='F12'
 #ZSH_TMUX_DEFAULT_SESSION_NAME=$([ "${#$(hostname)}" -gt 8 ] && echo "WSL" || hostname)
 ZSH_TMUX_DEFAULT_SESSION_NAME=`hostname`
 #ZSH_TMUX_AUTONAME_SESSION="true"
+#
+export SHOW_AWS_PROMPT=false
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -199,4 +201,4 @@ alias regctl="docker container run -i --rm --net host -v regctl-conf:/home/appus
 alias killbg='kill -KILL ${${(v)jobstates##*:*:}%=*}'
 
 
-export AWS_PAGER=""
+export AWS_PAGER="cat"
