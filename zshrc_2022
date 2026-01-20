@@ -86,7 +86,7 @@ export SHOW_AWS_PROMPT=false
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl z fzf aws)
+plugins=(kubectl tmux common-aliases systemd aliases history docker gitfast git ssh zsh-syntax-highlighting helm wd command-not-found extract k9s istioctl z fzf aws pyenv pyenv)
 
 source $ZSH/oh-my-zsh.sh
 

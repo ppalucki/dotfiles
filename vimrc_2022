@@ -473,3 +473,7 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pb"
 " https://github.com/goerz/jupytext.vim?tab=readme-ov-file#configuration
 " jupyter notebooks jupytext
 let g:jupytext_fmt = 'py' " default to md
+
+" PASTEB PASTEE macro
+let @w = "mbgg/PASTAB\<c-m>jhv/PASTAE\<c-m>\<c-x>'b"
+
