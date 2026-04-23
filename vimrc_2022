@@ -46,6 +46,7 @@ Plug 'rhysd/vim-healthcheck' " :CheckHealth
 " jupyter notebooks
 "Plug 'goerz/jupytext.nvim'
 Plug 'goerz/jupytext.vim'
+Plug 'godlygeek/tabular'
 
 call plug#end()
 
@@ -265,23 +266,25 @@ vnoremap <leader>f y:SS <C-R>"<cr>N
 """ ---------------------------------------------------------
 " replace normal mode with last searched element elmenet
 " nmap <leader>y :.,$s///gc<left><left><left>
-""" 1) Search (h) 
+"
+""" 1) Search (h) ("word" or "selected")
 map <leader>h "ayiw:Ag! -- "<C-r>a"
 vmap <leader>h "ay:Ag! -- "<C-r>a"
 map <leader>H "ayiw:Ag! --all-types --skip-vcs-ignores -- "<C-r>a"
 vmap <leader>H "ay:Ag! --all-types --skip-vcs-ignores -- "<C-r>a"
 
-""" 2) Search and Replace (y) in single file
+""" 2) Replace (y) in single file (from previous search)
 nmap <leader>y :%s///gc<left><left><left>
-" replace last searched element ("/ register) in given selection
+" Replace last searched element ("/ register) in given selection
 vmap <leader>y :s///gc<left><left><left>
-" replaced visually selected element in whole document
+""" Replaced visually selected element in whole document
 vmap <leader>Y y<bar>:%s/<c-r>"/<c-r>"/gc<left><left><left>
-" replaced visually selected element in all files from quick files list -
-" first use <leader>h to findall files 
+
+" Replaced visually selected element in all files from quick files list -
+" First use <leader>h to findall files 
 vmap <leader>u y<bar>:cfdo %s/<c-r>"/<c-r>"/gc<left><left><left>
 
-""" 3) Search and Replace (u) in multiple files
+""" 3) Search and Replace (u) in multiple files (in single call "word" or "selected")
 map <leader>u "ayiw:Ag! -- "<C-r>a"<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
 vmap <leader>u "ay:Ag! -- "<C-r>a"<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
 map <leader>U "ayiw:Ag! --all-types -- "<C-r>a<cr><bar>:cfdo %s/<c-r>a/<c-r>a/gc<left><left><left>
