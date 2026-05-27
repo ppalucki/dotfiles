@@ -329,6 +329,10 @@ au FileType markdown set ts=2 sw=2 et
 """ yaml manuall
 "au FileType yaml set ts=2 sw=2 et foldmethod=indent
 
+""" lets format output from shell scripts as shell for some syntax coloring
+autocmd BufNewFile,BufRead *.log :set filetype=sh
+autocmd BufNewFile,BufRead *.log :set foldmethod=indent
+
 """" LSP Configuration
 " enable lsp on startup (1) or disable (0)
 " works well for 
@@ -477,6 +481,6 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pb"
 " jupyter notebooks jupytext
 let g:jupytext_fmt = 'py' " default to md
 
-" PASTEB PASTEE macro
+" PASTEB PASTAE macro
 let @w = "mbgg/PASTAB\<c-m>jhv/PASTAE\<c-m>\<c-x>'b"
 
