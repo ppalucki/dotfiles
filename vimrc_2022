@@ -53,10 +53,17 @@ call plug#end()
 
 " normal mode (target pane = range)
 " nmap <silent> <c-x>        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
-nmap <silent> <Plug>(sendconsole)        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
+" current_pane = int(subprocess.check_output(['tmux', 'display-message', '-p', '#P']).strip())
+""" ALWAYS SEND TO TARGET PANE=1
+" nmap <silent> <Plug>(sendconsole)        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'                                                                                 ), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j 
+""" SEND TO PANE + 1
+nmap <silent> <Plug>(sendconsole)        :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or str(int(subprocess.check_output(['tmux', 'display-message', '-p', '#P']).strip())+1)), re.sub(r';\s*$', '\\;', vim.current.line).replace('\t',' '), 'enter'])<cr>j
 nmap <silent> <c-x> <Plug>(sendconsole)
 """ visual send whole line(s) (target pane = range) (a)
-vmap <silent> <c-x> :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'), re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
+""" ALWAYS SEND TO TARGET PANE=1
+vmap <silent> <c-x> :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or '1'                                                                                 ), re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
+""" SEND TO PANE + 1
+vmap <silent> <c-x> :python3 import re,vim,subprocess;subprocess.call(['tmux', 'send-keys', '-t', str(int(vim.eval("v:count")) or str(int(subprocess.check_output(['tmux', 'display-message', '-p', '#P']).strip())+1)), re.sub(r';\s*$', '\\;', '\n'.join(vim.current.range)).replace('\t',' '), 'enter'])<cr>
 """ visual send (sends only selection, but cannot handle range for target " pane!)) (b)
 " vmap <silent>         <c-x> y:python3 import re,vim,subprocess; pane=str(int(vim.eval("v:count")) or '1'); vim.command('y'); subprocess.call(['tmux', 'send-keys', '-t', pane, re.sub(r';\s*$', '\\;', vim.eval('@"')), 'enter'])<cr>
 
@@ -136,10 +143,12 @@ function! Mouseon()
     " set guioptions+=T 
     " for better golang navigation
     " TO PSUJE scrollowanie
+    """ code navigation ctrl+click to go in, right to go back
     map <C-LeftMouse> gd 
     nmap <RightMouse> <c-o>
 
-    nmap <2-LeftMouse> gd
+    nmap <2-LeftMouse> za
+    " nmap <2-LeftMouse> gd
     " nmap <expr> <2-LeftMouse> (&buftype is# "quickfix" ? "" : "gd")
 endfunction
 call Mouseon()
@@ -256,7 +265,7 @@ command! -nargs=1 SS let @/ = '\V'.escape(<q-args>, '/\')|normal! /<C-R>/<CR>
 " visual search selected text [find]
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
 " vnoremap // y/<C-R>"<CR>"
-vnoremap // y:SS <C-R>"<CR>
+" vnoremap // y:SS <C-R>"<CR> # breaks timeing of visual select
 vnoremap <leader>f y:SS <C-R>"<cr>N
 
 """ ------------ replace ---------------------
@@ -331,7 +340,7 @@ au FileType markdown set ts=2 sw=2 et
 
 """ lets format output from shell scripts as shell for some syntax coloring
 autocmd BufNewFile,BufRead *.log :set filetype=sh
-autocmd BufNewFile,BufRead *.log :set foldmethod=indent
+autocmd BufNewFile,BufRead *.log :set foldmethod=indent foldignore=
 
 """" LSP Configuration
 " enable lsp on startup (1) or disable (0)
@@ -482,5 +491,5 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,*.pyc,*.pb"
 let g:jupytext_fmt = 'py' " default to md
 
 " PASTEB PASTAE macro
-let @w = "mbgg/PASTAB\<c-m>jhv/PASTAE\<c-m>\<c-x>'b"
+let @w = "mbgg/PASTAB\<cr>\<down>v/PASTAE\<cr>\<up>\<c-x>'b"
 

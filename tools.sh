@@ -121,3 +121,9 @@ unzip awscliv2.zip
 sudo ./aws/install
 
 
+#### python uv
+#curl -LsSf https://astral.sh/uv/install.sh | sh
+curl -fL https://releases.astral.sh/github/uv/releases/download/0.11.21/uv-x86_64-unknown-linux-gnu.tar.gz -o - | tar -C /usr/local/bin -xzvf - --strip-components=1 uv-x86_64-unknown-linux-gnu/uv
+uv --version
+
+
