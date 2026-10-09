@@ -7,7 +7,7 @@ sudo cp /etc/redsocks.conf /etc/redsocks.conf.backup
 wget --no-check-certificate https://intelpedia.intel.com/images/a/a1/Redsocks.conf.txt 
 sudo cp Redsocks.conf.txt /etc/redsocks.conf
 # my own
-sudo cp ~/work/proxy/redsocks.conf.my /etc/redsocks.conf 
+sudo cp ~/dotfiles/proxy/redsocks.conf.my /etc/redsocks.conf 
 # restart
 sudo service redsocks restart
 sudo service redsocks status
