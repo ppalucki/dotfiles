@@ -9,13 +9,16 @@ setw -g mode-keys vi
 # break-pane 
 bind b break-pane
 
-# copy z ctrl
-unbind c-[
-bind c-[ copy-mode
+### copy z ctrl
+unbind C-[
+bind C-[ copy-mode
+# required for extended-keys
+bind Escape copy-mode
 
-# paste even with ctrl
-unbind c-]
-bind-key c-] paste-buffer
+### paste even with ctrl
+unbind C-]
+bind-key C-] paste-buffer
+bind ] paste-buffer
 
 # next/prev
 # easier and faster switching between next/prev window
@@ -29,7 +32,8 @@ set -s escape-time 0
 bind m command-prompt -p "send pane to:"  "join-pane -t '%%'"
 bind M choose-window "join-pane -t '%%'"
 # swap window
-bind c-m command-prompt -p "swap window with :"  "swap-window -t '%%'"
+bind C-m command-prompt -p "swap window with :"  "swap-window -t '%%'"
+bind Enter command-prompt -p "swap window with:" "swap-window -t '%%'"
 
 # prefix & last window
 unbind C-b

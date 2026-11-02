@@ -82,7 +82,13 @@ redsocks {
     // ip = 163.33.7.139;  // BROKEN
 
     // proxy-ir.intel.com
-    ip = 10.102.248.16; 
+    // ip = 10.102.248.16; 
+
+// proxy-dmz.iglb.intel.com
+// ip = 10.241.208.166;
+
+// ip = proxy-igk.intel.com;
+ip = 10.241.208.166;
 
         port = 1080;
 

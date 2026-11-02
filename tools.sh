@@ -127,3 +127,16 @@ curl -fL https://releases.astral.sh/github/uv/releases/download/0.11.21/uv-x86_6
 uv --version
 
 
+#### pyenv
+curl -fsSL https://pyenv.run | bash
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+sudo apt install -y python3.14-venv
+sudo apt install -y python3-pip make cmake pkg-config unzip git gcc-14 g++-14 libreadline-dev liblzma-dev libssl-dev libsqlite3-dev libffi-dev libbzip3-dev libbz2-dev libzstd-dev zlib1g-dev tk8.6 libtk8.6 tk9.0 libtk9.0 tk-dev tcl-dev
+CC=gcc-14 CXX=g++-14 pyenv install 3.13.11
+~/.pyenv/versions/3.13.11/bin/python -c 'import tkinter'
+
+
+CC=gcc-14 CXX=g++-14 pyenv 
